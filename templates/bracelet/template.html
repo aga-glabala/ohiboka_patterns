@@ -1,0 +1,46 @@
+{% load url from future %}
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Ohiboka Patterns{% block title %}{% endblock %}</title>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="{{ STATIC_URL }}css/default.css" type="text/css">
+{% block css %}
+{% endblock %}
+</head>
+<body>
+<div id="box">
+	<div id="top">
+	&nbsp;
+	</div>
+	
+	<div id="languages">
+	Language: <a href="" id="pl"><img src="{{ STATIC_URL }}gfx/polish.png" /></a> <a href="" id="en"><img src="{{ STATIC_URL }}gfx/english.png" /></a>
+	</div>
+	
+	<div id="login">
+	{% if user.is_authenticated %}
+		Logged in as {{user.username}}
+		<form method="post" action="{% url 'bracelet.views.logout_user' %}">
+		{% csrf_token %}
+		<input type="submit" value="Logout" />
+		</form>
+	{% else %}
+		{% if form.errors %}
+		<p>Your username and password didn't match. Please try again.</p>
+		{% endif %}
+		<form method="post" action="{% url 'bracelet.views.login_user' %}">
+		{% csrf_token %}
+		{{ form.username.label_tag }}: {{ form.username }}<br />
+		{{ form.password.label_tag }}: {{ form.password }}<br />
+		<a href="">Sign up</a> | <input type="submit" value="Login" />
+		</form>
+	{% endif %}
+	</div>
+	<div id="content">
+	{% block content %}{% endblock %}
+	</div>
+</div>
+</body>
+</html>

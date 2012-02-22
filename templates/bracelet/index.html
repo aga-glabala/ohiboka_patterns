@@ -1,0 +1,32 @@
+{% extends "bracelet/template.html" %}
+
+
+{% block title %}{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ STATIC_URL }}css/home.css" type="text/css">
+{% endblock %}
+
+{% block content %}	
+	<div id="right">
+	
+	</div>
+	<div id="left">
+	
+	</div>
+	{% if lista %}
+    <ul>
+    {% for poll in lista %}
+        <li>{{ poll }}</li>
+    {% endfor %}
+    </ul>
+    
+     <ul>
+    {% for poll in lista2 %}
+        <li>{{ poll }}</li>
+    {% endfor %}
+    </ul>
+	{% else %}
+	    <p>No polls are available.</p>
+	{% endif %}
+{% endblock %}

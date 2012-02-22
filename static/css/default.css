@@ -1,0 +1,62 @@
+*{  
+   margin:0;  
+   padding:0;  
+}  
+a:hover {
+	text-decoration: underline;
+}
+a {
+	text-decoration: none;
+	color: white;
+}
+body {
+	background: url('/static/gfx/bg.png');
+	color: white;
+	width: 100%;
+	text-align: center;
+}
+#box {
+	width:1000px;
+	text-align: left;
+	margin: 0 auto;
+}
+#top {
+	background: url('/static/gfx/top.png');
+	width: 664px;
+	height: 236px;
+	margin: -40px 0 0 -30px;
+	float: left;
+}
+#languages {
+	float: right;
+}
+#languages a{
+	text-decoration: none;
+}
+#login {
+	float: right;
+	width: 336px;
+	text-align: right;
+	margin-top: 30px;
+}
+#login form {
+	text-align: right;
+}
+#login table {
+	margin-right: 0;
+}
+#login input[type='submit'] {
+	width: 150px;
+	background: none; 
+	border:none;
+	border-bottom: 1px solid white;
+	color: white;
+}
+#login input[type='text'], #login input[type='password'] {
+	border:none;
+	border-bottom: 1px solid white;
+	background: none; 
+}
+#content {
+	clear:both;
+}
