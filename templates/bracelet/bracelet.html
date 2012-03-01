@@ -1,0 +1,26 @@
+{% extends "bracelet/template.html" %}
+
+{% block css %}
+<style type="text/css">
+{{ style }}
+</style>
+{% endblock %}
+
+{% block content %}
+{{ name }}
+<div id="pattern">
+
+</div>
+<script type="text/javascript">
+<!--
+var knotsColor = {{ knotsColor }};
+var knotsType = {{ knotsType }};
+for (var i=0; i<{{nofstr}};i++) {
+	$('<span class="str'+i+'">&nbsp;</span>').appendTo('#pattern');
+}
+for (var i=0; i<{{nofstr}};i++) {
+	$('<span class="str'+knotsColor[i]+'">'+knotsType[i]+'</span>').appendTo('#pattern');
+}
+//-->
+</script>
+{% endblock %}

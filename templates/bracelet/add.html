@@ -1,6 +1,87 @@
-{% extends "base.html" %}
-
+{% extends "bracelet/template.html" %}
+{% load filters %}
 {% block title %} - Add new pattern{% endblock %}
 
+{% block css %} 
+<script language="Javascript" type="text/javascript">
+var counter = 1;
+var limit = 30;
+function addInput(divColor){
+	if (counter == limit)  {
+		alert("You have reached the limit of adding " + counter + " inputs");
+	}
+	else {
+		var el = $("<select id='color"+(counter)+"' name='color"+(counter) +"' onchange='setColor(this.options[this.selectedIndex].value, this)'>");
+		var colors = {{ colors|safe }};
+		for (i=0;i<=colors.length-1;i++)
+		{
+			$("<option value='"+colors[i]+"' style='background-color:#"+colors[i]+"'>                  </option>").appendTo(el);
+		}
+		$("#"+divColor).append(el);
+		counter++;
+		
+	}
+}
+
+function removeInput() {
+	if(counter>1) {
+		element = document.getElementById("color"+(counter-1));
+		element.parentNode.removeChild(element);
+		counter--;
+	}
+}
+
+function setColor(color, selectbox) {
+	selectbox.style.background = '#'+color+'';
+}
+</script>
+{% endblock %}
+
+
 {% block content %}
+	<form action="addpattern" method="post">
+	{% csrf_token %}
+	<table>
+		<tr>
+			<td>Name: </td>
+			<td><input type="text" name="name"></td>
+		</tr>
+		<tr>
+			<td>Difficulty: </td>
+			<td><select name="difficulty">
+			<option value="1" {% if difficulty == "1" %}selected="selected" {% endif %}>Easy</option>
+			<option value="2" {% if difficulty == "2" %}selected="selected" {% endif %}>Medium</option>
+			<option value="3" {% if difficulty == "3" %}selected="selected" {% endif %}>Hard</option>
+			</select>
+			</td>
+		</tr>
+		<tr>
+			<td>Category:</td>
+			<td><select name="category">
+				{% if categories %}
+					{% for c in categories %}
+						<option {% if category == c.name %}selected="selected" {% endif %}>{{ c.name }}</option>
+					{% endfor %}
+					</select>
+				{% endif %}
+				</select>
+			</td>
+		</tr>
+	</table>
+	<span id="colorsInput">
+        {% if colors %}
+        <span>
+		<select name="color0" onchange='setColor(this.options[this.selectedIndex].value, this)'>
+		{% for c in colors %}
+			<option value="{{ c }}" style="background-color:#{{ c }}" {% if c == color %}selected="selected" {% endif %}>                  </option>
+		{% endfor %}
+		</select>
+		</span>
+	{% endif %}  
+    </span>
+    <input type="button" value="Add string" onClick="addInput('colorsInput');">
+    <input type="button" value="Remove string" onClick="removeInput();"><br />
+	<textarea rows="20" cols="100" name="pattern"></textarea>
+	<input type="submit" value="Add pattern">
+</form>
 {% endblock %}

@@ -1,6 +1,5 @@
 {% extends "bracelet/template.html" %}
 
-
 {% block title %}{% endblock %}
 
 {% block css %}
@@ -9,24 +8,87 @@
 
 {% block content %}	
 	<div id="right">
-	
+		<form action="search" method="get">
+		<ul>
+		<li>Category:</li>
+			<select name="category">
+			<option value="0">All</option>
+			{% if categories %}
+				{% for c in categories %}
+					<option {% if category == c.name %}selected="selected" {% endif %}>{{ c.name }}</option>
+				{% endfor %}
+				</select>
+			{% endif %}
+			</select>
+		<li>Rated:</li>
+		<select name="rate">
+		<option value="0">All</option>
+		<option value="1" {% if rate == "1" %}selected="selected" {% endif %}>More than *</option>
+		<option value="2" {% if rate == "2" %}selected="selected" {% endif %}>More than **</option>
+		<option value="3" {% if rate == "3" %}selected="selected" {% endif %}>More than ***</option>
+		<option value="4" {% if rate == "4" %}selected="selected" {% endif %}>More than ****</option>
+		<option value="5" {% if rate == "5" %}selected="selected" {% endif %}>*****</option>
+		</select>
+		<li>Difficulty:
+		<select name="difficulty">
+		<option value="0">All</option>
+		<option value="1" {% if difficulty == "1" %}selected="selected" {% endif %}>Easy</option>
+		<option value="2" {% if difficulty == "2" %}selected="selected" {% endif %}>Medium</option>
+		<option value="3" {% if difficulty == "3" %}selected="selected" {% endif %}>Hard</option>
+		</select>
+		</li>
+		<li>Color:
+			{% if colors %}
+			<select name="color">
+			<option value="0">All</option>
+			{% for c in colors %}
+				<option value="{{ c }}" style="background-color:#{{ c }}" {% if c == color %}selected="selected" {% endif %}>         </option>
+			{% endfor %}
+			</select>
+			{% endif %}
+		</li>
+			
+		<li><input type="checkbox" name="photo" value="photo" {% if photo %}checked="checked" {% endif %}/> With photo</li>
+		<li>Sort by:
+			<select name="orderby">
+			<option value="0" {% if orderby == "0" %}selected="selected" {% endif %}>Newest first</option>
+			<option value="1" {% if orderby == "1" %}selected="selected" {% endif %}>Oldest first</option>
+			<option value="2" {% if orderby == "2" %}selected="selected" {% endif %}>Highest rates first</option>
+			<option value="3" {% if orderby == "3" %}selected="selected" {% endif %}>Lowest rates first</option>
+			</select>
+		</li>
+		<li><input type="submit" value="Search" /></li>
+		</ul>
+		</form>
+		{% if user.is_authenticated %}
+		<a href="add">Add new pattern</a>
+		{% else %}
+		You need to be logged to add new pattern
+		{% endif %}
 	</div>
 	<div id="left">
-	
+		{% if search %}
+		Results:
+		{% else %}
+		Newest bracelets:
+		{% endif %}
+		<br />
+		
+		{% if patterns %}
+		    {% for bt in patterns %}
+		        <div>
+			        <table>
+			        	<tr><td><img src="{{ STATIC_URL }}bracelet_thumbs/{{ bt }}" /></td></tr>
+			        	<tr><td>author: aga-glabala</td></tr>
+			    	    <tr><td>date: 22-02-2012</td></tr>
+				    </table>
+		        </div>
+		    {% endfor %}
+	    {% else %}
+	    	There is no patterns to show.
+		{% endif %}
 	</div>
-	{% if lista %}
-    <ul>
-    {% for poll in lista %}
-        <li>{{ poll }}</li>
-    {% endfor %}
-    </ul>
-    
-     <ul>
-    {% for poll in lista2 %}
-        <li>{{ poll }}</li>
-    {% endfor %}
-    </ul>
-	{% else %}
-	    <p>No polls are available.</p>
-	{% endif %}
+	
+	
+
 {% endblock %}

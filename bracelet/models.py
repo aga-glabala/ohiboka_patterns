@@ -8,9 +8,9 @@ class Bracelet(models.Model):
     user = models.ForeignKey(User, related_name='+')
     date = models.DateTimeField('Creation date')
     name = models.CharField(max_length=50)
+    accepted = models.BooleanField()
     difficulty = models.IntegerField(choices=((0, ' Easy'), (1, 'Medium'), (2, 'Hard')))
     category = models.ForeignKey(BraceletCategory, related_name='+')
-    accepted = models.BooleanField()
     
 class BraceletColor(models.Model):
     hexcolor = models.IntegerField()

@@ -1,6 +1,21 @@
 #right {
+	width: 200px;
+	float: right;
+}
+#right li {
 	
 }
 #left {
-	
+	width: 800px;
+	float: left;
+}
+#left div {
+	float: left;
+	width: 132px;
+	padding: 2px;
+}
+#left div:hover { 
+	border: 1px solid #fff;
+	padding: 1px;
+	background-color: #224477;
 }
