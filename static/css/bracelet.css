@@ -1,0 +1,37 @@
+.knot {	
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	-moz-background-clip: padding; -webkit-background-clip: padding-box; background-clip: padding-box;
+	width: 20px;
+	height: 20px;
+	display: inline-block;
+	margin: -3px 4px;
+}
+
+.odd {
+	margin-left: 12px;
+}
+
+.even {
+	
+}
+
+.oddstring {
+	margin-right: 5px;
+}
+.evenstring {
+	margin-right: 16px;
+}
+.knot1 {
+	background: url('/static/gfx/knot1.png');
+}
+.knot2 {
+	background: url('/static/gfx/knot2.png');
+}
+.knot3 {
+	background: url('/static/gfx/knot3.png');
+}
+.knot4 {
+	background: url('/static/gfx/knot4.png');
+}

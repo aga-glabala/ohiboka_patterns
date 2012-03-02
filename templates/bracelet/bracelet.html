@@ -16,10 +16,22 @@
 var knotsColor = {{ knotsColor }};
 var knotsType = {{ knotsType }};
 for (var i=0; i<{{nofstr}};i++) {
-	$('<span class="str'+i+'">&nbsp;</span>').appendTo('#pattern');
+	var cl = "oddstring";
+	if(i%2==0) {
+		cl = "evenstring";
+	}
+	$('<span class="str'+i+' '+cl+'">&nbsp;</span>').appendTo('#pattern');
 }
-for (var i=0; i<{{nofstr}};i++) {
-	$('<span class="str'+knotsColor[i]+'">'+knotsType[i]+'</span>').appendTo('#pattern');
+$('<br />').appendTo('#pattern');
+for (var i=0; i<{{nofstr}}-1;i++) {
+	var cl = "odd";
+	if(i%2==0) {
+		cl = "even";
+	}
+	$('<div id="row'+i+'" class="'+cl+'" />').appendTo('#pattern');
+	for(var j=0; j<knotsType[i].length; j++) {
+		$('<span class="str'+knotsColor[i][j]+' knot knot'+knotsType[i][j]+'"></span>').appendTo('#row'+i);
+	}
 }
 //-->
 </script>

@@ -34,57 +34,15 @@ def add(request):
 	return render_to_response('bracelet/add.html', context, RequestContext(request))
 
 def bracelet(request, bracelet_id):
-	def calculateColor(knotsType, knotsColor, row, column, last):
-		None
-		
-	def calculateStringsOrder(stringsOrder, knotsType, odd):
-		so = []
-		if odd==1:
-			so.append(stringsOrder[0])
-		for i in range(len(knotsType)):
-			if knotsType[i] < 3:
-				so.append(stringsOrder[i+odd+1])
-				so.append(stringsOrder[i+odd])
-			elif knotsType[i] > 2:
-				so.append(stringsOrder[i+odd])
-				so.append(stringsOrder[i+odd+1])
-		if odd==1:
-			so.append(len(stringsOrder)-1)
-	bracelet = Bracelet.objects.get(id=bracelet_id)
-	strings = BraceletString.objects.filter(bracelet=bracelet)
-	style = ""
-	for i in range(len(strings)):
-		style+=".str"+str(i)+" {background-color:#"+(6-len(hex(strings[i].color.hexcolor)[2:]))*'0'+hex(strings[i].color.hexcolor)[2:]+";}"
-	style+=""
-	knotsType = []
-	knotsColor = []
-	stringsOrder = []
-	dbknots = BraceletKnot.objects.filter(bracelet=bracelet)
-	
-	knotsType[0] = []
-	knotsColor[0] = []
-	stringsOrder[0] = []
-	for i in range(len(strings)/2):
-		#color=(6-len(hex(dbknots[i].color.hexcolor)[2:]))*'0'+hex(dbknots[i].color.hexcolor)[2:]
-		knotsType[0].append(dbknots[i].knottype.id)
-		knotsColor[0].append(i)
-	stringsOrder[0] = calculateStringsOrder(range(len(strings)), knotsType[0])
-
-	nofrows = 2*len(dbknots)/(len(strings)-1)
-	if(len(dbknots)-nofrows*2*len(dbknots)/(len(strings)-1)>0):
-		nofrows+=1
-	for row in range(1,nofrows):
-		knotsType[row] = []
-		knotsColor[row] = []
-		for column in range(len(strings)/2 - row%2):
-			knotsType[row][column] = dbknots[(len(strings)-1) / 2.0 * row + (row%2)/2.0 + column ].knottype.id
-			knotsColor[row][column] = calculateColor(knotsType, knotsColor, row, column, range(len(strings)/2 - row%2))
+		bp = BraceletPattern(bracelet_id)
+	bp.generate_pattern()
+	print bp.get_knots_colors()
 	context = {'form':AuthenticationForm(),
-			'name' : bracelet.name,
-			'style':style,
-			'nofstr':len(strings),
-			'knotsType':knotsType,
-			'knotsColor':knotsColor,
+			'name' : bp.bracelet.name,
+			'style':bp.get_style(),
+			'nofstr':bp.get_n_of_strings(),
+			'knotsType':bp.get_knots_types(),
+			'knotsColor':bp.get_knots_colors(),
 			}
 	
 	return render_to_response('bracelet/bracelet.html', context, RequestContext(request))
