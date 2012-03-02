@@ -1,6 +1,7 @@
 {% extends "bracelet/template.html" %}
 
 {% block css %}
+<link rel="stylesheet" href="{{ STATIC_URL }}css/bracelet.css" type="text/css">
 <style type="text/css">
 {{ style }}
 </style>
@@ -23,7 +24,7 @@ for (var i=0; i<{{nofstr}};i++) {
 	$('<span class="str'+i+' '+cl+'">&nbsp;</span>').appendTo('#pattern');
 }
 $('<br />').appendTo('#pattern');
-for (var i=0; i<{{nofstr}}-1;i++) {
+for (var i=0; i<{{nofrows}}-1;i++) {
 	var cl = "odd";
 	if(i%2==0) {
 		cl = "even";

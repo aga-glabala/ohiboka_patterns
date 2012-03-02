@@ -7,7 +7,7 @@ from bracelet.models import BraceletColor, Bracelet, BraceletCategory,\
 	BraceletString, BraceletKnot, BraceletKnotType
 from django.forms.models import modelformset_factory
 import datetime
-from bracelet.Knot import Knot
+from bracelet.pattern_tools import BraceletPattern
 
 def home(request):
 	form = AuthenticationForm()
@@ -34,15 +34,15 @@ def add(request):
 	return render_to_response('bracelet/add.html', context, RequestContext(request))
 
 def bracelet(request, bracelet_id):
-		bp = BraceletPattern(bracelet_id)
+	bp = BraceletPattern(bracelet_id)
 	bp.generate_pattern()
-	print bp.get_knots_colors()
 	context = {'form':AuthenticationForm(),
 			'name' : bp.bracelet.name,
 			'style':bp.get_style(),
 			'nofstr':bp.get_n_of_strings(),
 			'knotsType':bp.get_knots_types(),
 			'knotsColor':bp.get_knots_colors(),
+			'nofrows':bp.nofrows
 			}
 	
 	return render_to_response('bracelet/bracelet.html', context, RequestContext(request))
@@ -102,7 +102,6 @@ def search(request, page=1):
 	return render_to_response('bracelet/index.html', context, RequestContext(request))
 
 def addpattern(request):
-	print request.POST
 	colors = []
 	for c in request.POST:
 		if c.find('color')==0:

@@ -15,7 +15,7 @@ class BraceletPattern(object):
 		Constructor
 		'''
 		self.bracelet = Bracelet.objects.get(id=bracelet_id)
-		self.strings = BraceletString.objects.filter(bracelet=self.bracelet)
+		self.strings = BraceletString.objects.filter(bracelet=self.bracelet).order_by('index')
 		self.knots = BraceletKnot.objects.filter(bracelet=self.bracelet)
 		self.strings_order = [range(len(self.strings))]
 		self.odd = len(self.strings)%2
@@ -25,13 +25,13 @@ class BraceletPattern(object):
 	def get_style(self):
 		style = ""
 		for i in range(len(self.strings)):
-			style+=".str"+str(i)+" {background-color:#"+(6-len(hex(self.strings[i].color.hexcolor)[2:]))*'0'+hex(self.strings[i].color.hexcolor)[2:]+";}"
+			style+=".str"+str(i)+" {background-color:"+str(self.strings[i].color)+";}"
 		return style
 	
 	def generate_pattern(self):
-		nofrows = 2*len(self.knots)/(len(self.strings)-1)
-		if(len(self.knots)-nofrows>0):
-			nofrows+=1
+		self.nofrows = 2*len(self.knots)/(len(self.strings)-1)
+		if(len(self.knots)-self.nofrows*(len(self.strings)/2.0)>0):
+			self.nofrows+=1
 		nofcols = len(self.strings)/2
 		types = []
 		colors = []
@@ -41,19 +41,19 @@ class BraceletPattern(object):
 		for i in range(nofcols):
 			colors.append(self.get_knot_color(self.strings_order[0], self.knots_types[0], i, 0))
 		self.knots_colors.append(colors)
-		index = 0
-		print self.knots_types
-		for i in range(1, nofrows):
+		index = nofcols
+		for i in range(1, self.nofrows):
 			self.strings_order.append(self.get_next_strings_order(self.strings_order[i-1], self.knots_types[i-1], (i-1)%2))
 			colors = []
 			types = []
 			for j in range(nofcols-(i%2)):
 				types.append(self.knots[index].knottype.id)
+				index+=1
 			self.knots_types.append(types)	
 			for j in range(nofcols-(i%2)):
-				index+=1
 				colors.append(self.get_knot_color(self.strings_order[i], self.knots_types[i], j, i%2))
 			self.knots_colors.append(colors)
+		print len(self.knots_types), self.nofrows, len(self.knots_colors), len(self.knots_types)
 		
 	def get_next_strings_order(self, strings_order, knots_type, odd):	
 		so = []
