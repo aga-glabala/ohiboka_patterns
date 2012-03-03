@@ -73,7 +73,7 @@ function setColor(color, selectbox) {
         <span>
 		<select name="color0" onchange='setColor(this.options[this.selectedIndex].value, this)'>
 		{% for c in colors %}
-			<option value="{{ c }}" style="background-color:#{{ c }}" {% if c == color %}selected="selected" {% endif %}>                  </option>
+			<option value="{{ c }}" style="background-color:{{ c }}" {% if c == color %}selected="selected" {% endif %}>                  </option>
 		{% endfor %}
 		</select>
 		</span>

@@ -3,7 +3,7 @@
 	float: right;
 }
 #right li {
-	
+	list-style-type: none;
 }
 #left {
 	width: 800px;
@@ -15,7 +15,7 @@
 	padding: 2px;
 }
 #left div:hover { 
-	border: 1px solid #fff;
+	border: 1px solid #329ec6;
 	padding: 1px;
-	background-color: #224477;
+	background-color: #084871;
 }

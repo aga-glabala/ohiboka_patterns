@@ -1,17 +1,50 @@
 {% extends "bracelet/template.html" %}
 
 {% block css %}
+<script src="{{ STATIC_URL }}js/jquery-ui-1.8.18.custom.min.js" type="text/javascript" ></script>
 <link rel="stylesheet" href="{{ STATIC_URL }}css/bracelet.css" type="text/css">
 <style type="text/css">
 {{ style }}
 </style>
+<script>
+	$(function() {
+		$( "#tabs" ).tabs({
+			ajaxOptions: {
+				error: function( xhr, status, index, anchor ) {
+					$( anchor.hash ).html(
+						"Couldn't load this tab. We'll try to fix this as soon as possible. " +
+						"If this wouldn't be a demo." );
+				}
+			}
+		});
+	});
+</script>
 {% endblock %}
 
 {% block content %}
 {{ name }}
-<div id="pattern">
+<div class="demo">
 
+<div id="tabs">
+	<ul>
+		<li><a href="#tabs-1">Pattern</a></li>
+		<li><a href="#tabs-2">Step by step instructions</a></li>
+		<li><a href="/bracelet/comments/{{bracelet_id}}">Comments</a></li>
+		<li><a href="#tabs-4">Photos</a></li>
+	</ul>
+	<div id="tabs-1">
+		<div id="pattern">
+	</div>
+	</div>
+	<div id="tabs-2">
+		<p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
+	</div>
+	<div id="tabs-4">
+	</div>
 </div>
+
+</div><!-- End demo -->
+
 <script type="text/javascript">
 <!--
 var knotsColor = {{ knotsColor }};

@@ -1,23 +1,31 @@
 from django.shortcuts import render_to_response
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.template.context import RequestContext
 from bracelet.models import BraceletColor, Bracelet, BraceletCategory,\
-	BraceletString, BraceletKnot, BraceletKnotType
-from django.forms.models import modelformset_factory
+	BraceletString, BraceletKnot, BraceletKnotType, Photo
 import datetime
-from bracelet.pattern_tools import BraceletPattern
+from bracelet.pattern_tools import BraceletPattern, BraceletContainer
 
 def home(request):
 	form = AuthenticationForm()
 	colors = []
 	for color in BraceletColor.objects.all():
-		colors.append((6-len(hex(color.hexcolor)[2:]))*'0'+hex(color.hexcolor)[2:])
+		colors.append(str(color.hexcolor))
+	bracelets = Bracelet.objects.all().order_by('-date')[:10]
+	imgs = []
+	for br in bracelets:
+		author = br.user.username
+		date = br.date.date().__str__()
+		photos = Photo.objects.all().filter(bracelet=br)
+		if len(photos)>0 and photos[0].accepted:
+			img = str(photos[0].id)+".png" 
+		else:
+			img = "nophoto.png"
+		imgs.append(BraceletContainer(id=br.id, author=author, photo=img, date=date))
 	context = {
-		'patterns': ("tmpbracelet.png", "tmpbracelet.png", "tmpbracelet.png", 
-				"tmpbracelet.png", "tmpbracelet.png", "tmpbracelet.png", "tmpbracelet.png",
-				"tmpbracelet.png", "tmpbracelet.png"), 
+		'patterns': imgs, 
 		'colors': colors,
 		'categories': BraceletCategory.objects.all(),
 		'form':form,
@@ -27,10 +35,11 @@ def home(request):
 def add(request):
 	colors = []
 	for color in BraceletColor.objects.all():
-		colors.append((6-len(hex(color.hexcolor)[2:]))*'0'+hex(color.hexcolor)[2:])
+		colors.append(str(color.hexcolor))
 	context = {'form':AuthenticationForm(),
 			'colors': colors,
-			'categories': BraceletCategory.objects.all(),}
+			'categories': BraceletCategory.objects.all(),
+			}
 	return render_to_response('bracelet/add.html', context, RequestContext(request))
 
 def bracelet(request, bracelet_id):
@@ -42,7 +51,8 @@ def bracelet(request, bracelet_id):
 			'nofstr':bp.get_n_of_strings(),
 			'knotsType':bp.get_knots_types(),
 			'knotsColor':bp.get_knots_colors(),
-			'nofrows':bp.nofrows
+			'nofrows':bp.nofrows,
+			'bracelet_id':bracelet_id,
 			}
 	
 	return render_to_response('bracelet/bracelet.html', context, RequestContext(request))
@@ -98,7 +108,18 @@ def search(request, page=1):
 	if request.GET['difficulty']!="0":
 		patterns = patterns.filter(difficulty=request.GET['difficulty'])
 		# TODO reszta filtrow
-	context['patterns'] = patterns
+	bracelets = []
+	for br in patterns:
+		author = br.user.username
+		date = br.date.date().__str__()
+		photos = Photo.objects.all().filter(bracelet=br)
+		if len(photos)>0 and photos[0].accepted:
+			img = str(photos[0].id)+".png" 
+		else:
+			img = "nophoto.png"
+		bracelets.append(BraceletContainer(id=br.id, author=author, photo=img, date=date))
+	context['patterns'] = bracelets
+	print bracelets
 	return render_to_response('bracelet/index.html', context, RequestContext(request))
 
 def addpattern(request):
@@ -124,9 +145,11 @@ def addpattern(request):
 			id=4
 		bk =  BraceletKnot(bracelet=b, knottype=BraceletKnotType.objects.filter(id=id)[0], index=i)
 		bk.save()
-	return render_to_response('bracelet/index.html', {}, RequestContext(request))
+	return HttpResponseRedirect('/bracelet/'+str(b.id))
+	#return render_to_response('bracelet/index.html', {}, RequestContext(request))
 
-
+def comments(request, bracelet_id):
+	return render_to_response('bracelet/tabs/comments.html', {'comments':'aaaaaa'}, RequestContext(request))
 
 
 

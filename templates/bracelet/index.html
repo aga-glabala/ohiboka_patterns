@@ -42,7 +42,7 @@
 			<select name="color">
 			<option value="0">All</option>
 			{% for c in colors %}
-				<option value="{{ c }}" style="background-color:#{{ c }}" {% if c == color %}selected="selected" {% endif %}>         </option>
+				<option value="{{ c }}" style="background-color:{{ c }}" {% if c == color %}selected="selected" {% endif %}>         </option>
 			{% endfor %}
 			</select>
 			{% endif %}
@@ -61,9 +61,9 @@
 		</ul>
 		</form>
 		{% if user.is_authenticated %}
-		<a href="add">Add new pattern</a>
+			<a href="add">Add new pattern</a>
 		{% else %}
-		You need to be logged to add new pattern
+			You need to be logged to add new pattern
 		{% endif %}
 	</div>
 	<div id="left">
@@ -77,11 +77,13 @@
 		{% if patterns %}
 		    {% for bt in patterns %}
 		        <div>
+		        <a href="/bracelet/{{ bt.id }}">
 			        <table>
-			        	<tr><td><img src="{{ STATIC_URL }}bracelet_thumbs/{{ bt }}" /></td></tr>
-			        	<tr><td>author: aga-glabala</td></tr>
-			    	    <tr><td>date: 22-02-2012</td></tr>
+			        	<tr><td><img src="{{ STATIC_URL }}bracelet_thumbs/{{ bt.photo }}" /></td></tr>
+			        	<tr><td>author: {{ bt.author }}</td></tr>
+			    	    <tr><td>date: {{ bt.date }}</td></tr>
 				    </table>
+				    </a>
 		        </div>
 		    {% endfor %}
 	    {% else %}
