@@ -8,11 +8,17 @@ from bracelet.models import BraceletColor, Bracelet, BraceletCategory,\
 import datetime
 from bracelet.pattern_tools import BraceletPattern, BraceletContainer
 
+def setlang(request, lang):
+	request.session['django_language'] = lang
+	r = HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+	r.set_cookie('django_language', lang)
+	return r
+	
 def home(request):
 	form = AuthenticationForm()
 	colors = []
 	for color in BraceletColor.objects.all():
-		colors.append(str(color.hexcolor))
+		colors.append(str(color))
 	bracelets = Bracelet.objects.all().order_by('-date')[:10]
 	imgs = []
 	for br in bracelets:

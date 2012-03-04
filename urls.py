@@ -26,6 +26,7 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^lang/(?P<lang>\w+)', 'ohiboka_patterns.bracelet.views.setlang'),
 )
 
 urlpatterns += staticfiles_urlpatterns()

@@ -36,7 +36,9 @@ TIME_ZONE = None
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'en'
-
+LANGUAGES =   (('pl', 'Polish'),
+  ('en', 'English'),
+)
 SITE_ID = 1
 
 # If you set this to False, Django will make some optimizations so as not
@@ -102,6 +104,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+	'django.middleware.locale.LocaleMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 

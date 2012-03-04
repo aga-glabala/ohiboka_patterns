@@ -1,4 +1,5 @@
 {% extends "bracelet/template.html" %}
+{% load i18n %}
 {% load filters %}
 {% block title %} - Add new pattern{% endblock %}
 
@@ -43,20 +44,20 @@ function setColor(color, selectbox) {
 	{% csrf_token %}
 	<table>
 		<tr>
-			<td>Name: </td>
+			<td>{% trans "Name" %}: </td>
 			<td><input type="text" name="name"></td>
 		</tr>
 		<tr>
-			<td>Difficulty: </td>
+			<td>{% trans "Difficulty" %}: </td>
 			<td><select name="difficulty">
-			<option value="1" {% if difficulty == "1" %}selected="selected" {% endif %}>Easy</option>
-			<option value="2" {% if difficulty == "2" %}selected="selected" {% endif %}>Medium</option>
-			<option value="3" {% if difficulty == "3" %}selected="selected" {% endif %}>Hard</option>
+			<option value="1" {% if difficulty == "1" %}selected="selected" {% endif %}>{% trans "Easy" %}</option>
+			<option value="2" {% if difficulty == "2" %}selected="selected" {% endif %}>{% trans "Medium" %}</option>
+			<option value="3" {% if difficulty == "3" %}selected="selected" {% endif %}>{% trans "Hard" %}</option>
 			</select>
 			</td>
 		</tr>
 		<tr>
-			<td>Category:</td>
+			<td>{% trans "Category" %}:</td>
 			<td><select name="category">
 				{% if categories %}
 					{% for c in categories %}
@@ -79,9 +80,9 @@ function setColor(color, selectbox) {
 		</span>
 	{% endif %}  
     </span>
-    <input type="button" value="Add string" onClick="addInput('colorsInput');">
-    <input type="button" value="Remove string" onClick="removeInput();"><br />
+    <input type="button" value='{% trans "Add string" %}' onClick="addInput('colorsInput');">
+    <input type="button" value='{% trans "Remove string" %}' onClick="removeInput();"><br />
 	<textarea rows="20" cols="100" name="pattern"></textarea>
-	<input type="submit" value="Add pattern">
+	<input type="submit" value='{% trans "Add pattern" %}'>
 </form>
 {% endblock %}
