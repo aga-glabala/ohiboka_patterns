@@ -4,6 +4,7 @@
 {% block title %} - Add new pattern{% endblock %}
 
 {% block css %} 
+<link rel="stylesheet" href="{{ STATIC_URL }}css/add.css" type="text/css">
 <script language="Javascript" type="text/javascript">
 var counter = 1;
 var limit = 30;
@@ -16,7 +17,7 @@ function addInput(divColor){
 		var colors = {{ colors|safe }};
 		for (i=0;i<=colors.length-1;i++)
 		{
-			$("<option value='"+colors[i]+"' style='background-color:#"+colors[i]+"'>                  </option>").appendTo(el);
+			$("<option value='"+colors[i]+"' style='background-color:"+colors[i]+"'>                  </option>").appendTo(el);
 		}
 		$("#"+divColor).append(el);
 		counter++;
@@ -33,23 +34,23 @@ function removeInput() {
 }
 
 function setColor(color, selectbox) {
-	selectbox.style.background = '#'+color+'';
+	selectbox.style.background = ''+color+'';
 }
 </script>
 {% endblock %}
 
 
 {% block content %}
-	<form action="addpattern" method="post">
+	<form action="addpattern" method="post" id="addbracelet">
 	{% csrf_token %}
 	<table>
 		<tr>
 			<td>{% trans "Name" %}: </td>
-			<td><input type="text" name="name"></td>
+			<td><input type="text" name="name" class="tableinput"></td>
 		</tr>
 		<tr>
 			<td>{% trans "Difficulty" %}: </td>
-			<td><select name="difficulty">
+			<td><select name="difficulty" class="tableinput">
 			<option value="1" {% if difficulty == "1" %}selected="selected" {% endif %}>{% trans "Easy" %}</option>
 			<option value="2" {% if difficulty == "2" %}selected="selected" {% endif %}>{% trans "Medium" %}</option>
 			<option value="3" {% if difficulty == "3" %}selected="selected" {% endif %}>{% trans "Hard" %}</option>
@@ -58,7 +59,7 @@ function setColor(color, selectbox) {
 		</tr>
 		<tr>
 			<td>{% trans "Category" %}:</td>
-			<td><select name="category">
+			<td><select name="category" class="tableinput">
 				{% if categories %}
 					{% for c in categories %}
 						<option {% if category == c.name %}selected="selected" {% endif %}>{{ c.name }}</option>
@@ -69,17 +70,17 @@ function setColor(color, selectbox) {
 			</td>
 		</tr>
 	</table>
+	{% trans "Set color of strings (use buttons below to add and remove strings)" %}: <br />
 	<span id="colorsInput">
         {% if colors %}
-        <span>
-		<select name="color0" onchange='setColor(this.options[this.selectedIndex].value, this)'>
+		<select id="color0" name="color0" onchange='setColor(this.options[this.selectedIndex].value, this)'>
 		{% for c in colors %}
 			<option value="{{ c }}" style="background-color:{{ c }}" {% if c == color %}selected="selected" {% endif %}>                  </option>
 		{% endfor %}
 		</select>
-		</span>
 	{% endif %}  
     </span>
+    <br />
     <input type="button" value='{% trans "Add string" %}' onClick="addInput('colorsInput');">
     <input type="button" value='{% trans "Remove string" %}' onClick="removeInput();"><br />
 	<textarea rows="20" cols="100" name="pattern"></textarea>

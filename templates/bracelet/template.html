@@ -14,36 +14,72 @@
 <body>
 <div id="box">
 	<div id="top">
-	&nbsp;
+		<a href="/">&nbsp;</a>
 	</div>
-	
-	<div id="languages">
-	Language: <a href="/lang/pl" id="pl"><img src="{{ STATIC_URL }}gfx/polish.png" /></a> 
-			<a href="/lang/en" id="en"><img src="{{ STATIC_URL }}gfx/english.png" /></a>
-	</div>
-	
-	<div id="login">
-	{% if user.is_authenticated %}
-		{% trans "Logged in as" %} {{user.username}}
-		<form method="post" action="{% url 'bracelet.views.logout_user' %}">
-		{% csrf_token %}
-		<input type="submit" value="Logout" />
-		</form>
-	{% else %}
-		{% if form.errors %}
-		<p>{% trans "Your username and password didn't match. Please try again." %}</p>
+	<div id="preferences">
+		<div id="languages">
+		Language: <a href="/lang/pl" id="pl"><img src="{{ STATIC_URL }}gfx/polish.png" /></a> 
+				<a href="/lang/en" id="en"><img src="{{ STATIC_URL }}gfx/english.png" /></a>
+		</div>
+		
+		<div id="login">
+		{% if user.is_authenticated %}
+			<span class="login">{% trans "Logged in as" %} {{user.username}}</span>
+			<form method="post" action="{% url 'bracelet.views.logout_user' %}">
+			{% csrf_token %}
+			<input type="submit" value="Logout" />
+			</form>
+		{% else %}
+			<input type="button" id="loginButton" value='      {% trans "Login" %}' onClick="showLoginForm();" 
+				{% if form.errors %}
+					class="showlogin"
+				{% else %}
+					class="hidelogin"
+				{% endif %}	
+			><br />
+			<div id="loginform" 
+				{% if form.errors %}
+					class="showlogin"
+				{% else %}
+					class="hidelogin"
+				{% endif %}	
+			>
+				
+				<form method="post" action="{% url 'bracelet.views.login_user' %}">
+					{% if form.errors %}
+					<p class="errors">{% trans "Your username and password didn't match. Please try again." %}</p>
+					{% endif %}
+					{% csrf_token %}
+					{{ form.username.label_tag }}<br />{{ form.username }}<br />
+					{{ form.password.label_tag }}<br />{{ form.password }}<br />
+					<input type="submit" value='{% trans "Login" %}' />
+				</form><br />
+			</div>
+			<div class="login"><a href="">{% trans "Sign up" %}</a></div>
 		{% endif %}
-		<form method="post" action="{% url 'bracelet.views.login_user' %}">
-		{% csrf_token %}
-		{{ form.username.label_tag }}: {{ form.username }}<br />
-		{{ form.password.label_tag }}: {{ form.password }}<br />
-		<a href="">{% trans "Sign up" %}</a> | <input type="submit" value='{% trans "Login" %}' />
-		</form>
-	{% endif %}
+		</div>
 	</div>
+	
 	<div id="content">
-	{% block content %}{% endblock %}
+	{% block content %}
+	
+	
+	{% endblock %}
+	</div>
+	<div id="footer">
+	<p>Copyright © 2012 - Ohiboka</p>
 	</div>
 </div>
+<script language="Javascript" type="text/javascript">
+function showLoginForm() {
+	if(document.getElementById("loginform").className=='showlogin') {
+		document.getElementById("loginform").className='hidelogin';
+		document.getElementById("loginButton").className='hidelogin';
+	} else {
+		document.getElementById("loginform").className='showlogin';
+		document.getElementById("loginButton").className='showlogin';
+	}
+}
+</script>
 </body>
 </html>

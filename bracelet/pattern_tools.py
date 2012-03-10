@@ -92,11 +92,3 @@ class BraceletPattern(object):
 	def get_knots_types(self):
 		return self.knots_types
 	
-class BraceletContainer(object):
-	def __init__(self, id, author, photo, date):
-		self.id = id
-		self.author = author
-		self.photo = photo
-		self.date = date
-	def __unicode__(self):
-		return "[ id="+self.id+", author="+self.author+", photo="+self.photo+", date="+self.date+"]"

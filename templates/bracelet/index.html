@@ -5,84 +5,117 @@
 
 {% block css %}
 <link rel="stylesheet" href="{{ STATIC_URL }}css/home.css" type="text/css">
+<script language="Javascript" type="text/javascript">
+function setColor(color, selectbox) {
+	selectbox.style.background = ''+color+'';
+}
+</script>
 {% endblock %}
 
 {% block content %}	
 	<div id="right">
 		<form action="search" method="get">
-		<ul>
-		<li>Category:</li>
-			<select name="category">
-			<option value="0">{% trans "All" %}</option>
-			{% if categories %}
-				{% for c in categories %}
-					<option {% if category == c.name %}selected="selected" {% endif %}>{{ c.name }}</option>
-				{% endfor %}
-				</select>
-			{% endif %}
-			</select>
-		<li>Rated:</li>
-		<select name="rate">
-		<option value="0">All</option>
-		<option value="1" {% if rate == "1" %}selected="selected" {% endif %}>{% trans "More than" %} *</option>
-		<option value="2" {% if rate == "2" %}selected="selected" {% endif %}>{% trans "More than" %} **</option>
-		<option value="3" {% if rate == "3" %}selected="selected" {% endif %}>{% trans "More than" %} ***</option>
-		<option value="4" {% if rate == "4" %}selected="selected" {% endif %}>{% trans "More than" %} ****</option>
-		<option value="5" {% if rate == "5" %}selected="selected" {% endif %}>*****</option>
-		</select>
-		<li>Difficulty:
-		<select name="difficulty">
-		<option value="0">All</option>
-		<option value="1" {% if difficulty == "1" %}selected="selected" {% endif %}>{% trans "Easy" %}</option>
-		<option value="2" {% if difficulty == "2" %}selected="selected" {% endif %}>{% trans "Medium" %}</option>
-		<option value="3" {% if difficulty == "3" %}selected="selected" {% endif %}>{% trans "Hard" %}</option>
-		</select>
-		</li>
-		<li>Color:
-			{% if colors %}
-			<select name="color">
-			<option value="0">{% trans "All" %}</option>
-			{% for c in colors %}
-				<option value="{{ c }}" style="background-color:{{ c }}" {% if c == color %}selected="selected" {% endif %}>         </option>
-			{% endfor %}
-			</select>
-			{% endif %}
-		</li>
-			
-		<li><input type="checkbox" name="photo" value="photo" {% if photo %}checked="checked" {% endif %}/> {% trans "With photo" %}</li>
-		<li>Sort by:
-			<select name="orderby">
-			<option value="0" {% if orderby == "0" %}selected="selected" {% endif %}>{% trans "Newest first" %}</option>
-			<option value="1" {% if orderby == "1" %}selected="selected" {% endif %}>{% trans "Oldest first" %}</option>
-			<option value="2" {% if orderby == "2" %}selected="selected" {% endif %}>{% trans "Highest rates first" %}</option>
-			<option value="3" {% if orderby == "3" %}selected="selected" {% endif %}>{% trans "Lowest rates first" %}</option>
-			</select>
-		</li>
-		<li><input type="submit" value='{% trans "Search" %}' /></li>
-		</ul>
+			<ul>
+				<li>
+					<input type="checkbox" name="photo" value="photo" {% if photo %}checked="checked" {% endif %}/> 
+					<label for="photo">{% trans "With photo" %}</label>
+				</li>
+				<li>{% trans "Category" %}:
+					<select name="category">
+						<option value="0">{% trans "All" %}</option>
+						{% if categories %}
+							{% for c in categories %}
+								<option {% if category == c.name %}selected="selected" {% endif %}>{{ c.name }}</option>
+							{% endfor %}
+						{% endif %}
+					</select>
+				</li>
+				<li>{% trans "Rated" %}:
+					<select name="rate">
+						<option value="0">All</option>
+						<option value="1" {% if rate == "1" %}selected="selected" {% endif %}>{% trans "More than" %} *</option>
+						<option value="2" {% if rate == "2" %}selected="selected" {% endif %}>{% trans "More than" %} **</option>
+						<option value="3" {% if rate == "3" %}selected="selected" {% endif %}>{% trans "More than" %} ***</option>
+						<option value="4" {% if rate == "4" %}selected="selected" {% endif %}>{% trans "More than" %} ****</option>
+						<option value="5" {% if rate == "5" %}selected="selected" {% endif %}>*****</option>
+					</select>
+				</li>
+				<li>{% trans "Difficulty" %}:
+					<select name="difficulty">
+						<option value="0">All</option>
+						<option value="1" {% if difficulty == "1" %}selected="selected" {% endif %}>{% trans "Easy" %}</option>
+						<option value="2" {% if difficulty == "2" %}selected="selected" {% endif %}>{% trans "Medium" %}</option>
+						<option value="3" {% if difficulty == "3" %}selected="selected" {% endif %}>{% trans "Hard" %}</option>
+					</select>
+				</li>
+				<li>{% trans "Color" %}:
+					<select name="color" onchange='setColor(this.options[this.selectedIndex].value, this)'>
+						<option value="0">{% trans "All" %}</option>
+						{% if colors %}
+							{% for c in colors %}
+								<option value="{{ c }}" style="background-color:{{ c }}" {% if c == color %}selected="selected" {% endif %} >         </option>
+							{% endfor %}
+						{% endif %}
+					</select>
+				</li>
+				<li>{% trans "Sort by" %}:
+					<select name="orderby">
+						<option value="0" {% if orderby == "0" %}selected="selected" {% endif %}>{% trans "Newest first" %}</option>
+						<option value="1" {% if orderby == "1" %}selected="selected" {% endif %}>{% trans "Oldest first" %}</option>
+						<option value="2" {% if orderby == "2" %}selected="selected" {% endif %}>{% trans "Highest rates first" %}</option>
+						<option value="3" {% if orderby == "3" %}selected="selected" {% endif %}>{% trans "Lowest rates first" %}</option>
+					</select>
+				</li>
+				<li class="center">
+					<input type="submit" value='{% trans "Search" %}' />
+				</li>
+			</ul>
 		</form>
-		{% if user.is_authenticated %}
-			<a href="add">{% trans "Add new pattern" %}</a>
-		{% else %}
-			{% trans "You need to be logged to add new pattern" %}
-		{% endif %}
+		<div class="add">
+			{% if user.is_authenticated %}
+				<a href="add"><img src="{{ STATIC_URL }}gfx/add.png" />{% trans "Add new pattern" %}</a>
+			{% else %}
+				{% trans "You need to be logged in to add new pattern" %}
+			{% endif %}
+		</div>
 	</div>
 	<div id="left">
+		<h2>
 		{% if search %}
-		{% trans "Results" %}:
+			{% trans "Results" %}:
 		{% else %}
-		{% trans "Newest bracelets" %}:
+			{% trans "Newest bracelets" %}:
 		{% endif %}
-		<br />
-		
+		</h2>
+		<hr />
 		{% if patterns %}
 		    {% for bt in patterns %}
-		        <div>
-		        <a href="/bracelet/{{ bt.id }}">
+		        <div class="pattern">
+		        <a href="/bracelet/{{ bt.braceletid }}">
 			        <table>
 			        	<tr><td><img src="{{ STATIC_URL }}bracelet_thumbs/{{ bt.photo }}" /></td></tr>
 			        	<tr><td>{% trans "author" %}: {{ bt.author }}</td></tr>
 			    	    <tr><td>{% trans "date" %}: {{ bt.date }}</td></tr>
+			    	    <tr><td>
+			    	    	<div title=
+			    	    		{% if bt.category == 1 %}
+			    	    			"{% trans 'nature' %}"
+			    	    		{% else %}
+			    	    			{% if bt.category == 2 %}
+			    	    				"{% trans 'text' %}"
+			    	    			{% else %}
+			    	    				{% if bt.category == 4 %}
+			    	    					"{% trans 'zigzak' %}"
+			    	    				{% else %}
+			    	    					"{% trans 'another' %}"
+			    	    				{% endif %}
+			    	    			{% endif %}
+			    	    		{% endif %}
+			    	    		 class="category category{{ bt.category }}">&nbsp;</div>
+			    	    	{% for c in bt.colors %}
+			    	    		<div class="knot" style="background-color:{{c}};"></div>
+			    	    	{% endfor %}
+		    	    	</td></tr>
 				    </table>
 				    </a>
 		        </div>
@@ -91,7 +124,4 @@
 	    	{% trans "There is no patterns to show." %}
 		{% endif %}
 	</div>
-	
-	
-
 {% endblock %}
