@@ -4,11 +4,12 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.template.context import RequestContext
 from bracelet.models import BraceletColor, Bracelet, BraceletCategory,\
-	BraceletString, BraceletKnot, BraceletKnotType
+	BraceletString, BraceletKnot, BraceletKnotType, Photo
 import datetime
 from bracelet.pattern_tools import BraceletPattern
 from bracelet.bracelet_tools import get_all_bracelets, find_bracelets,\
 	get_colors
+from bracelet.forms import UploadFileForm
 
 def setlang(request, lang):
 	request.session['django_language'] = lang
@@ -37,6 +38,7 @@ def bracelet(request, bracelet_id):
 	bp = BraceletPattern(bracelet_id)
 	bp.generate_pattern()
 	context = {'form':AuthenticationForm(),
+			'braceletid':bracelet_id,
 			'name' : bp.bracelet.name,
 			'style':bp.get_style(),
 			'nofstr':bp.get_n_of_strings(),
@@ -44,6 +46,7 @@ def bracelet(request, bracelet_id):
 			'knotsColor':bp.get_knots_colors(),
 			'nofrows':bp.nofrows,
 			'bracelet_id':bracelet_id,
+			'texts':[str(s) for s in BraceletKnotType.objects.all().order_by('id')],
 			}
 	
 	return render_to_response('bracelet/bracelet.html', context, RequestContext(request))
@@ -115,6 +118,24 @@ def addpattern(request):
 def comments(request, bracelet_id):
 	return render_to_response('bracelet/tabs/comments.html', {'comments':'aaaaaa'}, RequestContext(request))
 
+def photos(request, bracelet_id):
+	photos = Photo.objects.filter(bracelet = Bracelet.objects.get(id=bracelet_id))
+	print photos
+	form = UploadFileForm()
+	return render_to_response('bracelet/tabs/photos.html', {'form': form, 'bracelet_id':bracelet_id, 'photos':photos}, RequestContext(request))
+
+def photo_upload(request):
+	form = UploadFileForm(request.POST, request.FILES)
+	if form.is_valid():
+		handle_uploaded_file(request.FILES['file'], request.POST['bracelet_id'], request.user)
+		return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+	return render_to_response('bracelet/tabs/photos.html', {'form': form, }, RequestContext(request))
 
 
-
+def handle_uploaded_file(f, bracelet_id, user):
+	photo = Photo(user = user, name = str(f), accepted = False, bracelet = Bracelet.objects.get(id=bracelet_id))
+	photo.save()
+	destination = open('static/images/'+str(f), 'wb+')
+	for chunk in f.chunks():
+		destination.write(chunk)
+	destination.close()

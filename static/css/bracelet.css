@@ -157,6 +157,20 @@
 	background: url('/static/gfx/knot4.png');
 }
 
+#steppattern {
+	width: 60%;
+	display: inline-block;
+}
+#instructionbox {
+	width: 35%;
+	display: inline-block;
+	margin-left: 10px;
+	float:right;
+}
+#buttons {
+	text-align: center;
+	margin-top: 10px;
+}
 /* Layout helpers */
 
 .ui-helper-reset {

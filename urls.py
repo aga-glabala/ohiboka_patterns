@@ -14,10 +14,12 @@ urlpatterns = patterns('',
     url(r'^search$', 'ohiboka_patterns.bracelet.views.search'),
     #url(r'^$', 'ohiboka_patterns.bracelet.views.home', name='home'),
     url(r'^bracelet/comments/(?P<bracelet_id>\d+)/$', 'ohiboka_patterns.bracelet.views.comments'),
+    url(r'^bracelet/photos/(?P<bracelet_id>\d+)/$', 'ohiboka_patterns.bracelet.views.photos'),
+    url(r'^bracelet/photoUpload$', 'ohiboka_patterns.bracelet.views.photo_upload'),
     url(r'^bracelet/(?P<bracelet_id>\d+)/$', 'ohiboka_patterns.bracelet.views.bracelet'),
     url(r'^add$', 'ohiboka_patterns.bracelet.views.add'),
     url(r'^addpattern$', 'ohiboka_patterns.bracelet.views.addpattern'),
-    
+    url(r'^register/$', 'ohiboka_patterns.registration.views.register'),
     #url(r'^login/$', 'ohiboka_patterns.bracelet.views.login_user'),
     # url(r'^ohiboka_patterns/', include('ohiboka_patterns.foo.urls')),
 

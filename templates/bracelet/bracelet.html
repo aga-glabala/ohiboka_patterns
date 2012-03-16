@@ -1,4 +1,4 @@
-{% extends "bracelet/template.html" %}
+{% extends "template.html" %}
 {% load i18n %}
 
 {% block css %}
@@ -29,28 +29,45 @@
 		<li><a href="#tabs-1">{% trans "Pattern" %}</a></li>
 		<li><a href="#tabs-2">{% trans "Step by step instructions" %}</a></li>
 		<li><a href="/bracelet/comments/{{bracelet_id}}">{% trans "Comments" %}</a></li>
-		<li><a href="#tabs-4">{% trans "Photos" %}</a></li>
+		<li><a href="/bracelet/photos/{{bracelet_id}}">{% trans "Photos" %}</a></li>
 	</ul>
 	<div id="tabs-1">
 		<div id="pattern">
 		</div>
 	</div>
 	<div id="tabs-2">
-		<p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
+		<div id="steppattern">
+		</div>
+		<div id="instructionbox">
+			<div id="instructions"></div>
+			<div id="buttons">
+				<button>{% trans "Back 5" %}</button>
+				<button>{% trans "Back" %}</button>
+				<button onclick="addKnot()">{% trans "Next" %}</button>
+				<button onclick="add5Knots()">{% trans "Next 5" %}</button>
+				
+			</div>
+		</div>
+		<div style="clear:both"></div>
 	</div>
-	<div id="tabs-4">
-	</div>
+	
+	
+	
 </div>
 
 <script type="text/javascript">
 <!--
 var knotsColor = {{ knotsColor }};
 var knotsType = {{ knotsType }};
+var texts = {{ texts|safe }};
+var lastKnotRow = 0;
+var lastKnotCol = 0;
 for (var i=0; i<{{nofstr}};i++) {
 	var cl = "oddstring";
 	if(i%2==0) {
 		cl = "evenstring";
 	}
+	$('<span class="str'+i+' '+cl+'">&nbsp;</span>').appendTo('#steppattern');
 	$('<span class="str'+i+' '+cl+'">&nbsp;</span>').appendTo('#pattern');
 }
 $('<br />').appendTo('#pattern');
@@ -62,6 +79,33 @@ for (var i=0; i<{{nofrows}}-1;i++) {
 	$('<div id="row'+i+'" class="'+cl+'" />').appendTo('#pattern');
 	for(var j=0; j<knotsType[i].length; j++) {
 		$('<span class="str'+knotsColor[i][j]+' knot knot'+knotsType[i][j]+'"></span>').appendTo('#row'+i);
+	}
+}
+$('<div id="steprow0" class="even" />').appendTo('#steppattern');
+$('<span class="str'+knotsColor[lastKnotRow][lastKnotCol]+' knot knot'+knotsType[lastKnotRow][lastKnotCol]+'"></span>').appendTo('#steprow0');
+$('<p>'+texts[knotsType[lastKnotRow][lastKnotCol]]+'</p>').appendTo('#instructions');
+function addKnot() {
+	if(lastKnotCol+1<knotsType[lastKnotRow].length) {
+		lastKnotCol++;
+		$('<span class="str'+knotsColor[lastKnotRow][lastKnotCol]+' knot knot'+knotsType[lastKnotRow][lastKnotCol]+'"></span>').appendTo('#steprow'+lastKnotRow);
+		$('<p>'+texts[knotsType[lastKnotRow][lastKnotCol]]+'</p>').appendTo('#instructions');
+	} else {
+		if(lastKnotRow+1<knotsType.length) {
+			lastKnotRow++;
+			lastKnotCol = 0;
+			var cl = "odd";
+			if(lastKnotRow%2==0) {
+				cl = "even";
+			}
+			$('<div id="steprow'+lastKnotRow+'" class="'+cl+'" />').appendTo('#steppattern');
+			$('<span class="str'+knotsColor[lastKnotRow][lastKnotCol]+' knot knot'+knotsType[lastKnotRow][lastKnotCol]+'"></span>').appendTo('#steprow'+lastKnotRow);	
+			$('<p>'+texts[knotsType[lastKnotRow][lastKnotCol]]+'</p>').appendTo('#instructions');
+		}
+	}
+}
+function add5Knots() {
+	for(var i=0; i<5; i++) {
+		addKnot();
 	}
 }
 //-->

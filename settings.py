@@ -127,6 +127,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'ohiboka_patterns.bracelet',
     'ohiboka_patterns.bracelet.templatetags',
+    'ohiboka_patterns.registration',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )

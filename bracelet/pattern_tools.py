@@ -46,14 +46,18 @@ class BraceletPattern(object):
 			self.strings_order.append(self.get_next_strings_order(self.strings_order[i-1], self.knots_types[i-1], (i-1)%2))
 			colors = []
 			types = []
-			for j in range(nofcols-(i%2)):
+			if self.odd == 0:
+				noc = nofcols-(i%2) # dla parzystej liczby nitek 
+			else:
+				noc = nofcols
+			
+			for j in range(noc):
 				types.append(self.knots[index].knottype.id)
 				index+=1
 			self.knots_types.append(types)	
-			for j in range(nofcols-(i%2)):
+			for j in range(noc):
 				colors.append(self.get_knot_color(self.strings_order[i], self.knots_types[i], j, i%2))
 			self.knots_colors.append(colors)
-		print len(self.knots_types), self.nofrows, len(self.knots_colors), len(self.knots_types)
 		
 	def get_next_strings_order(self, strings_order, knots_type, odd):	
 		so = []
@@ -66,7 +70,9 @@ class BraceletPattern(object):
 			elif knots_type[i] > 2:
 				so.append(strings_order[2*i+odd])
 				so.append(strings_order[2*i+odd+1])
-		if odd==1:
+		if self.odd and odd==0:
+			so.append(strings_order[-1])
+		elif odd==1:
 			so.append(strings_order[-1])
 		return so
 	
