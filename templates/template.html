@@ -46,12 +46,12 @@
 			>
 				
 				<form method="post" action="{% url 'bracelet.views.login_user' %}">
-					{% if form.errors %}
+					{% if loginform.errors %}
 					<p class="errors">{% trans "Your username and password didn't match. Please try again." %}</p>
 					{% endif %}
 					{% csrf_token %}
-					{{ form.username.label_tag }}<br />{{ form.username }}<br />
-					{{ form.password.label_tag }}<br />{{ form.password }}<br />
+					{{ loginform.username.label_tag }}<br />{{ loginform.username }}<br />
+					{{ loginform.password.label_tag }}<br />{{ loginform.password }}<br />
 					<input type="submit" value='{% trans "Login" %}' />
 				</form><br />
 			</div>

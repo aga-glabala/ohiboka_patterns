@@ -12,6 +12,10 @@
 	padding: 1px;
 	background-color: rgba(38,116,165,0.4);
 }
+.imageTd {
+	height: 126px;
+	border: 1px solid #329ec6;
+}
 #left h2 {
 	font-family: sans;
 	font-size: 19px;

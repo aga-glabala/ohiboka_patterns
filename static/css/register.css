@@ -1,0 +1,6 @@
+#registerForm label {
+	width: 200px;
+}
+#registerForm tr td:last-child {
+	display: none;
+}

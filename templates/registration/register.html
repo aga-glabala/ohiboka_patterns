@@ -1,0 +1,34 @@
+{% extends "template.html" %}
+{% load i18n %}
+{% block title %} - Create an account{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ STATIC_URL }}css/register.css" type="text/css">
+{% endblock %}
+
+{% block content %}
+  <h1>Create an account</h1>
+
+  <form action="" method="post" id="registerForm">
+  	{% csrf_token %}
+  	<table>
+	  	{% for field in form %}
+		  	<tr>
+		  		<td>{{ field.label }}</td>
+		  		<td class="field">{{ field }}</td> 
+		  		<td>{{ field.help_text }}</td>
+		  	</tr>
+	  	{% endfor %}
+		<tr><td></td><td><input type="submit" value="{% trans 'Create new account' %}" /></td><td></td></tr>
+  	</table>
+  </form>
+  <script language="Javascript" type="text/javascript">
+  	$('.field > input').focus(function() {	
+  		$(this).parent().next("td").fadeIn("slow");
+  	});
+  	$('.field > input').focusout(function() {	
+  		$(this).parent().next("td").fadeOut("slow");
+  	});
+  	
+  </script>
+{% endblock %}

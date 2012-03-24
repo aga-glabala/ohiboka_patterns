@@ -10,6 +10,7 @@ from bracelet.pattern_tools import BraceletPattern
 from bracelet.bracelet_tools import get_all_bracelets, find_bracelets,\
 	get_colors
 from bracelet.forms import UploadFileForm
+from bracelet.helper import handle_uploaded_file
 
 def setlang(request, lang):
 	request.session['django_language'] = lang
@@ -23,12 +24,12 @@ def home(request):
 		'patterns': get_all_bracelets(10), 
 		'colors': get_colors(),
 		'categories': BraceletCategory.objects.all(),
-		'form':form,
+		'loginform':form,
 	}
 	return render_to_response('bracelet/index.html', context, RequestContext(request))
 
 def add(request):
-	context = {'form':AuthenticationForm(),
+	context = {'loginform':AuthenticationForm(),
 			'colors': get_colors(),
 			'categories': BraceletCategory.objects.all(),
 			}
@@ -37,7 +38,7 @@ def add(request):
 def bracelet(request, bracelet_id):
 	bp = BraceletPattern(bracelet_id)
 	bp.generate_pattern()
-	context = {'form':AuthenticationForm(),
+	context = {'loginform':AuthenticationForm(),
 			'braceletid':bracelet_id,
 			'name' : bp.bracelet.name,
 			'style':bp.get_style(),
@@ -63,7 +64,7 @@ def login_user(request):
 		user = authenticate(username=username, password=password)
 		if user is not None and user.is_active:
 			login(request, user)
-		context = {'form':form, 
+		context = {'loginform':form, 
 				'patterns': get_all_bracelets(10), 
 				'colors': get_colors(),
 				'categories': BraceletCategory.objects.all(),
@@ -82,7 +83,7 @@ def search(request, page=1):
 		'categories': BraceletCategory.objects.all(),
 		'photo': 'photo' in request.GET,
 		'colors': get_colors(),
-		'form': AuthenticationForm(),
+		'loginform': AuthenticationForm(),
 		'search': True
 	}
 	context['patterns'] = find_bracelets(category=request.GET['category'], difficulty=request.GET['difficulty'], 
@@ -120,22 +121,17 @@ def comments(request, bracelet_id):
 
 def photos(request, bracelet_id):
 	photos = Photo.objects.filter(bracelet = Bracelet.objects.get(id=bracelet_id))
-	print photos
 	form = UploadFileForm()
-	return render_to_response('bracelet/tabs/photos.html', {'form': form, 'bracelet_id':bracelet_id, 'photos':photos}, RequestContext(request))
+	return render_to_response('bracelet/tabs/photos.html', {'form': form, 'bracelet_id':bracelet_id, 'photos':photos, 'selectTabs':3}, RequestContext(request))
 
-def photo_upload(request):
+def photo_upload(request, bracelet_id):
+	photos = Photo.objects.filter(bracelet = Bracelet.objects.get(id=bracelet_id))
 	form = UploadFileForm(request.POST, request.FILES)
 	if form.is_valid():
 		handle_uploaded_file(request.FILES['file'], request.POST['bracelet_id'], request.user)
-		return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-	return render_to_response('bracelet/tabs/photos.html', {'form': form, }, RequestContext(request))
+		return HttpResponseRedirect('bracelet/'+request.POST['bracelet_id']+'/#ui-tabs-2')
+	return render_to_response('bracelet/tabs/photos.html', {'form': form, 'bracelet_id':bracelet_id, 'photos':photos, 'selectTabs':3}, RequestContext(request))
 
 
-def handle_uploaded_file(f, bracelet_id, user):
-	photo = Photo(user = user, name = str(f), accepted = False, bracelet = Bracelet.objects.get(id=bracelet_id))
-	photo.save()
-	destination = open('static/images/'+str(f), 'wb+')
-	for chunk in f.chunks():
-		destination.write(chunk)
-	destination.close()
+
+	

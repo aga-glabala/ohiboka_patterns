@@ -25,6 +25,9 @@ body {
 	font-size: 14px;   
 	height:100%;
 }
+h2 {
+	padding-left: 10px;
+}
 #box {
 	width:980px;
 	text-align: left;

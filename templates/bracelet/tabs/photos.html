@@ -1,0 +1,27 @@
+{% load i18n %}
+<div id="photoAdd" >
+{% if user.is_authenticated %}
+	<form enctype="multipart/form-data" action="/bracelet/photoUpload" method="post">
+		{% csrf_token %}
+		<input type="hidden" name="bracelet_id" value="{{ bracelet_id }}">
+		{{ form.file }}
+		<br />
+		<input value="Send photo" type="submit"/>
+	</form>
+{% else %}
+	{% trans "You need to be logged in to add new photo" %}
+{% endif %}
+</div>
+{% if photos %}
+	{% for p in photos %}
+	       <div id="photos">
+	        <table>
+	        	<tr><td class="photoTd"><a href="{{ STATIC_URL }}images/{{ p.name }}"><img src="{{ STATIC_URL }}bracelet_thumbs/{{ p.name }}" /></a></td></tr>
+	        	<tr><td>{% trans "author" %}: {{ p.user }}</td></tr>
+	    	    <tr><td></td></tr>
+		    </table>
+	       </div>
+	{% endfor %}
+{% else %}
+	{% trans "No photos, add yours to be first!" %}
+{% endif %}

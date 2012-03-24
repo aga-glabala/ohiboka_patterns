@@ -1,0 +1,150 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-03-04 22:45+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2)\n"
+
+#: templates/bracelet/add.html:46
+msgid "Name"
+msgstr "Nazwa"
+
+#: templates/bracelet/add.html:50
+msgid "Difficulty"
+msgstr "Poziom trudności"
+
+#: templates/bracelet/add.html:52 templates/bracelet/index.html:36
+msgid "Easy"
+msgstr "Łatwy"
+
+#: templates/bracelet/add.html:53 templates/bracelet/index.html:37
+msgid "Medium"
+msgstr "Średni"
+
+#: templates/bracelet/add.html:54 templates/bracelet/index.html:38
+msgid "Hard"
+msgstr "Trudny"
+
+#: templates/bracelet/add.html:59
+msgid "Category"
+msgstr "Kategoria"
+
+#: templates/bracelet/add.html:82
+msgid "Add string"
+msgstr ""
+
+#: templates/bracelet/add.html:83
+msgid "Remove string"
+msgstr "Usuń nitkę"
+
+#: templates/bracelet/add.html:85
+#, fuzzy
+msgid "Add pattern"
+msgstr "Dodaj nowy wzór"
+
+#: templates/bracelet/bracelet.html:30
+msgid "Pattern"
+msgstr "Wzór"
+
+#: templates/bracelet/bracelet.html:31
+msgid "Step by step instructions"
+msgstr "Instrukcja krok po kroku"
+
+#: templates/bracelet/bracelet.html:32
+msgid "Comments"
+msgstr "Komentarze"
+
+#: templates/bracelet/bracelet.html:33
+msgid "Photos"
+msgstr "Zdjęcia"
+
+#: templates/bracelet/index.html:16 templates/bracelet/index.html.py:44
+msgid "All"
+msgstr "Wszystkie"
+
+#: templates/bracelet/index.html:27 templates/bracelet/index.html.py:28
+#: templates/bracelet/index.html:29 templates/bracelet/index.html.py:30
+msgid "More than"
+msgstr "Co najmniej"
+
+#: templates/bracelet/index.html:52
+msgid "With photo"
+msgstr "Ze zdjęciem"
+
+#: templates/bracelet/index.html:55
+msgid "Newest first"
+msgstr "Najnowsze najpierw"
+
+#: templates/bracelet/index.html:56
+msgid "Oldest first"
+msgstr "Najstarsze najpierw"
+
+#: templates/bracelet/index.html:57
+msgid "Highest rates first"
+msgstr "Najwyżej oceniane najpierw"
+
+#: templates/bracelet/index.html:58
+msgid "Lowest rates first"
+msgstr "Najniżej oceniane najpierw"
+
+#: templates/bracelet/index.html:61
+msgid "Search"
+msgstr "Szukaj"
+
+#: templates/bracelet/index.html:65
+msgid "Add new pattern"
+msgstr "Dodaj nowy wzór"
+
+#: templates/bracelet/index.html:67
+msgid "You need to be logged to add new pattern"
+msgstr "Musisz być zalogowany, żeby dodać nowy wzór"
+
+#: templates/bracelet/index.html:72
+msgid "Results"
+msgstr "Wyniki"
+
+#: templates/bracelet/index.html:74
+msgid "Newest bracelets"
+msgstr "Najnowsze bransoletki"
+
+#: templates/bracelet/index.html:84
+msgid "author"
+msgstr "autor"
+
+#: templates/bracelet/index.html:85
+msgid "date"
+msgstr "data"
+
+#: templates/bracelet/index.html:91
+msgid "There is no patterns to show."
+msgstr "Nie ma wzorów do dodania"
+
+#: templates/bracelet/template.html:27
+msgid "Logged in as "
+msgstr "Zalogowany jako"
+
+#: templates/bracelet/template.html:34
+msgid "Your username and password didn't match. Please try again."
+msgstr "Twój login lub hasło nie pasuje, spróbuj ponownie"
+
+#: templates/bracelet/template.html:40
+msgid "Sign up"
+msgstr "Zarejestruj się"
+
+#: templates/bracelet/template.html:40
+msgid "Login"
+msgstr "Zaloguj się"

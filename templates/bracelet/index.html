@@ -93,7 +93,7 @@ function setColor(color, selectbox) {
 		        <div class="pattern">
 		        <a href="/bracelet/{{ bt.braceletid }}">
 			        <table>
-			        	<tr><td><img src="{{ STATIC_URL }}bracelet_thumbs/{{ bt.photo }}" /></td></tr>
+			        	<tr><td class="imageTd"><img src="{{ STATIC_URL }}bracelet_thumbs/{{ bt.photo }}" /></td></tr>
 			        	<tr><td>{% trans "author" %}: {{ bt.author }}</td></tr>
 			    	    <tr><td>{% trans "date" %}: {{ bt.date }}</td></tr>
 			    	    <tr><td>

@@ -34,7 +34,7 @@ def find_bracelets(orderby="0", category="0", difficulty="0", color="0", photo=F
 	if category!="0":
 		patterns = patterns.filter(category=BraceletCategory.objects.all().filter(name=category))
 	if difficulty!="0":
-		patterns = patterns.filter(difficulty=difficulty)
+		patterns = patterns.filter(difficulty=difficulty)		
 	# TODO reszta filtrow
 	return create_bracelet_array(patterns)
 
@@ -44,8 +44,9 @@ def create_bracelet_array(patterns):
 		author = br.user.username
 		date = br.date.date().__str__()
 		photos = Photo.objects.all().filter(bracelet=br)
+		print br, photos
 		if len(photos)>0 and photos[0].accepted:
-			img = str(photos[0].id)+".png" 
+			img = photos[0].name
 		else:
 			img = "nophoto.png"
 		colors = []
