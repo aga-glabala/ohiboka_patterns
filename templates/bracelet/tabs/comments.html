@@ -1,1 +1,8 @@
-{{ comments }}
+{% load comments %}
+
+{% get_comment_count for bracelet.bracelet bracelet_id as comment_count %}
+<p>{{ comment_count }} comments have been posted.</p>
+
+{% render_comment_form for bracelet.bracelet bracelet_id %}
+
+{% render_comment_list for bracelet.bracelet bracelet_id %}

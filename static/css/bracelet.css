@@ -35,7 +35,7 @@
 .ui-tabs .ui-tabs-panel {
 	display: block;
 	border-width: 0;
-	background: rgba(255, 255, 255, 0.2);
+	background: rgba(181, 233, 255, 0.2);
 }
 
 .ui-tabs .ui-tabs-hide {
@@ -68,13 +68,13 @@
 }
 
 .ui-state-active,.ui-widget-content .ui-state-active,.ui-widget-header .ui-state-active {
-	background: rgba(255, 255, 255, 0.2);
+	background: rgba(181, 233, 255, 0.2);
 	font-weight: normal;
 	color: #ffffff;
 }
 
 .ui-state-active a,.ui-state-active a:link,.ui-state-active a:visited {
-	color: #212121;
+	color: #ffffff;
 	text-decoration: none;
 }
 
@@ -155,7 +155,9 @@
 .knot4 {
 	background: url('/static/gfx/knot4.png');
 }
-
+#ratepattern {
+	float: right;
+}
 #steppattern {
 	width: 60%;
 	display: inline-block;
@@ -188,7 +190,40 @@
 #photoAdd input[type="submit"] {
 	padding: 1px 7px;
 }
-
+.comment_start {
+	padding-top: 20px;
+}
+.comment h4 {
+	font-weight: normal;
+	margin-bottom: 5px;
+}
+.comment hr {
+	border: 0;
+	border-top: 1px solid #329ec6;
+	border-bottom: 1px solid #547999;
+	margin: 10px 0;
+}
+.comment-user {
+	font-weight: bold;
+}
+.comment-time {
+	float:right;
+}
+#commentbox input[type="text"], #commentbox textarea  {
+	width:100%;
+	border:1px solid #329ec6;
+}
+#commentbox input[type="submit"] {
+	width:50%;
+}
+div.posterror {
+	padding: 10px;
+	margin: 10px 0;
+	border: 1px solid #D11717;
+	color: #AD1A1A;
+	font-weight: bold;
+	background: rgba(255, 255, 255, 0.4);
+}
 /* Layout helpers */
 
 .ui-helper-reset {

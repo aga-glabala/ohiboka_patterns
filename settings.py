@@ -125,9 +125,11 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admin',
+    'django.contrib.comments',
     'ohiboka_patterns.bracelet',
     'ohiboka_patterns.bracelet.templatetags',
     'ohiboka_patterns.registration',
+    'ohiboka_patterns.comments',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )

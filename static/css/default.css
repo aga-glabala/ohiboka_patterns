@@ -64,6 +64,15 @@ h2 {
 }
 #languages a{
 	text-decoration: none;
+	margin-top: 10px;
+	padding: 0px 8px 2px 8px;
+	background-image: url('/static/gfx/icons.png');
+}
+#pl {
+	background-position: 0 -71px;
+}
+#en {
+	background-position: -20px -71px;
 }
 #login {
 	margin-top: 15px;
@@ -116,12 +125,12 @@ div.login, div#languages, #login input[type='button'], #login label {
 	color: #ee4343;
 }
 #loginButton.hidelogin {
-	background:url('/static/gfx/unfold.png') no-repeat;
+	background:url('/static/gfx/icons.png') no-repeat -80px -30px;
 	border: 0;
 	color: #fff;
 }
 #loginButton.showlogin {
-	background:url('/static/gfx/fold.png') no-repeat;
+	background:url('/static/gfx/icons.png') no-repeat -80px -44px;
 	border: 0;
 	color: #fff;
 }
@@ -130,4 +139,49 @@ div.login, div#languages, #login input[type='button'], #login label {
 }
 #loginform.showlogin {
 	display:inline-block;
+}
+.icon-prev {
+	background: url('/static/gfx/icons.png');
+	padding: 0 10px 0 0;
+	font-size: 13px;
+}
+.icon-next {
+	background: url('/static/gfx/icons.png') -15px 0;
+	padding: 0 10px 0 0;
+	font-size: 13px;
+}
+.icon-star {
+	background: url('/static/gfx/icons.png') -15px -15px;
+	padding: 0 10px 0 0;
+	font-size: 13px;
+}
+.icon-star2 {
+	background: url('/static/gfx/icons.png') 0 -15px;
+	padding: 0 10px 0 0;
+	font-size: 13px;
+}
+.icon-strings {
+	background: url('/static/gfx/icons.png') -85px -71px;
+	padding: 0 10px 0 0;
+	font-size: 13px;
+}
+.icon-difficulty1 {
+	background: url('/static/gfx/icons.png') -40px -71px;
+	padding: 0 10px 0 0;
+	font-size: 13px;
+}
+.icon-difficulty2 {
+	background: url('/static/gfx/icons.png') -55px -71px;
+	padding: 0 10px 0 0;
+	font-size: 13px;
+}
+.icon-difficulty3 {
+	background: url('/static/gfx/icons.png') -70px -71px;
+	padding: 0 10px 0 0;
+	font-size: 13px;
+}
+.icon-new {
+	background: url('/static/gfx/icons.png') 0 -87px;
+	padding: 0 10px 0 0;
+	font-size: 13px;
 }

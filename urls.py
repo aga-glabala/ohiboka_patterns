@@ -12,11 +12,14 @@ urlpatterns = patterns('',
     url(r'^login$', 'ohiboka_patterns.bracelet.views.login_user'),
     url(r'^logout$', 'ohiboka_patterns.bracelet.views.logout_user'),
     url(r'^search$', 'ohiboka_patterns.bracelet.views.search'),
-    #url(r'^$', 'ohiboka_patterns.bracelet.views.home', name='home'),
-    url(r'^bracelet/comments/(?P<bracelet_id>\d+)/$', 'ohiboka_patterns.bracelet.views.comments'),
+    url(r'^comments/(?P<bracelet_id>\d+)/$', 'ohiboka_patterns.comments.views.pattern_comments'),
+    url(r'^comments/post/$', 'ohiboka_patterns.comments.views.pattern_comments_post'),
+    url(r'^comments/posted/$', 'ohiboka_patterns.comments.views.pattern_comments_posted'),
+    url(r'^comments/', include('django.contrib.comments.urls')),
     url(r'^bracelet/photos/(?P<bracelet_id>\d+)/$', 'ohiboka_patterns.bracelet.views.photos'),
-    url(r'^bracelet/photoUpload$', 'ohiboka_patterns.bracelet.views.photo_upload'),
+    url(r'^bracelet/photoUpload/(?P<bracelet_id>\d+)', 'ohiboka_patterns.bracelet.views.photo_upload'),
     url(r'^bracelet/(?P<bracelet_id>\d+)/$', 'ohiboka_patterns.bracelet.views.bracelet'),
+    url(r'^bracelet/rate/(?P<bracelet_id>\d+)/(?P<bracelet_rate>\d+)/$', 'ohiboka_patterns.bracelet.views.rate'),
     url(r'^add$', 'ohiboka_patterns.bracelet.views.add'),
     url(r'^addpattern$', 'ohiboka_patterns.bracelet.views.addpattern'),
     url(r'^register/$', 'ohiboka_patterns.registration.views.register'),
@@ -32,10 +35,3 @@ urlpatterns = patterns('',
 )
 
 urlpatterns += staticfiles_urlpatterns()
-
-#urlpatterns = patterns('',
-#    (r'^polls/$', 'mysite.polls.views.index'),
-#    (r'^polls/(?P<poll_id>\d+)/$', 'mysite.polls.views.detail'),
-#    (r'^polls/(?P<poll_id>\d+)/results/$', 'mysite.polls.views.results'),
-#    (r'^polls/(?P<poll_id>\d+)/vote/$', 'mysite.polls.views.vote'),
-#)

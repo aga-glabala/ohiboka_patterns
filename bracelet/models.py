@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.comments.models import Comment
 
 class BraceletCategory(models.Model):
 	name = models.CharField(max_length=50)
@@ -13,6 +14,7 @@ class Bracelet(models.Model):
 	accepted = models.BooleanField()
 	difficulty = models.IntegerField(choices=((0, ' Easy'), (1, 'Medium'), (2, 'Hard')))
 	category = models.ForeignKey(BraceletCategory, related_name='+')
+	rate = models.DecimalField(max_digits=3, decimal_places=2)
 	def __unicode__(self):
 		return "[id="+str(self.id)+", user="+str(self.user)+", name="+self.name+", accepted="+str(self.accepted)+", difficulty="+str(self.difficulty)+", category="+str(self.category)+"]"
 	
@@ -47,6 +49,9 @@ class Photo(models.Model):
 	user = models.ForeignKey(User, related_name='+')
 	def __unicode__(self):
 		return "[id="+str(self.id)+", accepted="+str(self.accepted)+", bracelet="+str(self.bracelet.id)+", user="+self.user.username+"]"
-	
-	
+
+class Rate(models.Model):
+	bracelet = models.ForeignKey(Bracelet, related_name='+')	
+	rate = models.IntegerField()
+	user = models.ForeignKey(User, related_name='+')
 	

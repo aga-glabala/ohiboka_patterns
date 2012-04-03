@@ -73,7 +73,7 @@ function setColor(color, selectbox) {
 		</form>
 		<div class="add">
 			{% if user.is_authenticated %}
-				<a href="add"><img src="{{ STATIC_URL }}gfx/add.png" />{% trans "Add new pattern" %}</a>
+				<a href="add"><i class="icon-plus">&nbsp;</i>{% trans "Add new pattern" %}</a>
 			{% else %}
 				{% trans "You need to be logged in to add new pattern" %}
 			{% endif %}
@@ -89,14 +89,16 @@ function setColor(color, selectbox) {
 		</h2>
 		<hr />
 		{% if patterns %}
-		    {% for bt in patterns %}
-		        <div class="pattern">
+		    {% for bt in patterns.object_list %}
+		        <div class="pattern" id="pattern{{ bt.braceletid }}">
 		        <a href="/bracelet/{{ bt.braceletid }}">
 			        <table>
+			        	<tr><td>{{ bt.name }}</td></tr>
 			        	<tr><td class="imageTd"><img src="{{ STATIC_URL }}bracelet_thumbs/{{ bt.photo }}" /></td></tr>
-			        	<tr><td>{% trans "author" %}: {{ bt.author }}</td></tr>
-			    	    <tr><td>{% trans "date" %}: {{ bt.date }}</td></tr>
 			    	    <tr><td>
+			    	    	{% if bt.now %}
+			    	    		<i class="icon-new">&nbsp;</i>
+			    	    	{% endif %}
 			    	    	<div title=
 			    	    		{% if bt.category == 1 %}
 			    	    			"{% trans 'nature' %}"
@@ -111,17 +113,83 @@ function setColor(color, selectbox) {
 			    	    				{% endif %}
 			    	    			{% endif %}
 			    	    		{% endif %}
-			    	    		 class="category category{{ bt.category }}">&nbsp;</div>
+			    	    		 class="category category{{ bt.category }}">&nbsp;
+			    	    	</div>
+			    	    	<i class="icon-strings" title="{% trans 'Number of strings' %}">&nbsp;</i> {{ bt.nofstrings }}
+			    	    	<i class="icon-star2" title="{% trans 'Rate' %}">&nbsp;</i> {{ bt.rate }}
+			    	    	<i class="icon-difficulty{{ bt.difficulty}}" title="{% trans 'Difficulty' %}">&nbsp;</i>
+			    	    </td></tr>
+			    	    <!--  -->
+				    </table>
+				    </a>
+		        </div>
+		        <div class="pattern_info"id="pattern_info{{ bt.braceletid }}">
+		        <a href="/bracelet/{{ bt.braceletid }}">
+				    <table>
+				    	<tr><td><b>{{ bt.name }}</b></td></tr>
+				    	<tr><td>{% trans 'date' %}: {{ bt.date }}</td></tr>
+				    	<tr><td>{% trans 'author' %}: {{ bt.author }}</td></tr>
+				    	<tr><td>{% trans 'votes' %}: {{ bt.nofvotes }}</td></tr>
+				    	<tr><td>{% trans 'rate' %}: {{ bt.rate }}</td></tr>
+				    	<tr><td>{% trans 'difficulty' %}: {{ bt.difficulty }}</td></tr>
+				    	<tr><td>{% trans 'n. of strings' %}: {{ bt.nofstrings }}</td></tr>
+				    	<tr><td>{% trans 'category' %}:
+			    	    		{% if bt.category == 1 %}
+			    	    			{% trans 'nature' %}
+			    	    		{% else %}
+			    	    			{% if bt.category == 2 %}
+			    	    				{% trans 'text' %}
+			    	    			{% else %}
+			    	    				{% if bt.category == 4 %}
+			    	    					{% trans 'zigzak' %}
+			    	    				{% else %}
+			    	    					{% trans 'another' %}
+			    	    				{% endif %}
+			    	    			{% endif %}
+			    	    		{% endif %}
+			    	    	</span>
+			    	   	</td></tr>
+				    	<tr><td>
 			    	    	{% for c in bt.colors %}
 			    	    		<div class="knot" style="background-color:{{c}};"></div>
 			    	    	{% endfor %}
 		    	    	</td></tr>
 				    </table>
-				    </a>
-		        </div>
+				</a>
+				</div>
 		    {% endfor %}
+		    <hr />
+		    <div class="pagination">
+				{% if patterns.has_previous %}
+					<span class="prev">
+		            	<a href="?page={{ patterns.previous_page_number }}{{ url }}"><i class="icon-prev">&nbsp;</i> {% trans "previous" %}</a>
+		            </span>
+		        {% endif %}
+		
+		        <span class="current">
+		            {% trans "Page" %} {{ patterns.number }} {% trans "of" %} {{ patterns.paginator.num_pages }}		            
+		        </span>
+		
+		        {% if patterns.has_next %}
+			        <span class="next">
+			            <a href="?page={{ patterns.next_page_number }}{{ url }}">{% trans "next" %} <i class="icon-next">&nbsp;</i></a>
+		            </span>
+		        {% endif %}
+		    </div>
 	    {% else %}
 	    	{% trans "There is no patterns to show." %}
 		{% endif %}
 	</div>
+	<script type="text/javascript">
+		$('.pattern').hover(function() {
+			$(this).hide();
+			$('#pattern_info'+$(this).attr('id').substring(7)).show();
+			$('#pattern_info'+$(this).attr('id').substring(7)).css("display", "inline-block");
+		});
+		$('.pattern_info').hover(function() {}, function() {
+			$(this).hide();
+			$('#pattern'+$(this).attr('id').substring(12)).show();
+		});
+		
+	</script>
 {% endblock %}

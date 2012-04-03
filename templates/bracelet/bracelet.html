@@ -32,9 +32,9 @@
 		});
 	});
 	{% if selectTabs %}
-	$(function() {
-		$( "#tabs" ).tabs("select", {% selectTabs %});
-	});
+		$(function() {
+			$( "#tabs" ).tabs("select", {{ selectTabs }});
+		});
 	{% endif %}
 </script>
 {% endblock %}
@@ -45,10 +45,22 @@
 	<ul>
 		<li><a href="#tabs-1">{% trans "Pattern" %}</a></li>
 		<li><a href="#tabs-2">{% trans "Step by step instructions" %}</a></li>
-		<li><a href="/bracelet/comments/{{bracelet_id}}">{% trans "Comments" %}</a></li>
+		<li><a href="/comments/{{bracelet_id}}">{% trans "Comments" %}</a></li>
 		<li><a href="/bracelet/photos/{{bracelet_id}}">{% trans "Photos" %}</a></li>
 	</ul>
 	<div id="tabs-1">
+		<div id="ratepattern">
+		{% if user.is_authenticated %}
+			{% trans "rate pattern" %}: 
+			<i class="icon-star" id="rate1">&nbsp;</i>
+			<i class="icon-star" id="rate2">&nbsp;</i>
+			<i class="icon-star" id="rate3">&nbsp;</i>
+			<i class="icon-star" id="rate4">&nbsp;</i>
+			<i class="icon-star" id="rate5">&nbsp;</i>
+		{% else %}
+			{% trans "you need to be logged to rate patern" %}
+		{% endif %}
+		</div>
 		<div id="pattern">
 		</div>
 	</div>
@@ -57,10 +69,10 @@
 		</div>
 		<div id="instructionbox">
 			<div id="buttons">
-				<button onclick="del5Knots()">{% trans "Back 5" %}</button>
-				<button onclick="delKnot()">{% trans "Back" %}</button>
-				<button onclick="addKnot()">{% trans "Next" %}</button>
-				<button onclick="add5Knots()">{% trans "Next 5" %}</button>
+				<button onclick="del5Knots()"><i class="icon-prev">&nbsp;</i> {% trans "Back 5" %}</button>
+				<button onclick="delKnot()"><i class="icon-prev">&nbsp;</i> {% trans "Back" %}</button>
+				<button onclick="addKnot()">{% trans "Next" %} <i class="icon-next">&nbsp;</i></button>
+				<button onclick="add5Knots()">{% trans "Next 5" %} <i class="icon-next">&nbsp;</i></button>
 				
 			</div>
 			<div id="instructions"></div>
@@ -79,6 +91,10 @@ var knotsType = {{ knotsType }};
 var texts = {{ texts|safe }};
 var lastKnotRow = 0;
 var lastKnotCol = 0;
+var rate = 0
+{% if rate %}
+	rate = {{ rate }}
+{% endif %}
 for (var i=0; i<{{nofstr}};i++) {
 	var cl = "oddstring";
 	if(i%2==0) {
@@ -142,6 +158,35 @@ function add5Knots() {
 		addKnot();
 	}
 }
+function setRate() {
+	$('.icon-star').slice(0,rate).css('background-position', '0 -15px');
+	$('.icon-star').slice(rate,5).css('background-position', '-15px -15px');
+}
+$('.icon-star').hover(
+  function () {
+    $('.icon-star').slice(0,$(this).attr('id').substring(4,5)).css('background-position', '0 -15px');
+    $('.icon-star').slice($(this).attr('id').substring(4,5),5).css('background-position', '-15px -15px');
+  }, 
+  function () {
+    setRate();
+  }
+);
+$('.icon-star').click(
+	function () {
+		var id = $(this).attr('id').substring(4,5)
+		$.ajax({
+		  url: "/bracelet/rate/{{ bracelet_id }}/"+id
+		}).done(function( html ) {
+			if(html == "OK") {
+				rate = id;
+				setRate();
+			} else {
+		  		alert(html);
+		  	}
+		});
+	}
+);
+$(function() {setRate();});
 //-->
 </script>
 {% endblock %}

@@ -4,22 +4,29 @@ Created on Mar 10, 2012
 @author: agnis
 '''
 from bracelet.models import Bracelet, Photo, BraceletCategory, BraceletColor,\
-	BraceletString
+	BraceletString, Rate
+from datetime import datetime
 class BraceletContainer(object):
-	def __init__(self, braceletid, author, photo, date, category, colors):
+	def __init__(self, braceletid, name, author, photo, now, category, colors, rate, nofstrings, difficulty, date, nofvotes):
 		self.braceletid = braceletid
+		self.name = name
 		self.author = author
 		self.photo = photo
-		self.date = date
+		self.now = now
 		self.category = category
 		self.colors = colors
+		self.rate = rate
+		self.nofstrings = nofstrings
+		self.difficulty = difficulty
+		self.date = date
+		self.nofvotes = nofvotes
 	def __unicode__(self):
 		return "[ id="+self.id+", author="+self.author+", photo="+self.photo+", date="+self.date+", category="+self.category+"]"
 
 def get_all_bracelets(number):
 	patterns = Bracelet.objects.all().order_by('-date')
 	if number > 0:
-		patterns = Bracelet.objects.all().order_by('-date')[:number]
+		patterns = patterns[:number]
 	return create_bracelet_array(patterns)
 
 def find_bracelets(orderby="0", category="0", difficulty="0", color="0", photo=False):
@@ -42,7 +49,8 @@ def create_bracelet_array(patterns):
 	bracelets = []
 	for br in patterns:
 		author = br.user.username
-		date = br.date.date().__str__()
+		d = datetime.now() - br.date
+		now  = d.days < 7 
 		photos = Photo.objects.all().filter(bracelet=br)
 		print br, photos
 		if len(photos)>0 and photos[0].accepted:
@@ -54,7 +62,10 @@ def create_bracelet_array(patterns):
 		for c in cs:
 			if not str(c.color) in colors:
 				colors.append(str(c.color))
-		bracelets.append(BraceletContainer(braceletid=br.id, author=author, photo=img, date=date, category=br.category.id, colors=colors))
+		nofvotes = len(Rate.objects.filter(bracelet = br))
+		bracelets.append(BraceletContainer(braceletid=br.id, name=br.name, author=author, photo=img, now = now, 
+										   category=br.category.id, colors=colors, nofstrings = len(colors), 
+										   rate = br.rate, difficulty = br.difficulty, date = br.date.date().__str__(), nofvotes = nofvotes))
 	return bracelets
 
 def get_colors():

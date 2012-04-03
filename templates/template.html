@@ -18,13 +18,13 @@
 	</div>
 	<div id="preferences">
 		<div id="languages">
-		Language: <a href="/lang/pl" id="pl"><img src="{{ STATIC_URL }}gfx/polish.png" /></a> 
-				<a href="/lang/en" id="en"><img src="{{ STATIC_URL }}gfx/english.png" /></a>
+		Language: <a href="/lang/pl" id="pl">&nbsp;</a> 
+				<a href="/lang/en" id="en">&nbsp;</a>
 		</div>
 		
 		<div id="login">
 		{% if user.is_authenticated %}
-			<span class="login">{% trans "Logged in as" %} {{user.username}}</span>
+			<span class="login">{% trans "Logged in as" %} <span>{{user.username}}</span></span>
 			<form method="post" action="{% url 'bracelet.views.logout_user' %}">
 			{% csrf_token %}
 			<input type="submit" value="Logout" />

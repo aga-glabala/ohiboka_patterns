@@ -4,14 +4,24 @@
 #left div.pattern {
 	display: inline-block;
 	width: 132px;
+	height: 170px;
 	padding: 2px;
+	margin: 5px 1px;
 	vertical-align: top;
 }
-#left div.pattern:hover { 
+#left div.pattern_info { 
+	padding: 2px;
+	margin: 4px 0;
+	vertical-align: top;
+	display: inline-block;
+	width: 132px;
+	height: 170px;
 	border: 1px solid #329ec6;
-	padding: 1px;
 	background-color: rgba(38,116,165,0.4);
+	display: none;
+	font-size: 90%;
 }
+
 .imageTd {
 	height: 126px;
 	border: 1px solid #329ec6;
@@ -67,21 +77,21 @@
 	display: inline-block;
 	width: 20px;
 	height:20px;
-	background-image: url('/static/gfx/categories.png');
+	background-image: url('/static/gfx/icons.png');
 	background-repeat:no-repeat;
 	vertical-align: middle;
 }
 .category1 {
-	background-position: 0 0;
+	background-position: 0 -51px;
 }
 .category2 {
-	background-position: -20px 0;
+	background-position: -20px -51px;
 }
 .category4 {
-	background-position: -40px 0;
+	background-position: -40px -51px;
 }
 .category3 {
-	background-position: -60px 0;
+	background-position: -60px -51px;
 }
 .knot {
 	-webkit-border-radius: 10px;
@@ -95,4 +105,29 @@
 	display: inline-block;
 	margin: 0 -1px;
 	vertical-align: middle;
+}
+.pagination {
+	margin-right: 45px;
+	text-align: center;
+}
+.prev {
+	float: left;
+}
+.next {
+	float: right;
+}
+.icon-plus {
+	background: url('/static/gfx/icons.png') -46px -15px;
+	padding: 0 10px 0 0;
+	font-size: 13px;
+}
+.icon-prev {
+	background: url('/static/gfx/icons.png') -76px -15px;
+	padding: 0 10px 0 0;
+	font-size: 13px;
+}
+.icon-next {
+	background: url('/static/gfx/icons.png') -92px -15px;
+	padding: 0 10px 0 0;
+	font-size: 13px;
 }
