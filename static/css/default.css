@@ -185,3 +185,9 @@ div.login, div#languages, #login input[type='button'], #login label {
 	padding: 0 10px 0 0;
 	font-size: 13px;
 }
+
+.facebook_login {
+	background: url('/static/gfx/login-fb.jpg') no-repeat;
+	border: 0;
+	padding: 0 150px 6px 0;
+}

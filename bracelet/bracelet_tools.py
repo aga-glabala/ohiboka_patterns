@@ -29,10 +29,14 @@ def get_all_bracelets(number):
 		patterns = patterns[:number]
 	return create_bracelet_array(patterns)
 
-def find_bracelets(orderby="0", category="0", difficulty="0", color="0", photo=False):
+def find_bracelets(orderby="0", category="0", difficulty="0", color="0", photo=False, rate="0"):
 	q_orderby = '-date'
 	if orderby=='1':
 		q_orderby = 'date'
+	elif orderby=='2':
+		q_orderby = '-rate'
+	elif orderby=='3':
+		q_orderby = 'rate'
 	#elif request.GET['orderby']=='2':
 	#	orderby = '-date'
 	#elif request.GET['orderby']=='3':
@@ -41,7 +45,10 @@ def find_bracelets(orderby="0", category="0", difficulty="0", color="0", photo=F
 	if category!="0":
 		patterns = patterns.filter(category=BraceletCategory.objects.all().filter(name=category))
 	if difficulty!="0":
-		patterns = patterns.filter(difficulty=difficulty)		
+		patterns = patterns.filter(difficulty=difficulty)
+	rate = int(rate)
+	if	rate>0:
+		patterns = patterns.filter(rate=rate) # TODO !
 	# TODO reszta filtrow
 	return create_bracelet_array(patterns)
 
@@ -52,7 +59,6 @@ def create_bracelet_array(patterns):
 		d = datetime.now() - br.date
 		now  = d.days < 7 
 		photos = Photo.objects.all().filter(bracelet=br)
-		print br, photos
 		if len(photos)>0 and photos[0].accepted:
 			img = photos[0].name
 		else:

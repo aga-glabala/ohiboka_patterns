@@ -20,6 +20,7 @@
 	background-color: rgba(38,116,165,0.4);
 	display: none;
 	font-size: 90%;
+	overflow: hidden;
 }
 
 .imageTd {
@@ -35,7 +36,7 @@
 	border: 0;
 	border-top: 1px solid #127ea6;
 	border-bottom: 1px solid #004e76;
-	width: 94%;
+	width: 96%;
 }
 #right {
 	width: 190px;

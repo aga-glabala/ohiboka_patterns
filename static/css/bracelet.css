@@ -172,6 +172,9 @@
 	text-align: center;
 	margin-top: 10px;
 }
+#buttons button {
+	padding: 2px;
+}
 #photos {
 	display: inline-block;
 	width: 132px;

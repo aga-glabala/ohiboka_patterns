@@ -11,6 +11,7 @@
 {% block css %}
 {% endblock %}
 </head>
+
 <body>
 <div id="box">
 	<div id="top">
@@ -24,7 +25,13 @@
 		
 		<div id="login">
 		{% if user.is_authenticated %}
-			<span class="login">{% trans "Logged in as" %} <span>{{user.username}}</span></span>
+			<span class="login">{% trans "Logged in as" %} <span>
+				{% if userprofile.fb_name %}
+					{{userprofile.fb_name}}
+				{% else %}
+					{{user.username}}
+				{% endif %}
+			</span></span>
 			<form method="post" action="{% url 'bracelet.views.logout_user' %}">
 			{% csrf_token %}
 			<input type="submit" value="Logout" />
@@ -56,6 +63,7 @@
 				</form><br />
 			</div>
 			<div class="login"><a href="/register/">{% trans "Sign up" %}</a></div>
+			<button onclick="location.href='/facebook_login'" class=facebook_login>&nbsp;      </button>
 		{% endif %}
 		</div>
 	</div>

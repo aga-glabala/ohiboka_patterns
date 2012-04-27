@@ -24,6 +24,10 @@ DATABASES = {
     }
 }
 
+FACEBOOK_APP_ID = '159476740845097'
+FACEBOOK_SECRET_KEY = 'cd8c09d3afc4796e18199466df0d4db8'
+FACEBOOK_REDIRECT_URL = siteaddress+'facebook_login_success/'
+
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
@@ -133,6 +137,8 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
+
+AUTHENTICATION_BACKENDS = ('ohiboka_patterns.registration.utils.FacebookBackend', 'django.contrib.auth.backends.ModelBackend',)
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

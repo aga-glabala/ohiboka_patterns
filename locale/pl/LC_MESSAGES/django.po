@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-04 22:45+0100\n"
+"POT-Creation-Date: 2012-04-05 16:38+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,132 +19,296 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2)\n"
 
-#: templates/bracelet/add.html:46
-msgid "Name"
-msgstr "Nazwa"
+#: bracelet/views.py:171
+msgid "Rate is not a number"
+msgstr "Ocena musi być liczbą"
 
-#: templates/bracelet/add.html:50
-msgid "Difficulty"
-msgstr "Poziom trudności"
+#: bracelet/views.py:173
+msgid "Rate must be between 1 and 5"
+msgstr "Ocena musi być z przedziału [1; 5]"
 
-#: templates/bracelet/add.html:52 templates/bracelet/index.html:36
-msgid "Easy"
-msgstr "Łatwy"
+#: bracelet/views.py:192
+msgid "Pattern do not exist"
+msgstr "Wzór nie istnieje"
 
-#: templates/bracelet/add.html:53 templates/bracelet/index.html:37
-msgid "Medium"
-msgstr "Średni"
-
-#: templates/bracelet/add.html:54 templates/bracelet/index.html:38
-msgid "Hard"
-msgstr "Trudny"
-
-#: templates/bracelet/add.html:59
-msgid "Category"
-msgstr "Kategoria"
-
-#: templates/bracelet/add.html:82
-msgid "Add string"
-msgstr ""
-
-#: templates/bracelet/add.html:83
-msgid "Remove string"
-msgstr "Usuń nitkę"
-
-#: templates/bracelet/add.html:85
-#, fuzzy
-msgid "Add pattern"
-msgstr "Dodaj nowy wzór"
-
-#: templates/bracelet/bracelet.html:30
-msgid "Pattern"
-msgstr "Wzór"
-
-#: templates/bracelet/bracelet.html:31
-msgid "Step by step instructions"
-msgstr "Instrukcja krok po kroku"
-
-#: templates/bracelet/bracelet.html:32
-msgid "Comments"
-msgstr "Komentarze"
-
-#: templates/bracelet/bracelet.html:33
-msgid "Photos"
-msgstr "Zdjęcia"
-
-#: templates/bracelet/index.html:16 templates/bracelet/index.html.py:44
-msgid "All"
-msgstr "Wszystkie"
-
-#: templates/bracelet/index.html:27 templates/bracelet/index.html.py:28
-#: templates/bracelet/index.html:29 templates/bracelet/index.html.py:30
-msgid "More than"
-msgstr "Co najmniej"
-
-#: templates/bracelet/index.html:52
-msgid "With photo"
-msgstr "Ze zdjęciem"
-
-#: templates/bracelet/index.html:55
-msgid "Newest first"
-msgstr "Najnowsze najpierw"
-
-#: templates/bracelet/index.html:56
-msgid "Oldest first"
-msgstr "Najstarsze najpierw"
-
-#: templates/bracelet/index.html:57
-msgid "Highest rates first"
-msgstr "Najwyżej oceniane najpierw"
-
-#: templates/bracelet/index.html:58
-msgid "Lowest rates first"
-msgstr "Najniżej oceniane najpierw"
-
-#: templates/bracelet/index.html:61
-msgid "Search"
-msgstr "Szukaj"
-
-#: templates/bracelet/index.html:65
-msgid "Add new pattern"
-msgstr "Dodaj nowy wzór"
-
-#: templates/bracelet/index.html:67
-msgid "You need to be logged to add new pattern"
+#: bracelet/views.py:193
+msgid "You need to be logged in to rate patterns"
 msgstr "Musisz być zalogowany, żeby dodać nowy wzór"
 
-#: templates/bracelet/index.html:72
-msgid "Results"
-msgstr "Wyniki"
-
-#: templates/bracelet/index.html:74
-msgid "Newest bracelets"
-msgstr "Najnowsze bransoletki"
-
-#: templates/bracelet/index.html:84
-msgid "author"
-msgstr "autor"
-
-#: templates/bracelet/index.html:85
-msgid "date"
-msgstr "data"
-
-#: templates/bracelet/index.html:91
-msgid "There is no patterns to show."
-msgstr "Nie ma wzorów do dodania"
-
-#: templates/bracelet/template.html:27
-msgid "Logged in as "
+#: templates/template.html:27
+msgid "Logged in as"
 msgstr "Zalogowany jako"
 
-#: templates/bracelet/template.html:34
+#: templates/template.html:33 templates/template.html.py:55
+msgid "Login"
+msgstr "Zaloguj się"
+
+#: templates/template.html:50
 msgid "Your username and password didn't match. Please try again."
 msgstr "Twój login lub hasło nie pasuje, spróbuj ponownie"
 
-#: templates/bracelet/template.html:40
+#: templates/template.html:58
 msgid "Sign up"
 msgstr "Zarejestruj się"
 
-#: templates/bracelet/template.html:40
-msgid "Login"
-msgstr "Zaloguj się"
+#: templates/bracelet/add.html:48
+msgid "Name"
+msgstr "Nazwa"
+
+#: templates/bracelet/add.html:52 templates/bracelet/index.html:43
+#: templates/bracelet/index.html.py:121
+msgid "Difficulty"
+msgstr "Poziom trudności"
+
+#: templates/bracelet/add.html:54 templates/bracelet/index.html:46
+msgid "Easy"
+msgstr "Łatwy"
+
+#: templates/bracelet/add.html:55 templates/bracelet/index.html:47
+msgid "Medium"
+msgstr "Średni"
+
+#: templates/bracelet/add.html:56 templates/bracelet/index.html:48
+msgid "Hard"
+msgstr "Trudny"
+
+#: templates/bracelet/add.html:61 templates/bracelet/index.html:23
+msgid "Category"
+msgstr "Kategoria"
+
+#: templates/bracelet/add.html:73
+msgid "Set color of strings (use buttons below to add and remove strings)"
+msgstr "Ustaw kolor nitek (użyj przycisków poniżej, żeby dodać i usuwać nitki)"
+
+#: templates/bracelet/add.html:84
+msgid "Add string"
+msgstr "Dodaj nitkę"
+
+#: templates/bracelet/add.html:85
+msgid "Remove string"
+msgstr "Usuń nitkę"
+
+#: templates/bracelet/add.html:87
+msgid "Add pattern"
+msgstr "Dodaj nowy wzór"
+
+#: templates/bracelet/bracelet.html:40
+msgid "Pattern"
+msgstr "Wzór"
+
+#: templates/bracelet/bracelet.html:41
+msgid "Step by step instructions"
+msgstr "Instrukcja krok po kroku"
+
+#: templates/bracelet/bracelet.html:42
+msgid "Comments"
+msgstr "Komentarze"
+
+#: templates/bracelet/bracelet.html:43
+msgid "Photos"
+msgstr "Zdjęcia"
+
+#: templates/bracelet/bracelet.html:48
+msgid "rate pattern"
+msgstr "oceń wzór"
+
+#: templates/bracelet/bracelet.html:55
+msgid "you need to be logged to rate patern"
+msgstr "Musisz być zalogowany, żeby dodać nowy wzór"
+
+#: templates/bracelet/bracelet.html:66
+msgid "Back 5"
+msgstr "Cofnij 5"
+
+#: templates/bracelet/bracelet.html:67
+msgid "Back"
+msgstr "Cofnij"
+
+#: templates/bracelet/bracelet.html:68
+msgid "Next"
+msgstr "Następny"
+
+#: templates/bracelet/bracelet.html:69
+msgid "Next 5"
+msgstr "Następne 5"
+
+#: templates/bracelet/index.html:21
+msgid "With photo"
+msgstr "Ze zdjęciem"
+
+#: templates/bracelet/index.html:25 templates/bracelet/index.html.py:53
+msgid "All"
+msgstr "Wszystkie"
+
+#: templates/bracelet/index.html:33
+msgid "Rated"
+msgstr "Ocenione"
+
+#: templates/bracelet/index.html:36 templates/bracelet/index.html.py:37
+#: templates/bracelet/index.html:38 templates/bracelet/index.html.py:39
+msgid "More than"
+msgstr "Co najmniej"
+
+#: templates/bracelet/index.html:51
+msgid "Color"
+msgstr "Kolor"
+
+#: templates/bracelet/index.html:61
+msgid "Sort by"
+msgstr "Sortuj wg"
+
+#: templates/bracelet/index.html:63
+msgid "Newest first"
+msgstr "Najnowsze najpierw"
+
+#: templates/bracelet/index.html:64
+msgid "Oldest first"
+msgstr "Najstarsze najpierw"
+
+#: templates/bracelet/index.html:65
+msgid "Highest rates first"
+msgstr "Najwyżej oceniane najpierw"
+
+#: templates/bracelet/index.html:66
+msgid "Lowest rates first"
+msgstr "Najniżej oceniane najpierw"
+
+#: templates/bracelet/index.html:70
+msgid "Search"
+msgstr "Szukaj"
+
+#: templates/bracelet/index.html:76
+msgid "Add new pattern"
+msgstr "Dodaj nowy wzór"
+
+#: templates/bracelet/index.html:78
+msgid "You need to be logged in to add new pattern"
+msgstr "Musisz być zalogowany, żeby dodać nowy wzór"
+
+#: templates/bracelet/index.html:85
+msgid "Results"
+msgstr "Wyniki"
+
+#: templates/bracelet/index.html:87
+msgid "Newest bracelets"
+msgstr "Najnowsze bransoletki"
+
+#: templates/bracelet/index.html:105 templates/bracelet/index.html.py:139
+msgid "nature"
+msgstr "natura"
+
+#: templates/bracelet/index.html:108 templates/bracelet/index.html.py:142
+msgid "text"
+msgstr "napis"
+
+#: templates/bracelet/index.html:111 templates/bracelet/index.html.py:145
+msgid "zigzak"
+msgstr "zigzak"
+
+#: templates/bracelet/index.html:113 templates/bracelet/index.html.py:147
+msgid "another"
+msgstr "inne"
+
+#: templates/bracelet/index.html:119
+msgid "Number of strings"
+msgstr "Ilość nitek"
+
+#: templates/bracelet/index.html:120
+msgid "Rate"
+msgstr "Ocena"
+
+#: templates/bracelet/index.html:131
+msgid "date"
+msgstr "data"
+
+#: templates/bracelet/index.html:132 templates/bracelet/tabs/photos.html:20
+msgid "author"
+msgstr "autor"
+
+#: templates/bracelet/index.html:133
+msgid "votes"
+msgstr "ocen"
+
+#: templates/bracelet/index.html:134
+msgid "rate"
+msgstr "ocena"
+
+#: templates/bracelet/index.html:135
+msgid "difficulty"
+msgstr "Poziom trudności"
+
+#: templates/bracelet/index.html:136
+msgid "n. of strings"
+msgstr "liczba nitek"
+
+#: templates/bracelet/index.html:137
+#, fuzzy
+msgid "category"
+msgstr "Kategoria"
+
+#: templates/bracelet/index.html:166
+msgid "previous"
+msgstr "poprzenia"
+
+#: templates/bracelet/index.html:171
+msgid "Page"
+msgstr "Strona"
+
+#: templates/bracelet/index.html:171
+msgid "of"
+msgstr "z"
+
+#: templates/bracelet/index.html:176
+msgid "next"
+msgstr "następna"
+
+#: templates/bracelet/index.html:181
+msgid "There is no patterns to show."
+msgstr "Nie ma wzorów do pokazania"
+
+#: templates/bracelet/tabs/photos.html:12
+msgid "You need to be logged in to add new photo"
+msgstr "Musisz być zalogowany, żeby dodać nowy wzór"
+
+#: templates/bracelet/tabs/photos.html:26
+msgid "No photos, add yours to be first!"
+msgstr "Nie ma zdjęć, dodaj swoje żeby być pierwszy!"
+
+#: templates/comments/form.html:17
+msgid "now"
+msgstr "teraz"
+
+#: templates/comments/preview.html:8
+msgid "Please correct the error below"
+msgid_plural "Please correct the errors below"
+msgstr[0] "Proszę, popraw błąd poniżej"
+msgstr[1] "Proszę, popraw błędy poniżej"
+msgstr[2] ""
+
+#: templates/comments/preview.html:10
+msgid "Preview your comment"
+msgstr "Zobacz swój komentarz"
+
+#: templates/comments/preview.html:13
+msgid "and"
+msgstr "i"
+
+#: templates/comments/preview.html:13
+msgid "Post your comment"
+msgstr "Wyślij swój komentarz"
+
+#: templates/comments/preview.html:13
+msgid "or make changes"
+msgstr "lub wprowadź zmiany"
+
+#: templates/comments/preview.html:29
+msgid "Post"
+msgstr "Wyślij"
+
+#: templates/comments/preview.html:30
+msgid "Preview"
+msgstr "Zobacz"
+
+#: templates/registration/register.html:22
+msgid "Create new account"
+msgstr "Utwórz nowe konto"
