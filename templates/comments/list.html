@@ -1,0 +1,10 @@
+{% load i18n %}
+<div class="comment_start"></div>
+{% for comment in comment_list reversed %}
+   <div class="comment">
+   	  <h4><span class="comment-user">{{ comment.user }}</span> <span class="comment-time">{{ comment.submit_date|timesince }} {% trans "ago" %}</span></h4>
+      {{ comment.comment }}
+      <hr />
+   </div>
+   
+{% endfor %}

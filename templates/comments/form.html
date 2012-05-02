@@ -28,13 +28,9 @@ $(document).ready(function() {
 	  	  });
 	  return false;
 	});
-	$('#comment-form-username').val($('.login span').html());
 });
 //]]>
 </script>
-
-{% get_comment_count for bracelet.bracelet bracelet_id as comment_count %}
-<p>{{ comment_count }} {% trans "comments have been posted." %}</p>
 
 {% get_comment_form for bracelet.bracelet bracelet_id as form %}
 <!-- A context variable called form is created with the necessary hidden
@@ -49,7 +45,9 @@ fields, timestamps and security hashes -->
 	                {{ field }}
 	            {% endif %}
 	    {% endfor %}
-    	<input type='hidden' name='name' id='comment-form-username' value='{{ userprofile.fb_name }}' />
+	    {% if userprofile.fb_name %}
+	    	<input type='hidden' name='name' value='{{ userprofile.fb_name }}' />
+	    {% endif %}
 	    <tr><td>{{ form.comment.label_tag }} </td><td>{{ form.comment }}</td><td>{{ form.comment.errors }}</td></tr>
 	    <tr><td>Do not fill this</td><td>{{ form.honeypot }}</td><td>{{ form.honeypot.errors }}</td></tr>
 	    <tr><td></td>
@@ -60,5 +58,3 @@ fields, timestamps and security hashes -->
 	  </form>
 	</table>
 {% endif %}
-
-{% render_comment_list for bracelet.bracelet bracelet_id %}
