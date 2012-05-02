@@ -28,7 +28,7 @@ urlpatterns = patterns('',
     #url(r'^login/$', 'ohibokapatterns.bracelet.views.login_user'),
     # url(r'^ohibokapatterns/', include('ohibokapatterns.foo.urls')),
 
-    # Uncomment the admin/doc line below to enable admin documentation:
+    # Uncomment the admin/doc line below to enable admin documentation:  
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
