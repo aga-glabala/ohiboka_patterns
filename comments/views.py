@@ -7,9 +7,7 @@ from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from django.http import HttpResponse
 from django.contrib.comments.views.comments import post_comment
-import time
 def pattern_comments(request, bracelet_id):
-	time.sleep(6)
 	return render_to_response('bracelet/tabs/comments.html', {'bracelet_id':bracelet_id}, RequestContext(request))
 
 def pattern_comments_posted(request):

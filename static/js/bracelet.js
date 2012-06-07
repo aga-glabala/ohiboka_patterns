@@ -80,7 +80,6 @@ $(document).ready(function(){
 		}
 	);
 	setRate();
-
  });
 
 function addKnot() {

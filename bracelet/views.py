@@ -45,7 +45,6 @@ def index(request, context):
 			pass
 	for c in context:
 		context_[c] = context[c]
-	print 'i tu'
 	return render_to_response('bracelet/index.html', context_, RequestContext(request))
 	
 def home(request):
