@@ -72,7 +72,7 @@ class BraceletPattern(object):
 				so.append(strings_order[2*i+odd+1])
 		if self.odd and odd==0:
 			so.append(strings_order[-1])
-		elif odd==1:
+		elif odd==1and not self.odd:
 			so.append(strings_order[-1])
 		return so
 	
@@ -88,6 +88,9 @@ class BraceletPattern(object):
 		elif knots_type[column] == 2 or knots_type[column] == 4:
 			return right_color
 		return -1
+	
+	def get_strings(self):
+		return self.strings_order
 	
 	def get_n_of_strings(self):
 		return len(self.strings)

@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.contrib.comments.models import Comment
 
 class BraceletCategory(models.Model):
 	name = models.CharField(max_length=50)
