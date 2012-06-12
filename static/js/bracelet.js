@@ -19,33 +19,45 @@ $(document).ready(function(){
 	});
 	
 	// pattern creating
-	/*
-	for (var i=0; i<nofstr;i++) {
-		var cl = "oddstring";
-		if(i%2==0) {
-			cl = "evenstring";
-		}
-		$('<span class="str'+i+' '+cl+'">&nbsp;</span>').appendTo('#steppattern');
-		$('<span class="str'+i+' '+cl+'">&nbsp;</span>').appendTo('#pattern');
-	}*/
 	$('<br />').appendTo('#pattern');
 	for (var i=0; i<nofrows-1;i++) {
 		var cl = "odd";
+		var directions = [0,1];
 		if(i%2==0) {
 			cl = "even";
+			directions = [1,0];
 		}
-		$('<div id="row'+i+'" class="'+cl+'" />').appendTo('#pattern');
 		$('<div id="row-strings'+i+'" />').appendTo('#pattern-canvas');
+		for(var j=0; j<strings[i].length/2;j++) {
+			$('<span class="str'+strings[i][2*j]+' string'+directions[0]+'"></span>').appendTo('#row-strings'+i);
+			$('<span class="str'+strings[i][2*j+1]+' string'+directions[1]+'"></span>').appendTo('#row-strings'+i);
+		}	
+		
+		$('<div id="row'+i+'" class="'+cl+'" />').appendTo('#pattern');
+		$('<div id="column'+i+'" class="column-'+cl+'" />').appendTo('#pattern-thumb');
 		for(var j=0; j<knotsType[i].length; j++) {
-			$('<span class="str'+knotsColor[i][j]+' knot knot'+knotsType[i][j]+'"></span>').appendTo('#row'+i);
-		}
-		for(var j=0; j<strings[i].length; j++) {
-			$('<span class="str'+strings[i][j]+' string'+(i+j)%2+'"></span>').appendTo('#row-strings'+i);
+			$('<span class="str'+knotsColor[i][j]+' knot knot'+knotsType[i][j]+ifwhite[knotsColor[i][j]]+'"></span>').appendTo('#row'+i);
+			$('<span class="str'+knotsColor[i][knotsType[i].length-1-j]+' knot-thumb"></span>').appendTo('#column'+i); 
 		}
 	}
+	//last row strings
+	var cl = "odd";
+	var directions = [0,1];
+	if((nofrows-1)%2==0) {
+		cl = "even";
+		directions = [1,0];
+	}
+	$('<div id="row-strings'+(nofrows-1)+'" />').appendTo('#pattern-canvas');
+		for(var j=0; j<strings[nofrows-1].length/2;j++) {
+			$('<span class="str'+strings[nofrows-1][2*j]+' string'+directions[0]+'"></span>').appendTo('#row-strings'+(nofrows-1));
+			$('<span class="str'+strings[nofrows-1][2*j+1]+' string'+directions[1]+'"></span>').appendTo('#row-strings'+(nofrows-1));
+		}
+		
+	//step pattern	
 	$('<div id="steprow0" class="even" />').appendTo('#steppattern');
 	$('<span class="str'+knotsColor[lastKnotRow][lastKnotCol]+' knot knot'+knotsType[lastKnotRow][lastKnotCol]+'"></span>').appendTo('#steprow0');
 	$('<p>'+texts[knotsType[lastKnotRow][lastKnotCol]-1]+'</p>').appendTo('#instructions');
+	
 	
 	// rates
 	$('.icon-star').hover(
@@ -73,7 +85,6 @@ $(document).ready(function(){
 		}
 	);
 	setRate();
-
  });
 
 function addKnot() {

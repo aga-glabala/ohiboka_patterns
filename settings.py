@@ -1,4 +1,4 @@
-# Django settings for ohibokapatterns project.
+# Django settings for ohiboka_patterns project.
 import os.path
 
 siteaddress = 'http://localhost:8000/'

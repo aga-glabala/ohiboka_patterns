@@ -27,6 +27,7 @@
 	var nofrows = {{nofrows}};
 	var bracelet_id = {{ bracelet_id }};
 	var strings = {{ strings }};
+	var ifwhite = {{ ifwhite|safe }};
 	var STATIC_URL = {{ STATIC_URL }};
 	{% if rate %}
 		rate = {{ rate }};
@@ -55,6 +56,8 @@
 		{% else %}
 			{% trans "you need to be logged to rate pattern" %}
 		{% endif %}
+		</div>
+		<div id="pattern-thumb">
 		</div>
 		<div id="pattern-box">
 			<div id="pattern-canvas">

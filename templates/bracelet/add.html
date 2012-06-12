@@ -5,37 +5,14 @@
 
 {% block css %} 
 <link rel="stylesheet" href="{{ STATIC_URL }}css/add.css" type="text/css">
+<style type="text/css">
+
+</style>
+<script src="{{ STATIC_URL }}js/add-pattern.js" type="text/javascript" ></script>
 <script language="Javascript" type="text/javascript">
-var counter = 1;
+var colors = {{ colors|safe }};
+var nofstrings = 0;
 var limit = 30;
-function addInput(divColor){
-	if (counter == limit)  {
-		alert("You have reached the limit of adding " + counter + " inputs");
-	}
-	else {
-		var el = $("<select id='color"+(counter)+"' name='color"+(counter) +"' onchange='setColor(this.options[this.selectedIndex].value, this)'>");
-		var colors = {{ colors|safe }};
-		for (i=0;i<=colors.length-1;i++)
-		{
-			$("<option value='"+colors[i]+"' style='background-color:"+colors[i]+"'>                  </option>").appendTo(el);
-		}
-		$("#"+divColor).append(el);
-		counter++;
-		
-	}
-}
-
-function removeInput() {
-	if(counter>1) {
-		element = document.getElementById("color"+(counter-1));
-		element.parentNode.removeChild(element);
-		counter--;
-	}
-}
-
-function setColor(color, selectbox) {
-	selectbox.style.background = ''+color+'';
-}
 </script>
 {% endblock %}
 
@@ -71,19 +48,18 @@ function setColor(color, selectbox) {
 		</tr>
 	</table>
 	{% trans "Set color of strings (use buttons below to add and remove strings)" %}: <br />
-	<span id="colorsInput">
-        {% if colors %}
-		<select id="color0" name="color0" onchange='setColor(this.options[this.selectedIndex].value, this)'>
-		{% for c in colors %}
-			<option value="{{ c }}" style="background-color:{{ c }}" {% if c == color %}selected="selected" {% endif %}>                  </option>
-		{% endfor %}
-		</select>
-	{% endif %}  
-    </span>
+	<span id="colorsInput"></span>
     <br />
     <input type="button" value='{% trans "Add string" %}' onClick="addInput('colorsInput');">
     <input type="button" value='{% trans "Remove string" %}' onClick="removeInput();"><br />
-	<textarea rows="20" cols="100" name="pattern"></textarea>
+    
+    <div>
+    	<div id="pattern-thumb"></div>
+    	<div id="pattern-canvas"></div>
+    	<div id="pattern-designer"></div>
+    </div>
+    
+	<textarea rows="20" cols="100" hidden="hidden" name="pattern"></textarea>
 	<input type="submit" value='{% trans "Add pattern" %}'>
 </form>
 {% endblock %}

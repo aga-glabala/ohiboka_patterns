@@ -26,7 +26,15 @@ class BraceletPattern(object):
 		style = ""
 		for i in range(len(self.strings)):
 			style+=".str"+str(i)+" {background-color:"+str(self.strings[i].color)+";}"
+			print self.strings[i].color
 		return style
+	
+	def get_ifwhite(self):
+		ifwhite = []
+		for i in range(len(self.strings)):
+			x = str(self.strings[i].color)
+			ifwhite.append('-white' if (int(x[1:3], 16)+int(x[3:5], 16)+int(x[5:7], 16))/3.0 < 128 else '')
+		return ifwhite
 	
 	def generate_pattern(self):
 		self.nofrows = 2*len(self.knots)/(len(self.strings)-1)

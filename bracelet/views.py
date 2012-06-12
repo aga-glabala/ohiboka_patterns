@@ -31,6 +31,7 @@ def index(request, context):
 		bracelets = paginator.page(1)
 	except EmptyPage:
 		bracelets = paginator.page(paginator.num_pages)
+	print [int(x[1:], 16) for x in get_colors()]
 	context_ = {
 		'patterns': bracelets, 
 		'colors': get_colors(),
@@ -63,8 +64,7 @@ def login_user(request):
 		if user is not None and user.is_active:
 			login(request, user)
 		context = {'loginform':form, }
-		return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-		#return index(request, context)
+		return index(request, context)
 	else:
 		home(request)
 
@@ -82,14 +82,15 @@ def facebook_login_success(request):
 	authenticator = FacebookBackend()
 	user = authenticator.authenticate(me)	
 	login(request, user)
-	print UserProfile.objects.get(user = user).fb_username, UserProfile.objects.get(user = user).fb_name, user.is_authenticated()
 	#context = {'loginform':AuthenticationForm(), 
 	#			'patterns': get_all_bracelets(10), 
 	#			'colors': get_colors(),
 	#			'categories': BraceletCategory.objects.all(),
 	#			}
-	print 'sesja1', request.session['_auth_user_id']
-	return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+	print 'is auth ', user.is_authenticated()
+	print  "Welcome <b>%s</b>. Your Facebook login has been completed successfully!"% me.name
+	#return render_to_response('bracelet/index.html', context, RequestContext(request))
+	return index(request, {})
 
 def setlang(request, lang):
 	request.session['django_language'] = lang
@@ -118,6 +119,7 @@ def bracelet(request, bracelet_id):
 			'nofrows':bp.nofrows,
 			'bracelet_id':bracelet_id,
 			'texts':[str(s) for s in BraceletKnotType.objects.all().order_by('id')],
+			'ifwhite':bp.get_ifwhite()
 			}
 	if request.user.is_authenticated():
 		try:

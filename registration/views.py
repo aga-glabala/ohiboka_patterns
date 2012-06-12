@@ -17,6 +17,7 @@ def register(request):
 			return HttpResponseRedirect("/")
 	else:
 		form = UserCreationForm()
+	print form
 	return render_to_response("registration/register.html", {'form': form,'loginform': AuthenticationForm(),},
                           context_instance=RequestContext(request))
 	
