@@ -1,0 +1,141 @@
+{% extends "template.html" %}
+{% load i18n %}
+{% block title %} - Profile{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ STATIC_URL }}css/home.css" type="text/css">
+<link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.lightbox-0.5.css" type="text/css">
+<link rel="stylesheet" href="{{ STATIC_URL }}css/userprofile.css" type="text/css">
+<link rel="stylesheet" href="{{ STATIC_URL }}css/bracelet.css" type="text/css">
+<script src="{{ STATIC_URL }}js/jquery.lightbox-0.5.pack.js" type="text/javascript" ></script>
+{% endblock %}
+
+{% block content %}
+{% if ok_message %}
+	<div class='ok_message'>{{ ok_message }}</div>
+{% endif %}
+{% if error_message %}
+	<div class='error_message'>{{ error_message }}</div>
+{% endif %}
+<h2>{% trans "Your bracelets"  %}</h2>
+
+<div id="left">
+<hr />
+		{% if bracelets %}
+		    {% for bt in bracelets %}
+		        <div class="pattern" id="pattern{{ bt.braceletid }}">
+		        <a href="/bracelet/{{ bt.braceletid }}">
+			        <table>
+			        	<tr><td>{{ bt.name }}
+			        		{% if bt.now %}
+			    	    		<i class="icon-new">&nbsp;</i>
+			    	    	{% endif %}
+			        	</td></tr>
+			        	<tr><td class="imageTd"><img src="{{ STATIC_URL }}bracelet_thumbs/{{ bt.photo }}" /></td></tr>
+			    	    <tr><td>
+			    	    	<div title=
+			    	    		{% if bt.category == 1 %}
+			    	    			"{% trans 'nature' %}"
+			    	    		{% else %}
+			    	    			{% if bt.category == 2 %}
+			    	    				"{% trans 'text' %}"
+			    	    			{% else %}
+			    	    				{% if bt.category == 4 %}
+			    	    					"{% trans 'zigzak' %}"
+			    	    				{% else %}
+			    	    					"{% trans 'another' %}"
+			    	    				{% endif %}
+			    	    			{% endif %}
+			    	    		{% endif %}
+			    	    		 class="category category{{ bt.category }}">&nbsp;
+			    	    	</div>
+			    	    	<i class="icon-strings" title="{% trans 'Number of strings' %}">&nbsp;</i> {{ bt.nofstrings }}
+			    	    	<i class="icon-star2" title="{% trans 'Rate' %}">&nbsp;</i> {{ bt.rate }}
+			    	    	<i class="icon-difficulty{{ bt.difficulty}}" title="{% trans 'Difficulty' %}">&nbsp;</i>
+			    	    </td></tr>
+			    	    <!--  -->
+				    </table>
+				    </a>
+		        </div>
+		        <div class="pattern_info"id="pattern_info{{ bt.braceletid }}">
+		        <a href="/bracelet/{{ bt.braceletid }}">
+				    <table>
+				    	<tr><td><b>{{ bt.name }}</b></td></tr>
+				    	<tr><td><span class="pull_left"><a href="/bracelet/edit/{{ bt.braceletid }}"><b>{% trans 'Edit' %}</b></a></span>
+		    	    			<span class="pull_right"><a href="/bracelet/remove/{{ bt.braceletid }}"><b>{% trans 'Delete' %}</b></a></span>
+		    	    	</td></tr>
+				    	<tr><td>{% trans 'date' %}: {{ bt.date }}</td></tr>
+				    	<tr><td>{% trans 'author' %}: {{ bt.author }}</td></tr>
+				    	<tr><td>{% trans 'votes' %}: {{ bt.nofvotes }}</td></tr>
+				    	<tr><td>{% trans 'rate' %}: {{ bt.rate }}</td></tr>
+				    	<tr><td>{% trans 'difficulty' %}: {{ bt.difficulty }}</td></tr>
+				    	<tr><td>{% trans 'n. of strings' %}: {{ bt.nofstrings }}</td></tr>
+				    	<tr><td>{% trans 'category' %}:
+			    	    		{% if bt.category == 1 %}
+			    	    			{% trans 'nature' %}
+			    	    		{% else %}
+			    	    			{% if bt.category == 2 %}
+			    	    				{% trans 'text' %}
+			    	    			{% else %}
+			    	    				{% if bt.category == 4 %}
+			    	    					{% trans 'zigzak' %}
+			    	    				{% else %}
+			    	    					{% trans 'another' %}
+			    	    				{% endif %}
+			    	    			{% endif %}
+			    	    		{% endif %}
+			    	    	</span>
+			    	   	</td></tr>
+				    	<tr><td>
+			    	    	{% for c in bt.colors %}
+			    	    		<div class="knot" style="background-color:{{c}};"></div>
+			    	    	{% endfor %}
+		    	    	</td></tr>
+		    	    	
+				    </table>
+				</a>
+				</div>
+		    {% endfor %}
+	{% endif %}
+
+<hr />
+<h2>{% trans 'Rates' %}</h2>
+{% for rate in rates %}
+	<a href="/bracelet/{{ rate.bracelet.id }}">{{rate.bracelet.name}}</a> - {{rate.rate}} - <a href="/bracelet/rate/remove/{{rate.id}}">{% trans 'Remove' %}</a><br />
+{% endfor %}
+<hr />
+<div id="user_photos">
+<h2>{% trans 'Photos' %}</h2>
+{% for photo in photos %}
+	<div id="photos">
+	        <table>
+	        	<tr><td class="photoTd">
+	        		<a href="{{ STATIC_URL }}images/{{ photo.name }}"><img src="{{ STATIC_URL }}bracelet_thumbs/{{ photo.name }}" /></a></td></tr>
+	    	    <tr><td><a href="/bracelet/{{ photo.bracelet.id }}">{{photo.bracelet.name}}</a></td></tr>
+	    	    <tr><td><a href="/bracelet/photo/remove/{{photo.id}}">{% trans 'Remove' %}</a></td></tr>
+		    </table>
+	       </div>
+{% endfor %}
+</div>
+</div>
+	<script type="text/javascript">
+		$('.pattern').hover(function() {
+			$(this).hide();
+			$('#pattern_info'+$(this).attr('id').substring(7)).show();
+			$('#pattern_info'+$(this).attr('id').substring(7)).css("display", "inline-block");
+		});
+		$('.pattern_info').hover(function() {}, function() {
+			$('.pattern_info').hide();
+			$('.pattern').show();
+			$('#pattern'+$(this).attr('id').substring(12)).show();
+		});
+		$('.photoTd a').lightBox(
+					{
+						imageLoading: {{STATIC_URL}}+'gfx/lightbox-ico-loading.gif',
+						imageBtnClose: {{STATIC_URL}}+'gfx/lightbox-btn-close.gif',
+						imageBtnPrev: {{STATIC_URL}}+'gfx/lightbox-btn-prev.gif',
+						imageBtnNext: {{STATIC_URL}}+'gfx/lightbox-btn-next.gif',
+					}
+				);
+	</script>
+{% endblock %}

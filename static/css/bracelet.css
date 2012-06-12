@@ -106,9 +106,17 @@
 	-khtml-border-top-right-radius: 4px;
 	border-top-right-radius: 4px;
 }
-
+#pattern-box {
+	position:relative;	
+}
 #pattern {
-	margin: 0 auto;
+	
+}
+#pattern-canvas {
+	position: absolute;
+	z-index:-1;
+	top: 6px;
+	left:2px;
 }
 
 .knot {
@@ -118,14 +126,16 @@
 	-moz-background-clip: padding;
 	-webkit-background-clip: padding-box;
 	background-clip: padding-box;
+	-webkit-box-shadow: 0px 0px 2px 0px #333;
+    box-shadow: 0px 0px 2px 0px #333;
 	width: 20px;
 	height: 20px;
 	display: inline-block;
-	margin: -3px 4px;
+	margin: 0 5px 0 11px;
 }
 
 .odd {
-	margin-left: 12px;
+	margin-left: 15px;
 }
 
 .even {
@@ -155,6 +165,20 @@
 .knot4 {
 	background: url('/static/gfx/knot4.png');
 }
+.string0 {
+	background: url('/static/gfx/pattern-strings-0.png');	
+	width: 15px;
+	height: 25px;
+	display: inline-block;
+	margin: -5px 3px 0 0;
+}
+.string1 {
+	background: url('/static/gfx/pattern-strings-1.png');	
+	width: 15px;
+	height: 25px;
+	display: inline-block;
+	margin: -5px 3px 0 0;
+}
 #ratepattern {
 	float: right;
 }
@@ -171,6 +195,9 @@
 #buttons {
 	text-align: center;
 	margin-top: 10px;
+}
+#buttons button {
+	padding: 2px;
 }
 #photos {
 	display: inline-block;

@@ -1,2 +1,5 @@
 *.pyc
-opdb.db
+*~
+*.db
+.project
+.pydevproject

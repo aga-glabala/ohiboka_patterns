@@ -1,9 +1,9 @@
-# Django settings for ohiboka_patterns project.
+# Django settings for ohibokapatterns project.
 import os.path
 
 siteaddress = 'http://localhost:8000/'
-projectaddress = '/files/workspace/ohiboka_patterns/'
-
+projectaddress = '/files/workspace/ohibokapatterns/'
+#projectaddress = ''
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -16,14 +16,18 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '/files/workspace/ohiboka_patterns/opdb.db',                      # Or path to database file if using sqlite3.
-        'USER': '',                      # Not used with sqlite3.
-        'PASSWORD': '',                  # Not used with sqlite3.
+        'NAME': '/files/workspace/ohibokapatterns/opdb.db',                      # Or path to database file if using sqlite3.
+        'USER': 'ohiboka',                      # Not used with sqlite3.
+        'PASSWORD': 'ohiboka',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
 
+FACEBOOK_APP_ID = '159476740845097'
+FACEBOOK_SECRET_KEY = 'cd8c09d3afc4796e18199466df0d4db8'
+FACEBOOK_REDIRECT_URL = siteaddress+'facebook_login_success/'
+SESSION_COOKIE_DOMAIN = 'localhost'
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
@@ -108,7 +112,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-ROOT_URLCONF = 'ohiboka_patterns.urls'
+ROOT_URLCONF = 'ohibokapatterns.urls'
 
 TEMPLATE_DIRS = (
 	projectaddress+"templates"
@@ -126,13 +130,15 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.comments',
-    'ohiboka_patterns.bracelet',
-    'ohiboka_patterns.bracelet.templatetags',
-    'ohiboka_patterns.registration',
-    'ohiboka_patterns.comments',
+    'bracelet',
+    'bracelet.templatetags',
+    'registration',
+    'comments',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
+
+AUTHENTICATION_BACKENDS = ('ohibokapatterns.registration.utils.FacebookBackend', 'django.contrib.auth.backends.ModelBackend',)
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

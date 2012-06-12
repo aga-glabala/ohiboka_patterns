@@ -1,0 +1,17 @@
+.pull_left {
+	float: left;
+}
+.pull_right {
+	float: right;
+}
+.pattern_info table {
+	width: 100%;
+}
+.error_message {
+	color: red;
+	margin-bottom: 15px;
+}
+.ok_message {
+	color: green;
+	margin-bottom: 15px;
+}

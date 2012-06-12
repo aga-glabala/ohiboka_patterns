@@ -5,81 +5,76 @@
 <head>
 <title>Ohiboka Patterns{% block title %}{% endblock %}</title>
 <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-<link rel="stylesheet" href="{{ STATIC_URL }}css/default.css" type="text/css">
+<link rel="stylesheet" href="{{ STATIC_URL }}css/base.css" type="text/css">
 <script src="{{ STATIC_URL }}js/jquery.js" type="text/javascript"></script>
-
+<script src="{{ STATIC_URL }}js/jquery-ui-1.8.18.custom.min.js" type="text/javascript" ></script>
 {% block css %}
 {% endblock %}
 </head>
+
 <body>
-<div id="box">
+	<div id="fb"> </div>
+	<div id="en"><a href="/lang/en">&nbsp;</a></div>
+	<div class="stitches stitches-top1"></div>
 	<div id="top">
-		<a href="/">&nbsp;</a>
+		<h1><a href="/">&nbsp;</a></h1>
+		<ul id="menu">
+			<li><a href=""><span>BLOG</span></a></li>
+			<li class="active"><a href=""><span>PATTERNS</span></a></li>
+			<li><a href=""><span>ABOUT</span></a></li>
+			<li><a href="" id="login"><span>LOG IN</span></a></li>
+			<li><a href=""><span>SIGN IN</span></a></li>
+			<li><a href=""><span>SEARCH</span></a></li>
+		</ul>
 	</div>
-	<div id="preferences">
-		<div id="languages">
-		Language: <a href="/lang/pl" id="pl">&nbsp;</a> 
-				<a href="/lang/en" id="en">&nbsp;</a>
-		</div>
-		
-		<div id="login">
-		{% if user.is_authenticated %}
-			<span class="login">{% trans "Logged in as" %} <span>{{user.username}}</span></span>
-			<form method="post" action="{% url 'bracelet.views.logout_user' %}">
-			{% csrf_token %}
-			<input type="submit" value="Logout" />
-			</form>
-		{% else %}
-			<input type="button" id="loginButton" value='      {% trans "Login" %}' onClick="showLoginForm();" 
-				{% if form.errors %}
-					class="showlogin"
-				{% else %}
-					class="hidelogin"
-				{% endif %}	
-			><br />
-			<div id="loginform" 
-				{% if form.errors %}
-					class="showlogin"
-				{% else %}
-					class="hidelogin"
-				{% endif %}	
-			>
-				
-				<form method="post" action="{% url 'bracelet.views.login_user' %}">
+	<div id="container">
+		<div class="stitches stitches-top2"></div>
+			
+		<div id="content">
+			<div id="login-box" class="box" style="display:none">
+				<div id="login-form">
+					<form method="post" action="{% url "bracelet.views.login_user" %}">
 					{% if loginform.errors %}
-					<p class="errors">{% trans "Your username and password didn't match. Please try again." %}</p>
+							<p class="errors">{% trans "Your username and password didn't match. Please try again." %}</p>
 					{% endif %}
 					{% csrf_token %}
-					{{ loginform.username.label_tag }}<br />{{ loginform.username }}<br />
-					{{ loginform.password.label_tag }}<br />{{ loginform.password }}<br />
-					<input type="submit" value='{% trans "Login" %}' />
-				</form><br />
+					<table>
+					<tr><td>{{ loginform.username }}</td></tr>
+					<tr><td>{{ loginform.password }}</td></tr>
+					<tr><td><input class="pull-right" type="submit" value="{% trans 'Login' %}" /></td></tr>
+					</table>
+					</form>
+				</div>
+				<div class="facebook_login pull-right">
+					<button onclick="location.href='/facebook_login'">&nbsp;      </button>
+				</div>
 			</div>
-			<div class="login"><a href="/register/">{% trans "Sign up" %}</a></div>
-		{% endif %}
+			<div class="spacer"></div>
+			<div class="box">
+				{% block content %}
+				{% endblock %}
+			</div>
 		</div>
 	</div>
-	
-	<div id="content">
-	{% block content %}
-	
-	
-	{% endblock %}
+	<div class="stitches stitches-bottom1"></div>
+	<div id="bottom">
+		<p>Copyright © 2012 - Ohiboka</p>
 	</div>
-	<div id="footer">
-	<p>Copyright © 2012 - Ohiboka</p>
-	</div>
-</div>
-<script language="Javascript" type="text/javascript">
-function showLoginForm() {
-	if(document.getElementById("loginform").className=='showlogin') {
-		document.getElementById("loginform").className='hidelogin';
-		document.getElementById("loginButton").className='hidelogin';
-	} else {
-		document.getElementById("loginform").className='showlogin';
-		document.getElementById("loginButton").className='showlogin';
-	}
-}
-</script>
+	<div class="stitches stitches-bottom2"></div>
+	<script>
+		$(document).ready(function() {
+			$('#login').click(function() {
+				if($('#login-box').is(':visible')) {
+					$('#login-box').slideUp();
+				} else {
+					$('#login-box').slideDown();
+				}
+				// prevent the default action, e.g., following a link
+				return false;
+			});
+			$('#login-form input:text').attr('placeholder', '{{ loginform.username.label }}')
+			$('#login-form input:password').attr('placeholder', '{{ loginform.password.label }}')
+		});
+	</script>
 </body>
 </html>
