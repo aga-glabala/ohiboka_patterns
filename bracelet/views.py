@@ -21,7 +21,7 @@ from registration.utils import FacebookBackend
 def index(request, context):	
 	form = AuthenticationForm()
 	bracelets = get_all_bracelets(0)
-	paginator = Paginator(bracelets, 10) 
+	paginator = Paginator(bracelets, 12) 
 	page = request.GET.get('page')
 	if not page:
 		page = 1
@@ -31,7 +31,6 @@ def index(request, context):
 		bracelets = paginator.page(1)
 	except EmptyPage:
 		bracelets = paginator.page(paginator.num_pages)
-	print [int(x[1:], 16) for x in get_colors()]
 	context_ = {
 		'patterns': bracelets, 
 		'colors': get_colors(),
