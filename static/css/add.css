@@ -4,6 +4,31 @@ select.tableinput {
 input.tableinput {
 	width:98%;
 }
+#pattern-designer {
+	z-index:3;
+	position: relative;
+	margin-top:15px;
+}
+#pattern-canvas {
+	position: absolute;
+	z-index:2;
+	top: -10px;
+	left: 0px;
+}
+.string0 {
+	background: url('/static/gfx/pattern-strings-0.png');	
+	width: 15px;
+	height: 25px;
+	display: inline-block;
+	margin: -5px 1px 0 1px;
+}
+.string1 {
+	background: url('/static/gfx/pattern-strings-1.png');	
+	width: 15px;
+	height: 25px;
+	display: inline-block;
+	margin: -5px 1px 0 1px;
+}
 .knot1 {
 	background: url('/static/gfx/knot1.png');
 }
@@ -58,4 +83,20 @@ input.tableinput {
 	height: 20px;
 	display: inline-block;
 	margin: 0 7px;
+}
+.odd {
+	margin-left:20px;
+}
+.column-margin {
+	margin-top:8px;
+}
+.column-odd {
+	width:10px;
+	vertical-align: top;
+	display:inline-block;
+}
+.column-even {
+	width:10px;
+	vertical-align: top;
+	display:inline-block;
 }

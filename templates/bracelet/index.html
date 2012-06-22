@@ -17,15 +17,12 @@ function showSearchBox(hash) {
 	}
 }
 $(document).ready(function(){
-	//$('.pattern').hover(function() {
-	//	$(this).hide();
-	//	$('#pattern_info'+$(this).attr('id').substring(7)).show();
-	//	$('#pattern_info'+$(this).attr('id').substring(7)).css("display", "inline-block");
-	//});
-	$('.pattern_info').hover(function() {}, function() {
-		$('.pattern_info').hide();
-		$('.pattern').show();
-		$('#pattern'+$(this).attr('id').substring(12)).show();
+	$('.pattern').hover(function() {
+		$('.pattern-details').hide();
+		$('#pattern_info'+$(this).attr('id').substring(7)).show();
+	});
+	$('.pattern-box').hover(function() {}, function() {
+		$('.pattern-details').hide();
 	});
 	
 	showSearchBox(window.location.hash.substring(1))
@@ -45,6 +42,7 @@ $(document).ready(function(){
 	
 	
 });
+
 </script>
 {% endblock %}
 
@@ -174,19 +172,18 @@ $(document).ready(function(){
 			        </div>
 				</a>
 	        </div>
-	        <div class="pattern-details" id="pattern_info{{ bt.braceletid }}">
+	        <div class="pattern-details" id="pattern_info{{ bt.braceletid }}" style="display:none">
 		        <a href="/bracelet/{{ bt.braceletid }}">
-				    <span class="darken">{{ bt.name }}</span>
-				    <table style="margin-top: 55px;" class="darken">
-				    	<tr><td></td></tr>
-				    	<tr><td>{% trans 'by' %}: {{ bt.author }} {% trans 'on' %}: {{ bt.date }}</td></tr>
-				    	<tr><td></td></tr>
-				    	<tr><td>
-			    	    	{% for c in bt.colors %}
-			    	    		<div class="knot" style="background-color:{{c}};"></div>
-			    	    	{% endfor %}
-		    	    	</td></tr>
-				    </table>
+				    <div class="darken">{{ bt.name }}</div>
+				    <div class="darken" style="margin-top:48px">
+				    	{% trans 'by' %}: {{ bt.author }} {% trans 'on' %}: {{ bt.date }}
+				    </div>
+				    <div class="darken"">
+			    		{% for c in bt.colors %}
+		    	    		<div class="knot" style="background-color:{{c}};"></div>
+		    	    	{% endfor %}
+				    </div>
+			    	    	
 				</a>
 			</div>
 			</div>

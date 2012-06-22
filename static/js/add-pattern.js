@@ -7,6 +7,7 @@ $('#color0 option:eq(6)').attr("selected", "selected");setColor(0);
 $('#color1 option:eq(22)').attr("selected", "selected");setColor(1);
 $('#color2 option:eq(30)').attr("selected", "selected");setColor(2);
 $('#color3 option:eq(34)').attr("selected", "selected");setColor(3);
+$('#color4 option:eq(38)').attr("selected", "selected");setColor(4);
 initDesigner();
 drawPattern();
 });
@@ -80,15 +81,28 @@ function initDesigner() {
 function drawPattern() {
 	for (var i=0; i<nofrows-1;i++) {
 		var cl = "odd";
+		var cl_thumb = "";
+		var directions = [1,0];
 		if(i%2==0) {
 			cl = "even";
+			cl_thumb = " column-margin";
+			var directions = [0,1];
 		}
+		
+		$('<div id="row-strings'+i+'" />').appendTo('#pattern-canvas');
+		for(var j=0; j<knotColors[i].length/2;j++) {
+			$('<span class="str'+knotColors[i][2*j]+' string'+directions[0]+'"></span>').appendTo('#row-strings'+i);
+			if(knotColors[i][2*j+1] != undefined) {
+				$('<span class="str'+knotColors[i][2*j+1]+' string'+directions[1]+'"></span>').appendTo('#row-strings'+i);
+			}
+		}
+		
 		$('<div id="row'+i+'" class="'+cl+'" />').appendTo('#pattern-designer');
-		$('<div id="column'+i+'" class="column-'+cl+'" />').appendTo('#pattern-thumb');
-		for(var j=0; j<knotTypes[i].length; j++) {
+		$('<div id="column'+i+'" class="column-'+cl+cl_thumb+'" />').appendTo('#pattern-thumb');
+		for(var j=0; j<knotColors[i].length/2; j++) {
 			if(knotTypes[i][j]<3) {
 				$('<span class="str'+knotColors[i][2*j+i%2]+' knot knot'+knotTypes[i][j]+'"></span>').appendTo('#row'+i);
-				$('<span class="str'+knotColors[i][knotTypes[i].length-1-(2*j+i%2)]+' knot-thumb"></span>').appendTo('#column'+i);
+				$('<span class="str'+knotColors[i][knotColors[i].length - knotColors[i].length%2 - 1 - (2*j + (i+1)%2)]+' knot-thumb"></span>').appendTo('#column'+i);
 			}
 		}
 	}

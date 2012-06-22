@@ -278,6 +278,11 @@ body {
 	top: 235px;
 	background-image: url(/static/gfx/english.png);
 }
+.fb-like-box {
+	position: fixed;
+	right: 0;
+	width:  290px;
+}
 /* -------------------------------- TOP -------------------------------- */
 #top {
 	margin: 0 auto;

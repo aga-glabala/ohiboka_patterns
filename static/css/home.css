@@ -34,13 +34,15 @@ div.pattern-info {
 	background-color: rgba(38,116,165,0.2);
 }
 div.pattern-details {
-	padding: 2px;
 	position: absolute;
 	top: 0;
 	left: 0;
+	width: 87%;
 }
 .darken {
-	background-color: rgba(0,0,0,0.2);
+	background-color: rgba(0,0,0,0.6);
+	padding: 2px;
+	color: white;
 }
 #left h2 {
 	font-size: 19px;

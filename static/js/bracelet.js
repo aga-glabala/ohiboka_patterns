@@ -22,19 +22,23 @@ $(document).ready(function(){
 	$('<br />').appendTo('#pattern');
 	for (var i=0; i<nofrows-1;i++) {
 		var cl = "odd";
-		var directions = [0,1];
+		var cl_thumb = "";
+		var directions = [1,0];
 		if(i%2==0) {
 			cl = "even";
-			directions = [1,0];
+			cl_thumb = " column-margin";
+			directions = [0,1];
 		}
 		$('<div id="row-strings'+i+'" />').appendTo('#pattern-canvas');
 		for(var j=0; j<strings[i].length/2;j++) {
 			$('<span class="str'+strings[i][2*j]+' string'+directions[0]+'"></span>').appendTo('#row-strings'+i);
-			$('<span class="str'+strings[i][2*j+1]+' string'+directions[1]+'"></span>').appendTo('#row-strings'+i);
+			if(strings[nofrows-1][2*j+1] != undefined) {
+				$('<span class="str'+strings[i][2*j+1]+' string'+directions[1]+'"></span>').appendTo('#row-strings'+i);
+			}
 		}	
 		
 		$('<div id="row'+i+'" class="'+cl+'" />').appendTo('#pattern');
-		$('<div id="column'+i+'" class="column-'+cl+'" />').appendTo('#pattern-thumb');
+		$('<div id="column'+i+'" class="column-'+cl+cl_thumb+'" />').appendTo('#pattern-thumb');
 		for(var j=0; j<knotsType[i].length; j++) {
 			$('<span class="str'+knotsColor[i][j]+' knot knot'+knotsType[i][j]+ifwhite[knotsColor[i][j]]+'"></span>').appendTo('#row'+i);
 			$('<span class="str'+knotsColor[i][knotsType[i].length-1-j]+' knot-thumb"></span>').appendTo('#column'+i); 
@@ -42,15 +46,17 @@ $(document).ready(function(){
 	}
 	//last row strings
 	var cl = "odd";
-	var directions = [0,1];
+	var directions = [1,0];
 	if((nofrows-1)%2==0) {
 		cl = "even";
-		directions = [1,0];
+		directions = [0,1];
 	}
 	$('<div id="row-strings'+(nofrows-1)+'" />').appendTo('#pattern-canvas');
 		for(var j=0; j<strings[nofrows-1].length/2;j++) {
 			$('<span class="str'+strings[nofrows-1][2*j]+' string'+directions[0]+'"></span>').appendTo('#row-strings'+(nofrows-1));
-			$('<span class="str'+strings[nofrows-1][2*j+1]+' string'+directions[1]+'"></span>').appendTo('#row-strings'+(nofrows-1));
+			if(strings[nofrows-1][2*j+1] != undefined) {
+				$('<span class="str'+strings[nofrows-1][2*j+1]+' string'+directions[1]+'"></span>').appendTo('#row-strings'+(nofrows-1));
+			}
 		}
 		
 	//step pattern	

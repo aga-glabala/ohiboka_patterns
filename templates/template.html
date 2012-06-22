@@ -15,6 +15,8 @@
 <body>
 	<div id="fb"> </div>
 	<div id="en"><a href="/lang/en">&nbsp;</a></div>
+	<div class="fb-like-box" data-href="http://www.facebook.com/ohibokabracelets" data-width="292" data-show-faces="true" 
+		data-stream="false" data-header="true" style="position: fixed;top: 200px;background-color: white;display:none"></div>
 	<div class="stitches stitches-top1"></div>
 	<div id="top">
 		<h1><a href="/">&nbsp;</a></h1>
@@ -74,7 +76,24 @@
 			});
 			$('#login-form input:text').attr('placeholder', '{{ loginform.username.label }}')
 			$('#login-form input:password').attr('placeholder', '{{ loginform.password.label }}')
+			
+			$('#fb').hover(function() {
+				$('.fb-like-box').fadeIn();
+			});
+			$('.fb-like-box').hover(function() {}, function() {
+				$('.fb-like-box').fadeOut();
+			});
 		});
+		
+	</script>
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+		  var js, fjs = d.getElementsByTagName(s)[0];
+		  if (d.getElementById(id)) return;
+		  js = d.createElement(s); js.id = id;
+		  js.src = "//connect.facebook.net/pl_PL/all.js#xfbml=1&appId=262681810480763";
+		  fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
 	</script>
 </body>
 </html>

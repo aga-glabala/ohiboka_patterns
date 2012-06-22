@@ -194,14 +194,17 @@
 	height: 10px;
 	display: inline-block;
 }
+.column-margin {
+	margin-top:8px;
+}
 .column-odd {
 	width:10px;
+	vertical-align: top;
 	display:inline-block;
-	margin-top:8px;
-	vertical-align:top;
 }
 .column-even {
 	width:10px;
+	vertical-align: top;
 	display:inline-block;
 }
 .string0 {
