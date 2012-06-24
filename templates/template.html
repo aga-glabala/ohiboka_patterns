@@ -24,8 +24,13 @@
 			<li><a href=""><span>BLOG</span></a></li>
 			<li class="active"><a href=""><span>PATTERNS</span></a></li>
 			<li><a href=""><span>ABOUT</span></a></li>
-			<li><a href="" id="login"><span>LOG IN</span></a></li>
-			<li><a href=""><span>SIGN IN</span></a></li>
+			
+				{% if user.is_authenticated %}
+					<li><a href=""><span>PROFILE</span></a></li>
+				{% else %}	
+					<li><a href="" id="login"><span>LOG IN</span></a></li>
+					<li><a href=""><span>SIGN IN</span></a></li>
+				{% endif %}
 			<li><a href="/#search"><span>SEARCH</span></a></li>
 		</ul>
 	</div>

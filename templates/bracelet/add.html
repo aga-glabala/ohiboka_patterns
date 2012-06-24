@@ -49,17 +49,17 @@ var limit = 30;
 	</table>
 	{% trans "Set color of strings (use buttons below to add and remove strings)" %}: <br />
 	<span id="colorsInput"></span>
-    <br />
-    <input type="button" value='{% trans "Add string" %}' onClick="addInput('colorsInput');">
+    <input type="button" value='{% trans "Add string" %}' onClick="addKnotColumnButton('colorsInput');">
     <input type="button" value='{% trans "Remove string" %}' onClick="removeInput();"><br />
     
     <div id="pattern-thumb"></div>
-    <div style="position: relative;">
+    <div id="pattern-container">
     	<div id="pattern-canvas"></div>
     	<div id="pattern-designer"></div>
     </div>
-    
-	<textarea rows="20" cols="100" hidden="hidden" name="pattern"></textarea>
+    <input type="button" value='{% trans "Add row" %}' onClick="addRow();">
+    <input type="button" value='{% trans "Remove row" %}' onClick="removeRow();"><br />
+	<textarea id="pattern-string" rows="20" cols="100" hidden="hidden" name="pattern"></textarea>
 	<input type="submit" value='{% trans "Add pattern" %}'>
 </form>
 {% endblock %}

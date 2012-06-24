@@ -179,26 +179,17 @@ def addpattern(request):
 		if c.find('color')==0:
 			colors.append((int('0x'+request.POST[c][1:],16),c[5:]))
 	knots = request.POST['pattern'].split()
+	print knots
+	print request.user
 	b = Bracelet(user = request.user, date = datetime.datetime.today(), name = request.POST['name'], accepted = False, difficulty = request.POST['difficulty'], category = BraceletCategory.objects.filter(name=request.POST['category'])[0], rate = 0)
 	b.save()
 	for color in colors:
 		bs = BraceletString(index=color[1], color=BraceletColor.objects.filter(hexcolor=color[0])[0], bracelet=b)
 		bs.save()
 	for i in range(len(knots)):
-		knotid=0
-		if knots[i]=="/":
-			knotid=2
-		elif knots[i]=="\\":
-			knotid=1
-		elif knots[i]==">":
-			knotid=3
-		elif knots[i]=="<":
-			knotid=4
-		bk =  BraceletKnot(bracelet=b, knottype=BraceletKnotType.objects.filter(id=knotid)[0], index=i)
+		bk =  BraceletKnot(bracelet=b, knottype=BraceletKnotType.objects.filter(id=knots[i])[0], index=i)
 		bk.save()
 	return HttpResponseRedirect('/bracelet/'+str(b.id))
-	#return render_to_response('bracelet/index.html', {}, RequestContext(request))
-
 
 def photos(request, bracelet_id):
 	photos = Photo.objects.filter(bracelet = Bracelet.objects.get(id=bracelet_id))

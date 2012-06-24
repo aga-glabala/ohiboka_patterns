@@ -26,8 +26,12 @@ $(document).ready(function(){
 		var directions = [1,0];
 		if(i%2==0) {
 			cl = "even";
+			var directions = [0,1];
+			if(nofstr%2==1) {
+				cl_thumb = " column-margin";
+			}
+		} else if(nofstr%2==0) {
 			cl_thumb = " column-margin";
-			directions = [0,1];
 		}
 		$('<div id="row-strings'+i+'" />').appendTo('#pattern-canvas');
 		for(var j=0; j<strings[i].length/2;j++) {

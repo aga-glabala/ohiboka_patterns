@@ -2,7 +2,7 @@
 import os.path
 
 siteaddress = 'http://localhost:8000/'
-projectaddress = '/files/workspace/ohibokapatterns/'
+projectaddress = '/home/agnis/ohibokapatterns/'
 #projectaddress = ''
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -16,7 +16,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '/files/workspace/ohibokapatterns/opdb.db',                      # Or path to database file if using sqlite3.
+        'NAME': projectaddress+'opdb.db',                      # Or path to database file if using sqlite3.
         'USER': 'ohiboka',                      # Not used with sqlite3.
         'PASSWORD': 'ohiboka',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.

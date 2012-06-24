@@ -4,6 +4,10 @@ select.tableinput {
 input.tableinput {
 	width:98%;
 }
+#pattern-container {
+	position: relative;
+	margin-bottom:10px;
+}
 #pattern-designer {
 	z-index:3;
 	position: relative;
