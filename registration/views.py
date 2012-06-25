@@ -20,7 +20,7 @@ def register(request):
 	print form
 	return render_to_response("registration/register.html", {'form': form,'loginform': AuthenticationForm(),},
                           context_instance=RequestContext(request))
-	
+
 def userprofile(request, error_message="", ok_message=""):
 	if request.user.is_authenticated():
 		context={}

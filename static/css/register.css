@@ -3,4 +3,9 @@
 }
 #registerForm tr td:last-child {
 	display: none;
+	color: #af0000;
+	padding-left:10px;
+}
+#registerForm tr td:first-child {
+	padding-right:10px;
 }

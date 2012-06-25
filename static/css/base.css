@@ -295,35 +295,42 @@ body {
 		height:111px;
 		margin: 10px 0 20px;
 	}
+	#top a {
+		text-decoration: none;
+		padding: 0 300px 100px 0;
+	}
 ul#menu {	
 	list-style-type: none;
 	float: right;
-	margin-top: 50px;
+	margin-top: 60px;
 	font: 14px "UbuntuRegular";
 	color: white;
+	width: 690px;
 }
-
 	ul#menu li {
 		display: inline-block;
 		margin: 0 10px;
 		vertical-align: middle;
+		width:90px;
 	}
 	ul#menu li a {
 		color: white;
 		text-decoration: none;
-	}
-	ul#menu li.active a {
-		background: transparent url('/static/gfx/button-p.png') no-repeat scroll top right;
 		display: block;
 		float: left;
 		height: 28px;
 		padding-right: 10px; /* sliding doors padding */
 	}
-	ul#menu li.active a span  {
-	    background: transparent url('/static/gfx/button-span.png') no-repeat;
+	ul#menu li a span  {
 	    display: block;
 	    line-height: 18px;
 	    padding: 5px 5px 5px 18px;
+	}
+	ul#menu li.active a {
+		background: transparent url('/static/gfx/button-p.png') no-repeat scroll top right;
+	}
+	ul#menu li.active a span  {
+	    background: transparent url('/static/gfx/button-span.png') no-repeat;
 	}
 /* -------------------------------- LOGIN -------------------------------- */
 #login-box {

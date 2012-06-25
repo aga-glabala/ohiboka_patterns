@@ -2,7 +2,7 @@
 import os.path
 
 siteaddress = 'http://localhost:8000/'
-projectaddress = '/home/agnis/ohibokapatterns/'
+projectaddress = '/files/workspace/ohibokapatterns/' #'/home/agnis/ohibokapatterns/'
 #projectaddress = ''
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
