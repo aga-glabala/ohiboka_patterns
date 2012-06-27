@@ -19,7 +19,6 @@ $(document).ready(function(){
 	});
 	
 	// pattern creating
-	$('<br />').appendTo('#pattern');
 	for (var i=0; i<nofrows-1;i++) {
 		var cl = "odd";
 		var cl_thumb = "";
@@ -56,17 +55,22 @@ $(document).ready(function(){
 		directions = [0,1];
 	}
 	$('<div id="row-strings'+(nofrows-1)+'" />').appendTo('#pattern-canvas');
-		for(var j=0; j<strings[nofrows-1].length/2;j++) {
-			$('<span class="str'+strings[nofrows-1][2*j]+' string'+directions[0]+'"></span>').appendTo('#row-strings'+(nofrows-1));
-			if(strings[nofrows-1][2*j+1] != undefined) {
-				$('<span class="str'+strings[nofrows-1][2*j+1]+' string'+directions[1]+'"></span>').appendTo('#row-strings'+(nofrows-1));
-			}
+	for(var j=0; j<strings[nofrows-1].length/2;j++) {
+		$('<span class="str'+strings[nofrows-1][2*j]+' string'+directions[0]+'"></span>').appendTo('#row-strings'+(nofrows-1));
+		if(strings[nofrows-1][2*j+1] != undefined) {
+			$('<span class="str'+strings[nofrows-1][2*j+1]+' string'+directions[1]+'"></span>').appendTo('#row-strings'+(nofrows-1));
 		}
-		
-	//step pattern	
-	$('<div id="steprow0" class="even" />').appendTo('#steppattern');
-	$('<span class="str'+knotsColor[lastKnotRow][lastKnotCol]+' knot knot'+knotsType[lastKnotRow][lastKnotCol]+'"></span>').appendTo('#steprow0');
-	$('<p>'+texts[knotsType[lastKnotRow][lastKnotCol]-1]+'</p>').appendTo('#instructions');
+	}
+	
+	//step pattern
+	$('<div id="step-row-strings'+0+'" />').appendTo('#step-pattern-canvas');
+	for(var i=0; i<strings[0].length/2;i++) {
+		$('<span class="str'+strings[0][i]+' string'+0+'"></span>').appendTo('#step-row-strings'+0);
+		if(strings[0][i] != undefined) {
+			$('<span class="str'+strings[0][i]+' string'+1+'"></span>').appendTo('#step-row-strings'+0);
+		}
+	}
+	addKnot();
 	
 	
 	// rates
@@ -98,24 +102,63 @@ $(document).ready(function(){
  });
 
 function addKnot() {
-		if(lastKnotCol+1<knotsType[lastKnotRow].length) {
-			lastKnotCol++;
-			$('<span class="str'+knotsColor[lastKnotRow][lastKnotCol]+' knot knot'+knotsType[lastKnotRow][lastKnotCol]+'"></span>').appendTo('#steprow'+lastKnotRow);
-			$('<p>'+texts[knotsType[lastKnotRow][lastKnotCol]-1]+'</p>').appendTo('#instructions');
-		} else {
-			if(lastKnotRow+1<knotsType.length) {
-				lastKnotRow++;
-				lastKnotCol = 0;
-				var cl = "odd";
-				if(lastKnotRow%2==0) {
-					cl = "even";
-				}
-				$('<div id="steprow'+lastKnotRow+'" class="'+cl+'" />').appendTo('#steppattern');
-				$('<span class="str'+knotsColor[lastKnotRow][lastKnotCol]+' knot knot'+knotsType[lastKnotRow][lastKnotCol]+'"></span>').appendTo('#steprow'+lastKnotRow);	
-				$('<p>'+texts[knotsType[lastKnotRow][lastKnotCol]-1]+'</p>').appendTo('#instructions');
-			}
+	var cl = "odd";
+	var directions = [1,0];
+	var move = 0;
+	if(lastKnotRow%2==0) {
+		cl = "even";
+	} else {
+		directions = [1,0];
+		move=1;
+	}
+	
+	if(lastKnotCol==0) {
+			$('<div id="steprow'+lastKnotRow+'" class="'+cl+'" />').appendTo('#step-pattern');
+	}
+	$('<span class="str'+knotsColor[lastKnotRow][lastKnotCol]+' knot knot'+knotsType[lastKnotRow][lastKnotCol]+'"></span>').appendTo('#steprow'+lastKnotRow);
+	if($('#step-row-strings'+(lastKnotRow+1)).length==0) {
+		$('<div id="step-row-strings'+(lastKnotRow+1)+'" />').appendTo('#step-pattern-canvas');
+		if(lastKnotRow%2==1) {
+			$('<span class="str'+strings[lastKnotRow+1][0]+' string'+directions[1]+'"></span>').appendTo('#step-row-strings'+(lastKnotRow+1));
 		}
 	}
+	$('<span class="str'+strings[lastKnotRow+1][2*lastKnotCol+move]+' string'+directions[0]+'"></span>').appendTo('#step-row-strings'+(lastKnotRow+1));
+	if(strings[lastKnotRow+1][2*lastKnotCol+1+move] != undefined) {
+		$('<span class="str'+strings[lastKnotRow+1][2*lastKnotCol+1+move]+' string'+directions[1]+'"></span>').appendTo('#step-row-strings'+(lastKnotRow+1));
+	}
+	if(lastKnotCol+1 > strings[lastKnotRow+1].length/2 && lastKnotRow%2==0) {
+		$('<span class="str'+strings[lastKnotRow+1][parseInt(strings[lastKnotRow+1].length/2)]+' string'+directions[0]+'"></span>').appendTo('#step-row-strings'+(lastKnotRow+1));
+	}
+	var text = texts[knotsType[lastKnotRow][lastKnotCol]-1];
+	text = text.replace('{0}', '<span class="str'+strings[lastKnotRow][2*lastKnotCol]+' knot"></span>');
+	text = text.replace('{1}', '<span class="str'+strings[lastKnotRow][2*lastKnotCol+1]+' knot"></span>');
+	$('<p>'+text+'</p>').appendTo('#instructions');
+		
+	if (lastKnotRow == knotsType.length - 1 || lastKnotCol == 0 && lastKnotRow%2==0) {
+		if (lastKnotRow%2 == 1) {
+			lastKnotCol += 1;
+		}
+		while (lastKnotRow > 0 && lastKnotCol < knotsType[lastKnotRow].length - 1) {
+			lastKnotRow -= 1;
+			lastKnotCol += lastKnotRow%2 ;
+		}
+		if (lastKnotCol == knotsType[lastKnotRow].length + lastKnotRow%2) {
+			if (lastKnotRow%2==0 && nofstr%2 == 0) {
+				lastKnotRow += 2;
+			} else {
+				lastKnotRow += 1;
+			}
+		}  
+		if (lastKnotRow == 0) {
+			lastKnotCol++;
+		}
+	} else {
+		lastKnotRow++;
+		if (lastKnotRow%2 != 0) {
+			lastKnotCol--;
+		}
+	}
+}
 
 function delKnot() {
 	if (lastKnotRow>0 || lastKnotCol>0) {

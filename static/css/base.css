@@ -295,7 +295,7 @@ body {
 		height:111px;
 		margin: 10px 0 20px;
 	}
-	#top a {
+	#top h1 a {
 		text-decoration: none;
 		padding: 0 300px 100px 0;
 	}
@@ -305,13 +305,11 @@ ul#menu {
 	margin-top: 60px;
 	font: 14px "UbuntuRegular";
 	color: white;
-	width: 690px;
 }
 	ul#menu li {
 		display: inline-block;
 		margin: 0 10px;
 		vertical-align: middle;
-		width:90px;
 	}
 	ul#menu li a {
 		color: white;

@@ -1,3 +1,12 @@
+#tabs ul {
+	display:inline-block;
+	margin:-7px 0 0 10px;
+}
+#tabs h2 {
+	display: inline-block;
+	vertical-align: top;
+	font-size:110%;
+}
 .ui-tabs {
 	position: relative;
 	padding: 0;
@@ -40,20 +49,15 @@
 }
 
 /* nieaktywne taby */
-.ui-state-default,.ui-widget-content .ui-state-default,.ui-widget-header .ui-state-default {
-	border-left: 1px solid #127EA6;
-	border-right: 1px solid #004E76;
+.ui-state-default {
 	font-weight: normal;
 }
-
 .ui-state-default a,.ui-state-default a:link,.ui-state-default a:visited {
 	color: #127EA6;
 	text-decoration: none;
 }
 
 .ui-state-hover,.ui-widget-content .ui-state-hover,.ui-widget-header .ui-state-hover,.ui-state-focus,.ui-widget-content .ui-state-focus,.ui-widget-header .ui-state-focus {
-	background: #dadada url(/static/gfx/ui-bg_glass_75_dadada_1x400.png) 50% 50%
-		repeat-x;
 }
 
 .ui-state-hover a,.ui-state-hover a:hover {
@@ -75,8 +79,6 @@
 
 
 .ui-widget-content {
-	margin-top: 1px;
-	padding: 10px;
 }
 
 
@@ -90,16 +92,18 @@
 .ui-corner-all, .ui-corner-top {
 
 }
-#pattern-box {
+.pattern-box {
 	position:relative;	
-	background-color: #e4eff3;
 	z-index:1;
+	width: 60%;
+	display: inline-block;
 }
-#pattern {
+#pattern, #step-pattern {
 	position:relative;
 	z-index:3;
+	padding-top: 14px;
 }
-#pattern-canvas {
+#pattern-canvas, #step-pattern-canvas {
 	position: absolute;
 	z-index:2;
 	top: 5px;
@@ -208,9 +212,7 @@
 #ratepattern {
 	float: right;
 }
-#steppattern {
-	width: 60%;
-	display: inline-block;
+#step-pattern {
 }
 #instructionbox {
 	width: 35%;

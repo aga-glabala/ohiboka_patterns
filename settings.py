@@ -27,7 +27,6 @@ DATABASES = {
 FACEBOOK_APP_ID = '159476740845097'
 FACEBOOK_SECRET_KEY = 'cd8c09d3afc4796e18199466df0d4db8'
 FACEBOOK_REDIRECT_URL = siteaddress+'facebook_login_success/'
-SESSION_COOKIE_DOMAIN = 'localhost'
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
