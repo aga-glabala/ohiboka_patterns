@@ -16,11 +16,15 @@ $(document).ready(function() {
 		  	if(data == 1) {
 				  var el = $('<div class="comment"><h4><span class="comment-user"></span> <span class="comment-time">{% trans "now" %}</span></h4></div>');
 		   		  $('.comment_start').after(el);
-				  $('.comment-user', el).html($('.login span').html());
+				  $('.comment-user', el).html($('#comment-form-username').val());
 				  el.append($('#id_comment').val());
 				  el.append($('<hr />'));
 		   		  $("#commentbox").hide();
 		   		  $('.posterror').remove();
+		   		  var tabname = $('.ui-tabs-nav li a')[2];
+		   		  tabname = $(tabname);
+		   		  var vals = tabname.html().split("(");
+		   		  tabname.html(vals[0]+"("+(parseInt(vals[1].split(")")[0])+1)+")");
 			 } else {
 	  			$('.comment_start').after($('<div class="posterror">{% trans "Unexpected error occured. Try reload page or try again later." %}</div>'));
 			 }
@@ -28,18 +32,21 @@ $(document).ready(function() {
 	  	  });
 	  return false;
 	});
-	$('#comment-form-username').val($('.login span').html());
+	$('#comment-form-username').val($('#username').val());
+	
+	$('#comment-input').focus(function () {
+		$('#comment-input').hide();
+		$('#commentbox').fadeIn();
+	});
 });
 //]]>
 </script>
-
-{% get_comment_count for bracelet.bracelet bracelet_id as comment_count %}
-<p>{{ comment_count }} {% trans "comments have been posted." %}</p>
 
 {% get_comment_form for bracelet.bracelet bracelet_id as form %}
 <!-- A context variable called form is created with the necessary hidden
 fields, timestamps and security hashes -->
 {% if user.is_authenticated %}
+	<input id="comment-input" placeholder="{% trans 'Click to add comment' %}" />
 	<table id="commentbox">
 	  <form action="/comments/post/" method="post">
 	    <tr><td colspan="3">{{ form.non_field_errors }}</td></tr>
@@ -59,6 +66,8 @@ fields, timestamps and security hashes -->
 	    </tr>
 	  </form>
 	</table>
+{% else %}
+	You need to be logged in to post comment.
 {% endif %}
 
 {% render_comment_list for bracelet.bracelet bracelet_id %}

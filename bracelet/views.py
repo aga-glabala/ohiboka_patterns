@@ -118,7 +118,8 @@ def bracelet(request, bracelet_id):
 			'nofrows':bp.nofrows,
 			'bracelet_id':bracelet_id,
 			'texts':[str(s) for s in BraceletKnotType.objects.all().order_by('id')],
-			'ifwhite':bp.get_ifwhite()
+			'ifwhite':bp.get_ifwhite(),
+			'nofphotos': len(Photo.objects.filter(bracelet = Bracelet.objects.get(id=bracelet_id)))
 			}
 	if request.user.is_authenticated():
 		try:
@@ -232,4 +233,5 @@ def rate(request, bracelet_id, bracelet_rate):
 			return HttpResponse(_("Pattern do not exist"))
 	return HttpResponse(_("You need to be logged in to rate patterns"))
 	
-	
+def about(request):
+	pass

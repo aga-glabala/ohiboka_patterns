@@ -26,7 +26,7 @@
 			<li><a href=""><span>ABOUT</span></a></li>
 			
 				{% if user.is_authenticated %}
-					<li><a href=""><span>PROFILE</span></a></li>
+					<li><a href="/profile/"><span>PROFILE</span></a></li>
 				{% else %}	
 					<li><a href="" id="login"><span>LOG IN</span></a></li>
 					<li><a href="/register/"><span>SIGN IN</span></a></li>
@@ -34,6 +34,7 @@
 			<li><a href="/#search"><span>SEARCH</span></a></li>
 		</ul>
 	</div>
+	<input id="username" type="hidden" value="{{ user.username  }}"/>
 	<div id="container">
 		<div class="stitches stitches-top2"></div>
 			
@@ -100,5 +101,6 @@
 		  fjs.parentNode.insertBefore(js, fjs);
 		}(document, 'script', 'facebook-jssdk'));
 	</script>
+	<div id="fb-root"></div>
 </body>
 </html>

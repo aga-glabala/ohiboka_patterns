@@ -6,7 +6,7 @@ $(document).ready(function(){
 					$( anchor.hash ).html(errorText);
 				},
 				success: function() {
-					$('.photoTd a').lightBox(
+					$('.photo a').lightBox(
 					{
 						imageLoading: STATIC_URL+'gfx/lightbox-ico-loading.gif',
 						imageBtnClose: STATIC_URL+'gfx/lightbox-btn-close.gif',
@@ -14,7 +14,11 @@ $(document).ready(function(){
 						imageBtnNext: STATIC_URL+'gfx/lightbox-btn-next.gif',
 					}
 				);
-			}
+			},
+			select: function(event, ui) {
+				var tabID = "#ui-tabs-" + (ui.index + 1);
+				$(tabID).html("<b>Fetching Data.... Please wait....</b>");
+		        }
 		}
 	});
 	
@@ -65,9 +69,9 @@ $(document).ready(function(){
 	//step pattern
 	$('<div id="step-row-strings'+0+'" />').appendTo('#step-pattern-canvas');
 	for(var i=0; i<strings[0].length/2;i++) {
-		$('<span class="str'+strings[0][i]+' string'+0+'"></span>').appendTo('#step-row-strings'+0);
+		$('<span class="str'+strings[0][2*i]+' string'+0+'"></span>').appendTo('#step-row-strings'+0);
 		if(strings[0][i] != undefined) {
-			$('<span class="str'+strings[0][i]+' string'+1+'"></span>').appendTo('#step-row-strings'+0);
+			$('<span class="str'+strings[0][2*i+1]+' string'+1+'"></span>').appendTo('#step-row-strings'+0);
 		}
 	}
 	addKnot();
@@ -78,11 +82,12 @@ $(document).ready(function(){
 	  function () {
 	    $('.icon-star').slice(0,$(this).attr('id').substring(4,5)).css('background-position', '0 -15px');
 	    $('.icon-star').slice($(this).attr('id').substring(4,5),5).css('background-position', '-15px -15px');
-	  }, 
-	  function () {
-	    setRate();
 	  }
 	);
+	$('.icon-star').parent().hover(function () {},
+	function () {
+	    setRate();
+	  });
 	$('.icon-star').click(
 		function () {
 			var id = $(this).attr('id').substring(4,5)
@@ -129,18 +134,20 @@ function addKnot() {
 	if(lastKnotCol+1 > strings[lastKnotRow+1].length/2 && lastKnotRow%2==0) {
 		$('<span class="str'+strings[lastKnotRow+1][parseInt(strings[lastKnotRow+1].length/2)]+' string'+directions[0]+'"></span>').appendTo('#step-row-strings'+(lastKnotRow+1));
 	}
+	
 	var text = texts[knotsType[lastKnotRow][lastKnotCol]-1];
 	text = text.replace('{0}', '<span class="str'+strings[lastKnotRow][2*lastKnotCol]+' knot"></span>');
 	text = text.replace('{1}', '<span class="str'+strings[lastKnotRow][2*lastKnotCol+1]+' knot"></span>');
-	$('<p>'+text+'</p>').appendTo('#instructions');
+	$('<p>'+text+'</p>').prependTo('#instructions');
 		
 	if (lastKnotRow == knotsType.length - 1 || lastKnotCol == 0 && lastKnotRow%2==0) {
-		if (lastKnotRow%2 == 1) {
-			lastKnotCol += 1;
-		}
-		while (lastKnotRow > 0 && lastKnotCol < knotsType[lastKnotRow].length - 1) {
+		
+		while (lastKnotRow > 0 && lastKnotCol+lastKnotRow%2 < knotsType[lastKnotRow].length) {
 			lastKnotRow -= 1;
 			lastKnotCol += lastKnotRow%2 ;
+		}
+		if (lastKnotRow%2 == 1) {
+			lastKnotCol += 1;
 		}
 		if (lastKnotCol == knotsType[lastKnotRow].length + lastKnotRow%2) {
 			if (lastKnotRow%2==0 && nofstr%2 == 0) {

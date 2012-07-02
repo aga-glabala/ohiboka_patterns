@@ -1,6 +1,6 @@
 #tabs ul {
 	display:inline-block;
-	margin:-7px 0 0 10px;
+	margin:-7px 0 0 20px;
 }
 #tabs h2 {
 	display: inline-block;
@@ -23,7 +23,6 @@
 	float: left;
 	position: relative;
 	top: 1px;
-	border-bottom: 0 !important;
 	padding: 0;
 	white-space: nowrap;
 }
@@ -31,6 +30,7 @@
 .ui-tabs .ui-tabs-nav li a {
 	float: left;
 	padding: .5em;
+	margin-bottom:-4px;
 	text-decoration: none;
 }
 
@@ -65,7 +65,11 @@
 }
 
 .ui-state-active,.ui-widget-content .ui-state-active,.ui-widget-header .ui-state-active {
-	font-weight: bold;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	-webkit-box-shadow: inset 1px 1px 6px 0px #000; /* Saf3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+    box-shadow: inset 1px 1px 6px 0px #000;
 }
 
 .ui-state-active a,.ui-state-active a:link,.ui-state-active a:visited {
@@ -209,7 +213,7 @@
 	display: inline-block;
 	margin: -5px 1px 0 1px;
 }
-#ratepattern {
+#ratepattern, .fb-like {
 	float: right;
 }
 #step-pattern {
@@ -227,18 +231,24 @@
 #buttons button {
 	padding: 2px;
 }
-#photos {
+.photo {
 	display: inline-block;
 	width: 132px;
+	height: 126px;
 	padding: 2px;
 	vertical-align: top;
+	margin: 3px;
+	overflow: hidden;
+	text-align: center;
 }
 
-.photoTd {
-	height: 126px;
-	border: 1px solid #329ec6;
+.photo div {
+	height: 100px;
 }
-
+.photo p {
+	height: 26px;
+	vertical-align: bottom;
+}
 #photoAdd {
 	padding: 0 0 20px 10px;	
 }
@@ -263,6 +273,19 @@
 }
 .comment-time {
 	float:right;
+}
+#comment-input {
+	width: 500px;
+	height: 20px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+}
+#commentbox {
+	display:none;
+}
+#commentbox td {
+	padding-right:5px;
+	vertical-align: top;
 }
 #commentbox input[type="text"], #commentbox textarea  {
 	width:100%;
