@@ -42,203 +42,16 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
-/* -------------------------------- FONTS -------------------------------- */
-@font-face {
-    font-family: 'CantarellBold';
-    src: url('/static/fonts/cantarell/cantarell-bold-webfont.eot');
-    src: url('/static/fonts/cantarell/cantarell-bold-webfont.eot?#iefix') format('embedded-opentype'),
-         url('/static/fonts/cantarell/cantarell-bold-webfont.woff') format('woff'),
-         url('/static/fonts/cantarell/cantarell-bold-webfont.ttf') format('truetype'),
-         url('/static/fonts/cantarell/cantarell-bold-webfont.svg#CantarellBold') format('svg');
-    font-weight: normal;
-    font-style: normal;
+.table td {
+	padding: 3px 6px 0px;
 }
-@font-face {
-    font-family: 'CantarellRegular';
-    src: url('/static/fonts/cantarell/cantarell-regular-webfont.eot');
-    src: url('/static/fonts/cantarell/cantarell-regular-webfont.eot?#iefix') format('embedded-opentype'),
-         url('/static/fonts/cantarell/cantarell-regular-webfont.woff') format('woff'),
-         url('/static/fonts/cantarell/cantarell-regular-webfont.ttf') format('truetype'),
-         url('/static/fonts/cantarell/cantarell-regular-webfont.svg#CantarellRegular') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'PTSansBold';
-    src: url('/static/fonts/pt-sans/pt_sans-web-bold-webfont.eot');
-    src: url('/static/fonts/pt-sans/pt_sans-web-bold-webfont.eot?#iefix') format('embedded-opentype'),
-         url('/static/fonts/pt-sans/pt_sans-web-bold-webfont.woff') format('woff'),
-         url('/static/fonts/pt-sans/pt_sans-web-bold-webfont.ttf') format('truetype'),
-         url('/static/fonts/pt-sans/pt_sans-web-bold-webfont.svg#PTSansBold') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'AlteHaasGroteskBold';
-    src: url('/static/fonts/altehaas/altehaasgroteskbold-webfont.eot');
-    src: url('/static/fonts/altehaas/altehaasgroteskbold-webfont.eot?#iefix') format('embedded-opentype'),
-         url('/static/fonts/altehaas/altehaasgroteskbold-webfont.woff') format('woff'),
-         url('/static/fonts/altehaas/altehaasgroteskbold-webfont.ttf') format('truetype'),
-         url('/static/fonts/altehaas/altehaasgroteskbold-webfont.svg#AlteHaasGroteskBold') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'UbuntuBold';
-    src: url('/static/fonts/ubuntu/ubuntu-b-webfont.eot');
-    src: url('/static/fonts/ubuntu/ubuntu-b-webfont.eot?#iefix') format('embedded-opentype'),
-         url('/static/fonts/ubuntu/ubuntu-b-webfont.woff') format('woff'),
-         url('/static/fonts/ubuntu/ubuntu-b-webfont.ttf') format('truetype'),
-         url('/static/fonts/ubuntu/ubuntu-b-webfont.svg#UbuntuBold') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'UbuntuBoldItalic';
-    src: url('/static/fonts/ubuntu/ubuntu-bi-webfont.eot');
-    src: url('/static/fonts/ubuntu/ubuntu-bi-webfont.eot?#iefix') format('embedded-opentype'),
-         url('/static/fonts/ubuntu/ubuntu-bi-webfont.woff') format('woff'),
-         url('/static/fonts/ubuntu/ubuntu-bi-webfont.ttf') format('truetype'),
-         url('/static/fonts/ubuntu/ubuntu-bi-webfont.svg#UbuntuBoldItalic') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'UbuntuCondensedRegular';
-    src: url('/static/fonts/ubuntu/ubuntu-c-webfont.eot');
-    src: url('/static/fonts/ubuntu/ubuntu-c-webfont.eot?#iefix') format('embedded-opentype'),
-         url('/static/fonts/ubuntu/ubuntu-c-webfont.woff') format('woff'),
-         url('/static/fonts/ubuntu/ubuntu-c-webfont.ttf') format('truetype'),
-         url('/static/fonts/ubuntu/ubuntu-c-webfont.svg#UbuntuCondensedRegular') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'UbuntuLightBold';
-    src: url('/static/fonts/ubuntu/ubuntu-m-webfont.eot');
-    src: url('/static/fonts/ubuntu/ubuntu-m-webfont.eot?#iefix') format('embedded-opentype'),
-         url('/static/fonts/ubuntu/ubuntu-m-webfont.woff') format('woff'),
-         url('/static/fonts/ubuntu/ubuntu-m-webfont.ttf') format('truetype'),
-         url('/static/fonts/ubuntu/ubuntu-m-webfont.svg#UbuntuLightBold') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'UbuntuLightBoldItalic';
-    src: url('/static/fonts/ubuntu/ubuntu-mi-webfont.eot');
-    src: url('/static/fonts/ubuntu/ubuntu-mi-webfont.eot?#iefix') format('embedded-opentype'),
-         url('/static/fonts/ubuntu/ubuntu-mi-webfont.woff') format('woff'),
-         url('/static/fonts/ubuntu/ubuntu-mi-webfont.ttf') format('truetype'),
-         url('/static/fonts/ubuntu/ubuntu-mi-webfont.svg#UbuntuLightBoldItalic') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'UbuntuRegular';
-    src: url('/static/fonts/ubuntu/ubuntu-r-webfont.eot');
-    src: url('/static/fonts/ubuntu/ubuntu-r-webfont.eot?#iefix') format('embedded-opentype'),
-         url('/static/fonts/ubuntu/ubuntu-r-webfont.woff') format('woff'),
-         url('/static/fonts/ubuntu/ubuntu-r-webfont.ttf') format('truetype'),
-         url('/static/fonts/ubuntu/ubuntu-r-webfont.svg#UbuntuRegular') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'UbuntuItalic';
-    src: url('/static/fonts/ubuntu/ubuntu-ri-webfont.eot');
-    src: url('/static/fonts/ubuntu/ubuntu-ri-webfont.eot?#iefix') format('embedded-opentype'),
-         url('/static/fonts/ubuntu/ubuntu-ri-webfont.woff') format('woff'),
-         url('/static/fonts/ubuntu/ubuntu-ri-webfont.ttf') format('truetype'),
-         url('/static/fonts/ubuntu/ubuntu-ri-webfont.svg#UbuntuItalic') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'PTSansNarrowRegular';
-    src: url('/static/fonts/pt-sans/PTN57F-webfont.eot');
-    src: url('/static/fonts/pt-sans/PTN57F-webfont.eot?#iefix') format('embedded-opentype'),
-         url('/static/fonts/pt-sans/PTN57F-webfont.woff') format('woff'),
-         url('/static/fonts/pt-sans/PTN57F-webfont.ttf') format('truetype'),
-         url('/static/fonts/pt-sans/PTN57F-webfont.svg#PTSansNarrowRegular') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
-}
-@font-face {
-    font-family: 'PTSansCaptionBold';
-    src: url('/static/fonts/pt-sans/PTC75F-webfont.eot');
-    src: url('/static/fonts/pt-sans/PTC75F-webfont.eot?#iefix') format('embedded-opentype'),
-         url('/static/fonts/pt-sans/PTC75F-webfont.woff') format('woff'),
-         url('/static/fonts/pt-sans/PTC75F-webfont.ttf') format('truetype'),
-         url('/static/fonts/pt-sans/PTC75F-webfont.svg#PTSansCaptionBold') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
-}
-@font-face {
-    font-family: 'PTSansCaptionRegular';
-    src: url('/static/fonts/pt-sans/PTC55F-webfont.eot');
-    src: url('/static/fonts/pt-sans/PTC55F-webfont.eot?#iefix') format('embedded-opentype'),
-         url('/static/fonts/pt-sans/PTC55F-webfont.woff') format('woff'),
-         url('/static/fonts/pt-sans/PTC55F-webfont.ttf') format('truetype'),
-         url('/static/fonts/pt-sans/PTC55F-webfont.svg#PTSansCaptionRegular') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
-}
-@font-face {
-    font-family: 'PTSansBoldItalic';
-    src: url('/static/fonts/pt-sans/PTS76F-webfont.eot');
-    src: url('/static/fonts/pt-sans/PTS76F-webfont.eot?#iefix') format('embedded-opentype'),
-         url('/static/fonts/pt-sans/PTS76F-webfont.woff') format('woff'),
-         url('/static/fonts/pt-sans/PTS76F-webfont.ttf') format('truetype'),
-         url('/static/fonts/pt-sans/PTS76F-webfont.svg#PTSansBoldItalic') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'PTSansBold';
-    src: url('/static/fonts/pt-sans/PTS75F-webfont.eot');
-    src: url('/static/fonts/pt-sans/PTS75F-webfont.eot?#iefix') format('embedded-opentype'),
-         url('/static/fonts/pt-sans/PTS75F-webfont.woff') format('woff'),
-         url('/static/fonts/pt-sans/PTS75F-webfont.ttf') format('truetype'),
-         url('/static/fonts/pt-sans/PTS75F-webfont.svg#PTSansBold') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'PTSansItalic';
-    src: url('/static/fonts/pt-sans/PTS56F-webfont.eot');
-    src: url('/static/fonts/pt-sans/PTS56F-webfont.eot?#iefix') format('embedded-opentype'),
-         url('/static/fonts/pt-sans/PTS56F-webfont.woff') format('woff'),
-         url('/static/fonts/pt-sans/PTS56F-webfont.ttf') format('truetype'),
-         url('/static/fonts/pt-sans/PTS56F-webfont.svg#PTSansItalic') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'PTSansRegular';
-    src: url('/static/fonts/pt-sans/PTS55F-webfont.eot');
-    src: url('/static/fonts/pt-sans/PTS55F-webfont.eot?#iefix') format('embedded-opentype'),
-         url('/static/fonts/pt-sans/PTS55F-webfont.woff') format('woff'),
-         url('/static/fonts/pt-sans/PTS55F-webfont.ttf') format('truetype'),
-         url('/static/fonts/pt-sans/PTS55F-webfont.svg#PTSansRegular') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'PTSansNarrowBold';
-    src: url('/static/fonts/pt-sans/PTN77F-webfont.eot');
-    src: url('/static/fonts/pt-sans/PTN77F-webfont.eot?#iefix') format('embedded-opentype'),
-         url('/static/fonts/pt-sans/PTN77F-webfont.woff') format('woff'),
-         url('/static/fonts/pt-sans/PTN77F-webfont.ttf') format('truetype'),
-         url('/static/fonts/pt-sans/PTN77F-webfont.svg#PTSansNarrowBold') format('svg');
-    font-weight: normal;
-    font-style: normal;
+.table tr {
+	border-bottom: 1px solid #ddd;
 }
 /* -------------------------------- COMMON -------------------------------- */
 h1, h2, h3, h4, h5 {
-	font-family: "AlteHaasGroteskBold" sans;
+	font-family: "Signika" sans;
+	font-weight: bold;
 }
 hr {
 	margin: 5px 0 18px 0;
@@ -256,7 +69,7 @@ a {
 body {
 	background-image: url(/static/gfx/bg.png);
 	margin:0;
-	font-family: "PTSansRegular" sans;
+	font-family: "Signika" sans;
 }
 #fb, #en {
 	width:  29px;
@@ -303,7 +116,7 @@ ul#menu {
 	list-style-type: none;
 	float: right;
 	margin-top: 60px;
-	font: 14px "UbuntuRegular";
+	font: 14px "Signika";
 	color: white;
 }
 	ul#menu li {
@@ -462,6 +275,11 @@ ul#menu {
 }
 .icon-new {
 	background: url('/static/gfx/icons.png') 0 -87px;
+	padding: 0 10px 0 0;
+	font-size: 13px;
+}
+.icon-delete {
+	background: url('/static/gfx/icons.png') -92px 0;
 	padding: 0 10px 0 0;
 	font-size: 13px;
 }

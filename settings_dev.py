@@ -1,8 +1,9 @@
 # Django settings for ohiboka_patterns project.
 import os.path
 
-siteaddress = 'http://localhost:8000/'
-projectaddress = '/files/workspace/ohibokapatterns/' #'/home/agnis/ohibokapatterns/'
+#siteaddress = 'http://localhost:8000/'
+siteaddress = 'http://dev.ohiboka.com/'
+projectaddress = '/home/jakchcesz/domains/dev.ohiboka.com/ohibokapatterns/' #'/home/agnis/ohibokapatterns/'
 #projectaddress = ''
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -143,6 +144,7 @@ INSTALLED_APPS = (
 )
 
 AUTHENTICATION_BACKENDS = ('ohibokapatterns.registration.utils.FacebookBackend', 'django.contrib.auth.backends.ModelBackend',)
+#AUTHENTICATION_BACKENDS = ( 'django.contrib.auth.backends.ModelBackend',)
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
@@ -166,3 +168,4 @@ LOGGING = {
         },
     }
 }
+

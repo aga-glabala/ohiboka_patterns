@@ -6,7 +6,7 @@ $(document).ready(function(){
 					$( anchor.hash ).html(errorText);
 				},
 				success: function() {
-					$('.photo a').lightBox(
+					$('.photoTd a').lightBox(
 					{
 						imageLoading: STATIC_URL+'gfx/lightbox-ico-loading.gif',
 						imageBtnClose: STATIC_URL+'gfx/lightbox-btn-close.gif',
@@ -14,11 +14,7 @@ $(document).ready(function(){
 						imageBtnNext: STATIC_URL+'gfx/lightbox-btn-next.gif',
 					}
 				);
-			},
-			select: function(event, ui) {
-				var tabID = "#ui-tabs-" + (ui.index + 1);
-				$(tabID).html("<b>Fetching Data.... Please wait....</b>");
-		        }
+			}
 		}
 	});
 	
@@ -73,21 +69,20 @@ $(document).ready(function(){
 		if(strings[0][i] != undefined) {
 			$('<span class="str'+strings[0][2*i+1]+' string'+1+'"></span>').appendTo('#step-row-strings'+0);
 		}
-	}
+	}	
 	addKnot();
 	
 	
 	// rates
 	$('.icon-star').hover(
-	  function () {
-	    $('.icon-star').slice(0,$(this).attr('id').substring(4,5)).css('background-position', '0 -15px');
-	    $('.icon-star').slice($(this).attr('id').substring(4,5),5).css('background-position', '-15px -15px');
-	  }
-	);
+		function () {
+		    $('.icon-star').slice(0,$(this).attr('id').substring(4,5)).css('background-position', '0 -15px');
+		    $('.icon-star').slice($(this).attr('id').substring(4,5),5).css('background-position', '-15px -15px');
+	});
 	$('.icon-star').parent().hover(function () {},
-	function () {
-	    setRate();
-	  });
+		function () {
+	    	setRate();
+	});
 	$('.icon-star').click(
 		function () {
 			var id = $(this).attr('id').substring(4,5)
@@ -107,49 +102,67 @@ $(document).ready(function(){
  });
 
 function addKnot() {
-	var cl = "odd";
-	var directions = [1,0];
-	var move = 0;
-	if(lastKnotRow%2==0) {
-		cl = "even";
-	} else {
-		directions = [1,0];
-		move=1;
-	}
-	
-	if(lastKnotCol==0) {
-			$('<div id="steprow'+lastKnotRow+'" class="'+cl+'" />').appendTo('#step-pattern');
-	}
-	$('<span class="str'+knotsColor[lastKnotRow][lastKnotCol]+' knot knot'+knotsType[lastKnotRow][lastKnotCol]+'"></span>').appendTo('#steprow'+lastKnotRow);
-	if($('#step-row-strings'+(lastKnotRow+1)).length==0) {
-		$('<div id="step-row-strings'+(lastKnotRow+1)+'" />').appendTo('#step-pattern-canvas');
+		
+		if (lastKnotRow > knotsColor.length - 1 || lastKnotCol > knotsColor[lastKnotRow].length - 1) {
+			return;
+		}
+		
+		if(lastKnotCol==0) {
+//			if(lastKnotRow<knotsType.length) {
+				var cl = "odd";
+				if(lastKnotRow%2==0) {
+					cl = "even";
+				}
+				$('<div id="steprow'+lastKnotRow+'" class="'+cl+'" />').appendTo('#step-pattern');
+				
+				
+//			}
+		}
+		$('<span class="str'+knotsColor[lastKnotRow][lastKnotCol]+' knot knot'+knotsType[lastKnotRow][lastKnotCol]+ifwhite[knotsColor[lastKnotRow][lastKnotCol]]+'" title="r'+lastKnotRow+'c'+lastKnotCol+'" id="knot'+sequence+'"></span>').appendTo('#steprow'+lastKnotRow);
+		var text = texts[knotsType[lastKnotRow][lastKnotCol]-1];
+		text = text.replace('{0}', '<span class="str'+knotsColor[lastKnotRow][2*lastKnotCol]+' knot"></span>');
+		text = text.replace('{1}', '<span class="str'+knotsColor[lastKnotRow][2*lastKnotCol+1]+' knot"></span>');
+		$('<p>'+text+'</p>').prependTo('#instructions');
+		
+		var cl = "odd";
+		var directions = [1,0];
 		if(lastKnotRow%2==1) {
-			$('<span class="str'+strings[lastKnotRow+1][0]+' string'+directions[1]+'"></span>').appendTo('#step-row-strings'+(lastKnotRow+1));
+			cl = "even";
+			directions = [1,0];
 		}
-	}
-	$('<span class="str'+strings[lastKnotRow+1][2*lastKnotCol+move]+' string'+directions[0]+'"></span>').appendTo('#step-row-strings'+(lastKnotRow+1));
-	if(strings[lastKnotRow+1][2*lastKnotCol+1+move] != undefined) {
-		$('<span class="str'+strings[lastKnotRow+1][2*lastKnotCol+1+move]+' string'+directions[1]+'"></span>').appendTo('#step-row-strings'+(lastKnotRow+1));
-	}
-	if(lastKnotCol+1 > strings[lastKnotRow+1].length/2 && lastKnotRow%2==0) {
-		$('<span class="str'+strings[lastKnotRow+1][parseInt(strings[lastKnotRow+1].length/2)]+' string'+directions[0]+'"></span>').appendTo('#step-row-strings'+(lastKnotRow+1));
-	}
-	
-	var text = texts[knotsType[lastKnotRow][lastKnotCol]-1];
-	text = text.replace('{0}', '<span class="str'+strings[lastKnotRow][2*lastKnotCol]+' knot"></span>');
-	text = text.replace('{1}', '<span class="str'+strings[lastKnotRow][2*lastKnotCol+1]+' knot"></span>');
-	$('<p>'+text+'</p>').prependTo('#instructions');
-		
+		var even = 0; // strings are even and row are odd
+		if(strings[0].length%2==0 && lastKnotRow%2==1) {
+			even = 1;
+		}
+			
+		if($('#step-row-strings'+(lastKnotRow+1)).length==0) {
+			$('<div id="step-row-strings'+(lastKnotRow+1)+'" />').appendTo('#step-pattern-canvas');
+			// if row is odd and nofstrings is odd draw last not used string
+			if(even && strings.length>lastKnotRow+1) {
+				$('<span id="string'+sequence+'sec" class="str'+strings[lastKnotRow+1][0]+' string'+directions[1]+'"></span>').appendTo('#step-row-strings'+(lastKnotRow+1));
+			}
+		}
+		if(strings.length>lastKnotRow+1 && strings[lastKnotRow+1].length>2*lastKnotCol+even) {
+			$('<span id="string'+sequence+'" class="str'+strings[lastKnotRow+1][2*lastKnotCol+even]+' string'+directions[0]+'"></span>').appendTo('#step-row-strings'+(lastKnotRow+1));
+			if(strings[lastKnotRow+1].length>2*lastKnotCol+1+even) {
+				$('<span id="string'+sequence+'sec" class="str'+strings[lastKnotRow+1][2*lastKnotCol+1+even]+' string'+directions[1]+'"></span>').appendTo('#step-row-strings'+(lastKnotRow+1));
+			}
+		}
+		// if row is odd and nofstrings is odd draw last not used string
+		if(even && strings.length > lastKnotRow+1 && 2*lastKnotCol+2+lastKnotRow%2==strings[lastKnotRow+1].length-1) {
+			$('<span id="string'+sequence+'sec" class="str'+strings[lastKnotRow+1][2*lastKnotCol+2+even]+' string'+directions[0]+'"></span>').appendTo('#step-row-strings'+(lastKnotRow+1));
+		}
+		sequence++;
+
 	if (lastKnotRow == knotsType.length - 1 || lastKnotCol == 0 && lastKnotRow%2==0) {
-		
-		while (lastKnotRow > 0 && lastKnotCol+lastKnotRow%2 < knotsType[lastKnotRow].length) {
-			lastKnotRow -= 1;
-			lastKnotCol += lastKnotRow%2 ;
-		}
 		if (lastKnotRow%2 == 1) {
 			lastKnotCol += 1;
 		}
-		if (lastKnotCol == knotsType[lastKnotRow].length + lastKnotRow%2) {
+		while (lastKnotRow > 0 && lastKnotCol < knotsType[lastKnotRow-lastKnotRow%2].length - 1) {
+			lastKnotRow -= 1;
+			lastKnotCol += lastKnotRow%2 ;
+		}
+		if (lastKnotCol == knotsType[lastKnotRow].length - 1 + lastKnotRow%2) {
 			if (lastKnotRow%2==0 && nofstr%2 == 0) {
 				lastKnotRow += 2;
 			} else {
@@ -168,15 +181,16 @@ function addKnot() {
 }
 
 function delKnot() {
-	if (lastKnotRow>0 || lastKnotCol>0) {
-			$('.knot:last').remove();
+	if (sequence>0) {
+			sequence--;
+			var element = $('#knot'+sequence);
+			$('#string'+sequence).remove()
+			$('#string'+sequence+'sec').remove();
+			var title = element.attr('title');
+			element.remove();
 			$('#instructions p:last').remove();
-			if(lastKnotCol>0) {
-				lastKnotCol--;
-			} else if(lastKnotRow>0) {
-					lastKnotRow--;	
-					lastKnotCol=knotsType[lastKnotRow].length-1;
-			}
+			lastKnotCol = title.slice(title.indexOf('c')+1);
+			lastKnotRow = title.slice(1, title.indexOf('c'));
 	}
 }
 function del5Knots() {

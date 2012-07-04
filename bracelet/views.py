@@ -175,6 +175,7 @@ def search(request):
 	return render_to_response('bracelet/index.html', context, RequestContext(request))
 
 def addpattern(request):
+	print request.POST
 	colors = []
 	for c in request.POST:
 		if c.find('color')==0:

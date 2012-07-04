@@ -10,6 +10,9 @@
 {% block content %}
   <h1>Create an account</h1>
 <hr />
+  {% if error_message %}
+  <div class='error_message'>{{ error_message }}</div>
+  {% endif %}
   <form action="" method="post" id="registerForm">
   	{% csrf_token %}
   	<table>
@@ -20,6 +23,10 @@
 		  		<td>{{ field.help_text }}</td>
 		  	</tr>
 	  	{% endfor %}
+		<tr>
+			<td colspan="2">{{ captcha|safe }}</td>
+			<td></td>
+		</tr>
 		<tr><td></td><td><input type="submit" value="{% trans 'Create new account' %}" /></td><td></td></tr>
   	</table>
   </form>

@@ -7,19 +7,27 @@ from bracelet.views import home, index
 from bracelet.bracelet_tools import get_all_bracelets
 from bracelet.models import Photo, Rate, Bracelet, BraceletString, BraceletKnot
 from django.utils.translation import ugettext as _
+from registration import captcha
+from settings import RECAPTCHA_PRIVATE_KEY, RECAPTCHA_PUBLIC_KEY
 
 def register(request):
 	form = None
+	error = None
 	if request.method == 'POST':
-		form = UserCreationForm(request.POST)
-		if form.is_valid():
-			form.save()
-			return HttpResponseRedirect("/")
-	else:
-		form = UserCreationForm()
-	print form
-	return render_to_response("registration/register.html", {'form': form,'loginform': AuthenticationForm(),},
-                          context_instance=RequestContext(request))
+		captcha_response = captcha.submit(request.POST['recaptcha_challenge_field'], request.POST['recaptcha_response_field'],
+                                          RECAPTCHA_PRIVATE_KEY, request.META['REMOTE_ADDR'])
+		if captcha_response.is_valid:
+			form = UserCreationForm(request.POST)
+			if form.is_valid():
+				form.save()
+				return HttpResponseRedirect("/")
+			else:
+				error = _("An error has occured. Correct entered data.")
+		else:
+			error = _("Wrong captcha, try again.")
+	form = UserCreationForm()
+	return render_to_response("registration/register.html", {'form': form,'loginform': AuthenticationForm(), 'error_message': error,
+                               'captcha': captcha.displayhtml(RECAPTCHA_PUBLIC_KEY)}, context_instance=RequestContext(request))
 
 def userprofile(request, error_message="", ok_message=""):
 	if request.user.is_authenticated():

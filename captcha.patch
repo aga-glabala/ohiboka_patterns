@@ -1,0 +1,96 @@
+diff --git a/registration/views.py b/registration/views.py
+index 238e28f..1346580 100644
+--- a/registration/views.py
++++ b/registration/views.py
+@@ -7,19 +7,27 @@ from bracelet.views import home, index
+ from bracelet.bracelet_tools import get_all_bracelets
+ from bracelet.models import Photo, Rate, Bracelet, BraceletString, BraceletKnot
+ from django.utils.translation import ugettext as _
++from registration import captcha
++from settings import RECAPTCHA_PRIVATE_KEY, RECAPTCHA_PUBLIC_KEY
+ 
+ def register(request):
+ 	form = None
++	error = None
+ 	if request.method == 'POST':
+-		form = UserCreationForm(request.POST)
+-		if form.is_valid():
+-			form.save()
+-			return HttpResponseRedirect("/")
+-	else:
+-		form = UserCreationForm()
+-	print form
+-	return render_to_response("registration/register.html", {'form': form,'loginform': AuthenticationForm(),},
+-                          context_instance=RequestContext(request))
++		captcha_response = captcha.submit(request.POST['recaptcha_challenge_field'], request.POST['recaptcha_response_field'],
++                                          RECAPTCHA_PRIVATE_KEY, request.META['REMOTE_ADDR'])
++		if captcha_response.is_valid:
++			form = UserCreationForm(request.POST)
++			if form.is_valid():
++				form.save()
++				return HttpResponseRedirect("/")
++			else:
++				error = _("An error has occured. Correct entered data.")
++		else:
++			error = _("Wrong captcha, try again.")
++	form = UserCreationForm()
++	return render_to_response("registration/register.html", {'form': form,'loginform': AuthenticationForm(), 'error_message': error,
++                               'captcha': captcha.displayhtml(RECAPTCHA_PUBLIC_KEY)}, context_instance=RequestContext(request))
+ 
+ def userprofile(request, error_message="", ok_message=""):
+ 	if request.user.is_authenticated():
+@@ -91,4 +99,4 @@ def delete_rate(request, rate_id):
+ 		return userprofile(request, error_message=_("You are not owner of this rate"))
+ 	rate.delete()
+ 	return userprofile(request, ok_message=_("Rate deleted successfully"))
+-	
+\ No newline at end of file
++	
+diff --git a/settings.py b/settings.py
+index 1938091..be69382 100755
+--- a/settings.py
++++ b/settings.py
+@@ -27,6 +27,11 @@ DATABASES = {
+ FACEBOOK_APP_ID = '159476740845097'
+ FACEBOOK_SECRET_KEY = 'cd8c09d3afc4796e18199466df0d4db8'
+ FACEBOOK_REDIRECT_URL = siteaddress+'facebook_login_success/'
++
++#recaptcha account: https://www.google.com/recaptcha/admin/site?siteid=315859431
++RECAPTCHA_PUBLIC_KEY = '6LfnodMSAAAAAGKD-qOokFqpKC1Fb8Jl7arec_54'
++RECAPTCHA_PRIVATE_KEY = '6LfnodMSAAAAANWiwrfvSXLHXt6xt27W4zJuQvB8'
++
+ # Local time zone for this installation. Choices can be found here:
+ # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
+ # although not all choices may be available on all operating systems.
+diff --git a/templates/registration/register.html b/templates/registration/register.html
+index 35e809a..55c653f 100644
+--- a/templates/registration/register.html
++++ b/templates/registration/register.html
+@@ -10,6 +10,9 @@
+ {% block content %}
+   <h1>Create an account</h1>
+ <hr />
++  {% if error_message %}
++  <div class='error_message'>{{ error_message }}</div>
++  {% endif %}
+   <form action="" method="post" id="registerForm">
+   	{% csrf_token %}
+   	<table>
+@@ -20,6 +23,10 @@
+ 		  		<td>{{ field.help_text }}</td>
+ 		  	</tr>
+ 	  	{% endfor %}
++		<tr>
++			<td colspan="2">{{ captcha|safe }}</td>
++			<td></td>
++		</tr>
+ 		<tr><td></td><td><input type="submit" value="{% trans 'Create new account' %}" /></td><td></td></tr>
+   	</table>
+   </form>
+@@ -32,4 +39,4 @@
+   	});
+   	
+   </script>
+-{% endblock %}
+\ No newline at end of file
++{% endblock %}

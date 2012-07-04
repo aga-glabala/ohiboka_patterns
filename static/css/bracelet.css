@@ -65,11 +65,12 @@
 }
 
 .ui-state-active,.ui-widget-content .ui-state-active,.ui-widget-header .ui-state-active {
-	-webkit-border-radius: 10px;
-	-moz-border-radius: 10px;
-	border-radius: 10px;
-	-webkit-box-shadow: inset 1px 1px 6px 0px #000; /* Saf3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
-    box-shadow: inset 1px 1px 6px 0px #000;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	-webkit-box-shadow: inset 1px 1px 4px 0px #000; /* Saf3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+    box-shadow: inset 1px 1px 4px 0px #000;
+    background-color: #f3f3f3;
 }
 
 .ui-state-active a,.ui-state-active a:link,.ui-state-active a:visited {
@@ -223,6 +224,8 @@
 	display: inline-block;
 	margin-left: 10px;
 	float:right;
+	height: 400px;
+	overflow:scroll;
 }
 #buttons {
 	text-align: center;
