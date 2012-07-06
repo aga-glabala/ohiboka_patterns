@@ -39,7 +39,16 @@ $(document).ready(function(){
             }
         }, 100);
     }
-	
+	$('#search-top').click(function(e) {
+		if($('#search-form').is(':visible')) {
+			$('#search-form').parent().slideUp();
+			window.location.hash = '';
+		} else {
+			$('#search-form').parent().slideDown();
+			window.location.hash = '#search';
+		}
+		e.preventDefault();
+	});
 	
 });
 
@@ -126,13 +135,13 @@ $(document).ready(function(){
 		{% endif %}
 	</div>
 
-	<h2>
+	<h1>
 	{% if search %}
 		{% trans "Results" %}
 	{% else %}
 		{% trans "Newest bracelets" %}
 	{% endif %}
-	</h2>
+	</h1>
 	<hr />
 	{% if patterns %}
 	    {% for bt in patterns.object_list %}
@@ -166,7 +175,7 @@ $(document).ready(function(){
 				    	<br />
 		    	    	<i class="icon-strings" title="{% trans 'Number of strings' %}">&nbsp;</i> {{ bt.nofstrings }}
 				    	<br />
-		    	    	<i class="icon-star2" title="{% trans 'Rate' %}">&nbsp;</i> {{ bt.rate }}
+		    	    	<i class="icon-star2" title="{% trans 'Rate' %}">&nbsp;</i> {{ bt.average_rate }}
 				    	<br />
 		    	    	<i class="icon-difficulty{{ bt.difficulty}}" title="{% trans 'Difficulty' %}">&nbsp;</i>
 			        </div>
@@ -186,13 +195,13 @@ $(document).ready(function(){
 			    	    	
 				</a>
 			</div>
-			</div>
+		</div>
 	    {% endfor %}
 	    <hr />
 	    <div class="pagination">
 			{% if patterns.has_previous %}
 				<span class="prev">
-	            	<a href="?page={{ patterns.previous_page_number }}{{ url }}"><i class="icon-prev">&nbsp;</i> {% trans "previous" %}</a>
+	            	<i class="icon-prev">&nbsp;</i><a href="?page={{ patterns.previous_page_number }}{{ url }}"> {% trans "previous" %}</a>
 	            </span>
 	        {% endif %}
 	
@@ -202,7 +211,7 @@ $(document).ready(function(){
 	
 	        {% if patterns.has_next %}
 		        <span class="next">
-		            <a href="?page={{ patterns.next_page_number }}{{ url }}">{% trans "next" %} <i class="icon-next">&nbsp;</i></a>
+		            <a href="?page={{ patterns.next_page_number }}{{ url }}">{% trans "next" %} </a><i class="icon-next">&nbsp;</i>
 	            </span>
 	        {% endif %}
 	    </div>

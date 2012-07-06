@@ -22,17 +22,18 @@
 	<div id="top">
 		<h1><a href="/">&nbsp;</a></h1>
 		<ul id="menu">
-			<li><a href=""><span>BLOG</span></a></li>
-			<li class="active"><a href=""><span>PATTERNS</span></a></li>
-			<li><a href=""><span>ABOUT</span></a></li>
+			<li><a href="http://blog.ohiboka.com"><span>BLOG</span></a></li>
+			<li class="active"><a href="/"><span>PATTERNS</span></a></li>
+			<li><a href="/about/"><span>ABOUT</span></a></li>
 			
 				{% if user.is_authenticated %}
 					<li><a href="/profile/"><span>PROFILE</span></a></li>
+					<li><a href="/logout/"><span>LOG OUT</span></a></li>
 				{% else %}	
 					<li><a href="" id="login"><span>LOG IN</span></a></li>
 					<li><a href="/register/"><span>SIGN IN</span></a></li>
 				{% endif %}
-			<li><a href="/#search"><span>SEARCH</span></a></li>
+			<li><a href="/#search" id='search-top'><span>SEARCH</span></a></li>
 		</ul>
 	</div>
 	<input id="username" type="hidden" value="{{ user.username  }}"/>
@@ -67,7 +68,24 @@
 	</div>
 	<div class="stitches stitches-bottom1"></div>
 	<div id="bottom">
-		<p>Copyright © 2012 - Ohiboka</p>
+		<div>Copyright © 2012 - Ohiboka</div>
+		<!-- <div>
+			<a href="/">{% trans 'Patterns' %}</a><br />
+			<a href="http://blog.ohiboka.com">{% trans 'Blog' %}</a>
+		</div>
+		<div>
+			{% if user.is_authenticated %}
+				<a href="/profile/">{% trans 'Profile' %} - {{ user.username }}</a><br />
+				<a href="/profile/">{% trans 'Add new bracelet' %}</a>
+			{% else %}
+				<a href="" id="login">Log in</a><br />
+				<a href="/register/">Register</a>
+			{% endif %}
+		</div>
+		<div>
+			<a href="http://www.facebook.com/ohibokabracelets">{% trans 'Find me on facebook' %}</a><br />
+			<a href="/about">{% trans 'About' %}</a><br />
+		</div> -->
 	</div>
 	<div class="stitches stitches-bottom2"></div>
 	<script>

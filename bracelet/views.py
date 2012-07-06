@@ -21,7 +21,7 @@ from registration.utils import FacebookBackend
 def index(request, context):	
 	form = AuthenticationForm()
 	bracelets = get_all_bracelets(0)
-	paginator = Paginator(bracelets, 12) 
+	paginator = Paginator(bracelets, 9) 
 	page = request.GET.get('page')
 	if not page:
 		page = 1
@@ -109,6 +109,7 @@ def bracelet(request, bracelet_id):
 	bp.generate_pattern()
 	context = {'loginform':AuthenticationForm(),
 			'braceletid':bracelet_id,
+			'bracelet': Bracelet.objects.get(id = bracelet_id),
 			'name' : bp.bracelet.name,
 			'style':bp.get_style(),
 			'nofstr':bp.get_n_of_strings(),
@@ -161,7 +162,8 @@ def search(request):
 	
 	bracelets = find_bracelets(category=request.GET['category'], difficulty=request.GET['difficulty'], 
 										color=request.GET['color'], orderby=request.GET['orderby'], photo='photo' in request.GET, rate = request.GET['rate'])
-	paginator = Paginator(bracelets, 10)
+
+	paginator = Paginator(bracelets, 9)
 	page = request.GET.get('page')
 	if page == None:
 		page = 1
@@ -175,14 +177,11 @@ def search(request):
 	return render_to_response('bracelet/index.html', context, RequestContext(request))
 
 def addpattern(request):
-	print request.POST
 	colors = []
 	for c in request.POST:
 		if c.find('color')==0:
 			colors.append((int('0x'+request.POST[c][1:],16),c[5:]))
 	knots = request.POST['pattern'].split()
-	print knots
-	print request.user
 	b = Bracelet(user = request.user, date = datetime.datetime.today(), name = request.POST['name'], accepted = False, difficulty = request.POST['difficulty'], category = BraceletCategory.objects.filter(name=request.POST['category'])[0], rate = 0)
 	b.save()
 	for color in colors:

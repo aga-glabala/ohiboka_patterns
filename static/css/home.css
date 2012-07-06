@@ -65,14 +65,13 @@ div.pattern-details {
 	padding: 4px;
 	float: right;
 	background-color: rgba(38,116,165,0.2);
-	-moz-border-bottom-left-radius: 6px;
-	border-bottom-left-radius: 6px;
-	-moz-border-bottom-right-radius: 6px;
-	border-bottom-right-radius: 6px;
+	-moz-border-bottom-left-radius: 3px;
+	border-bottom-left-radius: 3px;
+	-moz-border-bottom-right-radius: 3px;
+	border-bottom-right-radius: 3px;
 	border: 1px solid #329ec6;
 	border-top: 0;
-}
-.add:hover {
+	color: #004e76;
 }
 .category {
 	display: inline-block;

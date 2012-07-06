@@ -52,6 +52,7 @@ table {
 h1, h2, h3, h4, h5 {
 	font-family: "Signika" sans;
 	font-weight: bold;
+	font-size: 120%;
 }
 hr {
 	margin: 5px 0 18px 0;
@@ -69,7 +70,7 @@ a {
 body {
 	background-image: url(/static/gfx/bg.png);
 	margin:0;
-	font-family: "Signika" sans;
+	font-family: "Signika", sans;
 }
 #fb, #en {
 	width:  29px;
@@ -186,7 +187,7 @@ ul#menu {
 	display: block;
 	clear: both;
 	height: 0;
-		font-size: 0;
+	font-size: 0;
 }
 #content {
 	margin: -40px auto;
@@ -201,6 +202,8 @@ ul#menu {
 	.box p {
 		margin: 0;
 	}
+	
+.spacer {margin:20px;}
 /* -------------------------------- BOTTOM -------------------------------- */
 #bottom {
 	color: white;
@@ -209,7 +212,16 @@ ul#menu {
 	width: 1000px;
 }
 
-.spacer {margin:20px;}
+#bottom div {
+	display: inline-block;
+	width: 20%;
+}
+#bottom div:first-child {
+	width: 35%;
+}
+#bottom a {
+	color: #127ea6;
+}
 
 /* -------------------------------- STITCHES -------------------------------- */
 .stitches {

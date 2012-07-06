@@ -60,6 +60,14 @@
 	</div>
 	<div id="tabs-1">
 		<div class="fb-like" data-href="{{response.url}}" data-send="false" data-layout="button_count" data-width="150" data-show-faces="false"></div>
+		<div class="bracelet-data">
+			author: {{ bracelet.user.username }} <br/>
+			date: {{ bracelet.date }}<br/>
+			category: {{ bracelet.category.name }}<br/>
+			number of strings: {{ bracelet.strings.all|length }}<br/>
+			average rate: {{ bracelet.rate }}<br/>
+			difficulty: {{ bracelet.difficulty }}
+		</div>
 		<div id="pattern-thumb">
 		</div>
 		<div class="pattern-box">
