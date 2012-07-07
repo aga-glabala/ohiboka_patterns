@@ -1,6 +1,6 @@
 {% extends "template.html" %}
 {% load i18n %}
-{% block title %} - Profile{% endblock %}
+{% block title %} - {% trans 'User page' %} - {{ user.username }}{% endblock %}
 
 {% block css %}
 <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.lightbox-0.5.css" type="text/css">
@@ -22,13 +22,10 @@
 {% endblock %}
 
 {% block content %}
-{% if ok_message %}
-	<div class='ok_message'>{{ ok_message }}</div>
-{% endif %}
-{% if error_message %}
-	<div class='error_message'>{{ error_message }}</div>
-{% endif %}
-<h2>{% trans "Your bracelets"  %}</h2>
+<big><h2>{% trans 'Content added by' %}<b>{{ user.username }}</b></h2></big>
+
+{% if bracelets %}
+<h2>{% trans "Bracelets"  %}</h2>
 
 <hr />
 	{% for bt in bracelets %}
@@ -84,24 +81,8 @@
 			</div>
 			</div>
 	    {% endfor %}
-{% if rates %}
-<h2>{% trans 'Rates' %}</h2>
-<hr />
-	<table class='table'>
-		<tr>
-			<td>{% trans 'Bracelet' %}</td>
-			<td>{% trans 'Your rate' %}</td>
-			<td>{% trans 'Action' %}</td>
-		</tr>
-		{% for rate in rates %}
-		<tr>
-			<td><a href="/bracelet/{{ rate.bracelet.id }}">{{rate.bracelet.name}}</a></td>
-			<td>{{rate.rate}}</td>
-			<td><a href="/bracelet/rate/remove/{{rate.id}}" title="{% trans 'Remove' %}"> <i class="icon-delete"></i></a></td>
-		</tr>
-		{% endfor %}
-	</table>
 {% endif %}
+
 {% if photos %}
 	<div id="user_photos">
 	<h2>{% trans 'Photos' %}</h2>
@@ -110,7 +91,6 @@
 		<div class="photo">
         	<a href="{{ STATIC_URL }}images/{{ photo.name }}"><img src="{{ STATIC_URL }}bracelet_thumbs/{{ photo.name }}" /></a>
     	    <a href="/bracelet/{{ photo.bracelet.id }}">{{photo.bracelet.name}}</a>
-    	    <a href="/bracelet/photo/remove/{{photo.id}}" title="{% trans 'Remove' %}"><i class="icon-delete"></i></a>
 		</div>
 	{% endfor %}
 	</div>

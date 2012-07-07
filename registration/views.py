@@ -9,6 +9,7 @@ from bracelet.models import Photo, Rate, Bracelet, BraceletString, BraceletKnot
 from django.utils.translation import ugettext as _
 from registration import captcha
 from settings import RECAPTCHA_PRIVATE_KEY, RECAPTCHA_PUBLIC_KEY
+from django.contrib.auth.models import User
 
 def register(request):
 	form = None
@@ -20,22 +21,22 @@ def register(request):
 			form = UserCreationForm(request.POST)
 			if form.is_valid():
 				form.save()
-				return HttpResponseRedirect("/")
+				return  index(request, {'ok_message': _('Success! You can log in now.')})
 			else:
 				error = _("An error has occured. Correct entered data.")
 		else:
 			error = _("Wrong captcha, try again.")
 	form = UserCreationForm()
-	return render_to_response("registration/register.html", {'form': form,'loginform': AuthenticationForm(), 'error_message': error,
-                               'captcha': captcha.displayhtml(RECAPTCHA_PUBLIC_KEY)}, context_instance=RequestContext(request))
+	return render_to_response("registration/register.html", {'form': form, 'loginform': AuthenticationForm(), 'error_message': error,
+                               'captcha': captcha.displayhtml(RECAPTCHA_PUBLIC_KEY)}, context_instance = RequestContext(request))
 
-def userprofile(request, error_message="", ok_message=""):
+def userprofile(request, error_message = "", ok_message = ""):
 	if request.user.is_authenticated():
-		context={}
+		context = {}
 		context['loginform'] = AuthenticationForm()
-		context['bracelets'] = get_all_bracelets(0,request.user)
-		context['photos'] = Photo.objects.filter(user=request.user)
-		context['rates'] = Rate.objects.filter(user=request.user)
+		context['bracelets'] = get_all_bracelets(0, request.user)
+		context['photos'] = Photo.objects.filter(user = request.user)
+		context['rates'] = Rate.objects.filter(user = request.user)
 		if error_message:
 			context['error_message'] = error_message
 		if ok_message:
@@ -46,57 +47,68 @@ def userprofile(request, error_message="", ok_message=""):
 			pass
 		return render_to_response("registration/userprofile.html", context, RequestContext(request))
 	else:
-		return index(request, {})
-		
+		return index(request, {'error_message': _('You need to be logged in.')})
+
 def delete_bracelet(request, bracelet_id):
 	try:
 		bracelet = Bracelet.objects.get(id = bracelet_id)
 	except:
-		return userprofile(request, error_message=_("There is no bracelet with id "+str(bracelet_id)))
+		return userprofile(request, error_message = _("There is no bracelet with id " + str(bracelet_id)))
 	if not request.user.is_authenticated():
-		return userprofile(request, error_message=_("You need to be logged in to edit bracelets"))
+		return userprofile(request, error_message = _("You need to be logged in to edit bracelets"))
 	if bracelet.user != request.user:
-		return userprofile(request, error_message=_("You are not owner of this bracelet"))
-	strings = BraceletString.objects.filter(bracelet=bracelet)
+		return userprofile(request, error_message = _("You are not owner of this bracelet"))
+	strings = BraceletString.objects.filter(bracelet = bracelet)
 	for string in strings:
 		string.delete()
-		
-	knots = BraceletKnot.objects.filter(bracelet=bracelet)
+
+	knots = BraceletKnot.objects.filter(bracelet = bracelet)
 	for knot in knots:
 		knot.delete()
-		
-	photos = Photo.objects.filter(bracelet=bracelet)
+
+	photos = Photo.objects.filter(bracelet = bracelet)
 	for photo in photos:
 		photo.delete()
-		
-	rates = Rate.objects.filter(bracelet=bracelet)
+
+	rates = Rate.objects.filter(bracelet = bracelet)
 	for rate in rates:
 		rate.delete()
-	
+
 	bracelet.delete()
-	return userprofile(request, ok_message=_("Bracelet deleted successfully"))
-	
-def delete_photo(request, photo_id):	
+	return userprofile(request, ok_message = _("Bracelet deleted successfully"))
+
+def delete_photo(request, photo_id):
 	try:
 		photo = Photo.objects.get(id = photo_id)
 	except:
-		return userprofile(request, error_message=_("There is no photo with id ")+str(photo_id))
+		return userprofile(request, error_message = _("There is no photo with id ") + str(photo_id))
 	if not request.user.is_authenticated():
-		return userprofile(request, error_message=_("You need to be logged in to edit bracelets"))
+		return userprofile(request, error_message = _("You need to be logged in to edit bracelets"))
 	if photo.user != request.user:
-		return userprofile(request, error_message=_("You are not owner of this photo"))
+		return userprofile(request, error_message = _("You are not owner of this photo"))
 	photo.delete()
-	return userprofile(request, ok_message=_("Photo deleted successfully"))
+	return userprofile(request, ok_message = _("Photo deleted successfully"))
 
-def delete_rate(request, rate_id):	
+def delete_rate(request, rate_id):
 	try:
 		rate = Rate.objects.get(id = rate_id)
 	except:
-		return userprofile(request, error_message=_("There is no rate with id ")+str(rate_id))
+		return userprofile(request, error_message = _("There is no rate with id ") + str(rate_id))
 	if not request.user.is_authenticated():
-		return userprofile(request, error_message=_("You need to be logged in to edit rates"))
+		return userprofile(request, error_message = _("You need to be logged in to edit rates"))
 	if rate.user != request.user:
-		return userprofile(request, error_message=_("You are not owner of this rate"))
+		return userprofile(request, error_message = _("You are not owner of this rate"))
 	rate.delete()
-	return userprofile(request, ok_message=_("Rate deleted successfully"))
-	
+	return userprofile(request, ok_message = _("Rate deleted successfully"))
+
+def user(request, user_id):
+	try:
+		user = User.objects.get(id = user_id)
+	except Exception, e:
+		return index(request, {'error_message': _('There is no user with id') + ': ' + user_id})
+
+	context = {}
+	context['user'] = user
+	context['bracelets'] = get_all_bracelets(0, user)
+	context['photos'] = Photo.objects.filter(user = user)
+	return render_to_response('registration/user.html', context, RequestContext(request))

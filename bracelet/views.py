@@ -86,8 +86,6 @@ def facebook_login_success(request):
 	#			'colors': get_colors(),
 	#			'categories': BraceletCategory.objects.all(),
 	#			}
-	print 'is auth ', user.is_authenticated()
-	print  "Welcome <b>%s</b>. Your Facebook login has been completed successfully!" % me.name
 	#return render_to_response('bracelet/index.html', context, RequestContext(request))
 	return index(request, {})
 
@@ -107,6 +105,16 @@ def add(request):
 def bracelet(request, bracelet_id):
 	bp = BraceletPattern(bracelet_id)
 	bp.generate_pattern()
+	try:
+		bracelet = Bracelet.objects.get(bracelet_id)
+		photos = Photo.objects.all().filter(bracelet = bracelet)
+		if len(photos) > 0 and photos[0].accepted:
+			img = photos[0].name
+		else:
+			img = "nophoto.png"
+	except:
+		img = "nophoto.png"
+
 	context = {'loginform':AuthenticationForm(),
 			'braceletid':bracelet_id,
 			'bracelet': Bracelet.objects.get(id = bracelet_id),
@@ -120,7 +128,8 @@ def bracelet(request, bracelet_id):
 			'bracelet_id':bracelet_id,
 			'texts':[str(s) for s in BraceletKnotType.objects.all().order_by('id')],
 			'ifwhite':bp.get_ifwhite(),
-			'nofphotos': len(Photo.objects.filter(bracelet = Bracelet.objects.get(id = bracelet_id)))
+			'nofphotos': len(Photo.objects.filter(bracelet = Bracelet.objects.get(id = bracelet_id))),
+			'photo': img
 			}
 	if request.user.is_authenticated():
 		try:

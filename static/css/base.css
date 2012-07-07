@@ -66,6 +66,7 @@ a {
 }
 .pull-right {float: right;}
 .pull-left {float: left;}
+big {font-size: 120%}
 /* -------------------------------- BODY -------------------------------- */
 body {
 	background-image: url(/static/gfx/bg.png);
@@ -202,7 +203,12 @@ ul#menu {
 	.box p {
 		margin: 0;
 	}
-	
+.error_box {
+	color: #bc0000;
+}	
+.ok_box {
+	color: #148c00;
+}
 .spacer {margin:20px;}
 /* -------------------------------- BOTTOM -------------------------------- */
 #bottom {
@@ -256,14 +262,14 @@ ul#menu {
 	font-size: 13px;
 }
 .icon-star {
-	background: url('/static/gfx/icons.png') no-repeat -15px -15px;
+	background: url('/static/gfx/icons.png') no-repeat -15px -17px;
 	padding: 0 13px 0 0;
-	font-size: 11px;
+	font-size: 10px;
 }
 .icon-star2 {
-	background: url('/static/gfx/icons.png') no-repeat 0 -15px;
+	background: url('/static/gfx/icons.png') no-repeat 0 -17px;
 	padding: 0 13px 0 0;
-	font-size: 11px;
+	font-size: 10px;
 }
 .icon-strings {
 	background: url('/static/gfx/icons.png') no-repeat -85px -71px;
@@ -297,6 +303,6 @@ ul#menu {
 }
 .icon-calendar {
 	background: url('/static/gfx/icons.png') no-repeat -15px -89px;
-	padding: 0 10px 0 0;
+	padding: 0 8px 0 0;
 	font-size: 13px;	
 }

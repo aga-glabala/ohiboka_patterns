@@ -179,7 +179,7 @@ $(document).ready(function(){
 				    	<br />
 		    	    	<i class="icon-strings" title="{% trans 'Number of strings' %}">&nbsp;</i> {{ bt.nofstrings }}
 				    	<br />
-		    	    	<i class="icon-star2" title="{% trans 'Rate' %}">&nbsp;</i> {{ bt.average_rate }}
+		    	    	<i class="icon-star2" title="{% trans 'Rate' %}: {{ bt.average_rate }}">&nbsp;</i> {{ bt.short_rate }}
 				    	<br />
 		    	    	<i class="icon-difficulty{{ bt.difficulty}}" title="{% trans 'Difficulty' %}">&nbsp;</i>
 			        </div>
@@ -191,7 +191,7 @@ $(document).ready(function(){
 				    <div class="darken" style="margin-top:48px">
 				    	{% trans 'by' %}: {{ bt.author }} {% trans 'on' %}: {{ bt.date }}
 				    </div>
-				    <div class="darken"">
+				    <div class="darken">
 			    		{% for c in bt.colors %}
 		    	    		<div class="knot" style="background-color:{{c}};"></div>
 		    	    	{% endfor %}

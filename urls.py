@@ -6,9 +6,9 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    
+
     # Examples:
-    url(r'^$', 'ohibokapatterns.bracelet.views.home', name='home'),
+    url(r'^$', 'ohibokapatterns.bracelet.views.home', name = 'home'),
     url(r'^login$', 'ohibokapatterns.bracelet.views.login_user'),
     url(r'^logout$', 'ohibokapatterns.bracelet.views.logout_user'),
     url(r'^facebook_login/$', 'ohibokapatterns.bracelet.views.facebook_login'),
@@ -29,6 +29,7 @@ urlpatterns = patterns('',
     url(r'^addpattern$', 'ohibokapatterns.bracelet.views.addpattern'),
     url(r'^register/$', 'ohibokapatterns.registration.views.register'),
     url(r'^profile/$', 'ohibokapatterns.registration.views.userprofile'),
+    url(r'^user/(?P<user_id>\d+)', 'ohibokapatterns.registration.views.user'),
     #url(r'^login/$', 'ohibokapatterns.bracelet.views.login_user'),
     # url(r'^ohibokapatterns/', include('ohibokapatterns.foo.urls')),
 
