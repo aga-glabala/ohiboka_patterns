@@ -129,7 +129,8 @@ def bracelet(request, bracelet_id):
 			'texts':[str(s) for s in BraceletKnotType.objects.all().order_by('id')],
 			'ifwhite':bp.get_ifwhite(),
 			'nofphotos': len(Photo.objects.filter(bracelet = Bracelet.objects.get(id = bracelet_id))),
-			'photo': img
+			'photo': img,
+			'request': request
 			}
 	if request.user.is_authenticated():
 		try:
