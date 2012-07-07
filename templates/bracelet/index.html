@@ -12,8 +12,10 @@ function setColor(color, selectbox) {
 function showSearchBox(hash) {
 	if(hash != "search") {
 		$('#search-form').parent().hide();
+		$('#search-form').parent().next().hide();
 	} else {
 		$('#search-form').parent().show();
+		$('#search-form').parent().next().show();
 	}
 }
 $(document).ready(function(){
@@ -42,9 +44,11 @@ $(document).ready(function(){
 	$('#search-top').click(function(e) {
 		if($('#search-form').is(':visible')) {
 			$('#search-form').parent().slideUp();
+			$('#search-form').parent().next().hide();
 			window.location.hash = '';
 		} else {
 			$('#search-form').parent().slideDown();
+			$('#search-form').parent().next().show();
 			window.location.hash = '#search';
 		}
 		e.preventDefault();

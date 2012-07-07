@@ -39,46 +39,77 @@
 {% block content %}
 {% get_comment_count for bracelet.bracelet bracelet_id as comment_count %}
 <div id="tabs">
-	<h2>{{ name }}</h2>
-	<ul>
-		<li><a href="#tabs-1">{% trans "Pattern" %}</a></li>
-		<li><a href="#tabs-2">{% trans "Step by step instructions" %}</a></li>
-		<li><a href="/comments/{{bracelet_id}}">{% trans "Comments" %} ({{ comment_count }})</a></li>
-		<li><a href="/bracelet/photos/{{bracelet_id}}">{% trans "Photos" %} ({{ nofphotos }})</a></li>
-	</ul>
-	<div id="ratepattern">
-		{% if user.is_authenticated %}
-			{% trans "rate pattern" %}: 
-			<i class="icon-star" id="rate1">&nbsp;</i>
-			<i class="icon-star" id="rate2">&nbsp;</i>
-			<i class="icon-star" id="rate3">&nbsp;</i>
-			<i class="icon-star" id="rate4">&nbsp;</i>
-			<i class="icon-star" id="rate5">&nbsp;</i>
-		{% else %}
-			{% trans "you need to be logged to rate pattern" %}
-		{% endif %}
+	<div id="tabs-name">
+		<h2>{{ name }}</h2>
+		
+		<ul>
+			<li><a href="#tabs-1">{% trans "Pattern" %}</a></li>
+			<li><a href="#tabs-2">{% trans "Step by step instructions" %}</a></li>
+			<li><a href="/comments/{{bracelet_id}}">{% trans "Comments" %} ({{ comment_count }})</a></li>
+			<li><a href="/bracelet/photos/{{bracelet_id}}">{% trans "Photos" %} ({{ nofphotos }})</a></li>
+		</ul>
+
 	</div>
+	<hr />
 	<div id="tabs-1">
-		<div class="fb-like" data-href="{{response.url}}" data-send="false" data-layout="button_count" data-width="150" data-show-faces="false"></div>
-		<div class="bracelet-data">
-			author: {{ bracelet.user.username }} <br/>
-			date: {{ bracelet.date }}<br/>
-			category: {{ bracelet.category.name }}<br/>
-			number of strings: {{ bracelet.strings.all|length }}<br/>
-			average rate: {{ bracelet.rate }}<br/>
-			difficulty: {{ bracelet.difficulty }}
-		</div>
-		<div id="pattern-thumb">
-		</div>
-		<div class="pattern-box">
-			<div id="pattern-canvas">
+		<div id="pattern-container">
+			<div id="pattern-thumb"></div>
+			<div class="pattern-box">
+				<div id="pattern-canvas"></div>
+				<div id="pattern"></div>
 			</div>
-			<div id="pattern">
+		</div>
+		<div id="bracelet-extras">
+			<div id="ratepattern">
+				{% if user.is_authenticated %}
+					{% trans "rate pattern" %}: 
+					<i class="icon-star" id="rate1">&nbsp;</i>
+					<i class="icon-star" id="rate2">&nbsp;</i>
+					<i class="icon-star" id="rate3">&nbsp;</i>
+					<i class="icon-star" id="rate4">&nbsp;</i>
+					<i class="icon-star" id="rate5">&nbsp;</i>
+				{% else %}
+					{% trans "you need to be logged to rate pattern" %}
+				{% endif %}
+			</div>
+			
+			<hr />
+			<div id="author">
+				author: {{ bracelet.user.username }} <br/>
+				<a href='#'>See more from this author</a>
+			</div>
+			<hr />
+			<div class="bracelet-data">
+				<p><i class="icon-calendar">&nbsp;</i> {{ bracelet.date }}</p>
+				<p><span class="category category{{ bracelet.category.id }}">&nbsp;</span>
+    	    		{% if bracelet.category.id == 1 %}
+    	    			{% trans 'nature' %}
+    	    		{% else %}
+    	    			{% if bracelet.category.id == 2 %}
+    	    				{% trans 'text' %}
+    	    			{% else %}
+    	    				{% if bracelet.category.id == 4 %}
+    	    					{% trans 'zigzak' %}
+    	    				{% else %}
+    	    					{% trans 'another' %}
+    	    				{% endif %}
+    	    			{% endif %}
+    	    		{% endif %}</p>
+				<p><i class="icon-strings"  title="{% trans 'Number of strings' %}">&nbsp;</i> {{ bracelet.strings.all|length }}</p>
+				<p><i class="icon-star2" title="{% trans 'Rate' %}">&nbsp;</i> {{ bracelet.rate }}</p>
+				<p><i class="icon-difficulty{{ bracelet.difficulty}}" title="{% trans 'Difficulty' %}"> &nbsp;</i> {{ bracelet.difficulty }}</p>
+			</div>
+			
+			<div class="fb-like" data-href="{{response.url}}" data-send="false" data-layout="button_count" data-width="150" data-show-faces="false"></div>
+			
+			<p>{% trans 'Little hint' %}:</p>
+			<div id="bracelet-howto">
+				<img src="{{STATIC_URL}}gfx/knots.png" />
 			</div>
 		</div>
 	</div>
 	<div id="tabs-2">
-		<div class="pattern-box">
+		<div id="pattern-container" class="pattern-box" style="width:55%">
 			<div id="step-pattern-canvas">
 			</div>
 			<div id="step-pattern">

@@ -2,7 +2,7 @@
 import os.path
 
 siteaddress = 'http://localhost:8000/'
-projectaddress = '/files/workspace/ohibokapatterns/' #'/home/agnis/ohibokapatterns/'
+projectaddress = '/files/aptana-workspace/ohibokapatterns/' #'/home/agnis/ohibokapatterns/'
 #projectaddress = ''
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -16,17 +16,17 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': projectaddress+'opdb.db',                      # Or path to database file if using sqlite3.
-        'USER': 'ohiboka',                      # Not used with sqlite3.
-        'PASSWORD': 'ohiboka',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        'NAME': projectaddress + 'opdb.db', # Or path to database file if using sqlite3.
+        'USER': 'ohiboka', # Not used with sqlite3.
+        'PASSWORD': 'ohiboka', # Not used with sqlite3.
+        'HOST': '', # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '', # Set to empty string for default. Not used with sqlite3.
     }
 }
 
 FACEBOOK_APP_ID = '159476740845097'
 FACEBOOK_SECRET_KEY = 'cd8c09d3afc4796e18199466df0d4db8'
-FACEBOOK_REDIRECT_URL = siteaddress+'facebook_login_success/'
+FACEBOOK_REDIRECT_URL = siteaddress + 'facebook_login_success/'
 
 #recaptcha account: https://www.google.com/recaptcha/admin/site?siteid=315859431
 RECAPTCHA_PUBLIC_KEY = '6LfnodMSAAAAAGKD-qOokFqpKC1Fb8Jl7arec_54'
@@ -44,7 +44,7 @@ TIME_ZONE = None
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'en'
-LANGUAGES =   (('pl', 'Polish'),
+LANGUAGES = (('pl', 'Polish'),
   ('en', 'English'),
 )
 SITE_ID = 1
@@ -119,7 +119,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'ohibokapatterns.urls'
 
 TEMPLATE_DIRS = (
-	projectaddress+"templates"
+	projectaddress + "templates"
 	# Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
 	# Always use forward slashes, even on Windows.
 	# Don't forget to use absolute paths, not relative paths.

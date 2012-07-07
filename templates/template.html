@@ -59,7 +59,7 @@
 					<button onclick="location.href='/facebook_login'">&nbsp;      </button>
 				</div>
 			</div>
-			<div class="spacer"></div>
+			<div class="spacer" style="display:none"></div>
 			<div class="box">
 				{% block content %}
 				{% endblock %}
@@ -93,8 +93,10 @@
 			$('#login').click(function() {
 				if($('#login-box').is(':visible')) {
 					$('#login-box').slideUp();
+					$('#login-box').next().slideUp();
 				} else {
 					$('#login-box').slideDown();
+					$('#login-box').next().slideDown();
 				}
 				// prevent the default action, e.g., following a link
 				return false;
@@ -120,6 +122,5 @@
 		  fjs.parentNode.insertBefore(js, fjs);
 		}(document, 'script', 'facebook-jssdk'));
 	</script>
-	<div id="fb-root"></div>
 </body>
 </html>

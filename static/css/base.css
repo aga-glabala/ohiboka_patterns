@@ -208,7 +208,7 @@ ul#menu {
 #bottom {
 	color: white;
 	font-size: smaller;
-	margin: 50px auto 0;
+	margin: 50px auto 20px;
 	width: 1000px;
 }
 
@@ -246,52 +246,57 @@ ul#menu {
 
 /* -------------------------------- ICONS -------------------------------- */
 .icon-prev {
-	background: url('/static/gfx/icons.png');
+	background: url('/static/gfx/icons.png') no-repeat ;
 	padding: 0 13px 0 0;
 	font-size: 13px;
 }
 .icon-next {
-	background: url('/static/gfx/icons.png') -15px 0;
+	background: url('/static/gfx/icons.png') no-repeat -15px 0;
 	padding: 0 13px 0 0;
 	font-size: 13px;
 }
 .icon-star {
-	background: url('/static/gfx/icons.png') -15px -15px;
+	background: url('/static/gfx/icons.png') no-repeat -15px -15px;
 	padding: 0 13px 0 0;
 	font-size: 11px;
 }
 .icon-star2 {
-	background: url('/static/gfx/icons.png') 0 -15px;
+	background: url('/static/gfx/icons.png') no-repeat 0 -15px;
 	padding: 0 13px 0 0;
 	font-size: 11px;
 }
 .icon-strings {
-	background: url('/static/gfx/icons.png') -85px -71px;
+	background: url('/static/gfx/icons.png') no-repeat -85px -71px;
 	padding: 0 13px 0 0;
 	font-size: 11px;
 }
 .icon-difficulty1 {
-	background: url('/static/gfx/icons.png') -40px -71px;
+	background: url('/static/gfx/icons.png') no-repeat -40px -71px;
 	padding: 0 10px 0 0;
 	font-size: 13px;
 }
 .icon-difficulty2 {
-	background: url('/static/gfx/icons.png') -55px -71px;
+	background: url('/static/gfx/icons.png') no-repeat -55px -71px;
 	padding: 0 10px 0 0;
 	font-size: 13px;
 }
 .icon-difficulty3 {
-	background: url('/static/gfx/icons.png') -70px -71px;
+	background: url('/static/gfx/icons.png') no-repeat -70px -71px;
 	padding: 0 10px 0 0;
 	font-size: 13px;
 }
 .icon-new {
-	background: url('/static/gfx/icons.png') 0 -87px;
+	background: url('/static/gfx/icons.png') no-repeat 0 -87px;
 	padding: 0 10px 0 0;
 	font-size: 13px;
 }
 .icon-delete {
-	background: url('/static/gfx/icons.png') -92px 0;
+	background: url('/static/gfx/icons.png') no-repeat -92px 0;
 	padding: 0 10px 0 0;
 	font-size: 13px;
+}
+.icon-calendar {
+	background: url('/static/gfx/icons.png') no-repeat -15px -89px;
+	padding: 0 10px 0 0;
+	font-size: 13px;	
 }

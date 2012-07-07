@@ -97,11 +97,14 @@
 .ui-corner-all, .ui-corner-top {
 
 }
+#pattern-container {
+	display: inline-block;
+	width: 67%;
+}
 .pattern-box {
 	position:relative;	
 	z-index:1;
-	width: 60%;
-	display: inline-block;
+	vertical-align: top; 
 }
 #pattern, #step-pattern {
 	position:relative;
@@ -214,18 +217,54 @@
 	display: inline-block;
 	margin: -5px 1px 0 1px;
 }
-#ratepattern, .fb-like, .bracelet-data {
-	float: right;
+#tabs-name {
+	margin-bottom: 5px;
 }
-#step-pattern {
+
+#bracelet-extras {
+	display:inline-block;
+	width: 30%;
+	vertical-align: top;
+	color: #3a3a33;
+	background-color: #d2e5eb;
+	padding: 10px;
+	-webkit-box-shadow: 0 0 5px 0 #222;
+	box-shadow: 0 0 5px 0 #222;
+}
+.bracelet-data {
+	line-height: 1.5em;
+}
+.fb-like {
+	margin: 15px 0;
+}
+#ratepattern {
+	margin-bottom: 15px;
+}
+#bracelet-extras #author {
+	height: 50px;
+	background: url('/static/gfx/user.png') no-repeat;
+	margin: 10px 0;
+	padding: 15px 0 5px 50px;
+}
+.bracelet-data p i {
+	vertical-align: top;
 }
 #instructionbox {
-	width: 35%;
+	width: 40%;
 	display: inline-block;
 	margin-left: 10px;
-	float:right;
+	vertical-align: bottom;
+}
+#instructions {
 	height: 400px;
-	overflow:scroll;
+	overflow:auto;	
+}
+#instructions p {
+	margin: 5px 0;
+}
+#instructions span {
+	vertical-align: middle;
+
 }
 #buttons {
 	text-align: center;
@@ -234,6 +273,28 @@
 #buttons button {
 	padding: 2px;
 }
+.category {
+	border:0;
+	display: inline-block;
+	width: 20px;
+	height:20px;
+	background-image: url('/static/gfx/icons.png');
+	background-repeat:no-repeat;
+	vertical-align: middle;
+}
+.category1 {
+	background-position: 0 -51px;
+}
+.category2 {
+	background-position: -20px -51px;
+}
+.category4 {
+	background-position: -40px -51px;
+}
+.category3 {
+	background-position: -60px -51px;
+}
+
 .photo {
 	display: inline-block;
 	width: 132px;
