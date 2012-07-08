@@ -1,0 +1,7 @@
+{% extends "template.html" %}
+{% load i18n %}
+
+{% block content %}
+{% trans 'Ouch! Something went really wrong. Try to reload page, if problem reapeat' %}, <a href="/about/">{% trans 'let me knot about it'%}</a><br />
+{% trans '..or you can go back to' %}<a href="/">{% trans 'main page' %}</a>
+{% endblock %}

@@ -121,3 +121,9 @@ def user(request, user_id):
 	context['bracelets'] = get_all_bracelets(0, user)
 	context['photos'] = Photo.objects.filter(user = user)
 	return render_to_response('registration/user.html', context, RequestContext(request))
+
+def about(request):
+	return render_to_response('registration/about.html', {}, RequestContext(request))
+
+def privacypolicy(request):
+	return render_to_response('registration/privacypolicy.html', {}, RequestContext(request))

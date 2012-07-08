@@ -1,0 +1,7 @@
+{% extends "template.html" %}
+{% load i18n %}
+
+{% block content %}
+{% trans 'Page you are looking for is not here. If you got here following link from this page - please' %}, <a href="/about/">{% trans 'let me knot about it'%}</a><br />
+{% trans 'You can go back to' %}<a href="/">{% trans 'main page' %}</a>
+{% endblock %}

@@ -30,6 +30,8 @@ urlpatterns = patterns('',
     url(r'^register/$', 'ohibokapatterns.registration.views.register'),
     url(r'^profile/$', 'ohibokapatterns.registration.views.userprofile'),
     url(r'^user/(?P<user_id>\d+)', 'ohibokapatterns.registration.views.user'),
+    url(r'^about/$', 'ohibokapatterns.registration.views.about'),
+    url(r'^privacypolicy/$', 'ohibokapatterns.registration.views.privacypolicy'),
     #url(r'^login/$', 'ohibokapatterns.bracelet.views.login_user'),
     # url(r'^ohibokapatterns/', include('ohibokapatterns.foo.urls')),
 
