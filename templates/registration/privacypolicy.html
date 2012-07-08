@@ -1,5 +1,8 @@
 {% extends "template.html" %}
 {% load i18n %}
+{% block title %}
+ - {% trans "Privacy policy" %}
+{% endblock %}
 {% block css %}
 <link rel="stylesheet" href="{{ STATIC_URL }}css/static.css" type="text/css">
 {% endblock %}
@@ -8,102 +11,103 @@
 <h2>Polityka prywatności</h2>
 <hr />
 <h3>1. Jakie dane są zbierane?</h3>
-<p><strong>Dane zbierane podczas rejestracji</strong>
+<p><strong>Dane zbierane podczas rejestracji</strong><br />
 Abyś mógł skorzystać z niektórych funkcji naszego serwisu będziesz musiał sie zarejestrować. Podczas rejestracji zapytamy Cię o Twój adres email, nazwę użytkownika oraz hasło jakiego będziesz używał na naszej witrynie.</p>
 
-<p><strong>Dane zbierane automatycznie</strong>
+<p><strong>Dane zbierane automatycznie</strong><br />
 Podczas Twojej wizyty na naszej stronie internetowej, serwer automatycznie zbiera dane dotyczące Twojej wizyty, np. Twój adres IP, nazwa domeny, typ przeglądarki, typ systemu operacyjnego, itp.</p>
 
-<p><strong>Dane zbierane, gdy kontaktujesz się z nami</strong>
+<p><strong>Dane zbierane, gdy kontaktujesz się z nami</strong><br />
 Gdy kontaktujesz się z nami za pomocą strony internetowej, telefonu, poczty email, itp. przekazujesz nam swoje dane osobowe, np. imię, nazwisko, adres email, itp.</p>
 
 <h3>2. W jaki sposób wykorzystywane są dane?</h3>
-<ul>
-<li>Informacje zebrane o Tobie nie będą przekazywane podmiotom trzecim.</li>
 
-<li>Hasło zbierane podczas rejestracji będzie wykorzystane wyłącznie do umożliwienia Tobie zalogowania się do naszego serwisu, a adres email do umożliwienia wygenerowania i wysłania Ci hasła, gdy go zapomnisz. Rejestracja jest obowiązkowa jeżeli chcesz dodawać treści do serwisu.</li>
+<p>Informacje zebrane o Tobie nie będą przekazywane podmiotom trzecim.</p>
 
-<li>Jeżeli zapisałeś się na nasz Newsletter, lub w inny sposób wyraziłeś zgodę na jego otrzymywanie, wykorzystamy Twoje dane w celu wysłania Ci naszego Newslettera. Korzystanie z newslettera jest opcjaonalne.</li>
+<p>Hasło zbierane podczas rejestracji będzie wykorzystane wyłącznie do umożliwienia Tobie zalogowania się do naszego serwisu, a adres email do umożliwienia wygenerowania i wysłania Ci hasła, gdy go zapomnisz. Rejestracja jest obowiązkowa jeżeli chcesz dodawać treści do serwisu.</p>
 
-<li>Dane zbierane automatycznie mogą być użyte do analizy zachowań użytkowników na naszej stronie internetowej, zbierania danych demograficznych o naszych użytkownikach, lub do personalizacji zawartości naszych stron internetowych. Dane te są zbierane automatycznie o każdym użytkowniku i każdych odwiedzinach serwisu.</li>
+<p>Jeżeli zapisałeś się na nasz Newsletter, lub w inny sposób wyraziłeś zgodę na jego otrzymywanie, wykorzystamy Twoje dane w celu wysłania Ci naszego Newslettera. Korzystanie z newslettera jest opcjonalne.</p>
 
-<li>Dane zbierane w trakcie korespondencji pomiędzy Tobą, a naszym serwisem będą wykorzystane wyłącznie w celu odpowiedzi na Twoje zapytanie.</li>
+<p>Dane zbierane automatycznie mogą być użyte do analizy zachowań użytkowników na naszej stronie internetowej, zbierania danych demograficznych o naszych użytkownikach, lub do personalizacji zawartości naszych stron internetowych. Dane te są zbierane automatycznie o każdym użytkowniku i każdych odwiedzinach serwisu.</p>
 
-<li>W przypadku kontroli Generalnego Inspektoratu Ochrony Danych Osobowych, Twoje dane mogą zostać udostępnione pracownikom Inspektoratu zgodnie z ustawą o ochronie danych osobowych.</li>
+<p>Dane zbierane w trakcie korespondencji pomiędzy Tobą, a naszym serwisem będą wykorzystane wyłącznie w celu odpowiedzi na Twoje zapytanie.</p>
 
-<li>W przypadku naruszenia Regulaminu naszego serwisu, naruszenia prawa, lub gdy będą wymagały tego przepisy prawa, możemy udostępnić Twoje dane organom wymiaru sprawiedliwości.</li>
-</ul>
+<p>W przypadku kontroli Generalnego Inspektoratu Ochrony Danych Osobowych, Twoje dane mogą zostać udostępnione pracownikom Inspektoratu zgodnie z ustawą o ochronie danych osobowych.</p>
+
+<p>W przypadku naruszenia Regulaminu naszego serwisu, naruszenia prawa, lub gdy będą wymagały tego przepisy prawa, możemy udostępnić Twoje dane organom wymiaru sprawiedliwości.</p>
+
 <h3>3. W jaki sposób serwis kontaktuje się z użytkownikiem?</h3>
-<ul>
-<li>Jeżeli dodałeś publicznie widoczny wzór bransoletki lub zdjęcie, możesz otrzymać od nas emaile dotyczące akceptacji lub odrzucenia Twojej treści.</li>
-<li>Jeżeli zapisałeś się na nasz Newsletter, lub w inny sposób wyraziłeś zgodę na jego otrzymywanie, będziesz od nas otrzymywać drogą emailową nasz Newsletter.</li>
-<li>W przypadku istotnych zmian polityki prywatności lub zasad korzystania serwisu, poinformujemy Cię o tym emailem.</li>
-</ul>
+
+<p>Jeżeli dodałeś publicznie widoczny wzór bransoletki lub zdjęcie, możesz otrzymać od nas emaile dotyczące akceptacji lub odrzucenia Twojej treści.</p>
+<p>Jeżeli zapisałeś się na nasz Newsletter, lub w inny sposób wyraziłeś zgodę na jego otrzymywanie, będziesz od nas otrzymywać drogą emailową nasz Newsletter.</p>
+<p>W przypadku istotnych zmian polityki prywatności lub zasad korzystania serwisu, poinformujemy Cię o tym emailem.</p>
+
 <h3>4. Zmiany danych osobowych</h3>
-<p><strong>W jaki sposób możesz poinformować nas o zmianie danych?</strong>
+<p><strong>W jaki sposób możesz poinformować nas o zmianie danych?</strong><br />
 Po zalogowaniu się do serwisu i przejściu do Profilu, możesz wprowadzić zmiany lub usunąć swoje dane osobowe zbierane podczas rejestracji i używane do zalogowania się do serwisu. Możesz usunąć treści, które umieściłeś w serwisie. Danych zbieranych automatycznie nie da się zmienić lub usunąć.</p>
 
 <h3>5. Wykorzystanie cookies</h3>
-Nasz serwis może wykorzystywać ciasteczka, które służą identyfikacji Twojej przeglądarki podczas korzystania z naszej strony, abyśmy wiedzieli jaką stronę Ci wyświetlić. Ciasteczka nie zawierają żadnych danych osobowych.
+<p>Nasz serwis może wykorzystywać ciasteczka, które służą identyfikacji Twojej przeglądarki podczas korzystania z naszej strony, abyśmy wiedzieli jaką stronę Ci wyświetlić. Ciasteczka nie zawierają żadnych danych osobowych.</p>
 
 <h3>6. Zabezpieczenie danych</h3>
-Nasze bazy danych, zawierające informacje o Tobie, zabezpieczone są przed wglądem osób trzecich. Komunikacja między Twoim komputerem a naszym serwerem może być zaszyfrowana z użyciem protokołu SSL (Secure Socket Layer), jeśli ją wymusisz poprzez zmianę protokołu w adresie URL na https://.
+<p>Nasze bazy danych, zawierające informacje o Tobie, zabezpieczone są przed wglądem osób trzecich. Komunikacja między Twoim komputerem a naszym serwerem może być zaszyfrowana z użyciem protokołu SSL (Secure Socket Layer), jeśli ją wymusisz poprzez zmianę protokołu w adresie URL na https://.</p>
 
 <h3>7. Zmiany polityki prywatności</h3>
-Zastrzegamy sobie prawo zmiany powyższej polityki prywatności poprzez opublikowanie nowej polityki prywatności na tej stronie.
+<p>Zastrzegamy sobie prawo zmiany powyższej polityki prywatności poprzez opublikowanie nowej polityki prywatności na tej stronie.</p>
 
 <h3>8. Kontakt</h3>
-W razie dodatkowych pytań dotyczących ochrony prywatności, prosimy o kontakt korzystając z formularza kontaktowego na stronie o mnie.
+<p>W razie dodatkowych pytań dotyczących ochrony prywatności, prosimy o kontakt korzystając z formularza kontaktowego na stronie o mnie.</p>
 
 {% else %}
 <h2>Privacy Policy</h2>
-
+<hr />
 <h3>1. What information is collected?</h3>
-Data collected during the registration
-To be able to use certain features of our service you will need to register. During registration, we ask you to submit your email address, user name and password you will be using on our site.
 
-Data collected automatically
-During your visit to our website, the server automatically collects data about your visit, such as your IP address, domain name, browser type, operating system type, etc.
+<p><strong>Data collected during the registration</strong><br />
+To be able to use certain features of our service you will need to register. During registration, we ask you to submit your email address, user name and password you will be using on our site.</p>
 
-Data collected when you contact us
-When you contact us via the website, phone, email, etc. give us your personal information, such as your name, email address, etc.
+<p><strong>Data collected automatically</strong><br />
+During your visit to our website, the server automatically collects data about your visit, such as your IP address, domain name, browser type, operating system type, etc.</p>
+
+<p><strong>Data collected when you contact us</strong><br />
+When you contact us via the website, phone, email, etc. give us your personal information, such as your name, email address, etc.</p>
 
 <h3>2. How we use the data?</h3>
-Information collected about you will not be disclosed to third parties.
+<p>Information collected about you will not be disclosed to third parties.</p>
 
-Password gathered during registration will be used only to allow you to log on to our website, and email address to allow to generate and send you your password if you forget it. Registration is compulsory if you want to add content to the site.
+<p>Password gathered during registration will be used only to allow you to log on to our website, and email address to allow to generate and send you your password if you forget it. Registration is compulsory if you want to add content to the site.</p>
 
-If you subscribed to our newsletter, or otherwise consented to receive it, we will use your information to send you our newsletter. Using the newsletter is opcjaonalne.
+<p>If you subscribed to our newsletter, or otherwise consented to receive it, we will use your information to send you our newsletter. Using the newsletter is not required.</p>
 
-Automatically collected data may be used to analyze user behavior on our website, collect demographic data about our users, or to personalize the content of our web pages. These data are collected automatically for each user and each time you visit the site.
+<p>Automatically collected data may be used to analyze user behavior on our website, collect demographic data about our users, or to personalize the content of our web pages. These data are collected automatically for each user and each time you visit the site.</p>
 
-Data collected in the course of correspondence between you and our service will be used only to respond to your request.
+<p>Data collected in the course of correspondence between you and our service will be used only to respond to your request.</p>
 
-In the case of control of the General Inspectorate for Personal Data Protection, your data can be made available to employees of the Inspectorate in accordance with the Law on Personal Data Protection.
+<p>In the case of control of the General Inspectorate for Personal Data Protection, your data can be made available to employees of the Inspectorate in accordance with the Law on Personal Data Protection.</p>
 
-Currently our service, violation of law, or when they are required by law, we may disclose your information to the judicial authorities.
+<p>Currently our service, violation of law, or when they are required by law, we may disclose your information to the judicial authorities.</p>
 
 <h3>3. How to contact the service user?</h3>
-If you have added public bracelet pattern or picture, you can receive emails from us regarding the acceptance or rejection of your content.
+<p>If you have added public bracelet pattern or picture, you can receive emails from us regarding the acceptance or rejection of your content.</p>
 
-If you subscribed to our newsletter, or otherwise consented to receive it, you'll receive from us by e-mail newsletter.
+<p>If you subscribed to our newsletter, or otherwise consented to receive it, you'll receive from us by e-mail newsletter.</p>
 
-In the event of significant changes in our privacy policy or the rules of using the service, we will notify you by email.
+<p>In the event of significant changes in our privacy policy or the rules of using the service, we will notify you by email.</p>
 
 <h3>4. Changes in personal data</h3>
-How can you tell us about a change in data?
-After logging in to the site and going to your profile, you can make changes or remove your personal information collected during registration and used to log into the site. You can remove content that you put on the site. Automatically collected data can not be changed or removed.
+<p><strong>How can you tell us about a change in data?</strong><br />
+After logging in to the site and going to your profile, you can make changes or remove your personal information collected during registration and used to log into the site. You can remove content that you put on the site. Automatically collected data can not be changed or removed.</p>
 
 <h3>5. Use of Cookies</h3>
-Our site may use cookies to identify your browser when using our site, we know which page you view. Cookies do not contain any personal information.
+<p>Our site may use cookies to identify your browser when using our site, we know which page you view. Cookies do not contain any personal information.</p>
 
 <h3>6. Data protection</h3>
-Our database, containing information about you are protected against access by third parties. The communication between your computer and our server can be encrypted using SSL (Secure Socket Layer), if the force a cache reload it by changing the protocol in the URL to https://.
+<p>Our database, containing information about you are protected against access by third parties. The communication between your computer and our server can be encrypted using SSL (Secure Socket Layer), if the force a cache reload it by changing the protocol in the URL to https://.</p>
 
 <h3>7. Privacy Policy Changes</h3>
-We reserve the right to amend this privacy policy by posting the new Privacy Policy on this page.
+<p>We reserve the right to amend this privacy policy by posting the new Privacy Policy on this page.</p>
 
 <h3>8. Contact</h3>
-If you have further questions about privacy, please contact us using the contact form on the page about me.
+<p>If you have further questions about privacy, please contact us using the contact form on the page about me.</p>
 {% endif %}
 {% endblock %}

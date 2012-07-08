@@ -20,22 +20,23 @@
 		  	<tr>
 		  		<td>{{ field.label }}</td>
 		  		<td class="field">{{ field }}</td> 
-		  		<td>{{ field.help_text }}</td>
+		  		<td class="info">{{ field.help_text }}</td>
 		  	</tr>
 	  	{% endfor %}
 		<tr>
 			<td colspan="2">{{ captcha|safe }}</td>
 			<td></td>
 		</tr>
+		<tr><td colspan=2>{% trans 'By clicking button below, you accept' %} <a href="/privacypolicy/">{% trans 'our privacy policy' %}</a></td></tr>
 		<tr><td></td><td><input type="submit" value="{% trans 'Create new account' %}" /></td><td></td></tr>
   	</table>
   </form>
   <script language="Javascript" type="text/javascript">
   	$('.field > input').focus(function() {	
-  		$(this).parent().next("td").fadeIn("slow");
+  		$(this).parent().next(".info").fadeIn("slow");
   	});
   	$('.field > input').focusout(function() {	
-  		$(this).parent().next("td").fadeOut("slow");
+  		$(this).parent().next(".info").fadeOut("slow");
   	});
   	
   </script>

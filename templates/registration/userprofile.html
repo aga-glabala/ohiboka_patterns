@@ -24,16 +24,16 @@
 {% block content %}
 <h2>{% trans "Your content" %}</h2>
 
-{% if accepted %}
+{% if bracelets_accepted %}
 <h3>{% trans "Your accepted bracelets" %}</h3>
 
 <hr />
-	{% for bt in accepted %}
+	{% for bt in bracelets_accepted %}
 	    <div class="pattern-box">
 		<div class="pattern {% cycle 'pattern-odd' 'pattern-even' %}" id="pattern{{ bt.braceletid }}">
 		        <a href="/bracelet/{{ bt.braceletid }}">
 			        <div class="pattern-thumb">
-				        <img src="{{ STATIC_URL }}bracelet_thumbs/{{ bt.photo }}" />
+				        <img src="{{ MEDIA_URL }}bracelet_thumbs/{{ bt.photo }}" />
 			        </div>
 			        <div class="pattern-info">
 			        	{% if bt.now %}
@@ -83,16 +83,16 @@
 	    {% endfor %}
 {% endif %}
 
-{% if not_accepted %}
+{% if bracelets_not_accepted %}
 <h3>{% trans "Bracelets waiting for admin to accept" %}</h3>
 
 <hr />
-	{% for bt in not_accepted %}
+	{% for bt in bracelets_not_accepted %}
 	    <div class="pattern-box">
 		<div class="pattern {% cycle 'pattern-odd' 'pattern-even' %}" id="pattern{{ bt.braceletid }}">
 		        <a href="/bracelet/{{ bt.braceletid }}">
 			        <div class="pattern-thumb">
-				        <img src="{{ STATIC_URL }}bracelet_thumbs/{{ bt.photo }}" />
+				        <img src="{{ MEDIA_URL }}bracelet_thumbs/{{ bt.photo }}" />
 			        </div>
 			        <div class="pattern-info">
 			        	{% if bt.now %}
@@ -160,21 +160,31 @@
 		{% endfor %}
 	</table>
 {% endif %}
-{% if photos %}
-	<div id="user_photos">
-	<h3>{% trans 'Photos' %}</h3>
+{% if photos_accepted %}
+	<h3>{% trans 'Accepted photos' %}</h3>
 	<hr />
-	{% for photo in photos %}
+	{% for photo in photos_accepted %}
 		<div class="photo">
-        	<a href="{{ STATIC_URL }}images/{{ photo.name }}"><img src="{{ STATIC_URL }}bracelet_thumbs/{{ photo.name }}" /></a>
+        	<a href="{{ MEDIA_URL }}images/{{ photo.name }}"><img src="{{ MEDIA_URL }}bracelet_thumbs/{{ photo.name }}" /></a>
     	    <a href="/bracelet/{{ photo.bracelet.id }}">{{photo.bracelet.name}}</a>
     	    <a href="/bracelet/photo/remove/{{photo.id}}" title="{% trans 'Remove' %}"><i class="icon-delete"></i></a>
 		</div>
 	{% endfor %}
-	</div>
+{% endif %}
+
+{% if photos_not_accepted %}
+	<h3>{% trans 'Photos waiting for admin to accept' %}</h3>
+	<hr />
+	{% for photo in photos_not_accepted %}
+		<div class="photo">
+        	<a href="{{ MEDIA_URL }}images/{{ photo.name }}"><img src="{{ MEDIA_URL }}bracelet_thumbs/{{ photo.name }}" /></a>
+    	    <a href="/bracelet/{{ photo.bracelet.id }}">{{photo.bracelet.name}}</a>
+    	    <a href="/bracelet/photo/remove/{{photo.id}}" title="{% trans 'Remove' %}"><i class="icon-delete"></i></a>
+		</div>
+	{% endfor %}
 {% endif %}
 	<script type="text/javascript">
-		$('.photoTd a').lightBox(
+		$('.photo a').lightBox(
 					{
 						imageLoading: {{STATIC_URL}}+'gfx/lightbox-ico-loading.gif',
 						imageBtnClose: {{STATIC_URL}}+'gfx/lightbox-btn-close.gif',

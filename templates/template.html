@@ -86,15 +86,18 @@
 	</div>
 	<div class="stitches stitches-bottom1"></div>
 	<div id="bottom">
-		<div>Copyright © 2012 - Ohiboka</div>
-		<!-- <div>
+		<div>
+			Copyright © 2012 - Ohiboka<br />
+			<a href="/privacypolicy/">{% trans 'Privacy policy' %}</a>
+		</div>
+		<div>
 			<a href="/">{% trans 'Patterns' %}</a><br />
 			<a href="http://blog.ohiboka.com">{% trans 'Blog' %}</a>
 		</div>
 		<div>
 			{% if user.is_authenticated %}
 				<a href="/profile/">{% trans 'Profile' %} - {{ user.username }}</a><br />
-				<a href="/profile/">{% trans 'Add new bracelet' %}</a>
+				<a href="/add/">{% trans 'Add new bracelet' %}</a>
 			{% else %}
 				<a href="" id="login">Log in</a><br />
 				<a href="/register/">Register</a>
@@ -103,7 +106,7 @@
 		<div>
 			<a href="http://www.facebook.com/ohibokabracelets">{% trans 'Find me on facebook' %}</a><br />
 			<a href="/about">{% trans 'About' %}</a><br />
-		</div> -->
+		</div> 
 	</div>
 	<div class="stitches stitches-bottom2"></div>
 	<script>
@@ -119,9 +122,16 @@
 				// prevent the default action, e.g., following a link
 				return false;
 			});
-			$('#login-form input:text').attr('placeholder', '{{ loginform.username.label }}')
-			$('#login-form input:password').attr('placeholder', '{{ loginform.password.label }}')
-			
+
+			var i = document.createElement('input');
+			if ( 'placeholder' in i) {
+				$('#login-form input:text').attr('placeholder', '{{ loginform.username.label }}');
+				$('#login-form input:password').attr('placeholder', '{{ loginform.password.label }}');
+			} else {
+				$('#login-form input:text').val('{{ loginform.username.label }}');
+				$('#login-form input:password').val('{{ loginform.password.label }}');
+			}
+
 			$('#fb').hover(function() {
 				$('.fb-like-box').fadeIn();
 			});

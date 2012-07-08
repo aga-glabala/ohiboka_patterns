@@ -102,7 +102,7 @@ def add(request):
 			}
 	return render_to_response('bracelet/add.html', context, RequestContext(request))
 
-def bracelet(request, bracelet_id):
+def bracelet(request, bracelet_id, context = {}):
 	bp = BraceletPattern(bracelet_id)
 	bp.generate_pattern()
 	try:
@@ -117,7 +117,7 @@ def bracelet(request, bracelet_id):
 
 	bracelet = Bracelet.objects.get(id = bracelet_id)
 
-	context = {'loginform':AuthenticationForm(),
+	context.update({'loginform':AuthenticationForm(),
 			'braceletid':bracelet_id,
 			'bracelet': bracelet,
 			'name' : bp.bracelet.name,
@@ -130,10 +130,10 @@ def bracelet(request, bracelet_id):
 			'bracelet_id':bracelet_id,
 			'texts':[str(s) for s in BraceletKnotType.objects.all().order_by('id')],
 			'ifwhite':bp.get_ifwhite(),
-			'nofphotos': len(Photo.objects.filter(bracelet = bracelet)),
+			'nofphotos': len(Photo.objects.filter(bracelet = bracelet, accepted = True)),
 			'photo': img,
 			'request': request
-			}
+			})
 	if request.user.is_authenticated():
 		try:
 			context['userprofile'] = UserProfile.objects.get(user = request.user)
@@ -208,17 +208,17 @@ def addpattern(request):
 	return HttpResponseRedirect('/bracelet/' + str(b.id))
 
 def photos(request, bracelet_id):
-	photos = Photo.objects.filter(bracelet = Bracelet.objects.get(id = bracelet_id))
+	photos = Photo.objects.filter(bracelet = Bracelet.objects.get(id = bracelet_id), accepted = True)
 	form = UploadFileForm()
 	return render_to_response('bracelet/tabs/photos.html', {'form': form, 'bracelet_id':bracelet_id, 'photos':photos, 'selectTabs':3}, RequestContext(request))
 
 def photo_upload(request, bracelet_id):
-	photos = Photo.objects.filter(bracelet = Bracelet.objects.get(id = bracelet_id))
+	photos = Photo.objects.filter(bracelet = Bracelet.objects.get(id = bracelet_id), accepted = True)
 	form = UploadFileForm(request.POST, request.FILES)
 	if form.is_valid():
 		handle_uploaded_file(request.FILES['file'], request.POST['bracelet_id'], request.user)
-		return HttpResponseRedirect('/bracelet/' + request.POST['bracelet_id'] + '/#ui-tabs-2')
-	return render_to_response('bracelet/tabs/photos.html', {'form': form, 'bracelet_id':bracelet_id, 'photos':photos, 'selectTabs':3}, RequestContext(request))
+		return bracelet(request, bracelet_id, {'form': form, 'bracelet_id':bracelet_id, 'photos':photos, 'selectTabs':3, 'ok_message':_('Photo upload successfully. It will show up here after admin acceptance.')})
+	return bracelet(request, bracelet_id, {'form': form, 'bracelet_id':bracelet_id, 'photos':photos, 'selectTabs':3, 'error_message':_('Error has occured when uploading photo.')})
 
 def rate(request, bracelet_id, bracelet_rate):
 	try:

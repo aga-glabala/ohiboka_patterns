@@ -1,16 +1,19 @@
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.http import HttpResponseRedirect
-from django.shortcuts import render_to_response
+from django.contrib.auth.forms import AuthenticationForm
+from django.shortcuts import render_to_response, render
 from django.template import RequestContext
 from registration.models import UserProfile
-from bracelet.views import home, index
+from bracelet.views import index
 from bracelet.bracelet_tools import get_all_bracelets
 from bracelet.models import Photo, Rate, Bracelet, BraceletString, BraceletKnot
 from django.utils.translation import ugettext as _
 from registration import captcha
-from settings import RECAPTCHA_PRIVATE_KEY, RECAPTCHA_PUBLIC_KEY
+from settings import RECAPTCHA_PRIVATE_KEY, RECAPTCHA_PUBLIC_KEY, DEBUG
 from django.contrib.auth.models import User
+from registration.forms import UserCreationFormExtended, ContactForm
+from django.http import HttpResponseRedirect
+from django.core.mail import send_mail
 
+context = {'loginform' : AuthenticationForm()}
 def register(request):
 	form = None
 	error = None
@@ -18,7 +21,7 @@ def register(request):
 		captcha_response = captcha.submit(request.POST['recaptcha_challenge_field'], request.POST['recaptcha_response_field'],
                                           RECAPTCHA_PRIVATE_KEY, request.META['REMOTE_ADDR'])
 		if captcha_response.is_valid:
-			form = UserCreationForm(request.POST)
+			form = UserCreationFormExtended(request.POST)
 			if form.is_valid():
 				form.save()
 				return  index(request, {'ok_message': _('Success! You can log in now.')})
@@ -26,25 +29,34 @@ def register(request):
 				error = _("An error has occured. Correct entered data.")
 		else:
 			error = _("Wrong captcha, try again.")
-	form = UserCreationForm()
-	return render_to_response("registration/register.html", {'form': form, 'loginform': AuthenticationForm(), 'error_message': error,
-                               'captcha': captcha.displayhtml(RECAPTCHA_PUBLIC_KEY)}, context_instance = RequestContext(request))
+	form = UserCreationFormExtended()
+	context.update({'form': form, 'loginform': AuthenticationForm(), 'error_message': error,
+                               'captcha': captcha.displayhtml(RECAPTCHA_PUBLIC_KEY)})
+	return render_to_response("registration/register.html", context, context_instance = RequestContext(request))
 
 def userprofile(request, error_message = "", ok_message = ""):
 	if request.user.is_authenticated():
 		bracelets = get_all_bracelets(0, request.user, False)
-		accepted = []
-		not_accepted = []
+		bracelets_accepted = []
+		bracelets_not_accepted = []
 		for br in bracelets:
 			if br.accepted:
-				accepted.append(br)
+				bracelets_accepted.append(br)
 			else:
-				not_accepted.append(br)
-		context = {}
-		context['loginform'] = AuthenticationForm()
-		context['accepted'] = accepted
-		context['not_accepted'] = not_accepted
-		context['photos'] = Photo.objects.filter(user = request.user)
+				bracelets_not_accepted.append(br)
+
+		photos = Photo.objects.filter(user = request.user)
+		photos_accepted = []
+		photos_not_accepted = []
+		for p in photos:
+			if p.accepted:
+				photos_accepted.append(p)
+			else:
+				photos_not_accepted.append(p)
+		context['bracelets_accepted'] = bracelets_accepted
+		context['bracelets_not_accepted'] = bracelets_not_accepted
+		context['photos_accepted'] = photos_accepted
+		context['photos_not_accepted'] = photos_not_accepted
 		context['rates'] = Rate.objects.filter(user = request.user)
 		if error_message:
 			context['error_message'] = error_message
@@ -113,17 +125,26 @@ def delete_rate(request, rate_id):
 def user(request, user_id):
 	try:
 		user = User.objects.get(id = user_id)
-	except Exception, e:
+	except Exception:
 		return index(request, {'error_message': _('There is no user with id: {0}').format(user_id)})
 
 	context = {}
 	context['user'] = user
 	context['bracelets'] = get_all_bracelets(0, user)
-	context['photos'] = Photo.objects.filter(user = user)
+	context['photos'] = Photo.objects.filter(user = user, accepted = True)
 	return render_to_response('registration/user.html', context, RequestContext(request))
 
 def about(request):
-	return render_to_response('registration/about.html', {}, RequestContext(request))
+	if request.method == 'POST':
+		form = ContactForm(request.POST)
+		if form.is_valid():
+			send_mail('Subject here', 'Here is the message.', 'from@example.com', fail_silently = DEBUG)
+			return HttpResponseRedirect('/thanks/')
+	else:
+		form = ContactForm()
+	context.update({'contactform':form})
+
+	return render_to_response('registration/about.html', context, RequestContext(request))
 
 def privacypolicy(request):
-	return render_to_response('registration/privacypolicy.html', {}, RequestContext(request))
+	return render_to_response('registration/privacypolicy.html', context, RequestContext(request))

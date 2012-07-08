@@ -153,7 +153,7 @@ $(document).ready(function(){
 	        <div class="pattern {% cycle 'pattern-odd' 'pattern-even' %}" id="pattern{{ bt.braceletid }}">
 		        <a href="/bracelet/{{ bt.braceletid }}">
 			        <div class="pattern-thumb">
-				        <img src="{{ STATIC_URL }}bracelet_thumbs/{{ bt.photo }}" /></td></tr>
+				        <img src="{{ MEDIA_URL }}bracelet_thumbs/{{ bt.photo }}" /></td></tr>
 			        </div>
 			        <div class="pattern-info">
 			        	{% if bt.now %}

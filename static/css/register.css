@@ -1,7 +1,7 @@
 #registerForm label {
 	width: 200px;
 }
-#registerForm tr td:last-child {
+#registerForm tr td.info {
 	display: none;
 	color: #af0000;
 	padding-left:10px;

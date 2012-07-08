@@ -67,6 +67,7 @@ a {
 .pull-right {float: right;}
 .pull-left {float: left;}
 big {font-size: 120%}
+strong {font-weight: bold;}
 /* -------------------------------- BODY -------------------------------- */
 body {
 	background-image: url(/static/gfx/bg.png);
@@ -225,12 +226,13 @@ ul#menu {
 #bottom div {
 	display: inline-block;
 	width: 20%;
+	vertical-align: top;
 }
 #bottom div:first-child {
 	width: 35%;
 }
 #bottom a {
-	color: #127ea6;
+	color: #fff;
 }
 
 /* -------------------------------- STITCHES -------------------------------- */

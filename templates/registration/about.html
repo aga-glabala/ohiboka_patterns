@@ -4,6 +4,12 @@
 <link rel="stylesheet" href="{{ STATIC_URL }}css/static.css" type="text/css">
 {% endblock %}
 {% block content %}
+{% if contactform.errors %}
+	{{ contactform.errors }}
+	</div>
+	<div class="spacer"></div>
+	<div class="box">
+{% endif %}
 {% if LANGUAGE_CODE == 'pl' %}
 	<h2>O stronie</h2>
 	<hr />
@@ -11,11 +17,33 @@
 	<p>Serwis umożliwia dodawanie nowych wzorów przez wygodny generator, a potem pomoże w zrobieniu bransoletki mówiąc krok po kroku, którą nitką na której trzeba zrobić supełek.</p>
 	
 	<p>Jeśli chcesz się dowiedzieć więcej o Ohiboce i o mnie - przejdź do <a href="http://blog.ohiboka.com/o-nas-2/">tej strony na blogu</a>.</p>
+	Jeśli znalazłbyś jakiś błąd lub miałbyś sugestie dotyczące strony, możesz do mnie napisać - aga@ohiboka.com
 {% else %}
 	<h2>About page</h2>
 	<hr />
 	<p>Page was created to share my work and patterns. In this version of application you can share your works, too.</p>
 	<p>Service allows you to add new patterns through comfortable generator, and then help in making bracelets by showing step by step instructions which two strings we need to do knot.</p>
 	<p>If you want to know more about Ohiboka and me - go to <a href="http://blog.ohiboka.com/o-nas-2/">this page on blog</a> (only in polish)</p>
-{% endif %}
+	If you find any errors or have any ideas, you can sent me an email - aga@ohiboka.com
+	
+{% endif %}<!--
+<h2>Contact form</h2>
+<hr />
+  <form action="/about/" method="post" id="contact-form">
+  	{% csrf_token %}
+  	<table>
+	  	{% for field in contactform %}
+		  	<tr>
+		  		<td class="label">{{ field.label }}</td>
+		  		<td class="field">{{ field }}</td> 
+		  		<td class="info">{{ field.help_text }}</td>
+		  	</tr>
+	  	{% endfor %}
+		<tr>
+			<td colspan="2">{{ captcha|safe }}</td>
+			<td></td>
+		</tr>
+		<tr><td></td><td><input type="submit" value="{% trans 'Send message' %}" /></td><td></td></tr>
+  	</table>
+</form>-->
 {% endblock %}

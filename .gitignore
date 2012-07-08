@@ -4,3 +4,5 @@
 .project
 .pydevproject
 *.orig
+static/media/images/*
+static/media/bracelet_thumbs/*

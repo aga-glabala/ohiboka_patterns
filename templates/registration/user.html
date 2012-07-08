@@ -33,7 +33,7 @@
 		<div class="pattern {% cycle 'pattern-odd' 'pattern-even' %}" id="pattern{{ bt.braceletid }}">
 		        <a href="/bracelet/{{ bt.braceletid }}">
 			        <div class="pattern-thumb">
-				        <img src="{{ STATIC_URL }}bracelet_thumbs/{{ bt.photo }}" />
+				        <img src="{{ MEDIA_URL }}bracelet_thumbs/{{ bt.photo }}" />
 			        </div>
 			        <div class="pattern-info">
 			        	{% if bt.now %}
@@ -89,7 +89,7 @@
 	<hr />
 	{% for photo in photos %}
 		<div class="photo">
-        	<a href="{{ STATIC_URL }}images/{{ photo.name }}"><img src="{{ STATIC_URL }}bracelet_thumbs/{{ photo.name }}" /></a>
+        	<a href="{{ MEDIA_URL }}images/{{ photo.name }}"><img src="{{ M_URL }}bracelet_thumbs/{{ photo.name }}" /></a>
     	    <a href="/bracelet/{{ photo.bracelet.id }}">{{photo.bracelet.name}}</a>
 		</div>
 	{% endfor %}
