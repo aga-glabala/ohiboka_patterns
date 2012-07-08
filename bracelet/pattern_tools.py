@@ -74,7 +74,7 @@ class BraceletPattern(object):
 			noc = nofcols
 		colors = []
 		for j in range(noc):
-			colors.append(self.get_knot_color(self.strings_order[i], self.knots_types[i - 1], j, self.nofrows % 2))
+			colors.append(self.get_knot_color(self.strings_order[self.nofrows - 1], self.knots_types[self.nofrows - 1], j, (self.nofrows - 1) % 2))
 		self.knots_colors.append(colors)
 
 	def get_next_strings_order(self, strings_order, knots_type, odd):
