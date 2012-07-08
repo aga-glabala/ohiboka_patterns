@@ -217,6 +217,7 @@ def photo_upload(request, bracelet_id):
 	form = UploadFileForm(request.POST, request.FILES)
 	if form.is_valid():
 		handle_uploaded_file(request.FILES['file'], request.POST['bracelet_id'], request.user)
+
 		return bracelet(request, bracelet_id, {'form': form, 'bracelet_id':bracelet_id, 'photos':photos, 'selectTabs':3, 'ok_message':_('Photo upload successfully. It will show up here after admin acceptance.')})
 	return bracelet(request, bracelet_id, {'form': form, 'bracelet_id':bracelet_id, 'photos':photos, 'selectTabs':3, 'error_message':_('Error has occured when uploading photo.')})
 
