@@ -6,11 +6,10 @@ Created on Mar 20, 2012
 import Image as pil
 import time
 from bracelet.models import Bracelet, Photo
-from settings import MEDIA_ROOT
+from django.conf import settings
 
 THUMBNAIL_WIDTH = 260
 THUMBNAIL_HEIGHT = 100
-
 def scale(f, inputdir, output):
 	"""
 	f- filename
@@ -33,8 +32,8 @@ def handle_uploaded_file(f, bracelet_id, user):
 	photo = Photo(user = user, name = name, accepted = False, bracelet = Bracelet.objects.get(id = bracelet_id))
 	photo.save()
 
-	destination = open(MEDIA_ROOT + 'images/' + name, 'wb+')
+	destination = open(settings.MEDIA_ROOT + 'images/' + name, 'wb+')
 	for chunk in f.chunks():
 		destination.write(chunk)
 	destination.close()
-	scale(name, MEDIA_ROOT + 'images/', MEDIA_ROOT + 'bracelet_thumbs/')
+	scale(name, settings.MEDIA_ROOT + 'images/', settings.MEDIA_ROOT + 'bracelet_thumbs/')

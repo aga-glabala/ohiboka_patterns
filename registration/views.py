@@ -7,7 +7,7 @@ from bracelet.bracelet_tools import get_all_bracelets
 from bracelet.models import Photo, Rate, Bracelet, BraceletString, BraceletKnot
 from django.utils.translation import ugettext as _
 from registration import captcha
-from settings import RECAPTCHA_PRIVATE_KEY, RECAPTCHA_PUBLIC_KEY, DEBUG
+from django.conf import settings
 from django.contrib.auth.models import User
 from registration.forms import UserCreationFormExtended, ContactForm
 from django.http import HttpResponseRedirect
@@ -19,7 +19,7 @@ def register(request):
 	error = None
 	if request.method == 'POST':
 		captcha_response = captcha.submit(request.POST['recaptcha_challenge_field'], request.POST['recaptcha_response_field'],
-                                          RECAPTCHA_PRIVATE_KEY, request.META['REMOTE_ADDR'])
+                                          settings.RECAPTCHA_PRIVATE_KEY, request.META['REMOTE_ADDR'])
 		if captcha_response.is_valid:
 			form = UserCreationFormExtended(request.POST)
 			if form.is_valid():
@@ -31,7 +31,7 @@ def register(request):
 			error = _("Wrong captcha, try again.")
 	form = UserCreationFormExtended()
 	context.update({'form': form, 'loginform': AuthenticationForm(), 'error_message': error,
-                               'captcha': captcha.displayhtml(RECAPTCHA_PUBLIC_KEY)})
+                               'captcha': captcha.displayhtml(settings.RECAPTCHA_PUBLIC_KEY)})
 	return render_to_response("registration/register.html", context, context_instance = RequestContext(request))
 
 def userprofile(request, error_message = "", ok_message = ""):
