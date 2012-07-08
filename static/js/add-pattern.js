@@ -78,7 +78,7 @@ function addKnotColumn() {
 function setColor(i) {
 	var selectbox = $('#color'+i);
 	selectbox.css("background",''+selectbox.val()+'');
-	document.styleSheets[2].insertRule('.str'+i+' {background-color: '+selectbox.val()+'}', document.styleSheets[2].rules.length);
+	document.styleSheets[document.styleSheets.length-1].insertRule('.str'+i+' {background-color: '+selectbox.val()+'}', document.styleSheets[document.styleSheets.length-1].rules.length);
 }
 
 function evaluateColors() {
