@@ -73,7 +73,7 @@ body {
 	margin:0;
 	font-family: "Signika", sans;
 }
-#fb, #en {
+#fb, #en, #pl {
 	width:  29px;
 	height: 30px;
 	position: fixed;
@@ -81,7 +81,7 @@ body {
 	-webkit-box-shadow: 0 0 5px 0 #222;
 	box-shadow:		 0 0 5px 0 #222;
 }
-	#fb a, #en a {
+	#fb a, #en a, #pl a {
 		padding: 0 20px 10px;
 		text-decoration: none;
 	}
@@ -92,6 +92,10 @@ body {
 #en {
 	top: 235px;
 	background-image: url(/static/gfx/english.png);
+}
+#pl {
+	top: 235px;
+	background-image: url(/static/gfx/polish.png);
 }
 .fb-like-box {
 	position: fixed;

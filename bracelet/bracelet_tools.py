@@ -6,9 +6,8 @@ Created on Mar 10, 2012
 from bracelet.models import Bracelet, Photo, BraceletCategory, BraceletColor, \
 	BraceletString, Rate
 from datetime import datetime
-from django.db.models.aggregates import Avg
 class BraceletContainer(object):
-	def __init__(self, braceletid, name, author, photo, now, category, colors, average_rate, nofstrings, difficulty, date, nofvotes):
+	def __init__(self, braceletid, name, author, photo, now, category, colors, average_rate, nofstrings, difficulty, date, nofvotes, accepted):
 		self.braceletid = braceletid
 		self.name = name
 		self.author = author
@@ -22,17 +21,22 @@ class BraceletContainer(object):
 		self.nofvotes = nofvotes
 		self.average_rate = average_rate
 		self.short_rate = int(average_rate)
+		self.accepted = accepted
 	def __unicode__(self):
 		return "[ author=" + str(self.author) + ", photo=" + str(self.photo) + ", date=" + str(self.date) + ", category=" + str(self.category) + "]"
 
-def get_all_bracelets(number, user = None):
+def get_all_bracelets(number, user = None, accepted = True):
 	patterns = None
 	if user:
-		patterns = Bracelet.objects.filter(user = user).order_by('-date')
+		patterns = Bracelet.objects.filter(user = user)
 	else:
-		patterns = Bracelet.objects.all().order_by('-date')
+		patterns = Bracelet.objects
+
+	if accepted:
+		patterns = patterns.filter(accepted = True)
+
 	if number > 0:
-		patterns = patterns[:number]
+		patterns = patterns.order_by('-date')[:number]
 	return create_bracelet_array(patterns)
 
 def find_bracelets(orderby = "0", category = "0", difficulty = "0", color = "0", photo = False, rate = "0"):
@@ -81,7 +85,7 @@ def create_bracelet_array(patterns):
 		nofvotes = len(Rate.objects.filter(bracelet = br))
 		bracelets.append(BraceletContainer(braceletid = br.id, name = br.name, author = author, photo = img, now = now,
 										   category = br.category.id, colors = colors, nofstrings = len(colors),
-										   average_rate = br.rate, difficulty = br.difficulty, date = br.date.date().__str__(), nofvotes = nofvotes))
+										   average_rate = br.rate, difficulty = br.difficulty, date = br.date.date().__str__(), nofvotes = nofvotes, accepted = br.accepted))
 	return bracelets
 
 def get_colors():

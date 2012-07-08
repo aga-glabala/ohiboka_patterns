@@ -97,7 +97,7 @@
 .ui-corner-all, .ui-corner-top {
 
 }
-#pattern-container {
+.pattern-container {
 	display: inline-block;
 	width: 67%;
 }

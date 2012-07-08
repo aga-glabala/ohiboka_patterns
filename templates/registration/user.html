@@ -22,10 +22,10 @@
 {% endblock %}
 
 {% block content %}
-<big><h2>{% trans 'Content added by' %}<b>{{ user.username }}</b></h2></big>
+<big><h2>{% trans 'Content added by' %} <b>{{ user.username }}</b></h2></big>
 
 {% if bracelets %}
-<h2>{% trans "Bracelets"  %}</h2>
+<h3>{% trans "Bracelets"  %}</h3>
 
 <hr />
 	{% for bt in bracelets %}
@@ -85,7 +85,7 @@
 
 {% if photos %}
 	<div id="user_photos">
-	<h2>{% trans 'Photos' %}</h2>
+	<h3>{% trans 'Photos' %}</h3>
 	<hr />
 	{% for photo in photos %}
 		<div class="photo">

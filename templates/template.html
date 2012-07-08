@@ -16,7 +16,11 @@
 
 <body>
 	<div id="fb"> </div>
-	<div id="en"><a href="/lang/en">&nbsp;</a></div>
+	{% if LANGUAGE_CODE == 'en' %}
+		<div id="pl"><a href="/lang/pl">&nbsp;</a></div>
+	{% else %}
+		<div id="en"><a href="/lang/en">&nbsp;</a></div>
+	{% endif %}
 	<div class="fb-like-box" data-href="http://www.facebook.com/ohibokabracelets" data-width="292" data-show-faces="true" 
 		data-stream="false" data-header="true" style="position: fixed;top: 200px;background-color: white;display:none"></div>
 	<div class="stitches stitches-top1"></div>
@@ -29,7 +33,7 @@
 			
 				{% if user.is_authenticated %}
 					<li><a href="/profile/"><span>PROFILE</span></a></li>
-					<li><a href="/logout/"><span>LOG OUT</span></a></li>
+					<li><a href="/logout"><span>LOG OUT</span></a></li>
 				{% else %}	
 					<li><a href="" id="login"><span>LOG IN</span></a></li>
 					<li><a href="/register/"><span>SIGN IN</span></a></li>
@@ -50,6 +54,11 @@
 				<div class="box ok_box">{{ ok_message }}</div>
 				<div class="spacer"></div>
 			{% endif %}
+			{% if message %}
+				<div class="box">{{ message }}</div>
+				<div class="spacer"></div>
+			{% endif %}
+			
 			<div id="login-box" class="box" style="display:none">
 				<div id="login-form">
 					<form method="post" action="{% url "bracelet.views.login_user" %}">

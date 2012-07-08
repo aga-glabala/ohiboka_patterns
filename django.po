@@ -37,7 +37,7 @@ msgstr "Musisz być zalogowany, żeby dodać nowy wzór"
 
 #: registration/views.py:24
 msgid "Success! You can log in now."
-msgstr ""
+msgstr "Sukces! Możesz się teraz zalogować."
 
 #: registration/views.py:26
 msgid "An error has occured. Correct entered data."
@@ -45,60 +45,60 @@ msgstr ""
 
 #: registration/views.py:28
 msgid "Wrong captcha, try again."
-msgstr ""
+msgstr "Nieprawidłowy tekst z obrazka, spróbuj jeszcze raz."
 
 #: registration/views.py:59
 #, fuzzy
 msgid "You need to be logged in."
-msgstr "Musisz być zalogowany, żeby dodać nowy wzór"
+msgstr "Musisz być zalogowany, żeby dodać nowy wzór."
 
 #: registration/views.py:65
-msgid "There is no bracelet with id "
-msgstr ""
+msgid "There is no bracelet with id " 
+msgstr "Nie ma bransoletki o id "
 
 #: registration/views.py:67 registration/views.py:95
 #, fuzzy
 msgid "You need to be logged in to edit bracelets"
-msgstr "Musisz być zalogowany, żeby dodać nowy wzór"
+msgstr "Musisz być zalogowany, żeby dodać nowy wzór."
 
 #: registration/views.py:69
 msgid "You are not owner of this bracelet"
-msgstr ""
+msgstr "Nie jesteś właścicielem tej bransoletki."
 
 #: registration/views.py:87
 msgid "Bracelet deleted successfully"
-msgstr ""
+msgstr "Bransoletka usunięta pomyślnie."
 
 #: registration/views.py:93
 #, fuzzy
 msgid "There is no photo with id "
-msgstr "Nie ma wzorów do pokazania"
+msgstr "Nie ma zdjęcia o id "
 
 #: registration/views.py:97
 msgid "You are not owner of this photo"
-msgstr ""
+msgstr "Nie jesteś właścicielem tego zdjęcia"
 
 #: registration/views.py:99
 msgid "Photo deleted successfully"
-msgstr ""
+msgstr "Zdjęcie usunięte pomyślnie."
 
 #: registration/views.py:105
 #, fuzzy
 msgid "There is no rate with id "
-msgstr "Nie ma wzorów do pokazania"
+msgstr "Nie ma oceny o id "
 
 #: registration/views.py:107
 #, fuzzy
 msgid "You need to be logged in to edit rates"
-msgstr "Musisz być zalogowany, żeby dodać nowy wzór"
+msgstr "Musisz być zalogowany, żeby dodać nowy wzór."
 
 #: registration/views.py:109
 msgid "You are not owner of this rate"
-msgstr ""
+msgstr "Nie jesteś właścicielem tej oceny."
 
 #: registration/views.py:111
 msgid "Rate deleted successfully"
-msgstr ""
+msgstr "Ocena usunięta pomyślnie."
 
 #: registration/views.py:117
 #, fuzzy
@@ -116,15 +116,15 @@ msgstr "Zaloguj się"
 #: templates/template.html:86
 #, fuzzy
 msgid "Patterns"
-msgstr "Wzór"
+msgstr "Wzory"
 
 #: templates/template.html:87
 msgid "Blog"
-msgstr ""
+msgstr "Blog"
 
 #: templates/template.html:91
 msgid "Profile"
-msgstr ""
+msgstr "Profil"
 
 #: templates/template.html:92
 #, fuzzy
@@ -133,11 +133,11 @@ msgstr "Najnowsze bransoletki"
 
 #: templates/template.html:99
 msgid "Find me on facebook"
-msgstr ""
+msgstr "Znajdź mnie na facebooku"
 
 #: templates/template.html:100
 msgid "About"
-msgstr ""
+msgstr "O mnie"
 
 #: templates/bracelet/add.html:25
 msgid "Name"
@@ -182,7 +182,7 @@ msgstr "Usuń nitkę"
 
 #: templates/bracelet/add.html:60
 msgid "Add row"
-msgstr ""
+msgstr "Dodaj wiersz"
 
 #: templates/bracelet/add.html:61
 #, fuzzy
@@ -197,24 +197,24 @@ msgstr "Dodaj nowy wzór"
 #: templates/bracelet/bracelet.html:43
 #: templates/registration/userprofile.html:150
 msgid "Bracelet"
-msgstr ""
+msgstr "Bransoletka"
 
 #: templates/bracelet/bracelet.html:24
 msgid ""
 "Could not load this tab. Try reload page if problem will still exist - let "
 "me know."
-msgstr ""
+msgstr "Nie można załadować tej zakładki. Spróbuj odświeżyć, a jesli problem nadal występuje - powiadom administratora"
 
 #: templates/bracelet/bracelet.html:42 templates/bracelet/index.html:192
 #: templates/registration/user.html:72
 #: templates/registration/userprofile.html:72
 #: templates/registration/userprofile.html:131
 msgid "by"
-msgstr ""
+msgstr "przez"
 
 #: templates/bracelet/bracelet.html:43
 msgid "created by"
-msgstr ""
+msgstr "stworzone przez"
 
 #: templates/bracelet/bracelet.html:56
 msgid "Pattern"
@@ -245,7 +245,7 @@ msgstr "Musisz być zalogowany, żeby dodać nowy wzór"
 #: templates/bracelet/bracelet.html:93
 #, fuzzy
 msgid "Created on"
-msgstr "Utwórz nowe konto"
+msgstr "Stworzone"
 
 #: templates/bracelet/bracelet.html:96 templates/bracelet/index.html:165
 #: templates/registration/user.html:45
@@ -291,7 +291,7 @@ msgstr "Ocena"
 
 #: templates/bracelet/bracelet.html:115
 msgid "Little hint"
-msgstr ""
+msgstr "Mała podpowiedź"
 
 #: templates/bracelet/bracelet.html:130
 msgid "Back 5"
@@ -394,7 +394,7 @@ msgstr "następna"
 
 #: templates/bracelet/index.html:223
 msgid "There is no patterns to show."
-msgstr "Nie ma wzorów do pokazania"
+msgstr "Nie ma wzorów do pokazania."
 
 #: templates/bracelet/tabs/comments.html:17 templates/comments/form.html:17
 msgid "now"
@@ -402,11 +402,11 @@ msgstr "teraz"
 
 #: templates/bracelet/tabs/comments.html:29 templates/comments/form.html:25
 msgid "Unexpected error occured. Try reload page or try again later."
-msgstr ""
+msgstr "Wystąpił niespodziewany błąd. Spróbuj odświeżyć stronę lub odczekaj chwile i spróbuj ponownie."
 
 #: templates/bracelet/tabs/comments.html:49
 msgid "Click to add comment"
-msgstr ""
+msgstr "Kliknij, aby dodać komentarz"
 
 #: templates/bracelet/tabs/comments.html:64 templates/comments/form.html:55
 #: templates/comments/preview.html:29
@@ -427,7 +427,7 @@ msgstr "Nie ma zdjęć, dodaj swoje żeby być pierwszy!"
 
 #: templates/comments/list.html:5
 msgid "ago"
-msgstr ""
+msgstr "temu"
 
 #: templates/comments/preview.html:8
 msgid "Please correct the error below"
@@ -462,30 +462,30 @@ msgstr "Utwórz nowe konto"
 
 #: templates/registration/user.html:3
 msgid "User page"
-msgstr ""
+msgstr "Strona użytkownika"
 
 #: templates/registration/user.html:25
 msgid "Content added by"
-msgstr ""
+msgstr "Treść dodana przez"
 
 #: templates/registration/user.html:28
 #, fuzzy
 msgid "Bracelets"
-msgstr "Najnowsze bransoletki"
+msgstr "Bransoletki"
 
 #: templates/registration/userprofile.html:25
 #, fuzzy
 msgid "Your content"
-msgstr "Wyślij swój komentarz"
+msgstr "Twoja zawartość"
 
 #: templates/registration/userprofile.html:28
 #, fuzzy
 msgid "Your accepted bracelets"
-msgstr "Najnowsze bransoletki"
+msgstr "Twoje zaakceptowane bransoletki"
 
 #: templates/registration/userprofile.html:87
 msgid "Bracelets waiting for admin to accept"
-msgstr ""
+msgstr "Bransoletki czekające na akceptację administratora"
 
 #: templates/registration/userprofile.html:146
 #, fuzzy
@@ -499,7 +499,7 @@ msgstr "ocena"
 
 #: templates/registration/userprofile.html:152
 msgid "Action"
-msgstr ""
+msgstr "Akcja"
 
 #: templates/registration/userprofile.html:158
 #: templates/registration/userprofile.html:171

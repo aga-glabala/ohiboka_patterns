@@ -115,9 +115,11 @@ def bracelet(request, bracelet_id):
 	except:
 		img = "nophoto.png"
 
+	bracelet = Bracelet.objects.get(id = bracelet_id)
+
 	context = {'loginform':AuthenticationForm(),
 			'braceletid':bracelet_id,
-			'bracelet': Bracelet.objects.get(id = bracelet_id),
+			'bracelet': bracelet,
 			'name' : bp.bracelet.name,
 			'style':bp.get_style(),
 			'nofstr':bp.get_n_of_strings(),
@@ -128,7 +130,7 @@ def bracelet(request, bracelet_id):
 			'bracelet_id':bracelet_id,
 			'texts':[str(s) for s in BraceletKnotType.objects.all().order_by('id')],
 			'ifwhite':bp.get_ifwhite(),
-			'nofphotos': len(Photo.objects.filter(bracelet = Bracelet.objects.get(id = bracelet_id))),
+			'nofphotos': len(Photo.objects.filter(bracelet = bracelet)),
 			'photo': img,
 			'request': request
 			}
@@ -138,9 +140,12 @@ def bracelet(request, bracelet_id):
 		except:
 			pass
 
+	if not bracelet.accepted:
+		context['message'] = _("""This bracelet is not accepted yet. It means you can see it only if you have link to this page. """)
+
 	rates = []
 	if request.user.is_authenticated():
-		rates = Rate.objects.filter(user = request.user, bracelet = Bracelet.objects.get(id = bracelet_id))
+		rates = Rate.objects.filter(user = request.user, bracelet = bracelet)
 	if len(rates) > 0:
 		context['rate'] = rates[0].rate
 	return render_to_response('bracelet/bracelet.html', context, RequestContext(request))

@@ -26,7 +26,6 @@ class BraceletPattern(object):
 		style = ""
 		for i in range(len(self.strings)):
 			style += ".str" + str(i) + " {background-color:" + str(self.strings[i].color) + ";}"
-			print self.strings[i].color
 		return style
 
 	def get_ifwhite(self):
@@ -60,7 +59,7 @@ class BraceletPattern(object):
 				noc = nofcols
 
 			for j in range(noc):
-				types.append(int(self.knots[index].knottype.id))
+				types.append(int(self.knots[i].knottype.id))
 				index += 1
 			self.knots_types.append(types)
 			for j in range(noc):
@@ -90,7 +89,7 @@ class BraceletPattern(object):
 				so.append(strings_order[2 * i + odd + 1])
 		if self.odd and odd == 0:
 			so.append(strings_order[-1])
-		elif odd == 1and not self.odd:
+		elif odd == 1 and not self.odd:
 			so.append(strings_order[-1])
 		return so
 

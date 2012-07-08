@@ -42,11 +42,12 @@
 <meta property="og:title" content="Ohiboka Patterns - {% trans 'Bracelet' %} {{ name }} {% trans 'by' %} {{ bracelet.user.username }}" />
 <meta property="og:description" content="{% trans 'Bracelet' %} {{ name }} {% trans 'created by'%} {{ bracelet.user.username }}" />
 <meta property="og:image" content="http://{{ request.get_host }}{{ STATIC_URL }}bracelet_thumbs/{{ photo }}" />
-<meta property="og:url" content="http://{{ request.get_host }}/bracelet/{{bracelet.id}}" />
+<meta property="og:url" content="http://{{ request.get_host }}/bracelet/{{bracelet.id}}/" />
 <meta property="og:type" content="website" />
 {% endblock %}
 
 {% block content %}
+
 {% get_comment_count for bracelet.bracelet bracelet_id as comment_count %}
 <div id="tabs">
 	<div id="tabs-name">
@@ -62,7 +63,7 @@
 	</div>
 	<hr />
 	<div id="tabs-1">
-		<div id="pattern-container">
+		<div class="pattern-container">
 			<div id="pattern-thumb"></div>
 			<div class="pattern-box">
 				<div id="pattern-canvas"></div>
@@ -119,7 +120,7 @@
 		</div>
 	</div>
 	<div id="tabs-2">
-		<div id="pattern-container" class="pattern-box" style="width:55%">
+		<div class="pattern-container pattern-box" style="width:55%">
 			<div id="step-pattern-canvas">
 			</div>
 			<div id="step-pattern">

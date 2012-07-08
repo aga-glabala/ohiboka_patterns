@@ -22,16 +22,13 @@
 {% endblock %}
 
 {% block content %}
-{% if ok_message %}
-	<div class='ok_message'>{{ ok_message }}</div>
-{% endif %}
-{% if error_message %}
-	<div class='error_message'>{{ error_message }}</div>
-{% endif %}
-<h2>{% trans "Your bracelets"  %}</h2>
+<h2>{% trans "Your content" %}</h2>
+
+{% if accepted %}
+<h3>{% trans "Your accepted bracelets" %}</h3>
 
 <hr />
-	{% for bt in bracelets %}
+	{% for bt in accepted %}
 	    <div class="pattern-box">
 		<div class="pattern {% cycle 'pattern-odd' 'pattern-even' %}" id="pattern{{ bt.braceletid }}">
 		        <a href="/bracelet/{{ bt.braceletid }}">
@@ -84,8 +81,69 @@
 			</div>
 			</div>
 	    {% endfor %}
+{% endif %}
+
+{% if not_accepted %}
+<h3>{% trans "Bracelets waiting for admin to accept" %}</h3>
+
+<hr />
+	{% for bt in not_accepted %}
+	    <div class="pattern-box">
+		<div class="pattern {% cycle 'pattern-odd' 'pattern-even' %}" id="pattern{{ bt.braceletid }}">
+		        <a href="/bracelet/{{ bt.braceletid }}">
+			        <div class="pattern-thumb">
+				        <img src="{{ STATIC_URL }}bracelet_thumbs/{{ bt.photo }}" />
+			        </div>
+			        <div class="pattern-info">
+			        	{% if bt.now %}
+				    	    <i class="icon-new">&nbsp;</i>
+				    		<br />
+				    	{% endif %}
+				    	<div title=
+		    	    		{% if bt.category == 1 %}
+		    	    			"{% trans 'nature' %}"
+		    	    		{% else %}
+		    	    			{% if bt.category == 2 %}
+		    	    				"{% trans 'text' %}"
+		    	    			{% else %}
+		    	    				{% if bt.category == 4 %}
+		    	    					"{% trans 'zigzak' %}"
+		    	    				{% else %}
+		    	    					"{% trans 'another' %}"
+		    	    				{% endif %}
+		    	    			{% endif %}
+		    	    		{% endif %}
+		    	    		 class="category category{{ bt.category }}">&nbsp;
+		    	    	</div>
+				    	<br />
+		    	    	<i class="icon-strings" title="{% trans 'Number of strings' %}">&nbsp;</i> {{ bt.nofstrings }}
+				    	<br />
+		    	    	<i class="icon-star2" title="{% trans 'Rate' %}">&nbsp;</i> {{ bt.rate }}
+				    	<br />
+		    	    	<i class="icon-difficulty{{ bt.difficulty}}" title="{% trans 'Difficulty' %}">&nbsp;</i>
+			        </div>
+				</a>
+	        </div>
+	        <div class="pattern-details" id="pattern_info{{ bt.braceletid }}" style="display:none">
+		        <a href="/bracelet/{{ bt.braceletid }}">
+				    <div class="darken">{{ bt.name }}</div>
+				    <div class="darken" style="margin-top:48px">
+				    	{% trans 'by' %}: {{ bt.author }} {% trans 'on' %}: {{ bt.date }}
+				    </div>
+				    <div class="darken">
+			    		{% for c in bt.colors %}
+		    	    		<div class="knot" style="background-color:{{c}};"></div>
+		    	    	{% endfor %}
+				    </div>
+			    	    	
+				</a>
+			</div>
+			</div>
+	    {% endfor %}
+{% endif %}
+	    
 {% if rates %}
-<h2>{% trans 'Rates' %}</h2>
+<h3>{% trans 'Rates' %}</h3>
 <hr />
 	<table class='table'>
 		<tr>
@@ -104,7 +162,7 @@
 {% endif %}
 {% if photos %}
 	<div id="user_photos">
-	<h2>{% trans 'Photos' %}</h2>
+	<h3>{% trans 'Photos' %}</h3>
 	<hr />
 	{% for photo in photos %}
 		<div class="photo">
