@@ -29,16 +29,16 @@
 		<ul id="menu">
 			<li><a href="http://blog.ohiboka.com"><span>BLOG</span></a></li>
 			<li class="active"><a href="/"><span>PATTERNS</span></a></li>
-			<li><a href="/about/"><span>ABOUT</span></a></li>
+			<li><a href="/about/"><span>{% trans  "ABOUT" %}</span></a></li>
 			
 				{% if user.is_authenticated %}
-					<li><a href="/profile/"><span>PROFILE</span></a></li>
-					<li><a href="/logout"><span>LOG OUT</span></a></li>
+					<li><a href="/profile/"><span>{% trans  "PROFILE" %}</span></a></li>
+					<li><a href="/logout"><span>{% trans  "LOG OUT" %}</span></a></li>
 				{% else %}	
-					<li><a href="" id="login"><span>LOG IN</span></a></li>
-					<li><a href="/register/"><span>SIGN IN</span></a></li>
+					<li><a href="" id="login"><span>{% trans  "LOG IN" %}</span></a></li>
+					<li><a href="/register/"><span>{% trans  "SIGN IN" %}</span></a></li>
 				{% endif %}
-			<li><a href="/#search" id='search-top'><span>SEARCH</span></a></li>
+			<li><a href="/#search" id='search-top'><span>{% trans  "SEARCH" %}</span></a></li>
 		</ul>
 	</div>
 	<input id="username" type="hidden" value="{{ user.username  }}"/>
@@ -46,6 +46,10 @@
 		<div class="stitches stitches-top2"></div>
 			
 		<div id="content">
+			<div class="box ok_box">
+				{% trans  "Hey! It's super-beta version of my new site. You probably find some errors. Feel free to" %} <a href="/about/">{% trans "contact me" %}</a> {% trans "when you will find some error or you will have some suggestions how to make this site better." %}
+			</div>
+			<div class="spacer"></div>
 			{% if error_message %}
 				<div class="box error_box">{{ error_message }}</div>
 				<div class="spacer"></div>

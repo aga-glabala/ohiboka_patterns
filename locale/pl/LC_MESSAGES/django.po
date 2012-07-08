@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-08 21:50+0200\n"
+"POT-Creation-Date: 2012-07-09 00:08+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,30 +27,29 @@ msgstr ""
 "Bransoletka jest niezaakceptowana. Możesz ja zobaczyć tylko jeśli masz do "
 "niej linka"
 
-#: bracelet/views.py:220
+#: bracelet/views.py:221
 #, fuzzy
 msgid "Photo upload successfully. It will show up here after admin acceptance."
 msgstr ""
-"Zdjęcie dodana. Pokaże się tutaj po zaakceptowaniu przez "
-"administratora."
+"Zdjęcie dodana. Pokaże się tutaj po zaakceptowaniu przez administratora."
 
-#: bracelet/views.py:221
+#: bracelet/views.py:222
 msgid "Error has occured when uploading photo."
 msgstr "Wystąpił błąd przy wysyłaniu zdjęcia."
 
-#: bracelet/views.py:227
+#: bracelet/views.py:228
 msgid "Rate is not a number"
 msgstr "Ocena musi być liczbą"
 
-#: bracelet/views.py:229
+#: bracelet/views.py:230
 msgid "Rate must be between 1 and 5"
 msgstr "Ocena musi być z przedziału [1; 5]"
 
-#: bracelet/views.py:248
+#: bracelet/views.py:249
 msgid "Pattern do not exist"
 msgstr "Wzór nie istnieje"
 
-#: bracelet/views.py:249
+#: bracelet/views.py:250
 msgid "You need to be logged in to rate patterns"
 msgstr "Musisz być zalogowany, żeby dodać nowy wzór"
 
@@ -151,7 +150,9 @@ msgstr "Nie ma tego tutaj"
 msgid ""
 "Page you are looking for is not here. If you got here following link from "
 "this page - please"
-msgstr "Strona, której szukasz nie istnieje. Jeśli doprowadził Cię tu link z tej strony - proszę"
+msgstr ""
+"Strona, której szukasz nie istnieje. Jeśli doprowadził Cię tu link z tej "
+"strony - proszę"
 
 #: templates/404.html:7 templates/500.html:7
 msgid "let me knot about it"
@@ -171,47 +172,89 @@ msgstr "Ałć!"
 
 #: templates/500.html:7
 msgid "Something went really wrong. Try to reload page, if problem reapeat"
-msgstr "Coś poszło bardzo źle. Spróbuj odświeżyć stronę, jeśli problem się będzie powtarzać "
+msgstr ""
+"Coś poszło bardzo źle. Spróbuj odświeżyć stronę, jeśli problem się będzie "
+"powtarzać "
 
 #: templates/500.html:8
 msgid "..or you can go back to"
 msgstr ".. lub możesz wrócić do strony głównej"
 
-#: templates/template.html:66
+#: templates/template.html:32
+msgid "ABOUT"
+msgstr "O STRONIE"
+
+#: templates/template.html:35
+msgid "PROFILE"
+msgstr "PROFIL"
+
+#: templates/template.html:36
+msgid "LOG OUT"
+msgstr "WYLOGUJ"
+
+#: templates/template.html:38
+msgid "LOG IN"
+msgstr "ZALOGUJ"
+
+#: templates/template.html:39
+msgid "SIGN IN"
+msgstr "ZAREJESTRUJ"
+
+#: templates/template.html:41
+msgid "SEARCH"
+msgstr "SZUKAJ"
+
+#: templates/template.html:50
+msgid ""
+"Hey! It's super-beta version of my new site. You probably find some errors. "
+"Feel free to"
+msgstr "Cześć! To super-beta mojej nowej strony. Prawdopodobnie znajdziesz jakieś błędy. Możesz"
+
+#: templates/template.html:50
+msgid "contact me"
+msgstr "napisać do mnie"
+
+#: templates/template.html:50
+msgid ""
+"when you will find some error or you will have some suggestions how to make "
+"this site better."
+msgstr "jeśli znajdziesz jakiś błąd lub będziesz mieć sugestie co zrobić lepiej."
+
+#: templates/template.html:70
 msgid "Your username and password didn't match. Please try again."
 msgstr "Twój login lub hasło nie pasuje, spróbuj ponownie"
 
-#: templates/template.html:72
+#: templates/template.html:76
 msgid "Login"
 msgstr "Zaloguj się"
 
-#: templates/template.html:91 templates/registration/privacypolicy.html:4
+#: templates/template.html:95 templates/registration/privacypolicy.html:4
 msgid "Privacy policy"
 msgstr "Polityka prywatności"
 
-#: templates/template.html:94
+#: templates/template.html:98
 #, fuzzy
 msgid "Patterns"
 msgstr "Wzory"
 
-#: templates/template.html:95
+#: templates/template.html:99
 msgid "Blog"
 msgstr "Blog"
 
-#: templates/template.html:99
+#: templates/template.html:103
 msgid "Profile"
 msgstr "Profil"
 
-#: templates/template.html:100
+#: templates/template.html:104
 #, fuzzy
 msgid "Add new bracelet"
 msgstr "Najnowsze bransoletki"
 
-#: templates/template.html:107
+#: templates/template.html:111
 msgid "Find me on facebook"
 msgstr "Znajdź mnie na facebooku"
 
-#: templates/template.html:108
+#: templates/template.html:112
 msgid "About"
 msgstr "O mnie"
 
@@ -537,15 +580,15 @@ msgstr "Zobacz"
 
 #: templates/registration/about.html:46
 msgid "Send message"
-msgstr ""
+msgstr "Wyślij wiadomość"
 
 #: templates/registration/register.html:30
 msgid "By clicking button below, you accept"
-msgstr ""
+msgstr "Klikając przycisk poniżej akceptujesz"
 
 #: templates/registration/register.html:30
 msgid "our privacy policy"
-msgstr ""
+msgstr "naszą politykę prywatności"
 
 #: templates/registration/register.html:31
 msgid "Create new account"
