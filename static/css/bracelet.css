@@ -261,10 +261,19 @@
 }
 #instructions p {
 	margin: 5px 0;
+	padding: 6px 3px 3px;
 }
 #instructions span {
 	vertical-align: middle;
 
+}
+#step-pattern .new {
+	border: 1px solid #000;
+	-webkit-box-shadow: 0 0 5px 2px #000;
+	box-shadow: 0 0 5px 2px #000;
+}
+#instructions .new {
+	background: #DDDDDD;
 }
 #buttons {
 	text-align: center;

@@ -100,6 +100,11 @@ $(document).ready(function(){
 	);
 	setRate();
  });
+ 
+function addKnotButton() {
+	$('.new').removeClass('new');
+	addKnot();
+}
 
 function addKnot() {
 		
@@ -131,17 +136,17 @@ function addKnot() {
 			odd = 1;
 		}
 		
-		$('<span class="str'+knotsColor[lastKnotRow][lastKnotCol]+' knot knot'+knotsType[lastKnotRow][lastKnotCol]+ifwhite[knotsColor[lastKnotRow][lastKnotCol]]+'" title="r'+lastKnotRow+'c'+lastKnotCol+'" id="knot'+sequence+'"></span>').appendTo('#steprow'+lastKnotRow);
+		$('<span class="str'+knotsColor[lastKnotRow][lastKnotCol]+' knot knot'+knotsType[lastKnotRow][lastKnotCol]+ifwhite[knotsColor[lastKnotRow][lastKnotCol]]+' new" title="r'+lastKnotRow+'c'+lastKnotCol+'" id="knot'+sequence+'"></span>').appendTo('#steprow'+lastKnotRow);
 		var text = texts[knotsType[lastKnotRow][lastKnotCol]-1];
 		if(knotsType[lastKnotRow][lastKnotCol]%2) {
 			text = text.replace('{0}', '<span class="str'+strings[lastKnotRow][2*lastKnotCol+even+odd]+' knot"></span>');
-			text = text.replace('{1}', '<span class="str'+strings[lastKnotRow][2*lastKnotCol+1+even+odd]+' string'+directions[0]+'"></span>');
-			
+			text = text.replace('{1}', '<span class="str'+strings[lastKnotRow][2*lastKnotCol+1+even+odd]+'">&nbsp;</span>');
+			 
 		} else {
 			text = text.replace('{0}', '<span class="str'+strings[lastKnotRow][2*lastKnotCol+1+even+odd]+' knot"></span>');
-			text = text.replace('{1}', '<span class="str'+strings[lastKnotRow][2*lastKnotCol+even+odd]+' string'+directions[0]+'"></span>');
+			text = text.replace('{1}', '<span class="str'+strings[lastKnotRow][2*lastKnotCol+even+odd]+'">&nbsp;</span>');
 		}
-		$('<p>'+text+'</p>').appendTo('#instructions');
+		$('<p class="new">'+text+'</p>').appendTo('#instructions');
 		
 		
 		if($('#step-row-strings'+(lastKnotRow+1)).length==0) {
@@ -221,6 +226,7 @@ function del5Knots() {
 	}
 }
 function add5Knots() {
+	$('.new').removeClass('new');
 	for(var i=0; i<5; i++) {
 		addKnot();
 	}
