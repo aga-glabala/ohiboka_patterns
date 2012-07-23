@@ -4,6 +4,7 @@ Created on Feb 28, 2012
 @author: agnis
 '''
 from bracelet.models import Bracelet, BraceletString, BraceletKnot
+import Image, ImageDraw
 
 class BraceletPattern(object):
 	'''
@@ -26,7 +27,6 @@ class BraceletPattern(object):
 		style = ""
 		for i in range(len(self.strings)):
 			style += ".str" + str(i) + " {background-color:" + str(self.strings[i].color) + ";}"
-			print self.strings[i].color
 		return style
 
 	def get_ifwhite(self):
@@ -119,3 +119,20 @@ class BraceletPattern(object):
 	def get_knots_types(self):
 		return self.knots_types
 
+	def generate_photo(self, path):
+		im = Image.new(mode = "RGB", size = (self.nofrows * 100 + 16, len(self.strings) / 2 * 160 + 16 + 36), color = "#fff")
+		draw = ImageDraw.Draw(im)
+
+		for i in range(self.nofrows):
+			if i % 2 == 0 and self.odd or i % 2 == 1 and not self.odd:
+				marginTop = 80
+			else:
+				marginTop = 0
+			for j in range(len(self.knots_colors[i])):
+				color = str(self.strings[self.knots_colors[i][len(self.knots_colors[i]) - 1 - j]].color)
+				x = 8 + i * 100
+				y = 8 + j * 160 + marginTop
+				draw.ellipse((x - 8, y - 8, x + 116, y + 116), fill = 0x666666)
+				draw.ellipse((x - 4, y - 4, x + 108, y + 108), fill = color)
+		im = im.resize((self.nofrows * 10 + 1, len(self.strings) / 2 * 16 + 4), Image.ANTIALIAS)
+		im.save(path)

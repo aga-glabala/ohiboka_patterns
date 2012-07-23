@@ -10,13 +10,14 @@ from bracelet.pattern_tools import BraceletPattern
 from bracelet.bracelet_tools import get_all_bracelets, find_bracelets, \
 	get_colors
 from bracelet.forms import UploadFileForm
-from bracelet.helper import handle_uploaded_file
+from bracelet.helper import handle_uploaded_file, scale
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.utils.translation import ugettext as _
 from pyfb import Pyfb
 from django.conf import settings
 from registration.models import UserProfile
 from registration.utils import FacebookBackend
+import time
 
 def index(request, context):
 	form = AuthenticationForm()
@@ -205,6 +206,17 @@ def addpattern(request):
 	for i in range(len(knots)):
 		bk = BraceletKnot(bracelet = b, knottype = BraceletKnotType.objects.filter(id = knots[i])[0], index = i)
 		bk.save()
+
+	photo_name = str(int(time.time() * 1000)) + "-" + str(b.id) + '.png'
+	bp = BraceletPattern(b.id)
+	bp.generate_pattern()
+	bp.generate_photo(settings.MEDIA_ROOT + 'images/' + photo_name)
+	scale(photo_name, settings.MEDIA_ROOT + 'images/', settings.MEDIA_ROOT + 'bracelet_thumbs/')
+	photo = Photo(user = request.user, name = photo_name, accepted = True, bracelet = Bracelet.objects.get(id = b.id))
+	photo.save()
+
+	b.photo_id = photo.id
+	b.save()
 	return HttpResponseRedirect('/bracelet/' + str(b.id))
 
 def photos(request, bracelet_id):
