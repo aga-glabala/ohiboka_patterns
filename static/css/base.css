@@ -81,6 +81,7 @@ body {
 	right: 0;
 	-webkit-box-shadow: 0 0 5px 0 #222;
 	box-shadow:		 0 0 5px 0 #222;
+	z-index: 10;
 }
 	#fb a, #en a, #pl a {
 		padding: 0 20px 10px;
@@ -102,6 +103,7 @@ body {
 	position: fixed;
 	right: 0;
 	width:  290px;
+	z-index: 10;
 }
 /* -------------------------------- TOP -------------------------------- */
 #top {

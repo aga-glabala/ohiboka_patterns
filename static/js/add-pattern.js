@@ -1,18 +1,21 @@
 var nofrows = 10;
 var knotColors = [];
+var if_white = [];
 var knotTypes = [];
+	var loaded = false;
 $(document).ready(function(){
-addInput('colorsInput');addInput('colorsInput');addInput('colorsInput');addInput('colorsInput');addInput('colorsInput');
-$('#color0 option:eq(0)').attr("selected", "selected");setColor(0);
-$('#color1 option:eq(0)').attr("selected", "selected");setColor(1);
-$('#color2 option:eq(0)').attr("selected", "selected");setColor(2);
-$('#color3 option:eq(0)').attr("selected", "selected");setColor(3);
-$('#color4 option:eq(0)').attr("selected", "selected");setColor(4);
-initDesigner();
-drawPattern();
+	addInput('colorsInput');addInput('colorsInput');addInput('colorsInput');addInput('colorsInput');addInput('colorsInput');
+	$('#color0 option:eq(0)').attr("selected", "selected");setColor(0);
+	$('#color1 option:eq(0)').attr("selected", "selected");setColor(1);
+	$('#color2 option:eq(0)').attr("selected", "selected");setColor(2);
+	$('#color3 option:eq(0)').attr("selected", "selected");setColor(3);
+	$('#color4 option:eq(0)').attr("selected", "selected");setColor(4);
+	initDesigner();
+	drawPattern();
 	$('#addbracelet').submit(function() { 
 		return submit();
 	});
+	loaded = true;
 });
 function addKnotColumnButton(divColor) {
 	addInput(divColor);
@@ -62,7 +65,8 @@ function addInput(divColor){
 			$("<option value='"+colors[i]+"' style='background-color:"+colors[i]+"'>                  </option>").appendTo(el);
 		}
 		$("#"+divColor).append(el);
-		$('#color'+nofstrings+' option:eq(0)').attr("selected", "selected");setColor(nofstrings);
+		$('#color'+nofstrings+' option:eq(0)').attr("selected", "selected");
+		setColor(nofstrings);
 		nofstrings++;
 	}
 }
@@ -79,6 +83,16 @@ function setColor(i) {
 	var selectbox = $('#color'+i);
 	selectbox.css("background",''+selectbox.val()+'');
 	document.styleSheets[document.styleSheets.length-1].insertRule('.str'+i+' {background-color: '+selectbox.val()+'}', document.styleSheets[document.styleSheets.length-1].rules.length);
+	if(if_white[i]==undefined) {
+		if_white[i]= '';
+	}
+	var x = selectbox.val();
+	if((parseInt(x.slice(1,3), 16) + parseInt(x.slice(3,5), 16) + parseInt(x.slice(5,7), 16)) / 3.0<128) {
+		if_white[i]= '-white';
+	}
+	if(loaded) {
+		drawPattern();
+	}
 }
 
 function evaluateColors() {
@@ -168,7 +182,7 @@ function drawPattern() {
 			if(knotTypes[i][j]%2==0) {
 				move = 1;
 			}
-			$('<span class="str'+knotColors[i][2*j+i%2+move]+' knot knot'+knotTypes[i][j]+'" onclick="changeType(this, '+i+','+j+')"></span>').appendTo('#row'+i);
+			$('<span class="str'+knotColors[i][2*j+i%2+move]+' knot knot'+knotTypes[i][j]+if_white[knotColors[i][2*j+i%2+move]]+'" onclick="changeType(this, '+i+','+j+')"></span>').appendTo('#row'+i);
 		}
 		for(var j=parseInt(knotColors[i].length/2)-minus-1; j>=0; j--) {
 			var move = 0;
