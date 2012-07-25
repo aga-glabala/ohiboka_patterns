@@ -132,11 +132,7 @@ $(document).ready(function(){
 	<div class="spacer"></div>
 	<div class="box">
 	<div id="add-pattern" class="add">
-		{% if user.is_authenticated %}
-			<a href="add"><i class="icon-plus">&nbsp;</i>{% trans "Add new pattern" %}</a>
-		{% else %}
-			{% trans "You need to be logged in to add new pattern" %}
-		{% endif %}
+		<a href="add"><i class="icon-plus">&nbsp;</i>{% trans "Add new pattern" %}</a>
 	</div>
 
 	<h1>

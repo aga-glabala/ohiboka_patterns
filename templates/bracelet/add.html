@@ -18,9 +18,10 @@ var limit = 30;
 
 
 {% block content %}
-	<form action="addpattern" method="post" id="addbracelet">
-	{% csrf_token %}
-	<table>
+	{% if user.is_authenticated %}
+		<form action="addpattern" method="post" id="addbracelet">
+		{% csrf_token %}
+		<table>
 		<tr>
 			<td>{% trans "Name" %}: </td>
 			<td><input type="text" name="name" class="tableinput"></td>
@@ -47,6 +48,13 @@ var limit = 30;
 			</td>
 		</tr>
 	</table>
+	{% else %}
+		{% trans "You are not logged in, which means you won't be able to save your work!" %}
+		</div>
+		<div class='spacer'></div>
+		<div class='box'>
+	{% endif %}
+
 	{% trans "Set color of strings (use buttons below to add and remove strings)" %}: <br />
 	<span id="colorsInput"></span>
     <input type="button" value='{% trans "Add string" %}' onClick="addKnotColumnButton('colorsInput');">
@@ -60,6 +68,8 @@ var limit = 30;
     <input type="button" value='{% trans "Add row" %}' onClick="addRow();">
     <input type="button" value='{% trans "Remove row" %}' onClick="removeRow();"><br />
 	<textarea id="pattern-string" rows="20" cols="100" hidden="hidden" name="pattern"></textarea>
+{% if user.is_authenticated %}
 	<input type="submit" value='{% trans "Add pattern" %}'>
 </form>
+{% endif %}
 {% endblock %}
