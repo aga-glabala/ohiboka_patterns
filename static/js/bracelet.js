@@ -99,6 +99,7 @@ $(document).ready(function(){
 		}
 	);
 	setRate();
+
  });
  
 function addKnotButton() {

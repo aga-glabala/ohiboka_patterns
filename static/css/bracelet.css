@@ -234,6 +234,12 @@
 .bracelet-data {
 	line-height: 1.5em;
 }
+.bracelet-link {
+	margin: 10px 0 -5px;
+}
+.bracelet-link input {
+	width: 100%;
+}
 .fb-like {
 	margin: 15px 0;
 }
