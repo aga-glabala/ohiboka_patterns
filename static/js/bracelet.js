@@ -108,7 +108,6 @@ function addKnotButton() {
 }
 
 function addKnot() {
-		
 		if (lastKnotRow > knotsColor.length - 1 || lastKnotCol > knotsColor[lastKnotRow].length - 1) {
 			return;
 		}

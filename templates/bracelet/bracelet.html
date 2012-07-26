@@ -3,7 +3,7 @@
 {% load comments %}
 
 {% block title %}
-- {% trans "Bracelet" %} {{ name }}
+- {% trans "Bracelet" %} {{ bracelet.name }}
 {% endblock %}
 
 {% block css %}
@@ -18,7 +18,7 @@
 <script>
 	{% if selectTabs %}
 		$(function() {
-			$( "#tabs" ).tabs("select", {{ selectTabs }});
+			$( "#tabs" ).tabs("select", {{ selectTab }});
 		});
 	{% endif %}
 	var errorText = '{% trans "Could not load this tab. Try reload page if problem will still exist - let me know." %}'
@@ -31,7 +31,7 @@
 	var rate = 0;
 	var nofstr = {{nofstr}};
 	var nofrows = {{nofrows}};
-	var bracelet_id = {{ bracelet_id }};
+	var bracelet_id = {{ bracelet.id }};
 	var strings = {{ strings }};
 	var ifwhite = {{ ifwhite|safe }};
 	var STATIC_URL = {{ STATIC_URL }};
@@ -39,9 +39,9 @@
 		rate = {{ rate }};
 	{% endif %}
 </script>
-<meta property="og:title" content="Ohiboka Patterns - {% trans 'Bracelet' %} {{ name }} {% trans 'by' %} {{ bracelet.user.username }}" />
-<meta property="og:description" content="{% trans 'Bracelet' %} {{ name }} {% trans 'created by'%} {{ bracelet.user.username }}" />
-<meta property="og:image" content="http://{{ request.get_host }}{{ MEDIA_URL }}bracelet_thumbs/{{ photo }}" />
+<meta property="og:title" content="Ohiboka Patterns - {% trans 'Bracelet' %} {{ bracelet.name }} {% trans 'by' %} {{ bracelet.user.username }}" />
+<meta property="og:description" content="{% trans 'Bracelet' %} {{ bracelet.name }} {% trans 'created by'%} {{ bracelet.user.username }}" />
+<meta property="og:image" content="http://{{ request.get_host }}{{ MEDIA_URL }}bracelet_thumbs/{{ bracelet.photo }}" />
 <meta property="og:url" content="http://{{ request.get_host }}/bracelet/{{bracelet.id}}/" />
 <meta property="og:type" content="website" />
 {% endblock %}
@@ -85,10 +85,30 @@
 			</div>
 			
 			<hr />
-			<div id="author">
-				author: {{ bracelet.user.username }} <br/>
-				<a href='/user/{{ bracelet.user.id }}'>See more from this author</a>
-			</div>
+			{% if user == bracelet.user %}
+				<div>
+					{% trans "It\'s your bracelet" %} <a href='/profile/'>{% trans 'See more' %}</a><br />
+					{% trans 'Status' %}: 
+					{% if bracelet.public %}
+						{% trans 'public' %}
+					{% else %}
+						{% trans 'private' %}
+					{% endif %}
+					<a href='/bracelet/change_status/{{bracelet.id}}'>{% trans 'Change to' %}
+						{% if bracelet.public %}
+							{% trans 'private' %}
+						{% else %}
+							{% trans 'public' %}
+						{% endif %}
+					</a><br />
+					<i class='icon-delete'>&nbsp;</i> <a href='bracelet/delete/{{bracelet.id}}' style='color:red;'>{% trans 'Delete bracelet' %}</a>	<br />	<br />			
+				</div>
+			{% else %}
+				<div id="author">
+					author: {{ bracelet.user.username }} <br/>
+					<a href='/user/{{ bracelet.user.id }}'>{% trans 'See more from this author' %}</a>
+				</div>
+			{% endif %}
 			<hr />
 			<div class="bracelet-data">
 				<p><i class="icon-calendar" title="{% trans 'Created on' %}">&nbsp;</i> {{ bracelet.date }}</p>

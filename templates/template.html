@@ -78,7 +78,7 @@
 			
 			<div id="login-box" class="box" style="display:none">
 				<div id="login-form">
-					<form method="post" action="{% url "bracelet.views.login_user" %}">
+					<form method="post" action="{% url "common.views.login_user" %}">
 					{% if loginform.errors %}
 							<p class="errors">{% trans "Your username and password didn't match. Please try again." %}</p>
 					{% endif %}

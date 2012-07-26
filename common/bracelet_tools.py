@@ -31,10 +31,10 @@ def get_all_bracelets(number, user = None, accepted = True):
 		patterns = Bracelet.objects.filter(user = user)
 	else:
 		patterns = Bracelet.objects
-
 	if accepted:
-		patterns = patterns.filter(accepted = True)
-
+		patterns = patterns.filter(accepted = True, deleted = False)
+	else:
+		patterns = patterns.filter(deleted = False)
 	if number > 0:
 		patterns = patterns.order_by('-date')[:number]
 	return create_bracelet_array(patterns)

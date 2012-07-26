@@ -144,7 +144,7 @@ $(document).ready(function(){
 	</h1>
 	<hr />
 	{% if patterns %}
-	    {% for bt in patterns.object_list %}
+	    {% for bt in patterns %}
 	    <div class="pattern-box">
 	        <div class="pattern {% cycle 'pattern-odd' 'pattern-even' %}" id="pattern{{ bt.braceletid }}">
 		        <a href="/bracelet/{{ bt.braceletid }}">

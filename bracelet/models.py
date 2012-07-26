@@ -8,13 +8,16 @@ class BraceletCategory(models.Model):
 
 class Bracelet(models.Model):
 	user = models.ForeignKey(User, related_name = 'bracelets')
-	photo = models.ForeignKey('Photo', related_name = '+', blank = True)
+	photo = models.ForeignKey('Photo', related_name = '+', default = '')
 	date = models.DateTimeField('Creation date')
 	name = models.CharField(max_length = 50)
-	accepted = models.BooleanField()
+	accepted = models.BooleanField(default = False)
 	difficulty = models.IntegerField(choices = ((0, ' Easy'), (1, 'Medium'), (2, 'Hard')))
 	category = models.ForeignKey(BraceletCategory, related_name = 'bracelets')
 	rate = models.DecimalField(max_digits = 3, decimal_places = 2)
+	public = models.BooleanField(default = False)
+	url = models.CharField(max_length = 52)#, unique = True, null = False)
+	deleted = models.BooleanField(default = False)
 
 	def __unicode__(self):
 		return "[id=" + str(self.id) + ", user=" + str(self.user) + ", name=" + self.name + ", accepted=" + str(self.accepted) + ", difficulty=" + str(self.difficulty) + ", category=" + str(self.category) + "]"
@@ -54,7 +57,7 @@ class BraceletKnot(models.Model):
 
 class Photo(models.Model):
 	name = models.CharField(max_length = 50)
-	accepted = models.BooleanField()
+	accepted = models.BooleanField(default = False)
 	bracelet = models.ForeignKey(Bracelet, related_name = 'photos')
 	user = models.ForeignKey(User, related_name = 'photos')
 	def __unicode__(self):

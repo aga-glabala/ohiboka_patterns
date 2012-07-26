@@ -1,145 +1,51 @@
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect, HttpResponse
-from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.template.context import RequestContext
 from bracelet.models import BraceletColor, Bracelet, BraceletCategory, \
 	BraceletString, BraceletKnot, BraceletKnotType, Photo, Rate
 import datetime
 from bracelet.pattern_tools import BraceletPattern
-from bracelet.bracelet_tools import get_all_bracelets, find_bracelets, \
-	get_colors
+from common.bracelet_tools import get_colors
 from bracelet.forms import UploadFileForm
 from bracelet.helper import handle_uploaded_file, scale
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.utils.translation import ugettext as _
-from pyfb import Pyfb
 from django.conf import settings
-from registration.models import UserProfile
-from registration.utils import FacebookBackend
+from common.models import UserProfile
 import time
-
-def index(request, context):
-	form = AuthenticationForm()
-	bracelets = get_all_bracelets(0)
-	paginator = Paginator(bracelets, 9)
-	page = request.GET.get('page')
-	if not page:
-		page = 1
-	try:
-		bracelets = paginator.page(page)
-	except PageNotAnInteger:
-		bracelets = paginator.page(1)
-	except EmptyPage:
-		bracelets = paginator.page(paginator.num_pages)
-	context_ = {
-		'patterns': bracelets,
-		'colors': get_colors(),
-		'categories': BraceletCategory.objects.all(),
-		'loginform':form,
-		"FACEBOOK_APP_ID": settings.FACEBOOK_APP_ID,
-	}
-	if request.user.is_authenticated():
-		try:
-			context['userprofile'] = UserProfile.objects.get(user = request.user)
-		except:
-			pass
-	for c in context:
-		context_[c] = context[c]
-	return render_to_response('bracelet/index.html', context_, RequestContext(request))
-
-def home(request):
-	return index(request, {})
-
-def logout_user(request):
-	logout(request)
-	return HttpResponseRedirect('/')
-
-def login_user(request):
-	if 'username' in request.POST:
-		username = request.POST['username']
-		password = request.POST['password']
-		form = AuthenticationForm(data = request.POST)
-		user = authenticate(username = username, password = password)
-		if user is not None and user.is_active:
-			login(request, user)
-		context = {'loginform':form, }
-		return index(request, context)
-	else:
-		home(request)
-
-def facebook_login(request):
-	facebook = Pyfb(settings.FACEBOOK_APP_ID)
-	return HttpResponseRedirect(facebook.get_auth_code_url(redirect_uri = settings.FACEBOOK_REDIRECT_URL))
+from django.core.exceptions import ObjectDoesNotExist
+from common.views import userprofile, index, get_context
 
 
-#This view must be refered in your FACEBOOK_REDIRECT_URL. For example: http://www.mywebsite.com/facebook_login_success/
-def facebook_login_success(request):
-	code = request.GET.get('code')
-	facebook = Pyfb(settings.FACEBOOK_APP_ID)
-	facebook.get_access_token(settings.FACEBOOK_SECRET_KEY, code, redirect_uri = settings.FACEBOOK_REDIRECT_URL)
-	me = facebook.get_myself()
-	authenticator = FacebookBackend()
-	user = authenticator.authenticate(me)
-	login(request, user)
-	#context = {'loginform':AuthenticationForm(), 
-	#			'patterns': get_all_bracelets(10), 
-	#			'colors': get_colors(),
-	#			'categories': BraceletCategory.objects.all(),
-	#			}
-	#return render_to_response('bracelet/index.html', context, RequestContext(request))
-	return index(request, {})
-
-def setlang(request, lang):
-	request.session['django_language'] = lang
-	r = HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-	r.set_cookie('django_language', lang)
-	return r
 
 def add(request):
-	context = {'loginform':AuthenticationForm(),
-			'colors': get_colors(),
+	context = {'colors': get_colors(),
 			'categories': BraceletCategory.objects.all(),
 			}
+	context.update(get_context(request))
 	return render_to_response('bracelet/add.html', context, RequestContext(request))
 
 def bracelet(request, bracelet_id, context = {}):
-	bp = BraceletPattern(bracelet_id)
-	bp.generate_pattern()
 	try:
-		bracelet = Bracelet.objects.get(bracelet_id)
-		photos = Photo.objects.all().filter(bracelet = bracelet)
-		if len(photos) > 0 and photos[0].accepted:
-			img = photos[0].name
-		else:
-			img = "nophoto.png"
-	except:
-		img = "nophoto.png"
+		bracelet = Bracelet.objects.get(id = bracelet_id)
+	except ObjectDoesNotExist:
+		return index(request, {'error_message':'There is no bracelet with this id'})
+	bp = BraceletPattern(bracelet)
+	bp.generate_pattern()
 
-	bracelet = Bracelet.objects.get(id = bracelet_id)
-
-	context.update({'loginform':AuthenticationForm(),
-			'braceletid':bracelet_id,
-			'bracelet': bracelet,
-			'name' : bp.bracelet.name,
+	context = get_context(request)
+	context.update({'bracelet': bracelet,
 			'style':bp.get_style(),
 			'nofstr':bp.get_n_of_strings(),
 			'knotsType':bp.get_knots_types(),
 			'knotsColor':bp.get_knots_colors(),
 			'strings':bp.get_strings(),
 			'nofrows':bp.nofrows,
-			'bracelet_id':bracelet_id,
 			'texts':[str(s) for s in BraceletKnotType.objects.all().order_by('id')],
 			'ifwhite':bp.get_ifwhite(),
 			'nofphotos': len(Photo.objects.filter(bracelet = bracelet, accepted = True)),
-			'photo': img,
 			'request': request
 			})
-	if request.user.is_authenticated():
-		try:
-			context['userprofile'] = UserProfile.objects.get(user = request.user)
-		except:
-			pass
 
 	if not bracelet.accepted:
 		context['message'] = _("""This bracelet is not accepted yet. It means you can see it only if you have link to this page. """)
@@ -151,54 +57,19 @@ def bracelet(request, bracelet_id, context = {}):
 		context['rate'] = rates[0].rate
 	return render_to_response('bracelet/bracelet.html', context, RequestContext(request))
 
-def search(request):
-	# TODO bracelets filter
-	url = request.get_full_path()
-	if(url.find("category") > -1):
-		url = "&" + url[url.find("category"):]
-	else:
-		url = ""
-	context = {'category' : request.GET['category'],
-		'difficulty': request.GET['difficulty'],
-		'rate': request.GET['rate'],
-		'color': request.GET['color'],
-		'orderby': request.GET['orderby'],
-		'categories': BraceletCategory.objects.all(),
-		'photo': 'photo' in request.GET,
-		'colors': get_colors(),
-		'loginform': AuthenticationForm(),
-		'search': True,
-		'url':url
-	}
-	if request.user.is_authenticated():
-		try:
-			context['userprofile'] = UserProfile.objects.get(user = request.user)
-		except:
-			pass
-
-	bracelets = find_bracelets(category = request.GET['category'], difficulty = request.GET['difficulty'],
-										color = request.GET['color'], orderby = request.GET['orderby'], photo = 'photo' in request.GET, rate = request.GET['rate'])
-
-	paginator = Paginator(bracelets, 9)
-	page = request.GET.get('page')
-	if page == None:
-		page = 1
-	try:
-		bracelets = paginator.page(page)
-	except PageNotAnInteger:
-		bracelets = paginator.page(1)
-	except EmptyPage:
-		bracelets = paginator.page(paginator.num_pages)
-	context['patterns'] = bracelets
-	return render_to_response('bracelet/index.html', context, RequestContext(request))
-
 def addpattern(request):
 	colors = []
 	for c in request.POST:
 		if c.find('color') == 0:
 			colors.append((int('0x' + request.POST[c][1:], 16), c[5:]))
 	knots = request.POST['pattern'].split()
+	url = request.POST['name'].lower().replace(' ', '_')
+	brs = Bracelet.objects.filter(url__contains = url)
+	if brs:
+		url += '-' + str(len(brs))
+
 	b = Bracelet(user = request.user, date = datetime.datetime.today(), name = request.POST['name'], accepted = False, difficulty = request.POST['difficulty'], category = BraceletCategory.objects.filter(name = request.POST['category'])[0], rate = 0)
+
 	b.save()
 	for color in colors:
 		bs = BraceletString(index = color[1], color = BraceletColor.objects.filter(hexcolor = color[0])[0], bracelet = b)
@@ -217,7 +88,7 @@ def addpattern(request):
 
 	b.photo_id = photo.id
 	b.save()
-	return HttpResponseRedirect('/bracelet/' + str(b.id))
+	return bracelet(request, b.id, {'ok_message':_('Bracelet was successfully saved.')})
 
 def photos(request, bracelet_id):
 	photos = Photo.objects.filter(bracelet = Bracelet.objects.get(id = bracelet_id), accepted = True)
@@ -261,5 +132,50 @@ def rate(request, bracelet_id, bracelet_rate):
 			return HttpResponse(_("Pattern do not exist"))
 	return HttpResponse(_("You need to be logged in to rate patterns"))
 
-def about(request):
-	pass
+
+
+def delete_bracelet(request, bracelet_id):
+	try:
+		b = Bracelet.objects.get(id = bracelet_id)
+	except ObjectDoesNotExist:
+		return index(request, {'error_message': _('Bracelet do not exists') + '!'})
+	if b.user != request.user:
+		return index(request, {'error_message': _('This bracelet is not yours') + '!'})
+	b.deleted = True
+	b.save()
+	return index(request, {'ok_message': _('Bracelet was successfully deleted') + '.'})
+
+def change_status(request, bracelet_id):
+	try:
+		b = Bracelet.objects.get(id = bracelet_id)
+	except ObjectDoesNotExist:
+		return index(request, {'error_message': _('Bracelet do not exists') + '!'})
+	if b.user != request.user:
+		return index(request, {'error_message': _('This bracelet is not yours') + '!'})
+	b.public = not b.public
+	b.save()
+	return bracelet(request, bracelet_id, {'ok_message': _('Bracelet\'s status was successfully changed') + '.'})
+
+def delete_photo(request, photo_id):
+	try:
+		photo = Photo.objects.get(id = photo_id)
+	except:
+		return userprofile(request, error_message = _("There is no photo with id: {0}.").format(photo_id))
+	if not request.user.is_authenticated():
+		return userprofile(request, error_message = _("You need to be logged in to edit bracelets."))
+	if photo.user != request.user:
+		return userprofile(request, error_message = _("You are not owner of this photo."))
+	photo.delete()
+	return userprofile(request, ok_message = _("Photo deleted successfully."))
+
+def delete_rate(request, rate_id):
+	try:
+		rate = Rate.objects.get(id = rate_id)
+	except:
+		return userprofile(request, error_message = _("There is no rate with id: {0}.").format(rate_id))
+	if not request.user.is_authenticated():
+		return userprofile(request, error_message = _("You need to be logged in to edit rates."))
+	if rate.user != request.user:
+		return userprofile(request, error_message = _("You are not owner of this rate."))
+	rate.delete()
+	return userprofile(request, ok_message = _("Rate deleted successfully."))
