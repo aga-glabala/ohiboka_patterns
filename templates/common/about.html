@@ -2,6 +2,12 @@
 {% load i18n %}
 {% block css %}
 <link rel="stylesheet" href="{{ STATIC_URL }}css/static.css" type="text/css">
+<script type="text/javascript" >
+	$(document).ready(function(){
+		$('.active').removeClass('active');
+		$('#top-about').addClass('active');
+	});
+</script>
 {% endblock %}
 {% block content %}
 {% if contactform.errors %}

@@ -132,7 +132,7 @@
 			</div>
 			<div class='bracelet-link'>
 				{% trans 'Copy link to this bracelet' %}:<br />
-				<input value="http://{{ request.get_host }}/bracelet/{{bracelet.id}}" />
+				<input value="http://{{ request.get_host }}/bracelet/{{bracelet.url}}" />
 			</div>
 			<div class="fb-like" data-href="{{response.url}}" data-send="false" data-layout="button_count" data-width="150" data-show-faces="false"></div>
 			

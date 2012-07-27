@@ -16,9 +16,12 @@ function showSearchBox(hash) {
 	} else {
 		$('#search-form').parent().show();
 		$('#search-form').parent().next().show();
+		$('.active').removeClass('active');
+		$('#top-search').addClass('active');
 	}
 }
 $(document).ready(function(){
+	
 	$('.pattern').hover(function() {
 		$('.pattern-details').hide();
 		$('#pattern_info'+$(this).attr('id').substring(7)).show();
@@ -46,10 +49,14 @@ $(document).ready(function(){
 			$('#search-form').parent().slideUp();
 			$('#search-form').parent().next().hide();
 			window.location.hash = '';
+			$('.active').removeClass('active');
+			$('#top-patterns').addClass('active');
 		} else {
 			$('#search-form').parent().slideDown();
 			$('#search-form').parent().next().show();
 			window.location.hash = '#search';
+			$('.active').removeClass('active');
+			$('#top-search').addClass('active');
 		}
 		e.preventDefault();
 	});

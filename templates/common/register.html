@@ -5,6 +5,12 @@
 
 {% block css %}
 <link rel="stylesheet" href="{{ STATIC_URL }}css/register.css" type="text/css">
+<script type="text/javascript" >
+	$(document).ready(function(){
+		$('.active').removeClass('active');
+		$('#top-register').addClass('active');
+	});
+</script>
 {% endblock %}
 
 {% block content %}

@@ -16,7 +16,10 @@
 		});
 		$('.pattern-box').hover(function() {}, function() {
 			$('.pattern-details').hide();
-		});
+
+		$('.active').removeClass('active');
+		$('#top-profile').addClass('active');
+
 	});
 </script>
 {% endblock %}
