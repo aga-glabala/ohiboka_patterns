@@ -111,14 +111,14 @@ def delete_bracelet(request, bracelet_id):
 	return userprofile(request, ok_message = _("Bracelet deleted successfully."))
 '''
 
-def user(request, user_id):
+def user(request, user_name):
 	try:
-		user = User.objects.get(id = user_id)
-	except Exception:
-		return index(request, {'error_message': _('There is no user with id: {0}').format(user_id)})
+		user = User.objects.get(username = user_name)
+	except ObjectDoesNotExist:
+		return index(request, {'error_message': _('There is no user with login: {0}').format(user_name)})
 
 	context = {}
-	context['user'] = user
+	context['user_content'] = user
 	context['bracelets'] = get_all_bracelets(0, user)
 	context['photos'] = Photo.objects.filter(user = user, accepted = True)
 	return render_to_response('common/user.html', context, RequestContext(request))

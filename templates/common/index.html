@@ -146,10 +146,10 @@ $(document).ready(function(){
 	{% if patterns %}
 	    {% for bt in patterns %}
 	    <div class="pattern-box">
-	        <div class="pattern {% cycle 'pattern-odd' 'pattern-even' %}" id="pattern{{ bt.braceletid }}">
-		        <a href="/bracelet/{{ bt.braceletid }}">
+	        <div class="pattern" id="pattern{{ bt.id }}">
+		        <a href="/bracelet/{{ bt.url }}">
 			        <div class="pattern-thumb">
-				        <img src="{{ MEDIA_URL }}bracelet_thumbs/{{ bt.photo }}" /></td></tr>
+				        <img src="{{ MEDIA_URL }}bracelet_thumbs/{{ bt.photo.name }}" /></td></tr>
 			        </div>
 			        <div class="pattern-info">
 			        	{% if bt.now %}
@@ -157,20 +157,20 @@ $(document).ready(function(){
 				    		<br />
 				    	{% endif %}
 				    	<div title=
-		    	    		{% if bt.category == 1 %}
+		    	    		{% if bt.category.id == 1 %}
 		    	    			"{% trans 'nature' %}"
 		    	    		{% else %}
-		    	    			{% if bt.category == 2 %}
+		    	    			{% if bt.category.id == 2 %}
 		    	    				"{% trans 'text' %}"
 		    	    			{% else %}
-		    	    				{% if bt.category == 4 %}
+		    	    				{% if bt.category.id == 4 %}
 		    	    					"{% trans 'zigzak' %}"
 		    	    				{% else %}
 		    	    					"{% trans 'another' %}"
 		    	    				{% endif %}
 		    	    			{% endif %}
 		    	    		{% endif %}
-		    	    		 class="category category{{ bt.category }}">&nbsp;
+		    	    		 class="category category{{ bt.category.id }}">&nbsp;
 		    	    	</div>
 				    	<br />
 		    	    	<i class="icon-strings" title="{% trans 'Number of strings' %}">&nbsp;</i> {{ bt.nofstrings }}
@@ -185,7 +185,7 @@ $(document).ready(function(){
 		        <a href="/bracelet/{{ bt.braceletid }}">
 				    <div class="darken">{{ bt.name }}</div>
 				    <div class="darken" style="margin-top:48px">
-				    	{% trans 'by' %}: {{ bt.author }} {% trans 'on' %}: {{ bt.date }}
+				    	{% trans 'by' %}: {{ bt.author.username }} {% trans 'on' %}: {{ bt.date }}
 				    </div>
 				    <div class="darken">
 			    		{% for c in bt.colors %}

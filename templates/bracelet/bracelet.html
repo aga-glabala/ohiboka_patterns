@@ -48,16 +48,16 @@
 
 {% block content %}
 
-{% get_comment_count for bracelet.bracelet bracelet_id as comment_count %}
+{% get_comment_count for bracelet.bracelet bracelet.id as comment_count %}
 <div id="tabs">
 	<div id="tabs-name">
-		<h2>{{ name }}</h2>
+		<h2>{{ bracelet.name }}</h2>
 		
 		<ul>
 			<li><a href="#tabs-1">{% trans "Pattern" %}</a></li>
 			<li><a href="#tabs-2">{% trans "Step by step instructions" %}</a></li>
-			<li><a href="/comments/{{bracelet_id}}">{% trans "Comments" %} ({{ comment_count }})</a></li>
-			<li><a href="/bracelet/photos/{{bracelet_id}}">{% trans "Photos" %} ({{ nofphotos }})</a></li>
+			<li><a href="/comments/{{bracelet.id}}">{% trans "Comments" %} ({{ comment_count }})</a></li>
+			<li><a href="/bracelet/photos/{{bracelet.id}}">{% trans "Photos" %} ({{ nofphotos }})</a></li>
 		</ul>
 
 	</div>
@@ -106,7 +106,7 @@
 			{% else %}
 				<div id="author">
 					author: {{ bracelet.user.username }} <br/>
-					<a href='/user/{{ bracelet.user.id }}'>{% trans 'See more from this author' %}</a>
+					<a href='/user/{{ bracelet.user.username }}'>{% trans 'See more from this author' %}</a>
 				</div>
 			{% endif %}
 			<hr />

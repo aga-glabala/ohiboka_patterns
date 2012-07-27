@@ -6,37 +6,31 @@ Created on Mar 10, 2012
 from bracelet.models import Bracelet, Photo, BraceletCategory, BraceletColor, \
 	BraceletString, Rate
 from datetime import datetime
-class BraceletContainer(object):
-	def __init__(self, braceletid, name, author, photo, now, category, colors, average_rate, nofstrings, difficulty, date, nofvotes, accepted):
-		self.braceletid = braceletid
-		self.name = name
-		self.author = author
-		self.photo = photo
+class BraceletContainer(Bracelet):
+	def __init__(self, bracelet, now, colors, nofstrings, nofvotes):
+		self.__dict__ = bracelet.__dict__.copy()
+		#self.bracelet = bracelet
 		self.now = now
-		self.category = category
 		self.colors = colors
 		self.nofstrings = nofstrings
-		self.difficulty = difficulty
-		self.date = date
+		self.date = bracelet.date.date().__str__()
 		self.nofvotes = nofvotes
-		self.average_rate = average_rate
-		self.short_rate = int(average_rate)
-		self.accepted = accepted
+		self.short_rate = int(bracelet.rate)
 	def __unicode__(self):
 		return "[ author=" + str(self.author) + ", photo=" + str(self.photo) + ", date=" + str(self.date) + ", category=" + str(self.category) + "]"
 
 def get_all_bracelets(number, user = None, accepted = True):
-	patterns = None
+
+	patterns = Bracelet.objects.order_by('-date')
 	if user:
-		patterns = Bracelet.objects.filter(user = user)
-	else:
-		patterns = Bracelet.objects
+		patterns = patterns.filter(user = user)
+
 	if accepted:
 		patterns = patterns.filter(accepted = True, deleted = False)
 	else:
 		patterns = patterns.filter(deleted = False)
 	if number > 0:
-		patterns = patterns.order_by('-date')[:number]
+		patterns = patterns[:number]
 	return create_bracelet_array(patterns)
 
 def find_bracelets(orderby = "0", category = "0", difficulty = "0", color = "0", photo = False, rate = "0"):
@@ -69,23 +63,16 @@ def find_bracelets(orderby = "0", category = "0", difficulty = "0", color = "0",
 def create_bracelet_array(patterns):
 	bracelets = []
 	for br in patterns:
-		author = br.user.username
 		d = datetime.now() - br.date
 		now = d.days < 7
-		photos = Photo.objects.all().filter(bracelet = br)
-		if len(photos) > 0 and photos[0].accepted:
-			img = photos[0].name
-		else:
-			img = "nophoto.png"
+
 		colors = []
 		cs = BraceletString.objects.filter(bracelet = br)
 		for c in cs:
 			if not str(c.color) in colors:
 				colors.append(str(c.color))
 		nofvotes = len(Rate.objects.filter(bracelet = br))
-		bracelets.append(BraceletContainer(braceletid = br.id, name = br.name, author = author, photo = img, now = now,
-										   category = br.category.id, colors = colors, nofstrings = len(colors),
-										   average_rate = br.rate, difficulty = br.difficulty, date = br.date.date().__str__(), nofvotes = nofvotes, accepted = br.accepted))
+		bracelets.append(BraceletContainer(bracelet = br, now = now, colors = colors, nofstrings = len(colors), nofvotes = nofvotes))
 	return bracelets
 
 def get_colors():

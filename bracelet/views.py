@@ -15,6 +15,7 @@ from common.models import UserProfile
 import time
 from django.core.exceptions import ObjectDoesNotExist
 from common.views import userprofile, index, get_context
+from django.contrib.comments.models import Comment
 
 
 
@@ -25,9 +26,9 @@ def add(request):
 	context.update(get_context(request))
 	return render_to_response('bracelet/add.html', context, RequestContext(request))
 
-def bracelet(request, bracelet_id, context = {}):
+def bracelet(request, bracelet_url, context = {}):
 	try:
-		bracelet = Bracelet.objects.get(id = bracelet_id)
+		bracelet = Bracelet.objects.get(url = bracelet_url)
 	except ObjectDoesNotExist:
 		return index(request, {'error_message':'There is no bracelet with this id'})
 	bp = BraceletPattern(bracelet)
@@ -44,7 +45,7 @@ def bracelet(request, bracelet_id, context = {}):
 			'texts':[str(s) for s in BraceletKnotType.objects.all().order_by('id')],
 			'ifwhite':bp.get_ifwhite(),
 			'nofphotos': len(Photo.objects.filter(bracelet = bracelet, accepted = True)),
-			'request': request
+			'request': request,
 			})
 
 	if not bracelet.accepted:
@@ -55,6 +56,21 @@ def bracelet(request, bracelet_id, context = {}):
 		rates = Rate.objects.filter(user = request.user, bracelet = bracelet)
 	if len(rates) > 0:
 		context['rate'] = rates[0].rate
+
+	'''
+		for bracelet in Bracelet.objects.all():
+			photo_name = str(int(time.time() * 1000)) + "-" + str(bracelet.id) + '.png'
+			bp = BraceletPattern(bracelet.id)
+			bp.generate_pattern()
+			bp.generate_photo(settings.MEDIA_ROOT + 'images/' + photo_name)
+			scale(photo_name, settings.MEDIA_ROOT + 'images/', settings.MEDIA_ROOT + 'bracelet_thumbs/')
+			photo = Photo(user = request.user, name = photo_name, accepted = True, bracelet = bracelet)
+			photo.save()
+	
+			bracelet.photo_id = photo.id
+			bracelet.save()
+	'''
+
 	return render_to_response('bracelet/bracelet.html', context, RequestContext(request))
 
 def addpattern(request):
@@ -83,26 +99,32 @@ def addpattern(request):
 	bp.generate_pattern()
 	bp.generate_photo(settings.MEDIA_ROOT + 'images/' + photo_name)
 	scale(photo_name, settings.MEDIA_ROOT + 'images/', settings.MEDIA_ROOT + 'bracelet_thumbs/')
-	photo = Photo(user = request.user, name = photo_name, accepted = True, bracelet = Bracelet.objects.get(id = b.id))
+	photo = Photo(user = request.user, name = photo_name, accepted = True, bracelet = b)
 	photo.save()
 
 	b.photo_id = photo.id
 	b.save()
-	return bracelet(request, b.id, {'ok_message':_('Bracelet was successfully saved.')})
+	return bracelet(request, b.url, {'ok_message':_('Bracelet was successfully saved.')})
 
 def photos(request, bracelet_id):
+	print bracelet_id
 	photos = Photo.objects.filter(bracelet = Bracelet.objects.get(id = bracelet_id), accepted = True)
 	form = UploadFileForm()
 	return render_to_response('bracelet/tabs/photos.html', {'form': form, 'bracelet_id':bracelet_id, 'photos':photos, 'selectTabs':3}, RequestContext(request))
 
 def photo_upload(request, bracelet_id):
-	photos = Photo.objects.filter(bracelet = Bracelet.objects.get(id = bracelet_id), accepted = True)
+	try:
+		bracelet = Bracelet.objects.get(id = bracelet_id)
+	except ObjectDoesNotExist:
+		return index(request, {'error_message':'There is no bracelet with this idbbbbb'})
+
+	photos = Photo.objects.filter(bracelet = bracelet, accepted = True)
 	form = UploadFileForm(request.POST, request.FILES)
 	if form.is_valid():
 		handle_uploaded_file(request.FILES['file'], request.POST['bracelet_id'], request.user)
 
-		return bracelet(request, bracelet_id, {'form': form, 'bracelet_id':bracelet_id, 'photos':photos, 'selectTabs':3, 'ok_message':_('Photo upload successfully. It will show up here after admin acceptance.')})
-	return bracelet(request, bracelet_id, {'form': form, 'bracelet_id':bracelet_id, 'photos':photos, 'selectTabs':3, 'error_message':_('Error has occured when uploading photo.')})
+		return bracelet(request, bracelet.url, {'form': form, 'bracelet_id':bracelet_id, 'photos':photos, 'selectTabs':3, 'ok_message':_('Photo upload successfully. It will show up here after admin acceptance.')})
+	return bracelet(request, bracelet.url, {'form': form, 'bracelet_id':bracelet_id, 'photos':photos, 'selectTabs':3, 'error_message':_('Error has occured when uploading photo.')})
 
 def rate(request, bracelet_id, bracelet_rate):
 	try:
@@ -154,7 +176,7 @@ def change_status(request, bracelet_id):
 		return index(request, {'error_message': _('This bracelet is not yours') + '!'})
 	b.public = not b.public
 	b.save()
-	return bracelet(request, bracelet_id, {'ok_message': _('Bracelet\'s status was successfully changed') + '.'})
+	return bracelet(request, b.url, {'ok_message': _('Bracelet\'s status was successfully changed') + '.'})
 
 def delete_photo(request, photo_id):
 	try:

@@ -56,7 +56,9 @@ fields, timestamps and security hashes -->
 	                {{ field }}
 	            {% endif %}
 	    {% endfor %}
+	    
     	<input type='hidden' name='name' id='comment-form-username' value='{{ userprofile.fb_name }}' />
+    	<input type='hidden' name='email' id='comment-form-email' value='email@com.com' />
 	    <tr><td>{{ form.comment.label_tag }} </td><td>{{ form.comment }}</td><td>{{ form.comment.errors }}</td></tr>
 	    <tr><td>Do not fill this</td><td>{{ form.honeypot }}</td><td>{{ form.honeypot.errors }}</td></tr>
 	    <tr><td></td>
