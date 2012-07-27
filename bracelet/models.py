@@ -11,12 +11,12 @@ class Bracelet(models.Model):
 	photo = models.ForeignKey('Photo', related_name = '+', default = '')
 	date = models.DateTimeField('Creation date')
 	name = models.CharField(max_length = 50)
-	accepted = models.BooleanField(default = False)
+	accepted = models.IntegerField(default = 0)
 	difficulty = models.IntegerField(choices = ((0, ' Easy'), (1, 'Medium'), (2, 'Hard')))
 	category = models.ForeignKey(BraceletCategory, related_name = 'bracelets')
 	rate = models.DecimalField(max_digits = 3, decimal_places = 2)
 	public = models.BooleanField(default = False)
-	url = models.CharField(max_length = 52)#, unique = True, null = False)
+	url = models.CharField(max_length = 52, unique = True, null = False)
 	deleted = models.BooleanField(default = False)
 
 	def __unicode__(self):

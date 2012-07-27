@@ -30,7 +30,7 @@ def bracelet(request, bracelet_url, context = {}):
 	try:
 		bracelet = Bracelet.objects.get(url = bracelet_url)
 	except ObjectDoesNotExist:
-		return index(request, {'error_message':'There is no bracelet with this id'})
+		return index(request, {'error_message':'There is no bracelet with this id.'})
 	bp = BraceletPattern(bracelet)
 	bp.generate_pattern()
 
@@ -48,9 +48,10 @@ def bracelet(request, bracelet_url, context = {}):
 			'request': request,
 			})
 
-	if not bracelet.accepted:
-		context['message'] = _("""This bracelet is not accepted yet. It means you can see it only if you have link to this page. """)
-
+	if bracelet.accepted == 0:
+		context['message'] = _("""This bracelet is not accepted yet. It means you can see it only if you have link to this page.""")
+	elif bracelet.accepted == -1:
+		context['message'] = _("""This bracelet has been rejected. It means you can see it only if you have link to this page.""")
 	rates = []
 	if request.user.is_authenticated():
 		rates = Rate.objects.filter(user = request.user, bracelet = bracelet)

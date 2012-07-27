@@ -83,7 +83,21 @@
 					{% trans "you need to be logged to rate pattern" %}
 				{% endif %}
 			</div>
-			
+			{% if user.is_staff %}
+				<hr />
+				Status: 
+				{% if bracelet.accepted == 1 %}
+					{% trans 'Accepted' %}
+				{% else %}{% if bracelet.accepted == 0 %}
+					{% trans 'None' %}
+				{% else %}{% if bracelet.accepted == -1 %}
+					{% trans 'Rejected' %}
+				{% endif %}{% endif %}{% endif %}
+				<br />
+				<a href='/bracelet/accept/{{bracelet.id}}/0'>{% trans "Hide this, I'll check later" %}</a><br />
+				<a href='/bracelet/accept/{{bracelet.id}}/-1'>{% trans 'Do not accept'%}</a><br />
+				<a href='/bracelet/accept/{{bracelet.id}}/1'>{% trans 'Accept bracelet'%}</a><br />
+			{% endif %}
 			<hr />
 			{% if user == bracelet.user %}
 				<div>
