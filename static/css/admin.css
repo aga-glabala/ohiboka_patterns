@@ -1,0 +1,21 @@
+table {
+	width: 100%;
+	line-height: 1.2em;
+	vertical-align: top;
+	margin-bottom: 20px;
+}
+td {
+	padding: 5px;
+}
+tr {
+	border-bottom: 1px solid #aaa;
+}
+tr.odd {
+	background-color: #eee;
+}
+tr:hover {
+	background-color: #ddd;
+}
+tr:first-child {
+	font-weight: bold;
+}

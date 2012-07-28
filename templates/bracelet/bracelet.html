@@ -87,11 +87,11 @@
 				<hr />
 				Status: 
 				{% if bracelet.accepted == 1 %}
-					{% trans 'Accepted' %}
+					<span class="ok_box">{% trans 'Accepted' %}</span>
 				{% else %}{% if bracelet.accepted == 0 %}
 					{% trans 'None' %}
 				{% else %}{% if bracelet.accepted == -1 %}
-					{% trans 'Rejected' %}
+					<span class="error_box">{% trans 'Rejected' %}</span>
 				{% endif %}{% endif %}{% endif %}
 				<br />
 				<a href='/bracelet/accept/{{bracelet.id}}/0'>{% trans "Hide this, I'll check later" %}</a><br />

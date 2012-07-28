@@ -28,8 +28,10 @@ urlpatterns = patterns('',
     url(r'^bracelet/remove/(?P<bracelet_id>\d+)/$', 'ohibokapatterns.bracelet.views.delete_bracelet'),
     url(r'^bracelet/rate/(?P<bracelet_id>\d+)/(?P<bracelet_rate>\d+)/$', 'ohibokapatterns.bracelet.views.rate'),
     url(r'^bracelet/rate/remove/(?P<rate_id>\d+)', 'ohibokapatterns.bracelet.views.delete_rate'),
-    url(r'^bracelet/change_status/(?P<bracelet_id>\d+)/$', 'ohibokapatterns.bracelet.views.change_status'),
+    url(r'^bracelet/change_status/(?P<bracelet_id>\d+)$', 'ohibokapatterns.bracelet.views.change_status'),
     url(r'^bracelet/delete/(?P<bracelet_id>\d+)/$', 'ohibokapatterns.bracelet.views.delete_bracelet'),
+    # TODO minus przy statusie!
+    url(r'^bracelet/accept/(?P<bracelet_id>\d+)/(?P<bracelet_status>\d+)/$', 'ohibokapatterns.bracelet.views.accept'),
     url(r'^add$', 'ohibokapatterns.bracelet.views.add'),
     url(r'^addpattern$', 'ohibokapatterns.bracelet.views.addpattern'),
     url(r'^bracelet/(?P<bracelet_url>.+)/$', 'ohibokapatterns.bracelet.views.bracelet'),
@@ -39,14 +41,15 @@ urlpatterns = patterns('',
     url(r'^comments/post/$', 'ohibokapatterns.comments.views.pattern_comments_post'),
     url(r'^comments/posted/$', 'ohibokapatterns.comments.views.pattern_comments_posted'),
     url(r'^comments/', include('django.contrib.comments.urls')),
-    #url(r'^login/$', 'ohibokapatterns.bracelet.views.login_user'),
-    # url(r'^ohibokapatterns/', include('ohibokapatterns.foo.urls')),
+
+    # MODULE ADMIN
+    url(r'admin/manage_bracelets', 'ohibokapatterns.admin.views.manage_bracelets'),
 
     # Uncomment the admin/doc line below to enable admin documentation:  
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^superadmin/', include(admin.site.urls)),
 )
 
 urlpatterns += staticfiles_urlpatterns()

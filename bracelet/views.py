@@ -30,7 +30,7 @@ def bracelet(request, bracelet_url, context = {}):
 	try:
 		bracelet = Bracelet.objects.get(url = bracelet_url)
 	except ObjectDoesNotExist:
-		return index(request, {'error_message':'There is no bracelet with this id.'})
+		return index(request, {'error_message':_('There is no bracelet with this id.')})
 	bp = BraceletPattern(bracelet)
 	bp.generate_pattern()
 
@@ -176,6 +176,23 @@ def change_status(request, bracelet_id):
 	if b.user != request.user:
 		return index(request, {'error_message': _('This bracelet is not yours') + '!'})
 	b.public = not b.public
+	b.save()
+	return bracelet(request, b.url, {'ok_message': _('Bracelet\'s status was successfully changed') + '.'})
+
+def accept(request, bracelet_id, bracelet_status):
+	try:
+		b = Bracelet.objects.get(id = bracelet_id)
+	except ObjectDoesNotExist:
+		return index(request, {'error_message': _('Bracelet do not exists') + '!'})
+	if b.user != request.user:
+		return index(request, {'error_message': _('This bracelet is not yours') + '!'})
+	try:
+		status = int(bracelet_status)		
+	except ValueError:
+		return index(request, {'error_message': _('Wrong value for bracelet status') + '!'})
+	if not status in [-1, 0, 1]:
+		return index(request, {'error_message': _('Wrong value for bracelet status') + '!'})
+	b.accepted = status
 	b.save()
 	return bracelet(request, b.url, {'ok_message': _('Bracelet\'s status was successfully changed') + '.'})
 

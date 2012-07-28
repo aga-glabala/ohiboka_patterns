@@ -2,7 +2,7 @@
 import os.path
 
 siteaddress = 'http://localhost:8000/'
-projectaddress = '/files/aptana-workspace/ohibokapatterns/' #'/home/agnis/ohibokapatterns/'
+projectaddress = '/home/agnis/ohibokapatterns/' #'/files/aptana-workspace/ohibokapatterns/' #
 #projectaddress = ''
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -138,6 +138,7 @@ INSTALLED_APPS = (
     'bracelet.templatetags',
     'common',
     'comments',
+    'admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
