@@ -28,7 +28,7 @@ var limit = 30;
 		</tr>
 		<tr>
 			<td>{% trans "Difficulty" %}: </td>
-			<td><select name="difficulty" class="tableinput">
+			<td><select class='btn' name="difficulty" class="tableinput">
 			<option value="1" {% if difficulty == "1" %}selected="selected" {% endif %}>{% trans "Easy" %}</option>
 			<option value="2" {% if difficulty == "2" %}selected="selected" {% endif %}>{% trans "Medium" %}</option>
 			<option value="3" {% if difficulty == "3" %}selected="selected" {% endif %}>{% trans "Hard" %}</option>
@@ -37,7 +37,7 @@ var limit = 30;
 		</tr>
 		<tr>
 			<td>{% trans "Category" %}:</td>
-			<td><select name="category" class="tableinput">
+			<td><select class='btn' name="category" class="tableinput">
 				{% if categories %}
 					{% for c in categories %}
 						<option {% if category == c.name %}selected="selected" {% endif %}>{{ c.name }}</option>
@@ -57,19 +57,33 @@ var limit = 30;
 
 	{% trans "Set color of strings (use buttons below to add and remove strings)" %}: <br />
 	<span id="colorsInput"></span>
-    <input type="button" value='{% trans "Add string" %}' onClick="addKnotColumnButton('colorsInput');">
-    <input type="button" value='{% trans "Remove string" %}' onClick="removeInput();"><br />
+    <input class='btn' type="button" value='{% trans "Add string" %}' onClick="addKnotColumnButton('colorsInput');">
+    
+    <div class="btn-group">
+  	<button  onClick="addKnotColumnButton('colorsInput');" class="btn">Action</button>
+  	<button class="btn dropdown-toggle" data-toggle="dropdown">
+    	<span class="caret">a</span>
+  	</button>
+  	<ul class="dropdown-menu">
+    	<li>/</li>
+    	<li>\</li>
+    	<li>x</li>
+    	<li>a</li>
+  	</ul>
+    </div>
+    
+    <input class='btn' type="button" value='{% trans "Remove string" %}' onClick="removeInput();"><br />
     
     <div id="pattern-thumb"></div>
     <div id="pattern-container">
     	<div id="pattern-canvas"></div>
     	<div id="pattern-designer"></div>
     </div>
-    <input type="button" value='{% trans "Add row" %}' onClick="addRow();">
-    <input type="button" value='{% trans "Remove row" %}' onClick="removeRow();"><br />
+    <input class='btn' type="button" value='{% trans "Add row" %}' onClick="addRow();">
+    <input class='btn' type="button" value='{% trans "Remove row" %}' onClick="removeRow();"><br />
 	<textarea id="pattern-string" rows="20" cols="100" hidden="hidden" name="pattern"></textarea>
 {% if user.is_authenticated %}
-	<input type="submit" value='{% trans "Add pattern" %}'>
+	<input class='btn' type="submit" value='{% trans "Add pattern" %}'>
 </form>
 {% endif %}
 {% endblock %}

@@ -5,6 +5,14 @@ select.tableinput {
 input.tableinput {
 	width:98%;
 }
+#pattern-string {
+	display: none;
+}
+#colorsInput select {
+	width: 50px;
+	margin: 1px;
+}
+
 #pattern-container {
 	position: relative;
 	margin-bottom:10px;

@@ -59,7 +59,7 @@ function addInput(divColor){
 	if (nofstrings == limit)  {
 		alert("You have reached the limit of adding " + nofstrings + " inputs");
 	} else {
-		var el = $("<select id='color"+nofstrings+"' name='color"+nofstrings +"' onchange='setColor("+nofstrings+")'>");
+		var el = $("<select class='btn' id='color"+nofstrings+"' name='color"+nofstrings +"' onchange='setColor("+nofstrings+")'>");
 		for (i=0;i<=colors.length-1;i++)
 		{
 			$("<option value='"+colors[i]+"' style='background-color:"+colors[i]+"'>                  </option>").appendTo(el);
