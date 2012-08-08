@@ -1,9 +1,27 @@
-
+table td:first-child {
+	padding-right: 5px;
+}
 select.tableinput {
 	width:100%;
 }
+.btn-group {
+	display:inline-block;
+}
+.span2 {
+	width: 48%;
+	display: inline-block;
+}
+.span2.second {
+	padding-left: 20px;
+	border-left: 1px solid #bfbbb1;
+}
+table th {
+	text-align: left;
+	font-weight: bold;
+	padding-bottom: 10px;
+}
 input.tableinput {
-	width:98%;
+	width:95%;
 }
 #pattern-string {
 	display: none;
@@ -12,7 +30,12 @@ input.tableinput {
 	width: 50px;
 	margin: 1px;
 }
-
+#floating-top div {
+	display: inline-block;
+}
+#floating-top div#pattern-thumb {
+	display: block;
+}
 #pattern-container {
 	position: relative;
 	margin-bottom:10px;

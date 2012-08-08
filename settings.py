@@ -2,7 +2,7 @@
 import os.path
 
 siteaddress = 'http://localhost:8000/'
-projectaddress = '/home/agnis/ohibokapatterns/' #'/files/aptana-workspace/ohibokapatterns/' #
+projectaddress = '/files/aptana-workspace/ohibokapatterns/' #'/home/agnis/ohibokapatterns/' 
 #projectaddress = ''
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG

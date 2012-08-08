@@ -2,7 +2,7 @@ var nofrows = 10;
 var knotColors = [];
 var if_white = [];
 var knotTypes = [];
-	var loaded = false;
+var loaded = false;
 $(document).ready(function(){
 	addInput('colorsInput');addInput('colorsInput');addInput('colorsInput');addInput('colorsInput');addInput('colorsInput');
 	$('#color0 option:eq(0)').attr("selected", "selected");setColor(0);
@@ -16,6 +16,7 @@ $(document).ready(function(){
 		return submit();
 	});
 	loaded = true;
+	$('.dropdown-toggle').dropdown()
 });
 function addKnotColumnButton(divColor) {
 	addInput(divColor);
