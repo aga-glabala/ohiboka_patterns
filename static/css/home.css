@@ -111,24 +111,3 @@ div.pattern-details {
 	margin-right: 45px;
 	text-align: center;
 }
-.prev {
-	float: left;
-}
-.next {
-	float: right;
-}
-.icon-plus {
-	background: url('/static/gfx/icons.png') -46px -15px;
-	padding: 0 10px 0 0;
-	font-size: 13px;
-}
-.icon-prev {
-	background: url('/static/gfx/icons.png') -76px -15px;
-	padding: 0 10px 0 0;
-	font-size: 13px;
-}
-.icon-next {
-	background: url('/static/gfx/icons.png') -92px -15px;
-	padding: 0 10px 0 0;
-	font-size: 13px;
-}

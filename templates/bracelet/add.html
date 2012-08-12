@@ -9,7 +9,7 @@
 </style>
 <script src="{{ STATIC_URL }}js/add-pattern.js" type="text/javascript" ></script>
 <script src="{{ STATIC_URL }}js/bootstrap-dropdown.js" type="text/javascript" ></script>
-<script language="Javascript" type="text/javascript">
+<script type="text/javascript">
 var colors = {{ colors|safe }};
 var nofstrings = 0;
 var limit = 30;
@@ -23,31 +23,30 @@ var limit = 30;
 		{% csrf_token %}
 		<div class="span2">
 			<table>
-		<tr><th colspan=2>{% trans "Fill basic pattern information" %}</th></tr>
-			<tr>
-				<td>{% trans "Name" %}: </td>
-				<td><input type="text" name="name" class="tableinput"></td>
-			</tr>
-			<tr>
-				<td>{% trans "Difficulty" %}: </td>
-				<td><select class='btn' name="difficulty" class="tableinput">
-				<option value="1" {% if difficulty == "1" %}selected="selected" {% endif %}>{% trans "Easy" %}</option>
-				<option value="2" {% if difficulty == "2" %}selected="selected" {% endif %}>{% trans "Medium" %}</option>
-				<option value="3" {% if difficulty == "3" %}selected="selected" {% endif %}>{% trans "Hard" %}</option>
-				</select>
-				</td>
-			</tr>
-			<tr>
-				<td>{% trans "Category" %}:</td>
-				<td><select class='btn' name="category" class="tableinput">
-					{% if categories %}
-						{% for c in categories %}
-							<option {% if category == c.name %}selected="selected" {% endif %}>{{ c.name }}</option>
-						{% endfor %}
-					{% endif %}
-					</select>
-				</td>
-			</tr>
+				<tr><th colspan=2>{% trans "Fill basic pattern information" %}</th></tr>
+				<tr>
+					<td>{% trans "Name" %}: </td>
+					<td><input type="text" name="name" class="tableinput"></td>
+				</tr>
+				<tr>
+					<td>{% trans "Difficulty" %}: </td>
+					<td><select class='btn' name="difficulty">
+						<option value="1" {% if difficulty == "1" %}selected="selected" {% endif %}>{% trans "Easy" %}</option>
+						<option value="2" {% if difficulty == "2" %}selected="selected" {% endif %}>{% trans "Medium" %}</option>
+						<option value="3" {% if difficulty == "3" %}selected="selected" {% endif %}>{% trans "Hard" %}</option>
+					</select></td>
+				</tr>
+				<tr>
+					<td>{% trans "Category" %}:</td>
+					<td><select class='btn' name="category" class="tableinput">
+						{% if categories %}
+							{% for c in categories %}
+								<option {% if category == c.name %}selected="selected" {% endif %}>{{ c.name }}</option>
+							{% endfor %}
+						{% endif %}
+						</select>
+					</td>
+				</tr>
 			</table>
 		</div>
 	{% else %}
@@ -59,10 +58,10 @@ var limit = 30;
 	<div class="span2 second">
 		<table>
 		<tr><th colspan=2>{% trans "Fast generating empty template" %}</th></tr>
-		<tr><td><label for="rows">{%trans 'Row' %}:</label></td><td><input name="rows" type="text" /></td></tr>
-		<tr><td><label for="columns">{%trans 'Columns' %}:</label></td><td><input name="columns" type="text" /></td></tr>
-		<tr><td><label for="knots">{%trans 'Knot types' %}:</label></td>
-					<td><select class='btn' name="knots">
+		<tr><td><label for="generate-form-rows">{%trans 'Row' %}:</label></td><td><input id="generate-form-rows" name="rows" type="text" /></td></tr>
+		<tr><td><label for="generate-form-columns">{%trans 'Columns' %}:</label></td><td><input id="generate-form-columns" name="columns" type="text" /></td></tr>
+		<tr><td><label for="generate-form-knots">{%trans 'Knot types' %}:</label></td>
+					<td><select class='btn' id="generate-form-knots" name="knots">
 						<option value="1">{% trans 'All forward' %}</option>
 						<option value="2">{% trans 'All backward' %}</option>
 						<option value="3">{% trans 'All forward-backward' %}</option>
@@ -70,8 +69,9 @@ var limit = 30;
 						<option value="5">{% trans 'Forward-backward and backward-forward' %}</option>
 					</select></td></tr>
 		</table>
+		<button class='btn btn-primary'>Generate template</button>
 	</div>
-	<div id="floating-top">
+	<div id="floating-top" class="form-actions">
 		{% trans "Set color of strings (use buttons below to add and remove strings)" %}: <br />
 		<div id="colorsInput"></div>
 	    

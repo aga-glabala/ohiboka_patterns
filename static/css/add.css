@@ -4,13 +4,6 @@ table td:first-child {
 select.tableinput {
 	width:100%;
 }
-.btn-group {
-	display:inline-block;
-}
-.span2 {
-	width: 48%;
-	display: inline-block;
-}
 .span2.second {
 	padding-left: 20px;
 	border-left: 1px solid #bfbbb1;

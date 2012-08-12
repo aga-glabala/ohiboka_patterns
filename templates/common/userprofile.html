@@ -158,7 +158,7 @@
 		<tr>
 			<td><a href="/bracelet/{{ rate.bracelet.id }}">{{rate.bracelet.name}}</a></td>
 			<td>{{rate.rate}}</td>
-			<td><a href="/bracelet/rate/remove/{{rate.id}}" title="{% trans 'Remove' %}"> <i class="icon-delete"></i></a></td>
+			<td><a href="/bracelet/rate/remove/{{rate.id}}" title="{% trans 'Remove' %}"> <i class="icon-trash"></i></a></td>
 		</tr>
 		{% endfor %}
 	</table>
@@ -170,7 +170,7 @@
 		<div class="photo">
         	<a href="{{ MEDIA_URL }}images/{{ photo.name }}"><img src="{{ MEDIA_URL }}bracelet_thumbs/{{ photo.name }}" /></a>
     	    <a href="/bracelet/{{ photo.bracelet.id }}">{{photo.bracelet.name}}</a>
-    	    <a href="/bracelet/photo/remove/{{photo.id}}" title="{% trans 'Remove' %}"><i class="icon-delete"></i></a>
+    	    <a href="/bracelet/photo/remove/{{photo.id}}" title="{% trans 'Remove' %}"><i class="icon-trash"></i></a>
 		</div>
 	{% endfor %}
 {% endif %}
@@ -182,7 +182,7 @@
 		<div class="photo">
         	<a href="{{ MEDIA_URL }}images/{{ photo.name }}"><img src="{{ MEDIA_URL }}bracelet_thumbs/{{ photo.name }}" /></a>
     	    <a href="/bracelet/{{ photo.bracelet.id }}">{{photo.bracelet.name}}</a>
-    	    <a href="/bracelet/photo/remove/{{photo.id}}" title="{% trans 'Remove' %}"><i class="icon-delete"></i></a>
+    	    <a href="/bracelet/photo/remove/{{photo.id}}" title="{% trans 'Remove' %}"><i class="icon-trash"></i></a>
 		</div>
 	{% endfor %}
 {% endif %}

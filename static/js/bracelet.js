@@ -74,16 +74,18 @@ $(document).ready(function(){
 	
 	
 	// rates
-	$('.icon-star').hover(
+	$('.icon-heart-empty').hover(
 		function () {
-		    $('.icon-star').slice(0,$(this).attr('id').substring(4,5)).css('background-position', '0 -15px');
-		    $('.icon-star').slice($(this).attr('id').substring(4,5),5).css('background-position', '-15px -15px');
+		    $('.icon-heart-empty').slice(0,$(this).attr('id').substring(4,5)).removeClass('icon-heart-empty');
+		    $('.icon-heart-empty').slice(0,$(this).attr('id').substring(4,5)).addClass('icon-heart-full');
+		    $('.icon-heart-empty').slice($(this).attr('id').substring(4,5),5).removeClass('icon-heart-full');
+		    $('.icon-heart-empty').slice($(this).attr('id').substring(4,5),5).addClass('icon-heart-empty');
 	});
-	$('.icon-star').parent().hover(function () {},
+	$('.icon-heart-empty').parent().hover(function () {},
 		function () {
 	    	setRate();
 	});
-	$('.icon-star').click(
+	$('.icon-heart-empty').click(
 		function () {
 			var id = $(this).attr('id').substring(4,5)
 			$.ajax({
@@ -232,6 +234,8 @@ function add5Knots() {
 	}
 }
 function setRate() {
-	$('.icon-star').slice(0,rate).css('background-position', '0 -15px');
-	$('.icon-star').slice(rate,5).css('background-position', '-15px -15px');
+	$('#ratepattern i').slice(0,rate).removeClass('icon-heart-empty');
+	$('#ratepattern i').slice(0,rate).addClass('icon-heart-full');
+	$('#ratepattern i').slice(rate,5).removeClass('icon-heart-full');
+	$('#ratepattern i').slice(rate,5).addClass('icon-heart-empty');
 }

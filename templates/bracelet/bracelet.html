@@ -115,7 +115,7 @@
 							{% trans 'public' %}
 						{% endif %}
 					</a><br />
-					<i class='icon-delete'>&nbsp;</i> <a href='bracelet/delete/{{bracelet.id}}' style='color:red;'>{% trans 'Delete bracelet' %}</a>	<br />	<br />			
+					<i class='icon-trash'>&nbsp;</i> <a href='bracelet/delete/{{bracelet.id}}' style='color:red;'>{% trans 'Delete bracelet' %}</a>	<br />	<br />			
 				</div>
 			{% else %}
 				<div id="author">
@@ -165,10 +165,10 @@
 		</div>
 		<div id="instructionbox">
 			<div id="buttons">
-				<button onclick="del5Knots()"><i class="icon-prev">&nbsp;</i> {% trans "Back 5" %}</button>
-				<button onclick="delKnot()"><i class="icon-prev">&nbsp;</i> {% trans "Back" %}</button>
-				<button onclick="addKnotButton()">{% trans "Next" %} <i class="icon-next">&nbsp;</i></button>
-				<button onclick="add5Knots()">{% trans "Next 5" %} <i class="icon-next">&nbsp;</i></button>
+				<button onclick="del5Knots()"><i class="icon-backward">&nbsp;</i> {% trans "Back 5" %}</button>
+				<button onclick="delKnot()"><i class="icon-backward">&nbsp;</i> {% trans "Back" %}</button>
+				<button onclick="addKnotButton()">{% trans "Next" %} <i class="icon-forward">&nbsp;</i></button>
+				<button onclick="add5Knots()">{% trans "Next 5" %} <i class="icon-forward">&nbsp;</i></button>
 				
 			</div>
 			<div id="instructions"></div>
