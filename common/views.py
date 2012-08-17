@@ -117,7 +117,7 @@ def user(request, user_name):
 	except ObjectDoesNotExist:
 		return index(request, {'error_message': _('There is no user with login: {0}').format(user_name)})
 
-	context = {}
+	context = get_context(request)
 	context['user_content'] = user
 	context['bracelets'] = get_all_bracelets(0, user)
 	context['photos'] = Photo.objects.filter(user = user, accepted = True)

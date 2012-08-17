@@ -6,7 +6,7 @@ $(document).ready(function(){
 					$( anchor.hash ).html(errorText);
 				},
 				success: function() {
-					$('.photoTd a').lightBox(
+					$('.photo a').lightBox(
 					{
 						imageLoading: STATIC_URL+'gfx/lightbox-ico-loading.gif',
 						imageBtnClose: STATIC_URL+'gfx/lightbox-btn-close.gif',

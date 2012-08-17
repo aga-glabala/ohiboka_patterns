@@ -17,6 +17,12 @@
 		$('.pattern-box').hover(function() {}, function() {
 			$('.pattern-details').hide();
 		});
+		$('.photo a').lightBox({
+			imageLoading: {{STATIC_URL}}+'gfx/lightbox-ico-loading.gif',
+			imageBtnClose: {{STATIC_URL}}+'gfx/lightbox-btn-close.gif',
+			imageBtnPrev: {{STATIC_URL}}+'gfx/lightbox-btn-prev.gif',
+			imageBtnNext: {{STATIC_URL}}+'gfx/lightbox-btn-next.gif',
+		});
 	});
 </script>
 {% endblock %}
@@ -95,14 +101,4 @@
 	{% endfor %}
 	</div>
 {% endif %}
-	<script type="text/javascript">
-		$('.photoTd a').lightBox(
-					{
-						imageLoading: {{STATIC_URL}}+'gfx/lightbox-ico-loading.gif',
-						imageBtnClose: {{STATIC_URL}}+'gfx/lightbox-btn-close.gif',
-						imageBtnPrev: {{STATIC_URL}}+'gfx/lightbox-btn-prev.gif',
-						imageBtnNext: {{STATIC_URL}}+'gfx/lightbox-btn-next.gif',
-					}
-				);
-	</script>
 {% endblock %}
