@@ -21,10 +21,13 @@
 			$( "#tabs" ).tabs("select", {{ selectTab }});
 		});
 	{% endif %}
-	var errorText = '{% trans "Could not load this tab. Try reload page if problem will still exist - let me know." %}'
+	var errorText = '{% trans "Could not load this tab. Try reload page if problem will still exist - let me know." %}';
 	var knotsColor = {{ knotsColor }};
 	var knotsType = {{ knotsType }};
-	var texts = {{ texts|safe }};
+	var texts = [];
+	{% for text in texts %}
+		texts[{{forloop.counter0}}] = '{{ text|safe }}';
+	{% endfor %}
 	var lastKnotRow = 0;
 	var lastKnotCol = 0;
 	var sequence = 0;

@@ -10,6 +10,7 @@ from common.bracelet_tools import get_colors
 from bracelet.forms import UploadFileForm
 from bracelet.helper import handle_uploaded_file, scale
 from django.utils.translation import ugettext as _
+from django.utils.translation import gettext
 from django.conf import settings
 from common.models import UserProfile
 import time
@@ -33,8 +34,8 @@ def bracelet(request, bracelet_url, context = {}):
 		return index(request, {'error_message':_('There is no bracelet with this id.')})
 	bp = BraceletPattern(bracelet)
 	bp.generate_pattern()
-
 	context = get_context(request)
+	texts = [gettext(s.text) for s in BraceletKnotType.objects.all().order_by('id')]
 	context.update({'bracelet': bracelet,
 			'style':bp.get_style(),
 			'nofstr':bp.get_n_of_strings(),
@@ -42,7 +43,7 @@ def bracelet(request, bracelet_url, context = {}):
 			'knotsColor':bp.get_knots_colors(),
 			'strings':bp.get_strings(),
 			'nofrows':bp.nofrows,
-			'texts':[str(s) for s in BraceletKnotType.objects.all().order_by('id')],
+			'texts':texts,
 			'ifwhite':bp.get_ifwhite(),
 			'nofphotos': len(Photo.objects.filter(bracelet = bracelet, accepted = True)),
 			'request': request,

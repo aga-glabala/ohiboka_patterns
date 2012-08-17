@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-09 00:08+0200\n"
+"POT-Creation-Date: 2012-08-17 18:32+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,39 +19,126 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2)\n"
 
-#: bracelet/views.py:144
+#: admin/views.py:31
+msgid "You have no permission to see this"
+msgstr ""
+
+#: bracelet/views.py:33
+#, fuzzy
+msgid "There is no bracelet with this id."
+msgstr "Nie ma bransoletki o id {0}"
+
+#: bracelet/views.py:52
+#, fuzzy
 msgid ""
 "This bracelet is not accepted yet. It means you can see it only if you have "
-"link to this page. "
+"link to this page."
 msgstr ""
 "Bransoletka jest niezaakceptowana. Możesz ja zobaczyć tylko jeśli masz do "
 "niej linka"
 
-#: bracelet/views.py:221
+#: bracelet/views.py:54
+#, fuzzy
+msgid ""
+"This bracelet has been rejected. It means you can see it only if you have "
+"link to this page."
+msgstr ""
+"Bransoletka jest niezaakceptowana. Możesz ja zobaczyć tylko jeśli masz do "
+"niej linka"
+
+#: bracelet/views.py:114
+#, fuzzy
+msgid "Bracelet was successfully saved."
+msgstr "Bransoletka usunięta pomyślnie."
+
+#: bracelet/views.py:133
 #, fuzzy
 msgid "Photo upload successfully. It will show up here after admin acceptance."
 msgstr ""
 "Zdjęcie dodana. Pokaże się tutaj po zaakceptowaniu przez administratora."
 
-#: bracelet/views.py:222
+#: bracelet/views.py:134
 msgid "Error has occured when uploading photo."
 msgstr "Wystąpił błąd przy wysyłaniu zdjęcia."
 
-#: bracelet/views.py:228
+#: bracelet/views.py:140
 msgid "Rate is not a number"
 msgstr "Ocena musi być liczbą"
 
-#: bracelet/views.py:230
+#: bracelet/views.py:142
 msgid "Rate must be between 1 and 5"
 msgstr "Ocena musi być z przedziału [1; 5]"
 
-#: bracelet/views.py:249
+#: bracelet/views.py:161
 msgid "Pattern do not exist"
 msgstr "Wzór nie istnieje"
 
-#: bracelet/views.py:250
+#: bracelet/views.py:162
 msgid "You need to be logged in to rate patterns"
 msgstr "Musisz być zalogowany, żeby dodać nowy wzór"
+
+#: bracelet/views.py:170 bracelet/views.py:181 bracelet/views.py:192
+#, fuzzy
+msgid "Bracelet do not exists"
+msgstr "Wzór nie istnieje"
+
+#: bracelet/views.py:172 bracelet/views.py:183 bracelet/views.py:194
+msgid "This bracelet is not yours"
+msgstr ""
+
+#: bracelet/views.py:175
+#, fuzzy
+msgid "Bracelet was successfully deleted"
+msgstr "Bransoletka usunięta pomyślnie."
+
+#: bracelet/views.py:186 bracelet/views.py:203
+#, fuzzy
+msgid "Bracelet's status was successfully changed"
+msgstr "Bransoletka usunięta pomyślnie."
+
+#: bracelet/views.py:198 bracelet/views.py:200
+msgid "Wrong value for bracelet status"
+msgstr ""
+
+#: bracelet/views.py:209
+#, fuzzy
+msgid "There is no photo with id: {0}."
+msgstr "Nie ma zdjęcia o id {0}"
+
+#: bracelet/views.py:211
+#, fuzzy
+msgid "You need to be logged in to edit bracelets."
+msgstr "Musisz być zalogowany, żeby dodać nowy wzór."
+
+#: bracelet/views.py:213
+#, fuzzy
+msgid "You are not owner of this photo."
+msgstr "Nie jesteś właścicielem tego zdjęcia"
+
+#: bracelet/views.py:215
+#, fuzzy
+msgid "Photo deleted successfully."
+msgstr "Zdjęcie usunięte pomyślnie."
+
+#: bracelet/views.py:221
+#, fuzzy
+msgid "There is no rate with id: {0}."
+msgstr "Nie ma oceny o id {0}"
+
+#: bracelet/views.py:223
+#, fuzzy
+msgid "You need to be logged in to edit rates."
+msgstr "Musisz być zalogowany, żeby dodać nowy wzór."
+
+#: bracelet/views.py:225
+#, fuzzy
+msgid "You are not owner of this rate."
+msgstr "Nie jesteś właścicielem tej oceny."
+
+#: bracelet/views.py:227
+#, fuzzy
+msgid "Rate deleted successfully."
+msgstr "Ocena usunięta pomyślnie."
 
 #: common/forms.py:25
 msgid "Subject"
@@ -65,81 +152,26 @@ msgstr "Nadawca"
 msgid "Message"
 msgstr "Wiadomość"
 
-#: common/views.py:27
+#: common/views.py:39
 msgid "Success! You can log in now."
 msgstr "Sukces! Możesz się teraz zalogować."
 
-#: common/views.py:29
+#: common/views.py:41
 msgid "An error has occured. Correct entered data."
 msgstr "Wystąpił błąd. Popraw dane."
 
-#: common/views.py:31
+#: common/views.py:43
 msgid "Wrong captcha, try again."
 msgstr "Nieprawidłowy tekst z obrazka, spróbuj jeszcze raz."
 
-#: common/views.py:71
+#: common/views.py:82
 #, fuzzy
 msgid "You need to be logged in."
 msgstr "Musisz być zalogowany, żeby dodać nowy wzór."
 
-#: common/views.py:77
+#: common/views.py:118
 #, fuzzy
-msgid "There is no bracelet with id: {0}"
-msgstr "Nie ma bransoletki o id {0}"
-
-#: common/views.py:79 common/views.py:107
-#, fuzzy
-msgid "You need to be logged in to edit bracelets."
-msgstr "Musisz być zalogowany, żeby dodać nowy wzór."
-
-#: common/views.py:81
-#, fuzzy
-msgid "You are not owner of this bracelet."
-msgstr "Nie jesteś właścicielem tej bransoletki."
-
-#: common/views.py:99
-#, fuzzy
-msgid "Bracelet deleted successfully."
-msgstr "Bransoletka usunięta pomyślnie."
-
-#: common/views.py:105
-#, fuzzy
-msgid "There is no photo with id: {0}."
-msgstr "Nie ma zdjęcia o id {0}"
-
-#: common/views.py:109
-#, fuzzy
-msgid "You are not owner of this photo."
-msgstr "Nie jesteś właścicielem tego zdjęcia"
-
-#: common/views.py:111
-#, fuzzy
-msgid "Photo deleted successfully."
-msgstr "Zdjęcie usunięte pomyślnie."
-
-#: common/views.py:117
-#, fuzzy
-msgid "There is no rate with id: {0}."
-msgstr "Nie ma oceny o id {0}"
-
-#: common/views.py:119
-#, fuzzy
-msgid "You need to be logged in to edit rates."
-msgstr "Musisz być zalogowany, żeby dodać nowy wzór."
-
-#: common/views.py:121
-#, fuzzy
-msgid "You are not owner of this rate."
-msgstr "Nie jesteś właścicielem tej oceny."
-
-#: common/views.py:123
-#, fuzzy
-msgid "Rate deleted successfully."
-msgstr "Ocena usunięta pomyślnie."
-
-#: common/views.py:129
-#, fuzzy
-msgid "There is no user with id: {0}"
+msgid "There is no user with login: {0}"
 msgstr "Nie ma użitkownika o id {0}"
 
 #: templates/404.html:5
@@ -180,141 +212,305 @@ msgstr ""
 msgid "..or you can go back to"
 msgstr ".. lub możesz wrócić do strony głównej"
 
-#: templates/template.html:32
+#: templates/template.html:47
 msgid "ABOUT"
 msgstr "O STRONIE"
 
-#: templates/template.html:35
+#: templates/template.html:50
 msgid "PROFILE"
 msgstr "PROFIL"
 
-#: templates/template.html:36
+#: templates/template.html:51
 msgid "LOG OUT"
 msgstr "WYLOGUJ"
 
-#: templates/template.html:38
+#: templates/template.html:53
 msgid "LOG IN"
 msgstr "ZALOGUJ"
 
-#: templates/template.html:39
+#: templates/template.html:54
 msgid "SIGN IN"
 msgstr "ZAREJESTRUJ"
 
-#: templates/template.html:41
+#: templates/template.html:56
 msgid "SEARCH"
 msgstr "SZUKAJ"
 
-#: templates/template.html:50
+#: templates/template.html:65
 msgid ""
 "Hey! It's super-beta version of my new site. You probably find some errors. "
 "Feel free to"
-msgstr "Cześć! To super-beta mojej nowej strony. Prawdopodobnie znajdziesz jakieś błędy. Możesz"
+msgstr ""
+"Cześć! To super-beta mojej nowej strony. Prawdopodobnie znajdziesz jakieś "
+"błędy. Możesz"
 
-#: templates/template.html:50
+#: templates/template.html:65
 msgid "contact me"
 msgstr "napisać do mnie"
 
-#: templates/template.html:50
+#: templates/template.html:65
 msgid ""
 "when you will find some error or you will have some suggestions how to make "
 "this site better."
-msgstr "jeśli znajdziesz jakiś błąd lub będziesz mieć sugestie co zrobić lepiej."
+msgstr ""
+"jeśli znajdziesz jakiś błąd lub będziesz mieć sugestie co zrobić lepiej."
 
-#: templates/template.html:70
+#: templates/template.html:85
 msgid "Your username and password didn't match. Please try again."
 msgstr "Twój login lub hasło nie pasuje, spróbuj ponownie"
 
-#: templates/template.html:76
+#: templates/template.html:91
 msgid "Login"
 msgstr "Zaloguj się"
 
-#: templates/template.html:95 templates/common/privacypolicy.html:4
+#: templates/template.html:110 templates/common/privacypolicy.html:4
 msgid "Privacy policy"
 msgstr "Polityka prywatności"
 
-#: templates/template.html:98
+#: templates/template.html:113
 #, fuzzy
 msgid "Patterns"
 msgstr "Wzory"
 
-#: templates/template.html:99
+#: templates/template.html:114
 msgid "Blog"
 msgstr "Blog"
 
-#: templates/template.html:103
+#: templates/template.html:118
 msgid "Profile"
 msgstr "Profil"
 
-#: templates/template.html:104
+#: templates/template.html:119
 #, fuzzy
 msgid "Add new bracelet"
 msgstr "Najnowsze bransoletki"
 
-#: templates/template.html:111
+#: templates/template.html:121
+msgid "Log in"
+msgstr ""
+
+#: templates/template.html:122
+msgid "Register"
+msgstr ""
+
+#: templates/template.html:126
 msgid "Find me on facebook"
 msgstr "Znajdź mnie na facebooku"
 
-#: templates/template.html:112
+#: templates/template.html:127
 msgid "About"
 msgstr "O mnie"
 
-#: templates/bracelet/add.html:25
+#: templates/admin/manage_bracelets.html:5
+#, fuzzy
+msgid "Manage bracelets"
+msgstr "Najnowsze bransoletki"
+
+#: templates/admin/manage_bracelets.html:14
+#: templates/admin/manage_bracelets.html:59
+#: templates/admin/manage_bracelets.html:87
+msgid "To verify"
+msgstr ""
+
+#: templates/admin/manage_bracelets.html:18
+#: templates/admin/manage_bracelets.html:47
+#: templates/admin/manage_bracelets.html:76 templates/bracelet/add.html:23
 msgid "Name"
 msgstr "Nazwa"
 
-#: templates/bracelet/add.html:29 templates/bracelet/bracelet.html:111
-#: templates/bracelet/index.html:72 templates/bracelet/index.html.py:184
-#: templates/common/user.html:64
-#: templates/common/userprofile.html:64
-#: templates/common/userprofile.html:123
+#: templates/admin/manage_bracelets.html:19
+#: templates/admin/manage_bracelets.html:48
+#: templates/admin/manage_bracelets.html:77
+#, fuzzy
+msgid "Author"
+msgstr "autor"
+
+#: templates/admin/manage_bracelets.html:20
+#: templates/admin/manage_bracelets.html:49
+#: templates/admin/manage_bracelets.html:78
+msgid "Status change"
+msgstr ""
+
+#: templates/admin/manage_bracelets.html:21
+#: templates/admin/manage_bracelets.html:50
+#: templates/admin/manage_bracelets.html:79
+msgid "Delete?"
+msgstr ""
+
+#: templates/admin/manage_bracelets.html:22
+#: templates/admin/manage_bracelets.html:33
+#: templates/admin/manage_bracelets.html:51
+#: templates/admin/manage_bracelets.html:62
+#: templates/admin/manage_bracelets.html:80
+#: templates/admin/manage_bracelets.html:91
+msgid "Edit"
+msgstr ""
+
+#: templates/admin/manage_bracelets.html:29
+#: templates/admin/manage_bracelets.html:58
+#: templates/bracelet/bracelet.html:98
+msgid "Do not accept"
+msgstr ""
+
+#: templates/admin/manage_bracelets.html:30
+#: templates/admin/manage_bracelets.html:88
+#: templates/bracelet/bracelet.html:99
+#, fuzzy
+msgid "Accept bracelet"
+msgstr "Twoje zaakceptowane bransoletki"
+
+#: templates/admin/manage_bracelets.html:32
+#: templates/admin/manage_bracelets.html:61
+#: templates/admin/manage_bracelets.html:90
+msgid "Delete"
+msgstr ""
+
+#: templates/admin/manage_bracelets.html:38
+msgid "Nothing to verify"
+msgstr ""
+
+#: templates/admin/manage_bracelets.html:43
+#: templates/bracelet/bracelet.html:90
+#, fuzzy
+msgid "Accepted"
+msgstr "Zaakceptowane zdjęcia"
+
+#: templates/admin/manage_bracelets.html:67
+#, fuzzy
+msgid "No accepted bracelets"
+msgstr "Twoje zaakceptowane bransoletki"
+
+#: templates/admin/manage_bracelets.html:72
+#: templates/bracelet/bracelet.html:94
+msgid "Rejected"
+msgstr ""
+
+#: templates/admin/manage_bracelets.html:96
+#, fuzzy
+msgid "No rejected bracelets"
+msgstr "Najnowsze bransoletki"
+
+#: templates/bracelet/add.html:21
+msgid "Fill basic pattern information"
+msgstr ""
+
+#: templates/bracelet/add.html:27 templates/bracelet/bracelet.html:145
+#: templates/common/index.html:79 templates/common/index.html.py:196
+#: templates/common/user.html:70 templates/common/userprofile.html:67
+#: templates/common/userprofile.html:126
 msgid "Difficulty"
 msgstr "Poziom trudności"
 
-#: templates/bracelet/add.html:31 templates/bracelet/index.html:76
+#: templates/bracelet/add.html:29 templates/common/index.html:83
 msgid "Easy"
 msgstr "Łatwy"
 
-#: templates/bracelet/add.html:32 templates/bracelet/index.html:77
+#: templates/bracelet/add.html:30 templates/common/index.html:84
 msgid "Medium"
 msgstr "Średni"
 
-#: templates/bracelet/add.html:33 templates/bracelet/index.html:78
+#: templates/bracelet/add.html:31 templates/common/index.html:85
 msgid "Hard"
 msgstr "Trudny"
 
-#: templates/bracelet/add.html:38 templates/bracelet/bracelet.html:95
-#: templates/bracelet/index.html:83
+#: templates/bracelet/add.html:35 templates/bracelet/bracelet.html:129
+#: templates/common/index.html:90
 msgid "Category"
 msgstr "Kategoria"
 
+#: templates/bracelet/add.html:46 templates/bracelet/add.html.py:49
+msgid "Public"
+msgstr ""
+
 #: templates/bracelet/add.html:50
+msgid "Private"
+msgstr ""
+
+#: templates/bracelet/add.html:57
+msgid "You are not logged in, which means you won't be able to save your work!"
+msgstr ""
+
+#: templates/bracelet/add.html:64
+msgid "Fast generating empty template"
+msgstr ""
+
+#: templates/bracelet/add.html:65
+#, fuzzy
+msgid "Row"
+msgstr "teraz"
+
+#: templates/bracelet/add.html:68
+msgid "Columns"
+msgstr ""
+
+#: templates/bracelet/add.html:71
+msgid "Knot types"
+msgstr ""
+
+#: templates/bracelet/add.html:73 templates/bracelet/add.html.py:95
+#: templates/bracelet/add.html:136
+msgid "All forward"
+msgstr ""
+
+#: templates/bracelet/add.html:74 templates/bracelet/add.html.py:96
+#: templates/bracelet/add.html:137
+msgid "All backward"
+msgstr ""
+
+#: templates/bracelet/add.html:75 templates/bracelet/add.html.py:97
+#: templates/bracelet/add.html:138
+msgid "All forward-backward"
+msgstr ""
+
+#: templates/bracelet/add.html:76 templates/bracelet/add.html.py:98
+#: templates/bracelet/add.html:139
+msgid "All backward-forward"
+msgstr ""
+
+#: templates/bracelet/add.html:77 templates/bracelet/add.html.py:99
+#: templates/bracelet/add.html:140
+msgid "Forward-backward and backward-forward"
+msgstr ""
+
+#: templates/bracelet/add.html:87
 msgid "Set color of strings (use buttons below to add and remove strings)"
 msgstr "Ustaw kolor nitek (użyj przycisków poniżej, żeby dodać i usuwać nitki)"
 
-#: templates/bracelet/add.html:52
+#: templates/bracelet/add.html:90
 msgid "Add string"
 msgstr "Dodaj nitkę"
 
-#: templates/bracelet/add.html:53
+#: templates/bracelet/add.html:102
 msgid "Remove string"
 msgstr "Usuń nitkę"
 
-#: templates/bracelet/add.html:60
+#: templates/bracelet/add.html:110
+msgid "Choose color"
+msgstr ""
+
+#: templates/bracelet/add.html:120
+msgid "Cancel"
+msgstr ""
+
+#: templates/bracelet/add.html:121
+msgid "OK"
+msgstr ""
+
+#: templates/bracelet/add.html:131
 msgid "Add row"
 msgstr "Dodaj wiersz"
 
-#: templates/bracelet/add.html:61
+#: templates/bracelet/add.html:143
 #, fuzzy
 msgid "Remove row"
 msgstr "Usuń wiersz"
 
-#: templates/bracelet/add.html:63
+#: templates/bracelet/add.html:150
 msgid "Add pattern"
 msgstr "Dodaj nowy wzór"
 
 #: templates/bracelet/bracelet.html:6 templates/bracelet/bracelet.html:42
-#: templates/bracelet/bracelet.html:43
-#: templates/common/userprofile.html:150
+#: templates/bracelet/bracelet.html:43 templates/common/userprofile.html:153
 msgid "Bracelet"
 msgstr "Bransoletka"
 
@@ -326,10 +522,9 @@ msgstr ""
 "Nie można załadować tej zakładki. Spróbuj odświeżyć, a jesli problem nadal "
 "występuje - powiadom administratora"
 
-#: templates/bracelet/bracelet.html:42 templates/bracelet/index.html:192
-#: templates/common/user.html:72
-#: templates/common/userprofile.html:72
-#: templates/common/userprofile.html:131
+#: templates/bracelet/bracelet.html:42 templates/common/index.html:204
+#: templates/common/user.html:78 templates/common/userprofile.html:75
+#: templates/common/userprofile.html:134
 msgid "by"
 msgstr "przez"
 
@@ -349,7 +544,7 @@ msgstr "Instrukcja krok po kroku"
 msgid "Comments"
 msgstr "Komentarze"
 
-#: templates/bracelet/bracelet.html:60 templates/common/user.html:88
+#: templates/bracelet/bracelet.html:60 templates/common/user.html:94
 msgid "Photos"
 msgstr "Zdjęcia"
 
@@ -362,176 +557,128 @@ msgstr "oceń wzór"
 msgid "you need to be logged to rate pattern"
 msgstr "Musisz być zalogowany, żeby dodać nowy wzór"
 
-#: templates/bracelet/bracelet.html:94
+#: templates/bracelet/bracelet.html:92
+msgid "None"
+msgstr ""
+
+#: templates/bracelet/bracelet.html:97
+msgid "Hide this, I'll check later"
+msgstr ""
+
+#: templates/bracelet/bracelet.html:104
+msgid "It\\'s your bracelet"
+msgstr ""
+
+#: templates/bracelet/bracelet.html:104
+msgid "See more"
+msgstr ""
+
+#: templates/bracelet/bracelet.html:105
+msgid "Status"
+msgstr ""
+
+#: templates/bracelet/bracelet.html:107 templates/bracelet/bracelet.html:115
+msgid "public"
+msgstr ""
+
+#: templates/bracelet/bracelet.html:109 templates/bracelet/bracelet.html:113
+msgid "private"
+msgstr ""
+
+#: templates/bracelet/bracelet.html:111
+msgid "Change to"
+msgstr ""
+
+#: templates/bracelet/bracelet.html:118
+#, fuzzy
+msgid "Delete bracelet"
+msgstr "Najnowsze bransoletki"
+
+#: templates/bracelet/bracelet.html:123
+msgid "See more from this author"
+msgstr ""
+
+#: templates/bracelet/bracelet.html:128
 #, fuzzy
 msgid "Created on"
 msgstr "Stworzone"
 
-#: templates/bracelet/bracelet.html:97 templates/bracelet/index.html:165
-#: templates/common/user.html:45
-#: templates/common/userprofile.html:45
-#: templates/common/userprofile.html:104
+#: templates/bracelet/bracelet.html:131 templates/common/index.html:177
+#: templates/common/user.html:51 templates/common/userprofile.html:48
+#: templates/common/userprofile.html:107
 msgid "nature"
 msgstr "natura"
 
-#: templates/bracelet/bracelet.html:100 templates/bracelet/index.html:168
-#: templates/common/user.html:48
-#: templates/common/userprofile.html:48
-#: templates/common/userprofile.html:107
+#: templates/bracelet/bracelet.html:134 templates/common/index.html:180
+#: templates/common/user.html:54 templates/common/userprofile.html:51
+#: templates/common/userprofile.html:110
 msgid "text"
 msgstr "napis"
 
-#: templates/bracelet/bracelet.html:103 templates/bracelet/index.html:171
-#: templates/common/user.html:51
-#: templates/common/userprofile.html:51
-#: templates/common/userprofile.html:110
+#: templates/bracelet/bracelet.html:137 templates/common/index.html:183
+#: templates/common/user.html:57 templates/common/userprofile.html:54
+#: templates/common/userprofile.html:113
 msgid "zigzak"
 msgstr "zigzak"
 
-#: templates/bracelet/bracelet.html:105 templates/bracelet/index.html:173
-#: templates/common/user.html:53
-#: templates/common/userprofile.html:53
-#: templates/common/userprofile.html:112
+#: templates/bracelet/bracelet.html:139 templates/common/index.html:185
+#: templates/common/user.html:59 templates/common/userprofile.html:56
+#: templates/common/userprofile.html:115
 msgid "another"
 msgstr "inne"
 
-#: templates/bracelet/bracelet.html:109 templates/bracelet/index.html:180
-#: templates/common/user.html:60
-#: templates/common/userprofile.html:60
-#: templates/common/userprofile.html:119
+#: templates/bracelet/bracelet.html:143 templates/common/index.html:192
+#: templates/common/user.html:66 templates/common/userprofile.html:63
+#: templates/common/userprofile.html:122
 msgid "Number of strings"
 msgstr "Ilość nitek"
 
-#: templates/bracelet/bracelet.html:110 templates/bracelet/index.html:182
-#: templates/common/user.html:62
-#: templates/common/userprofile.html:62
-#: templates/common/userprofile.html:121
+#: templates/bracelet/bracelet.html:144 templates/common/index.html:194
+#: templates/common/user.html:68 templates/common/userprofile.html:65
+#: templates/common/userprofile.html:124
 msgid "Rate"
 msgstr "Ocena"
 
-#: templates/bracelet/bracelet.html:116
+#: templates/bracelet/bracelet.html:148
+#, fuzzy
+msgid "Copy link to this bracelet"
+msgstr "Nie jesteś właścicielem tej bransoletki."
+
+#: templates/bracelet/bracelet.html:153
 msgid "Little hint"
 msgstr "Mała podpowiedź"
 
-#: templates/bracelet/bracelet.html:131
+#: templates/bracelet/bracelet.html:168
 msgid "Back 5"
 msgstr "Cofnij 5"
 
-#: templates/bracelet/bracelet.html:132
+#: templates/bracelet/bracelet.html:169
 msgid "Back"
 msgstr "Cofnij"
 
-#: templates/bracelet/bracelet.html:133
+#: templates/bracelet/bracelet.html:170
 msgid "Next"
 msgstr "Następny"
 
-#: templates/bracelet/bracelet.html:134
+#: templates/bracelet/bracelet.html:171
 msgid "Next 5"
 msgstr "Następne 5"
 
-#: templates/bracelet/index.html:67
-msgid "With photo"
-msgstr "Ze zdjęciem"
-
-#: templates/bracelet/index.html:86 templates/bracelet/index.html.py:97
-msgid "All"
-msgstr "Wszystkie"
-
-#: templates/bracelet/index.html:94
-msgid "Color"
-msgstr "Kolor"
-
-#: templates/bracelet/index.html:107
-msgid "Rated"
-msgstr "Ocenione"
-
-#: templates/bracelet/index.html:111 templates/bracelet/index.html.py:112
-#: templates/bracelet/index.html:113 templates/bracelet/index.html.py:114
-msgid "More than"
-msgstr "Co najmniej"
-
-#: templates/bracelet/index.html:118
-msgid "Sort by"
-msgstr "Sortuj wg"
-
-#: templates/bracelet/index.html:121
-msgid "Newest first"
-msgstr "Najnowsze najpierw"
-
-#: templates/bracelet/index.html:122
-msgid "Oldest first"
-msgstr "Najstarsze najpierw"
-
-#: templates/bracelet/index.html:123
-msgid "Highest rates first"
-msgstr "Najwyżej oceniane najpierw"
-
-#: templates/bracelet/index.html:124
-msgid "Lowest rates first"
-msgstr "Najniżej oceniane najpierw"
-
-#: templates/bracelet/index.html:128
-msgid "Search"
-msgstr "Szukaj"
-
-#: templates/bracelet/index.html:136
-msgid "Add new pattern"
-msgstr "Dodaj nowy wzór"
-
-#: templates/bracelet/index.html:138
-msgid "You need to be logged in to add new pattern"
-msgstr "Musisz być zalogowany, żeby dodać nowy wzór"
-
-#: templates/bracelet/index.html:144
-msgid "Results"
-msgstr "Wyniki"
-
-#: templates/bracelet/index.html:146
-msgid "Newest bracelets"
-msgstr "Najnowsze bransoletki"
-
-#: templates/bracelet/index.html:192 templates/common/user.html:72
-#: templates/common/userprofile.html:72
-#: templates/common/userprofile.html:131
-msgid "on"
-msgstr ""
-
-#: templates/bracelet/index.html:208
-msgid "previous"
-msgstr "poprzenia"
-
-#: templates/bracelet/index.html:213
-msgid "Page"
-msgstr "Strona"
-
-#: templates/bracelet/index.html:213
-msgid "of"
-msgstr "z"
-
-#: templates/bracelet/index.html:218
-msgid "next"
-msgstr "następna"
-
-#: templates/bracelet/index.html:223
-msgid "There is no patterns to show."
-msgstr "Nie ma wzorów do pokazania."
-
-#: templates/bracelet/tabs/comments.html:17 templates/comments/form.html:17
+#: templates/bracelet/tabs/comments.html:17
 msgid "now"
 msgstr "teraz"
 
-#: templates/bracelet/tabs/comments.html:29 templates/comments/form.html:25
+#: templates/bracelet/tabs/comments.html:31
 msgid "Unexpected error occured. Try reload page or try again later."
 msgstr ""
 "Wystąpił niespodziewany błąd. Spróbuj odświeżyć stronę lub odczekaj chwile i "
 "spróbuj ponownie."
 
-#: templates/bracelet/tabs/comments.html:49
+#: templates/bracelet/tabs/comments.html:51
 msgid "Click to add comment"
 msgstr "Kliknij, aby dodać komentarz"
 
-#: templates/bracelet/tabs/comments.html:64 templates/comments/form.html:55
-#: templates/comments/preview.html:29
+#: templates/bracelet/tabs/comments.html:80 templates/comments/preview.html:29
 msgid "Post"
 msgstr "Wyślij"
 
@@ -578,19 +725,101 @@ msgstr "lub wprowadź zmiany"
 msgid "Preview"
 msgstr "Zobacz"
 
-#: templates/common/about.html:46
+#: templates/common/about.html:52
 msgid "Send message"
 msgstr "Wyślij wiadomość"
 
-#: templates/common/register.html:30
+#: templates/common/index.html:73
+msgid "With photo"
+msgstr "Ze zdjęciem"
+
+#: templates/common/index.html:93 templates/common/index.html.py:108
+msgid "All"
+msgstr "Wszystkie"
+
+#: templates/common/index.html:105
+msgid "Color"
+msgstr "Kolor"
+
+#: templates/common/index.html:118
+msgid "Rated"
+msgstr "Ocenione"
+
+#: templates/common/index.html:122 templates/common/index.html.py:123
+#: templates/common/index.html:124 templates/common/index.html.py:125
+msgid "More than"
+msgstr "Co najmniej"
+
+#: templates/common/index.html:131
+msgid "Sort by"
+msgstr "Sortuj wg"
+
+#: templates/common/index.html:134
+msgid "Newest first"
+msgstr "Najnowsze najpierw"
+
+#: templates/common/index.html:135
+msgid "Oldest first"
+msgstr "Najstarsze najpierw"
+
+#: templates/common/index.html:136
+msgid "Highest rates first"
+msgstr "Najwyżej oceniane najpierw"
+
+#: templates/common/index.html:137
+msgid "Lowest rates first"
+msgstr "Najniżej oceniane najpierw"
+
+#: templates/common/index.html:143
+msgid "Search"
+msgstr "Szukaj"
+
+#: templates/common/index.html:155
+msgid "Results"
+msgstr "Wyniki"
+
+#: templates/common/index.html:157
+msgid "Newest bracelets"
+msgstr "Najnowsze bransoletki"
+
+#: templates/common/index.html:159
+msgid "Add new pattern"
+msgstr "Dodaj nowy wzór"
+
+#: templates/common/index.html:204 templates/common/user.html:78
+#: templates/common/userprofile.html:75 templates/common/userprofile.html:134
+msgid "on"
+msgstr ""
+
+#: templates/common/index.html:221
+msgid "previous"
+msgstr "poprzenia"
+
+#: templates/common/index.html:225
+msgid "Page"
+msgstr "Strona"
+
+#: templates/common/index.html:225
+msgid "of"
+msgstr "z"
+
+#: templates/common/index.html:229
+msgid "next"
+msgstr "następna"
+
+#: templates/common/index.html:234
+msgid "There is no patterns to show."
+msgstr "Nie ma wzorów do pokazania."
+
+#: templates/common/register.html:39
 msgid "By clicking button below, you accept"
 msgstr "Klikając przycisk poniżej akceptujesz"
 
-#: templates/common/register.html:30
+#: templates/common/register.html:39
 msgid "our privacy policy"
 msgstr "naszą politykę prywatności"
 
-#: templates/common/register.html:31
+#: templates/common/register.html:41
 msgid "Create new account"
 msgstr "Utwórz nowe konto"
 
@@ -598,58 +827,78 @@ msgstr "Utwórz nowe konto"
 msgid "User page"
 msgstr "Strona użytkownika"
 
-#: templates/common/user.html:25
+#: templates/common/user.html:31
 msgid "Content added by"
 msgstr "Treść dodana przez"
 
-#: templates/common/user.html:28
+#: templates/common/user.html:34
 #, fuzzy
 msgid "Bracelets"
 msgstr "Bransoletki"
 
-#: templates/common/userprofile.html:25
+#: templates/common/userprofile.html:28
 #, fuzzy
 msgid "Your content"
 msgstr "Twoja zawartość"
 
-#: templates/common/userprofile.html:28
+#: templates/common/userprofile.html:31
 #, fuzzy
 msgid "Your accepted bracelets"
 msgstr "Twoje zaakceptowane bransoletki"
 
-#: templates/common/userprofile.html:87
+#: templates/common/userprofile.html:90
 msgid "Bracelets waiting for admin to accept"
 msgstr "Bransoletki czekające na akceptację administratora"
 
-#: templates/common/userprofile.html:146
+#: templates/common/userprofile.html:149
 #, fuzzy
 msgid "Rates"
 msgstr "Ocena"
 
-#: templates/common/userprofile.html:151
+#: templates/common/userprofile.html:154
 #, fuzzy
 msgid "Your rate"
 msgstr "ocena"
 
-#: templates/common/userprofile.html:152
+#: templates/common/userprofile.html:155
 msgid "Action"
 msgstr "Akcja"
 
-#: templates/common/userprofile.html:158
-#: templates/common/userprofile.html:170
-#: templates/common/userprofile.html:182
+#: templates/common/userprofile.html:161 templates/common/userprofile.html:173
+#: templates/common/userprofile.html:185
 #, fuzzy
 msgid "Remove"
 msgstr "Usuń nitkę"
 
-#: templates/common/userprofile.html:164
+#: templates/common/userprofile.html:167
 msgid "Accepted photos"
 msgstr "Zaakceptowane zdjęcia"
 
-#: templates/common/userprofile.html:176
+#: templates/common/userprofile.html:179
 #, fuzzy
 msgid "Photos waiting for admin to accept"
 msgstr "Bransoletki czekające na akceptację administratora"
+
+msgid "Make one knot {0} in forward on {1}" 
+msgstr "Zrób jeden supełek {0} w prawo {1}"
+ 
+msgid "Make one knot {0} in backward on {1}" 
+msgstr "Zrób jeden supełek {0} w lewo {1}"
+
+msgid "Make one knot {0} in forward-backward on {1}" 
+msgstr "Zrób jeden supełek {0} zwrotny prawo-lewo na {1}"
+
+msgid "Make one knot {0} in backward-forward on {1}"
+msgstr "Zrób jeden supełek {0} zwrotny lewo-prawo {1}"
+ 
+msgid "Horizontal"
+msgstr "Zrób jeden supełek" 
+
+msgid "Vertical"
+msgstr "Zrób jeden supełek"
+
+#~ msgid "You need to be logged in to add new pattern"
+#~ msgstr "Musisz być zalogowany, żeby dodać nowy wzór"
 
 #~ msgid "Logged in as"
 #~ msgstr "Zalogowany jako"
