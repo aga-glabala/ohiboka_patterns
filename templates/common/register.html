@@ -19,23 +19,30 @@
   {% if error_message %}
   <div class='error_message'>{{ error_message }}</div>
   {% endif %}
-  <form action="" method="post" id="registerForm">
+  <form action="" method="post" id="registerForm" class='form-horizontal'>
   	{% csrf_token %}
-  	<table>
+	<fieldset>
+		{{ form.non_field_errors }}
 	  	{% for field in form %}
-		  	<tr>
-		  		<td>{{ field.label }}</td>
-		  		<td class="field">{{ field }}</td> 
-		  		<td class="info">{{ field.help_text }}</td>
-		  	</tr>
+		<div class="control-group">
+			<label class="control-label" >{{ field.label }}</label>
+			<div class="controls">
+				{{ field }}
+			</div>
+			<p class="info">{{ field.help_text }}</p>
+    	</div>
 	  	{% endfor %}
-		<tr>
-			<td colspan="2">{{ captcha|safe }}</td>
-			<td></td>
-		</tr>
-		<tr><td colspan=2>{% trans 'By clicking button below, you accept' %} <a href="/privacypolicy/">{% trans 'our privacy policy' %}</a></td></tr>
-		<tr><td></td><td><input type="submit" value="{% trans 'Create new account' %}" /></td><td></td></tr>
-  	</table>
+		<div class="control-group">
+	 	 	{{ captcha|safe }}
+	 	 </div>
+	 	<div class="control-group">
+	 		<p style="margin: 10px 0 10px;">{% trans 'By clicking button below, you accept' %} <a href="/privacypolicy/">{% trans 'our privacy policy' %}</a></p>
+			<div class="controls">
+				<button class='btn btn-primary' >{% trans 'Create new account' %}</button>
+			</div>
+			<p class="info">{{ field.help_text }}</p>
+    	</div> 
+    </fieldset>
   </form>
   <script language="Javascript" type="text/javascript">
   	$('.field > input').focus(function() {	

@@ -126,7 +126,7 @@
 			<hr />
 			<div class="bracelet-data">
 				<p><i class="icon-calendar" title="{% trans 'Created on' %}">&nbsp;</i> {{ bracelet.date }}</p>
-				<p><span class="category category{{ bracelet.category.id }}" title="{% trans 'Category' %}">&nbsp;</span>
+				<p><span class="category icon-category{{ bracelet.category.id }}" title="{% trans 'Category' %}">&nbsp;</span>
     	    		{% if bracelet.category.id == 1 %}
     	    			{% trans 'nature' %}
     	    		{% else %}
@@ -146,7 +146,7 @@
 			</div>
 			<div class='bracelet-link'>
 				{% trans 'Copy link to this bracelet' %}:<br />
-				<input value="http://{{ request.get_host }}/bracelet/{{bracelet.url}}" />
+				<input type='text' value="http://{{ request.get_host }}/bracelet/{{bracelet.url}}" />
 			</div>
 			<div class="fb-like" data-href="{{response.url}}" data-send="false" data-layout="button_count" data-width="150" data-show-faces="false"></div>
 			
@@ -165,10 +165,10 @@
 		</div>
 		<div id="instructionbox">
 			<div id="buttons">
-				<button onclick="del5Knots()"><i class="icon-backward">&nbsp;</i> {% trans "Back 5" %}</button>
-				<button onclick="delKnot()"><i class="icon-backward">&nbsp;</i> {% trans "Back" %}</button>
-				<button onclick="addKnotButton()">{% trans "Next" %} <i class="icon-forward">&nbsp;</i></button>
-				<button onclick="add5Knots()">{% trans "Next 5" %} <i class="icon-forward">&nbsp;</i></button>
+				<button class='btn' onclick="del5Knots()"><i class="icon-backward">&nbsp;</i> {% trans "Back 5" %}</button>
+				<button class='btn' onclick="delKnot()"><i class="icon-backward">&nbsp;</i> {% trans "Back" %}</button>
+				<button class='btn' onclick="addKnotButton()">{% trans "Next" %} <i class="icon-forward">&nbsp;</i></button>
+				<button class='btn' onclick="add5Knots()">{% trans "Next 5" %} <i class="icon-forward">&nbsp;</i></button>
 				
 			</div>
 			<div id="instructions"></div>

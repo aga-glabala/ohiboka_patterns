@@ -1,48 +1,21 @@
-table td:first-child {
-	padding-right: 5px;
-}
-select.tableinput {
-	width:100%;
-}
-.span2.second {
-	padding-left: 20px;
-	border-left: 1px solid #bfbbb1;
-}
-table th {
-	text-align: left;
-	font-weight: bold;
-	padding-bottom: 10px;
-}
-input.tableinput {
-	width:95%;
-}
-#pattern-string {
-	display: none;
-}
-#colorsInput select {
-	width: 50px;
-	margin: 1px;
-}
-#floating-top div {
+.div-form {
 	display: inline-block;
+	width: 45%;
+	vertical-align: top;
 }
-#floating-top div#pattern-thumb {
-	display: block;
+.second {
+	margin-left: 50px;
 }
-#pattern-container {
-	position: relative;
-	margin-bottom:10px;
+.color-chooser-button {
+	width: 20px;
+	height: 20px;
+	background: none;
 }
-#pattern-designer {
-	z-index:3;
-	position: relative;
-	margin-top:15px;
+.modal-backdrop {
+	background: none;
 }
-#pattern-canvas {
-	position: absolute;
-	z-index:2;
-	top: -10px;
-	left: 0px;
+.modal {
+	width: 600px;
 }
 .string0 {
 	background: url('/static/gfx/pattern-strings-0.png');	
@@ -128,4 +101,50 @@ input.tableinput {
 	width:10px;
 	vertical-align: top;
 	display:inline-block;
+}
+#pattern-string, #pattern-colors {
+	display: none;
+}
+#colorsInput select {
+	width: 50px;
+	margin: 1px;
+}
+.pattern-tool {
+	background-color: whiteSmoke;
+	padding: 2px;
+	margin-bottom: 10px;
+}
+.pattern-tool-inside {
+	border: 1px dashed #E5E5E5;
+	padding: 4px;
+}
+#floating-top {
+	position: relative;
+	z-index: 100;
+	margin-top: 10px;
+}
+.pattern-tool-inside div, #colorsInput {
+	display: inline-block;
+	vertical-align: top;
+}
+#floating-top div#pattern-thumb {
+	display: block;
+}
+#pattern-container {
+	position: relative;
+	margin:30px 0;
+}
+#pattern-designer {
+	z-index:3;
+	position: relative;
+	margin-top:15px;
+}
+#pattern-canvas {
+	position: absolute;
+	z-index:2;
+	top: -10px;
+	left: 0px;
+}
+.btn-group {
+	display: inline-block;
 }

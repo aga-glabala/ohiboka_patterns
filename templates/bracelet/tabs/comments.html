@@ -4,7 +4,7 @@
 <script type="text/javascript">
 //<![CDATA[
 $(document).ready(function() {
-	$('#commentbox form').submit(function(e) {
+	$('#commentbox').submit(function(e) {
 	  e.preventDefault();
 	  return false;
 	});
@@ -12,7 +12,7 @@ $(document).ready(function() {
 	$('#submit_comment').click(function(e) {
 		  e.preventDefault();
 		
-		  $.post("/comments/post/", $('#commentbox form').serialize(), function(data) {
+		  $.post("/comments/post/", $('#commentbox').serialize(), function(data) {
 		  	if(data == 1) {
 				  var el = $('<div class="comment"><h4><span class="comment-user"></span> <span class="comment-time">{% trans "now" %}</span></h4></div>');
 		   		  $('.comment_start').after(el);
@@ -20,6 +20,8 @@ $(document).ready(function() {
 				  el.append($('#id_comment').val());
 				  el.append($('<hr />'));
 		   		  $("#commentbox").hide();
+		   		  $('#id_comment').val('');
+		   		  $('#comment-input').show();
 		   		  $('.posterror').remove();
 		   		  var tabname = $('.ui-tabs-nav li a')[2];
 		   		  tabname = $(tabname);
@@ -46,28 +48,41 @@ $(document).ready(function() {
 <!-- A context variable called form is created with the necessary hidden
 fields, timestamps and security hashes -->
 {% if user.is_authenticated %}
-	<input id="comment-input" placeholder="{% trans 'Click to add comment' %}" />
-	<table id="commentbox">
-	  <form action="/comments/post/" method="post">
-	    <tr><td colspan="3">{{ form.non_field_errors }}</td></tr>
-	    <tr><td colspan="3">{% csrf_token %}</td></tr>
-	    {% for field in form %}
-	            {% if field.is_hidden %}
-	                {{ field }}
-	            {% endif %}
-	    {% endfor %}
-	    
-    	<input type='hidden' name='name' id='comment-form-username' value='{{ userprofile.fb_name }}' />
-    	<input type='hidden' name='email' id='comment-form-email' value='email@com.com' />
-	    <tr><td>{{ form.comment.label_tag }} </td><td>{{ form.comment }}</td><td>{{ form.comment.errors }}</td></tr>
-	    <tr><td>Do not fill this</td><td>{{ form.honeypot }}</td><td>{{ form.honeypot.errors }}</td></tr>
-	    <tr><td></td>
-	      <td colspan="2">
-	        <input id="submit_comment" type="submit" name="submit" value="{% trans 'Post' %}">
-	      </td>
-	    </tr>
-	  </form>
-	</table>
+<input id="comment-input" type='text' placeholder="{% trans 'Click to add comment' %}" />
+
+<form id="commentbox" action="/comments/post/" method="post" class='form-horizontal'>
+	{% csrf_token %}
+	{% for field in form %}
+	        {% if field.is_hidden %}
+	            {{ field }}
+	        {% endif %}
+	{% endfor %}
+	<input type='hidden' name='name' id='comment-form-username' value='{{ userprofile.fb_name }}' />
+	<input type='hidden' name='email' id='comment-form-email' value='email@com.com' />
+	<fieldset>
+		{{ form.non_field_errors }}
+		<div class="control-group">
+			<label for="comment-form-text" class="control-label" >{{ form.comment.label }}</label>
+			<div class="controls">
+				{{ form.comment }}
+			</div>
+			<p>{{ form.comment.errors }}</p>
+    	</div>
+		<div class="control-group">
+			<label for="comment-form-honeypot" class="control-label" >Do not fill this</label>
+			<div class="controls">
+				{{ form.honeypot }}
+			</div>
+			<p>{{ form.honeypot.errors }}</p>
+    	</div>
+    	<div class="control-group">
+			<div class="controls">
+				<button id="submit_comment" class='btn btn-primary' type="submit" name="submit" value=""><i class='icon-envelope icon-white'></i> {% trans 'Post' %}</button>
+			</div>
+		</div>
+	
+	</fieldset>
+</form>
 {% else %}
 	You need to be logged in to post comment.
 {% endif %}

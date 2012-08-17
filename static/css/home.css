@@ -13,7 +13,7 @@ div.pattern {
 	padding: 2px;
 	vertical-align: top;
 }
-div.pattern a {
+div.pattern a, .pattern-details a {
 	text-decoration: none;	
 }
 div.pattern-info { 
@@ -47,52 +47,13 @@ div.pattern-details {
 #left h2 {
 	font-size: 19px;
 }
-#search-form select {
-	width: 100%;
-}
-#search-form input[type="submit"] {
-	padding: 3px 10px;
-}
-#search-form td {
-	width: 150px;
-	padding: 3px 8px;
-}
-#search-form td.label {
-	width: 100px;
-}
-.add {
-	margin-top: -15px;
-	padding: 4px;
-	float: right;
-	background-color: rgba(38,116,165,0.2);
-	-moz-border-bottom-left-radius: 3px;
-	border-bottom-left-radius: 3px;
-	-moz-border-bottom-right-radius: 3px;
-	border-bottom-right-radius: 3px;
-	border: 1px solid #329ec6;
-	border-top: 0;
-	color: #004e76;
-}
 .category {
 	border:0;
 	display: inline-block;
 	width: 20px;
 	height:20px;
-	background-image: url('/static/gfx/icons.png');
 	background-repeat:no-repeat;
 	vertical-align: middle;
-}
-.category1 {
-	background-position: 0 -51px;
-}
-.category2 {
-	background-position: -20px -51px;
-}
-.category4 {
-	background-position: -40px -51px;
-}
-.category3 {
-	background-position: -60px -51px;
 }
 .knot {
 	-webkit-border-radius: 10px;
@@ -107,7 +68,12 @@ div.pattern-details {
 	margin: 0 -1px;
 	vertical-align: middle;
 }
-.pagination {
-	margin-right: 45px;
-	text-align: center;
+
+.form-horizontal .two-column {
+	display: inline-block;
+	width: 45%;
+	vertical-align: top;
+}
+.form-horizontal, form {
+	margin: 0;
 }

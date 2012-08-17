@@ -16,7 +16,7 @@ import time
 from django.core.exceptions import ObjectDoesNotExist
 from common.views import userprofile, index, get_context
 from django.contrib.comments.models import Comment
-
+import unicodedata
 
 
 def add(request):
@@ -75,21 +75,27 @@ def bracelet(request, bracelet_url, context = {}):
 	return render_to_response('bracelet/bracelet.html', context, RequestContext(request))
 
 def addpattern(request):
+	colors_tmp = request.POST['colors'][:-1].split(' ')
 	colors = []
-	for c in request.POST:
-		if c.find('color') == 0:
-			colors.append((int('0x' + request.POST[c][1:], 16), c[5:]))
+	for c in colors_tmp:
+		colors.append((int('0x' + c[1:], 16)))
 	knots = request.POST['pattern'].split()
-	url = request.POST['name'].lower().replace(' ', '_')
+	url = unicodedata.normalize('NFKD', request.POST['name'].lower().replace(' ', '_')).encode('ascii', 'ignore')
+
 	brs = Bracelet.objects.filter(url__contains = url)
 	if brs:
 		url += '-' + str(len(brs))
-
-	b = Bracelet(user = request.user, date = datetime.datetime.today(), name = request.POST['name'], accepted = False, difficulty = request.POST['difficulty'], category = BraceletCategory.objects.filter(name = request.POST['category'])[0], rate = 0)
+	if request.POST['public']:
+		public = True
+	else:
+		public = False
+	b = Bracelet(user = request.user, date = datetime.datetime.today(), url = url, public = public, name = request.POST['name'], accepted = False, difficulty = request.POST['difficulty'], category = BraceletCategory.objects.filter(name = request.POST['category'])[0], rate = 0)
 
 	b.save()
+	index = 0
 	for color in colors:
-		bs = BraceletString(index = color[1], color = BraceletColor.objects.filter(hexcolor = color[0])[0], bracelet = b)
+		bs = BraceletString(index = index, color = BraceletColor.objects.filter(hexcolor = color)[0], bracelet = b)
+		index += 1
 		bs.save()
 	for i in range(len(knots)):
 		bk = BraceletKnot(bracelet = b, knottype = BraceletKnotType.objects.filter(id = knots[i])[0], index = i)
@@ -187,7 +193,7 @@ def accept(request, bracelet_id, bracelet_status):
 	if b.user != request.user:
 		return index(request, {'error_message': _('This bracelet is not yours') + '!'})
 	try:
-		status = int(bracelet_status)		
+		status = int(bracelet_status)
 	except ValueError:
 		return index(request, {'error_message': _('Wrong value for bracelet status') + '!'})
 	if not status in [-1, 0, 1]:

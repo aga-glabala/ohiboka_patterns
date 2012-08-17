@@ -1,23 +1,82 @@
 var nofrows = 10;
+var nofcols = 5;
 var knotColors = [];
 var if_white = [];
 var knotTypes = [];
 var loaded = false;
-$(document).ready(function(){
-	addInput('colorsInput');addInput('colorsInput');addInput('colorsInput');addInput('colorsInput');addInput('colorsInput');
-	$('#color0 option:eq(0)').attr("selected", "selected");setColor(0);
-	$('#color1 option:eq(0)').attr("selected", "selected");setColor(1);
-	$('#color2 option:eq(0)').attr("selected", "selected");setColor(2);
-	$('#color3 option:eq(0)').attr("selected", "selected");setColor(3);
-	$('#color4 option:eq(0)').attr("selected", "selected");setColor(4);
+var nofstrings = 0;
+var limit = 30;
+var knottype = 1;
+var clickedColorChooser = undefined;
+var chosedColor = '';
+$(document).ready(function(){	
 	initDesigner();
-	drawPattern();
 	$('#addbracelet').submit(function() { 
 		return submit();
 	});
 	loaded = true;
 	$('.dropdown-toggle').dropdown()
+	
+	var stickyBox = $("#floating-top");
+	var stickyBoxPosition = stickyBox.offset().top;
+	stickyBox.css('position', 'relative');
+	
+	$(window).scroll(function(){
+		if(stickyBoxPosition < $(window).scrollTop()) {
+			stickyBox.stop().animate({
+				"top": ($(window).scrollTop() - stickyBoxPosition) + "px"
+			}, "fast" );
+		} else {
+			stickyBox.css('top', 0);
+		}
+	});
+	
+	$('.dropdown-menu a').click(function(e) {
+		e.preventDefault()
+		changeBraceletType($(this));
+	});
+	
+	$('#generate-template-button').click(generateTemplate);	
+	$('.modal-body a').click(function(e) {
+		e.preventDefault()
+		setTempColor($(this).data('color'));
+	});
+	
+	//$('.color-chooser-cancel').click(function(e) {
+		
+	//});
+	
+	$('#color-chooser-ok').click(function(e) {
+		e.preventDefault();
+		setColor();
+		$('#color-chooser').modal('hide');
+	});
+	
+	$('#color-chooser').on('hidden', function () {
+	  	//e.preventDefault()
+		setTempColor(clickedColorChooser.data('color'));
+		$('#color-chooser').modal('hide');
+	})
 });
+
+function generateTemplate() {
+	nofrows = parseInt($('#generate-form-rows').val());
+	nofcols = parseInt($('#generate-form-columns').val());
+	
+	knottype = $('#generate-form-knots').val();
+	var els = $('span[class*="icon-knot"]');
+	els.removeClass();
+	els.addClass('icon-knot'+knottype);
+	initDesigner();
+}
+
+function changeBraceletType(aElement) {
+	knottype = aElement.data('knot-type');
+	var els = $('span[class*="icon-knot"]');
+	els.removeClass();
+	els.addClass('icon-knot'+knottype);
+}
+
 function addKnotColumnButton(divColor) {
 	addInput(divColor);
 	addKnotColumn();
@@ -42,8 +101,19 @@ function addRow() {
 	if(nofstrings%2==0 && knotTypes[nofrows-1].length==num) {
 		num--;
 	}
+	
+	var kt = knottype;
+	if(kt == 5) {
+		kt = knotTypes[nofrows-1][0];
+		if(kt==3) {
+			kt=4;
+		} else {
+			kt=3;
+		}
+	}
+	
 	for(var i=0; i<num; i++) {
-		knotTypes[nofrows][i]=1;
+		knotTypes[nofrows][i]=kt;
 	}
 	nofrows++;
 	evaluateColors();
@@ -56,44 +126,61 @@ function removeRow() {
 	evaluateColors();
 	drawPattern();	
 }
+
 function addInput(divColor){
 	if (nofstrings == limit)  {
 		alert("You have reached the limit of adding " + nofstrings + " inputs");
 	} else {
-		var el = $("<select class='btn' id='color"+nofstrings+"' name='color"+nofstrings +"' onchange='setColor("+nofstrings+")'>");
-		for (i=0;i<=colors.length-1;i++)
-		{
-			$("<option value='"+colors[i]+"' style='background-color:"+colors[i]+"'>                  </option>").appendTo(el);
-		}
+		var el = $("<a class='btn color-chooser-button' id='color"+nofstrings+"' name='color"+nofstrings +"' href='#color-chooser'>"); 
+		el.click(function(e) {
+			e.preventDefault();
+			clickedColorChooser = $(this);
+			$('#color-chooser').modal();
+		});
 		$("#"+divColor).append(el);
 		$('#color'+nofstrings+' option:eq(0)').attr("selected", "selected");
-		setColor(nofstrings);
+		//setColor(nofstrings);
 		nofstrings++;
+		clickedColorChooser = el;
+		setTempColor('#ffffff');
+		setColor('#ffffff');
+		clickedColorChooser = undefined;
 	}
 }
 
 function addKnotColumn() {
 	for(var i=(nofstrings%2); i<nofrows; i+=2) {
-		knotTypes[i][knotTypes[i].length]=1;
+		var kt = knottype;
+		if(kt == 5) {
+			kt = knotTypes[i][knotTypes[i].length-1];
+		}
+		knotTypes[i][knotTypes[i].length]=kt;
 	}
 	evaluateColors();
 	drawPattern();
 }
 
-function setColor(i) {
-	var selectbox = $('#color'+i);
-	selectbox.css("background",''+selectbox.val()+'');
-	document.styleSheets[document.styleSheets.length-1].insertRule('.str'+i+' {background-color: '+selectbox.val()+'}', document.styleSheets[document.styleSheets.length-1].rules.length);
-	if(if_white[i]==undefined) {
-		if_white[i]= '';
-	}
-	var x = selectbox.val();
+function setTempColor(color) {
+	//var selectbox = $('#color'+i);
+	//selectbox.css("background",''+selectbox.val()+'');
+	var i = clickedColorChooser.attr('id').slice(5,6);
+	var x = color;
+	chosedColor = color;
+	document.styleSheets[document.styleSheets.length-1].insertRule('.str'+i+' {background-color: '+x+'}', document.styleSheets[document.styleSheets.length-1].rules.length);
 	if((parseInt(x.slice(1,3), 16) + parseInt(x.slice(3,5), 16) + parseInt(x.slice(5,7), 16)) / 3.0<128) {
 		if_white[i]= '-white';
+	} else {
+		if_white[i]= '';
 	}
 	if(loaded) {
 		drawPattern();
 	}
+}
+
+function setColor() {
+	prevColor = '';
+	clickedColorChooser.css('background', chosedColor);
+	clickedColorChooser.data('color', chosedColor);
 }
 
 function evaluateColors() {
@@ -101,7 +188,7 @@ function evaluateColors() {
 	for(var i=0; i<nofstrings;i++) {
 		knotColors[0][i] = i;
 	}
-	for(var i=1; i<nofrows;i++) {
+	for(var i=1; i<nofrows+1;i++) {
 		knotColors[i] = [];
 		var even = 0;
 		var evenstr_evenrow = 0;
@@ -134,23 +221,49 @@ function evaluateColors() {
 }
 
 function initDesigner() {
+	knotColors = [];
+	if_white = [];
+	knotTypes = [];
+	nofstrings = 0;
+	$('#pattern-canvas').empty();
+	$('#pattern-thumb').empty();
+	$('#pattern-designer').empty();
+	$('#colorsInput').empty();
+	loaded = false;
+	for(var i=0; i<nofcols; i++) {
+		addInput('colorsInput');
+		$('#color'+i+' option:eq(0)').attr("selected", "selected");
+	}
+	var kt = knottype;
 	for(var i=0; i<nofrows;i++) {
 		knotTypes[i] = [];
+		if(knottype==5 && knotTypes[i-1]!=undefined) {
+			kt=knotTypes[i-1][0];
+			if(kt==3) {
+				kt=4;
+			} else {
+				kt=3;
+			}
+		} else if(knottype==5 && i==0) {
+			kt=3;
+		}
 		for(var j=0; j<parseInt(nofstrings/2)-i%2; j++){
-			knotTypes[i][j] = 1;//parseInt(Math.random()*3)+1;
+			knotTypes[i][j] = kt;
 		}
 		if(nofstrings%2==1 && i%2==1) {
-			knotTypes[i][knotTypes[i].length] = 1;//parseInt(Math.random()*3)+1;
+			knotTypes[i][knotTypes[i].length] = kt;
 		}
 	}
+	loaded = true;
 	evaluateColors();
+	drawPattern();
 }
 
 function drawPattern() {
 	$('#pattern-canvas').empty();
 	$('#pattern-thumb').empty();
 	$('#pattern-designer').empty();
-	for (var i=0; i<nofrows-1;i++) {
+	for (var i=0; i<nofrows;i++) {
 		var cl = "odd";
 		var cl_thumb = "";
 		var directions = [1,0];
@@ -193,7 +306,7 @@ function drawPattern() {
 			$('<span class="str'+knotColors[i][2*j+i%2+move]+' knot-thumb"></span>').appendTo('#column'+i);
 		}
 	}
-	var i = nofrows-1;
+	var i = nofrows;
 	var directions = [1,0];
 	if(i%2==0) {
 		var directions = [0,1];
@@ -229,5 +342,12 @@ function submit() {
 		}
 	}
 	$('#pattern-string').text(str);
+	
+	var colors = $('#colorsInput').children();
+	str = '';
+	for(var i=0; i<colors.length; i++) {
+		str+=$(colors[i]).data('color')+' ';
+	}
+	$('#pattern-colors').text(str);
 	return true;
 }

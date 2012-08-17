@@ -1,11 +1,3 @@
-#registerForm label {
-	width: 200px;
-}
-#registerForm tr td.info {
+.info {
 	display: none;
-	color: #af0000;
-	padding-left:10px;
-}
-#registerForm tr td:first-child {
-	padding-right:10px;
 }

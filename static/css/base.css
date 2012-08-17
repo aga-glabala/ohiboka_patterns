@@ -1,58 +1,22 @@
-/* -------------------------------- RESET -------------------------------- */
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
-}
-/* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
-footer, header, hgroup, menu, nav, section {
-	display: block;
-}
-body {
-	line-height: 1;
-}
-ol, ul {
-	list-style: none;
-}
-blockquote, q {
-	quotes: none;
-}
-blockquote:before, blockquote:after,
-q:before, q:after {
-	content: '';
-	content: none;
-}
-table {
-	border-collapse: collapse;
-	border-spacing: 0;
-}
-.table td {
-	padding: 3px 6px 0px;
-}
-.table tr {
-	border-bottom: 1px solid #ddd;
-}
 /* -------------------------------- COMMON -------------------------------- */
 h1, h2, h3, h4, h5 {
 	font-family: "Signika" sans;
 	font-weight: bold;
+}
+h1 {
+	font-size: 170%;
+}
+h2 {
+	font-size: 140%;
+}
+h3 {
+	font-size: 130%;
+}
+h4 {
 	font-size: 120%;
+}
+h5 {
+	font-size: 110%;
 }
 hr {
 	margin: 5px 0 18px 0;
@@ -64,17 +28,12 @@ hr {
 a {
 	color: #004e76;
 }
-.pull-right {float: right;}
-.pull-left {float: left;}
-big {font-size: 120%}
-strong {font-weight: bold;}
 /* -------------------------------- BODY -------------------------------- */
 body {
 	background-image: url(/static/gfx/bg.png);
 	margin:0;
 	font-family: "Signika", sans;
 	font-size: 15px;
-	line-height: 20px;
 	color: #111;
 }
 #fb, #en, #pl {

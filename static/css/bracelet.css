@@ -238,7 +238,7 @@
 	margin: 10px 0 -5px;
 }
 .bracelet-link input {
-	width: 100%;
+	width: 95%;
 }
 .fb-like {
 	margin: 15px 0;
@@ -283,31 +283,6 @@
 }
 #buttons {
 	text-align: center;
-	margin-top: 10px;
-}
-#buttons button {
-	padding: 2px;
-}
-.category {
-	border:0;
-	display: inline-block;
-	width: 20px;
-	height:20px;
-	background-image: url('/static/gfx/icons.png');
-	background-repeat:no-repeat;
-	vertical-align: middle;
-}
-.category1 {
-	background-position: 0 -51px;
-}
-.category2 {
-	background-position: -20px -51px;
-}
-.category4 {
-	background-position: -40px -51px;
-}
-.category3 {
-	background-position: -60px -51px;
 }
 
 .photo {
@@ -353,24 +328,10 @@
 .comment-time {
 	float:right;
 }
-#comment-input {
-	width: 500px;
-	height: 20px;
-	-webkit-border-radius: 5px;
-	border-radius: 5px;
-}
 #commentbox {
 	display:none;
 }
-#commentbox td {
-	padding-right:5px;
-	vertical-align: top;
-}
 #commentbox input[type="text"], #commentbox textarea  {
-	width:100%;
-	border:1px solid #329ec6;
-}
-#commentbox input[type="submit"] {
 	width:50%;
 }
 div.posterror {

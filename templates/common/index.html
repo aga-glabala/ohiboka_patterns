@@ -67,29 +67,29 @@ $(document).ready(function(){
 {% endblock %}
 
 {% block content %}	
-		<form action="search" method="get" id="search-form">
-			<table>
-				<tr>
-					<td class="label">
-						<label for="photo">{% trans "With photo" %}</label>
-					</td>
-					<td>
-						<input type="checkbox" name="photo" value="photo" {% if photo %}checked="checked" {% endif %}/> 
-					</td>
-					<td class="label">{% trans "Difficulty" %}:</td>
-					<td>
-						<select name="difficulty">
+		<form action="search" class="form-horizontal" method="get" id="search-form">
+			<fieldset class='two-column'>
+				<div class="control-group">
+      				<label for="search-form-photo" class="control-label" >{% trans "With photo" %}</label>
+      				<div class="controls">
+        				<input id="search-form-photo" type="checkbox" name="photo" value="photo" {% if photo %}checked="checked" {% endif %} />
+      				</div>
+    			</div>
+    			<div class="control-group">
+      				<label for="search-form-difficulty" class="control-label" >{% trans "Difficulty" %}</label>
+      				<div class="controls">
+        				<select name="difficulty" id="search-form-difficulty">
 							<option value="0">All</option>
 							<option value="1" {% if difficulty == "1" %}selected="selected" {% endif %}>{% trans "Easy" %}</option>
 							<option value="2" {% if difficulty == "2" %}selected="selected" {% endif %}>{% trans "Medium" %}</option>
 							<option value="3" {% if difficulty == "3" %}selected="selected" {% endif %}>{% trans "Hard" %}</option>
 						</select>
-					</td>
-				</tr>
-				<tr>
-					<td class="label">{% trans "Category" %}:</td>
-					<td>
-						<select name="category">
+      				</div>
+    			</div>
+    			<div class="control-group">
+      				<label for="search-form-category" class="control-label" >{% trans "Category" %}</label>
+      				<div class="controls">
+        				<select name="category" id="search-form-category">
 							<option value="0">{% trans "All" %}</option>
 							{% if categories %}
 								{% for c in categories %}
@@ -97,10 +97,14 @@ $(document).ready(function(){
 								{% endfor %}
 							{% endif %}
 						</select>
-					</td>
-					<td class="label">{% trans "Color" %}:</td>
-					<td>
-						<select name="color" onchange='setColor(this.options[this.selectedIndex].value, this)'>
+      				</div>
+    			</div>
+    		</fieldset>
+    		<fieldset class='two-column'>	
+    			<div class="control-group">
+      				<label for="search-form-color" class="control-label" >{% trans "Color" %}</label>
+      				<div class="controls">
+        				<select name="color" onchange='setColor(this.options[this.selectedIndex].value, this)' id="search-form-color">
 							<option value="0">{% trans "All" %}</option>
 							{% if colors %}
 								{% for c in colors %}
@@ -108,12 +112,12 @@ $(document).ready(function(){
 								{% endfor %}
 							{% endif %}
 						</select>
-					</td>
-				</tr>
-				<tr>
-					<td class="label">{% trans "Rated" %}:</td>
-					<td>
-						<select name="rate">
+      				</div>
+    			</div>
+    			<div class="control-group">
+      				<label for="search-form-rate" class="control-label" >{% trans "Rated" %}</label>
+      				<div class="controls">
+        				<select name="rate" id="search-form-rate">
 							<option value="0">All</option>
 							<option value="1" {% if rate == "1" %}selected="selected" {% endif %}>{% trans "More than" %} *</option>
 							<option value="2" {% if rate == "2" %}selected="selected" {% endif %}>{% trans "More than" %} **</option>
@@ -121,33 +125,38 @@ $(document).ready(function(){
 							<option value="4" {% if rate == "4" %}selected="selected" {% endif %}>{% trans "More than" %} ****</option>
 							<option value="5" {% if rate == "5" %}selected="selected" {% endif %}>*****</option>
 						</select>
-					</td>
-					<td class="label">{% trans "Sort by" %}:</td>
-					<td>
-						<select name="orderby">
+      				</div>
+    			</div>
+    			<div class="control-group">
+      				<label for="search-form-orderby" class="control-label" >{% trans "Sort by" %}</label>
+      				<div class="controls">
+        				<select name="orderby" id="search-form-orderby">
 							<option value="0" {% if orderby == "0" %}selected="selected" {% endif %}>{% trans "Newest first" %}</option>
 							<option value="1" {% if orderby == "1" %}selected="selected" {% endif %}>{% trans "Oldest first" %}</option>
 							<option value="2" {% if orderby == "2" %}selected="selected" {% endif %}>{% trans "Highest rates first" %}</option>
 							<option value="3" {% if orderby == "3" %}selected="selected" {% endif %}>{% trans "Lowest rates first" %}</option>
 						</select>
-					</td>
-				</tr>
-				<tr><td></td><td></td><td></td><td><input type="submit" value='{% trans "Search" %}' /></td></tr>
-			</table>
+      				</div>
+    			</div>
+    			<div class="control-group">
+      				<div class="controls">
+        				<button class='btn btn-primary' type="submit" ><i class='icon-search icon-white'></i> {% trans "Search" %}</button>
+      				</div>
+    			</div>
+			</fieldset>
 		</form>
 	</div>
 	<div class="spacer"></div>
 	<div class="box">
-	<div id="add-pattern" class="add">
-		<a href="add"><i class="icon-plus">&nbsp;</i>{% trans "Add new pattern" %}</a>
-	</div>
+	
 
 	<h1>
-	{% if search %}
-		{% trans "Results" %}
-	{% else %}
-		{% trans "Newest bracelets" %}
-	{% endif %}
+		{% if search %}
+			{% trans "Results" %}
+		{% else %}
+			{% trans "Newest bracelets" %}
+		{% endif %}
+		<a href="add" class='btn btn-info pull-right'><i class="icon-plus icon-white"></i> {% trans "Add new pattern" %}</a>
 	</h1>
 	<hr />
 	{% if patterns %}
@@ -177,7 +186,7 @@ $(document).ready(function(){
 		    	    				{% endif %}
 		    	    			{% endif %}
 		    	    		{% endif %}
-		    	    		 class="category category{{ bt.category.id }}">&nbsp;
+		    	    		 class="category icon-category{{ bt.category.id }}">&nbsp;
 		    	    	</div>
 				    	<br />
 		    	    	<i class="icon-strings" title="{% trans 'Number of strings' %}"></i> {{ bt.nofstrings }}
@@ -188,10 +197,10 @@ $(document).ready(function(){
 			        </div>
 				</a>
 	        </div>
-	        <div class="pattern-details" id="pattern_info{{ bt.braceletid }}" style="display:none">
-		        <a href="/bracelet/{{ bt.braceletid }}">
+	        <div class="pattern-details" id="pattern_info{{ bt.id }}" style="display:none">
+		        <a href="/bracelet/{{ bt.url }}">
 				    <div class="darken">{{ bt.name }}</div>
-				    <div class="darken" style="margin-top:48px">
+				    <div class="darken" style="margin-top:37px">
 				    	{% trans 'by' %}: {{ bt.author.username }} {% trans 'on' %}: {{ bt.date }}
 				    </div>
 				    <div class="darken">
@@ -205,23 +214,22 @@ $(document).ready(function(){
 		</div>
 	    {% endfor %}
 	    <hr />
-	    <div class="pagination">
+	    
+	    <ul class="pager">
 			{% if patterns.has_previous %}
-				<span class="pull-left">
-	            	<i class="icon-backward">&nbsp;</i><a href="?page={{ patterns.previous_page_number }}{{ url }}"> {% trans "previous" %}</a>
-	            </span>
+	  			<li class="previous">
+	    			<a href="?page={{ patterns.previous_page_number }}{{ url }}">&larr; {% trans "previous" %}</a>
+	  			</li>
 	        {% endif %}
-	
 	        <span class="current">
 	            {% trans "Page" %} {{ patterns.number }} {% trans "of" %} {{ patterns.paginator.num_pages }}		            
 	        </span>
-	
 	        {% if patterns.has_next %}
-		        <span class="pull-right">
-		            <a href="?page={{ patterns.next_page_number }}{{ url }}">{% trans "next" %} </a><i class="icon-forward">&nbsp;</i>
-	            </span>
-	        {% endif %}
-	    </div>
+  			<li class="next">
+    			<a href="?page={{ patterns.next_page_number }}{{ url }}">{% trans "next" %} &rarr;</a>
+  			</li>
+  			{% endif %}
+		</ul>
     {% else %}
     	{% trans "There is no patterns to show." %}
 	{% endif %}
