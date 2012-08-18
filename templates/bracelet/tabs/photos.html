@@ -1,12 +1,25 @@
 {% load i18n %}
+
+<script type="text/javascript">
+//<![CDATA[
+$(document).ready(function() {
+	$('#photo-upload-form').submit(function() { 
+		$('.loader').show();
+		return True;
+	});
+});
+//]]>
+</script>
+
 <div id="photoAdd" >
 {% if user.is_authenticated %}
-	<form enctype="multipart/form-data" action="/bracelet/photoUpload/{{ bracelet_id }}/" method="post">
+	<form id='photo-upload-form' enctype="multipart/form-data" action="/bracelet/photoUpload/{{ bracelet_id }}/" method="post">
 		{% csrf_token %}
 		<input type="hidden" name="bracelet_id" value="{{ bracelet_id }}">
 		{{ form.file }}
 		<br />
-		<input value="Send photo" type="submit"/>
+		<input class='btn btn-primary' value="Send photo" type="submit"/>
+		<span class='loader'><img src='{{ STATIC_URL }}gfx/lightbox-ico-loading.gif' /></span>
 	</form>
 {% else %}
 	{% trans "You need to be logged in to add new photo" %}

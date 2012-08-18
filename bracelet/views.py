@@ -28,13 +28,15 @@ def add(request):
 	return render_to_response('bracelet/add.html', context, RequestContext(request))
 
 def bracelet(request, bracelet_url, context = {}):
+	print '11111', context
 	try:
 		bracelet = Bracelet.objects.get(url = bracelet_url)
 	except ObjectDoesNotExist:
 		return index(request, {'error_message':_('There is no bracelet with this id.')})
 	bp = BraceletPattern(bracelet)
 	bp.generate_pattern()
-	context = get_context(request)
+	context.update(get_context(request))
+
 	texts = [gettext(s.text) for s in BraceletKnotType.objects.all().order_by('id')]
 	context.update({'bracelet': bracelet,
 			'style':bp.get_style(),
@@ -118,21 +120,21 @@ def photos(request, bracelet_id):
 	print bracelet_id
 	photos = Photo.objects.filter(bracelet = Bracelet.objects.get(id = bracelet_id), accepted = True)
 	form = UploadFileForm()
-	return render_to_response('bracelet/tabs/photos.html', {'form': form, 'bracelet_id':bracelet_id, 'photos':photos, 'selectTabs':3}, RequestContext(request))
+	return render_to_response('bracelet/tabs/photos.html', {'form': form, 'bracelet_id':bracelet_id, 'photos':photos, 'selectTab':3}, RequestContext(request))
 
 def photo_upload(request, bracelet_id):
 	try:
-		bracelet = Bracelet.objects.get(id = bracelet_id)
+		bracelet_obj = Bracelet.objects.get(id = bracelet_id)
 	except ObjectDoesNotExist:
 		return index(request, {'error_message':'There is no bracelet with this idbbbbb'})
 
-	photos = Photo.objects.filter(bracelet = bracelet, accepted = True)
+	photos = Photo.objects.filter(bracelet = bracelet_obj, accepted = True)
 	form = UploadFileForm(request.POST, request.FILES)
 	if form.is_valid():
 		handle_uploaded_file(request.FILES['file'], request.POST['bracelet_id'], request.user)
-
-		return bracelet(request, bracelet.url, {'form': form, 'bracelet_id':bracelet_id, 'photos':photos, 'selectTabs':3, 'ok_message':_('Photo upload successfully. It will show up here after admin acceptance.')})
-	return bracelet(request, bracelet.url, {'form': form, 'bracelet_id':bracelet_id, 'photos':photos, 'selectTabs':3, 'error_message':_('Error has occured when uploading photo.')})
+		print 'OK!'
+		return bracelet(request, bracelet_obj.url, {'form': form, 'bracelet_id':bracelet_id, 'photos':photos, 'selectTab':3, 'ok_message':_('Photo upload successfully. It will show up here after admin acceptance.')})
+	return bracelet(request, bracelet_obj.url, {'form': form, 'bracelet_id':bracelet_id, 'photos':photos, 'selectTab':3, 'error_message':_('Error has occured when uploading photo.')})
 
 def rate(request, bracelet_id, bracelet_rate):
 	try:

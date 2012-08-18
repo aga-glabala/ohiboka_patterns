@@ -306,9 +306,7 @@
 #photoAdd {
 	padding: 0 0 20px 10px;	
 }
-#photoAdd input[type="submit"] {
-	padding: 1px 7px;
-}
+
 .comment_start {
 	padding-top: 20px;
 }
@@ -341,6 +339,9 @@ div.posterror {
 	color: #AD1A1A;
 	font-weight: bold;
 	background: rgba(255, 255, 255, 0.4);
+}
+.loader {
+	display:none;
 }
 /* Layout helpers */
 
