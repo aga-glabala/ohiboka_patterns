@@ -102,6 +102,11 @@ $(document).ready(function(){
 	);
 	setRate();
 
+	$('#delete-link').click(function() {
+		$('#delete-confirm').modal();
+		return False;
+	});
+
  });
  
 function addKnotButton() {

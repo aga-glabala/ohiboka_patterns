@@ -126,7 +126,7 @@ def photo_upload(request, bracelet_id):
 	try:
 		bracelet_obj = Bracelet.objects.get(id = bracelet_id)
 	except ObjectDoesNotExist:
-		return index(request, {'error_message':'There is no bracelet with this idbbbbb'})
+		return index(request, {'error_message':_('There is no bracelet with this id {0}').format(bracelet_id)})
 
 	photos = Photo.objects.filter(bracelet = bracelet_obj, accepted = True)
 	form = UploadFileForm(request.POST, request.FILES)
