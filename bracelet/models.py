@@ -20,7 +20,8 @@ class Bracelet(models.Model):
 	deleted = models.BooleanField(default = False)
 
 	def __unicode__(self):
-		return "[id=" + str(self.id) + ", user=" + str(self.user) + ", name=" + self.name + ", accepted=" + str(self.accepted) + ", difficulty=" + str(self.difficulty) + ", category=" + str(self.category) + "]"
+		return "[id=" + str(self.id) + ", user=" + str(self.user) + ", name=" + self.name + ", accepted=" + str(self.accepted) + ", difficulty=" + str(self.difficulty) + \
+				 ", category=" + str(self.category) + ", rate=" + str(self.rate) + ", public=" + str(self.public) + "]"
 
 	def get_average_rate(self):
 		rate = 0

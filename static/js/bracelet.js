@@ -85,18 +85,19 @@ $(document).ready(function(){
 	
 	
 	// rates
-	$('.icon-heart-empty').hover(
+	$('#ratepattern i').hover(
 		function () {
-		    $('.icon-heart-empty').slice(0,$(this).attr('id').substring(4,5)).removeClass('icon-heart-empty');
-		    $('.icon-heart-empty').slice(0,$(this).attr('id').substring(4,5)).addClass('icon-heart-full');
-		    $('.icon-heart-empty').slice($(this).attr('id').substring(4,5),5).removeClass('icon-heart-full');
-		    $('.icon-heart-empty').slice($(this).attr('id').substring(4,5),5).addClass('icon-heart-empty');
+			var els = $('#ratepattern i');
+		    els.slice(0,$(this).attr('id').substring(4,5)).removeClass('icon-heart-empty');
+		    els.slice(0,$(this).attr('id').substring(4,5)).addClass('icon-heart-full');
+		    els.slice($(this).attr('id').substring(4,5),5).removeClass('icon-heart-full');
+		    els.slice($(this).attr('id').substring(4,5),5).addClass('icon-heart-empty');
 	});
-	$('.icon-heart-empty').parent().hover(function () {},
+	$('#ratepattern').hover(function () {},
 		function () {
 	    	setRate();
 	});
-	$('.icon-heart-empty').click(
+	$('#ratepattern i').click(
 		function () {
 			var id = $(this).attr('id').substring(4,5)
 			$.ajax({

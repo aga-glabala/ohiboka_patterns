@@ -49,7 +49,8 @@ def find_bracelets(orderby = "0", category = "0", difficulty = "0", color = "0",
 
 	rate = int(rate)
 	if	rate > 0:
-		patterns = patterns.filter(rate__gte = rate)
+		print 'rate', rate
+		patterns = patterns.filter(rate__gte = int(rate))
 	if photo:
 		patterns = patterns.filter(photo__isnull = False)
 

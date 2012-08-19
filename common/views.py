@@ -205,7 +205,6 @@ def setlang(request, lang):
 def search(request):
 	# TODO bracelets filter
 	url = request.get_full_path()
-	print url
 	if url.find("page") > -1:
 			url = url[url.find("&") :]
 	else:
