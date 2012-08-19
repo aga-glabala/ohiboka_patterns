@@ -41,7 +41,7 @@ def find_bracelets(orderby = "0", category = "0", difficulty = "0", color = "0",
 		q_orderby = '-rate'
 	elif orderby == '3':
 		q_orderby = 'rate'
-	patterns = Bracelet.objects.all().order_by(q_orderby)
+	patterns = Bracelet.objects.all().order_by(q_orderby).filter(public = 1, accepted = 1)
 	if category != "0":
 		patterns = patterns.filter(category = BraceletCategory.objects.all().filter(name = category))
 	if difficulty != "0":
@@ -53,7 +53,7 @@ def find_bracelets(orderby = "0", category = "0", difficulty = "0", color = "0",
 	if photo:
 		patterns = patterns.filter(photo__isnull = False)
 
-	if color:
+	if color != "0":
 		color = BraceletColor.objects.get(hexcolor = int('0x' + color[1:], 16))
 		strings = [bs.bracelet.id for bs in BraceletString.objects.filter(color = color)] # TODO find more effective way to do this
 		patterns = patterns.filter(id__in = strings)

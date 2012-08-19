@@ -2351,18 +2351,6 @@ input[type="submit"].btn.btn-mini {
 .icon-new {
 	background-position: -168px -168px;
 }
-.icon-category1 {
-	background-position: -104px -192px;
-}
-.icon-category2 {
-	background-position: -129px -192px;
-}
-.icon-category4 {
-	background-position: -156px -192px;
-}
-.icon-category3{
-	background-position: -184px -192px;
-}
 .icon-knot1 {
 	background-position: 0 -192px;
 }
@@ -2378,6 +2366,19 @@ input[type="submit"].btn.btn-mini {
 .icon-knot5 {
 	background-position: -26px -192px;
 }
+.icon-category1 {
+	background-position: -96px -192px;
+}
+.icon-category2 {
+	background-position: -120px -192px;
+}
+.icon-category4 {
+	background-position: -144px -192px;
+}
+.icon-category3{
+	background-position: -168px -192px;
+}
+
 .btn-group {
   position: relative;
   *zoom: 1;

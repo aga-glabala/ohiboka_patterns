@@ -1,6 +1,5 @@
 from django.shortcuts import render_to_response
-from django.http import HttpResponseRedirect, HttpResponse
-from django.contrib.auth.forms import AuthenticationForm
+from django.http import HttpResponse
 from django.template.context import RequestContext
 from bracelet.models import BraceletColor, Bracelet, BraceletCategory, \
 	BraceletString, BraceletKnot, BraceletKnotType, Photo, Rate
@@ -12,11 +11,9 @@ from bracelet.helper import handle_uploaded_file, scale
 from django.utils.translation import ugettext as _
 from django.utils.translation import gettext
 from django.conf import settings
-from common.models import UserProfile
 import time
 from django.core.exceptions import ObjectDoesNotExist
 from common.views import userprofile, index, get_context
-from django.contrib.comments.models import Comment
 import unicodedata
 
 
@@ -28,7 +25,6 @@ def add(request):
 	return render_to_response('bracelet/add.html', context, RequestContext(request))
 
 def bracelet(request, bracelet_url, context = {}):
-	print '11111', context
 	try:
 		bracelet = Bracelet.objects.get(url = bracelet_url)
 	except ObjectDoesNotExist:

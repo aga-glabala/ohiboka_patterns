@@ -104,21 +104,21 @@
 			<hr />
 			{% if user == bracelet.user %}
 				<div>
-					{% trans "It\'s your bracelet" %} <a href='/profile/'>{% trans 'See more' %}</a><br />
+					{% trans "It's your bracelet" %}   <a href='/profile/' class="label label-info">{% trans 'See more' %}</a><br />
 					{% trans 'Status' %}: 
 					{% if bracelet.public %}
 						{% trans 'public' %}
 					{% else %}
 						{% trans 'private' %}
 					{% endif %}
-					<a href='/bracelet/change_status/{{bracelet.id}}'>{% trans 'Change to' %}
+					  <a href='/bracelet/change_status/{{bracelet.id}}' class="label label-info">{% trans 'Change to' %}
 						{% if bracelet.public %}
 							{% trans 'private' %}
 						{% else %}
 							{% trans 'public' %}
 						{% endif %}
 					</a><br />
-					<i class='icon-trash'>&nbsp;</i> <a href='#' style='color:red;' id='delete-link'>{% trans 'Delete bracelet' %}</a>	<br />	<br />
+					<i class='icon-trash'>&nbsp;</i>  <a href='#' style='color:red;' id='delete-link'>{% trans 'Delete bracelet' %}</a>	<br />	<br />
 					<div class="modal hide" id="delete-confirm">
 					  	<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" class='color-chooser-cancel'>×</button>
@@ -159,7 +159,7 @@
     	    			{% endif %}
     	    		{% endif %}</p>
 				<p><i class="icon-strings"  title="{% trans 'Number of strings' %}">&nbsp;</i> {{ bracelet.strings.all|length }}</p>
-				<p><i class="icon-star2" title="{% trans 'Rate' %}">&nbsp;</i> {{ bracelet.rate }}</p>
+				<p><i class="icon-heart-full" title="{% trans 'Rate' %}">&nbsp;</i> {{ bracelet.rate }}</p>
 				<p><i class="icon-difficulty{{ bracelet.difficulty}}" title="{% trans 'Difficulty' %}"> &nbsp;</i> {{ bracelet.difficulty }}</p>
 			</div>
 			<div class='bracelet-link'>

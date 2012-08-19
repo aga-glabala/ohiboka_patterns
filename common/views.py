@@ -205,10 +205,11 @@ def setlang(request, lang):
 def search(request):
 	# TODO bracelets filter
 	url = request.get_full_path()
-	if(url.find("category") > -1):
-		url = "&" + url[url.find("category"):]
+	print url
+	if url.find("page") > -1:
+			url = url[url.find("&") :]
 	else:
-		url = ""
+		url = "&" + url[url.find("?") + 1:]
 
 	context = get_context(request)
 	context.update({'category' : request.GET['category'],
