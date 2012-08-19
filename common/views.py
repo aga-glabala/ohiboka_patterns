@@ -16,6 +16,7 @@ from django.contrib.auth import authenticate, login, logout
 from pyfb.pyfb import Pyfb
 from common.utils import FacebookBackend
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.mail import send_mail
 
 def get_context(request):
 	context = {'loginform': AuthenticationForm(), "FACEBOOK_APP_ID": settings.FACEBOOK_APP_ID}
@@ -123,18 +124,27 @@ def user(request, user_name):
 	context['photos'] = Photo.objects.filter(user = user, accepted = True)
 	return render_to_response('common/user.html', context, RequestContext(request))
 
-def about(request):
-	if request.method == 'POST':
+def about(request, context = {}, errors = 0):
+	if request.method == 'POST' and not errors:
 		form = ContactForm(request.POST)
-		if form.is_valid():
-			#send_mail('Subject here', 'Here is the message.', 'from@example.com', fail_silently = DEBUG)
-			return HttpResponseRedirect('/thanks/')
+		captcha_response = captcha.submit(request.POST['recaptcha_challenge_field'], request.POST['recaptcha_response_field'],
+                                          settings.RECAPTCHA_PRIVATE_KEY, request.META['REMOTE_ADDR'])
+		if captcha_response.is_valid:
+			if form.is_valid():
+				subject = form.cleaned_data['subject']
+				msg_content = form.cleaned_data['message']
+				sender = form.cleaned_data['sender']
+				receiver = ['aga@ohiboka.com']
+				send_mail(subject, msg_content, sender, receiver)
+				return HttpResponseRedirect('/contact/success/')
+			else:
+				return about(request, {'error_message': _("An error has occured. Correct entered data.")}, errors = 1)
+		else:
+			return about(request, {'error_message': _('Wrong captcha.')}, errors = 1)
 	else:
 		form = ContactForm()
-
-	context = get_context(request)
-	context.update({'contactform':form})
-
+	context.update(get_context(request))
+	context.update({'contactform':form, 'captcha': captcha.displayhtml(settings.RECAPTCHA_PUBLIC_KEY)})
 	return render_to_response('common/about.html', context, RequestContext(request))
 
 def privacypolicy(request):
@@ -238,3 +248,6 @@ def search(request):
 		bracelets = paginator.page(paginator.num_pages)
 	context['patterns'] = bracelets
 	return render_to_response('common/index.html', context, RequestContext(request))
+
+def contact_success(request):
+	return render_to_response('contact_ok.html', get_context(request))

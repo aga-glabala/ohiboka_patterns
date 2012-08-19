@@ -32,24 +32,29 @@
 	<p>If you want to know more about Ohiboka and me - go to <a href="http://blog.ohiboka.com/o-nas-2/">this page on blog</a> (only in polish)</p>
 	If you find any errors or have any ideas, you can sent me an email - aga@ohiboka.com
 	
-{% endif %}<!--
+{% endif %}
 <h2>Contact form</h2>
 <hr />
-  <form action="/about/" method="post" id="contact-form">
+  <form action="/about/" method="post" id="contact-form" class='form-horizontal'>
   	{% csrf_token %}
-  	<table>
+  	<fieldset>
 	  	{% for field in contactform %}
-		  	<tr>
-		  		<td class="label">{{ field.label }}</td>
+	  	<div class="control-group">
+	  		<label for="comment-form-text" class="control-label" >{{ field.label }}</label>
+			<div class="controls">
 		  		<td class="field">{{ field }}</td> 
-		  		<td class="info">{{ field.help_text }}</td>
-		  	</tr>
+		  		<td class="info">{{ field.errors }}</td>
+		  </div>
+		</div>
 	  	{% endfor %}
-		<tr>
-			<td colspan="2">{{ captcha|safe }}</td>
-			<td></td>
-		</tr>
-		<tr><td></td><td><input type="submit" value="{% trans 'Send message' %}" /></td><td></td></tr>
-  	</table>
-</form>-->
+	  	<div class="control-group">
+			{{ captcha|safe }}
+		</div>
+		<div class="control-group">
+			<div class="controls">
+				<input class='btn btn-primary' type="submit" value="{% trans 'Send message' %}" />
+			</div>
+		</div>
+  	</fieldset>
+</form>
 {% endblock %}

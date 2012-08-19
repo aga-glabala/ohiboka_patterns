@@ -14,14 +14,6 @@ class UserCreationFormExtended(UserCreationForm):
         fields = ('username', 'email')
 
 class ContactForm(forms.Form):
-    subject = forms.CharField(max_length = 100)
-    sender = forms.EmailField()
-    message = forms.CharField(widget = forms.Textarea)
-
-
-    def __init__(self, *args, **kwargs):
-        super(ContactForm, self).__init__(*args, **kwargs)
-
-        self.fields['subject'].label = _("Subject")
-        self.fields['sender'].label = _("Sender")
-        self.fields['message'].label = _("Message")
+    subject = forms.CharField(label = _("Subject"), max_length = 100, required = True)
+    sender = forms.EmailField(label = _("Sender"), required = True)
+    message = forms.CharField(label = _("Message"), widget = forms.Textarea, required = True)
