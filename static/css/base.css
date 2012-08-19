@@ -74,14 +74,13 @@ body {
 }
 	#top h1 {
 		display: inline-block;
-		background: url(/static/gfx/ohiboka.png) no-repeat;
 		width:278px;
 		height:111px;
 		margin: 10px 0 20px;
 	}
 	#top h1 a {
 		text-decoration: none;
-		padding: 0 300px 100px 0;
+		padding: 50px 100px 55px 0;
 	}
 ul#menu {	
 	list-style-type: none;
