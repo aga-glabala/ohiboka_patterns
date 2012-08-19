@@ -17,6 +17,17 @@ $(document).ready(function(){
 			}
 		}
 	});
+
+	// Mousetrap
+	$( "#tabs" ).bind( "tabsshow", function(event, ui) {
+		Mousetrap.reset();
+		if (ui.index == 1) {
+			stepByStepInit();
+		}
+	});
+	if (window.location.hash == '#tabs-2') {
+		stepByStepInit();
+	}
 	
 	// pattern creating
 	for (var i=0; i<nofrows;i++) {
@@ -243,4 +254,11 @@ function setRate() {
 	$('#ratepattern i').slice(0,rate).addClass('icon-heart-full');
 	$('#ratepattern i').slice(rate,5).removeClass('icon-heart-full');
 	$('#ratepattern i').slice(rate,5).addClass('icon-heart-empty');
+}
+
+function stepByStepInit() {
+	Mousetrap.bind('space', addKnotButton);
+	Mousetrap.bind('backspace', delKnot);
+	Mousetrap.bind('right', add5Knots);
+	Mousetrap.bind('left', del5Knots);
 }

@@ -148,3 +148,8 @@
 .btn-group {
 	display: inline-block;
 }
+#pattern-designer .current {
+	border: 1px solid black;
+	-webkit-box-shadow: 0 0 5px 2px #000;
+	box-shadow: 0 0 5px 2px #000;
+}

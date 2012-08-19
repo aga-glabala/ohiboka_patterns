@@ -56,7 +56,99 @@ $(document).ready(function(){
 	  	//e.preventDefault()
 		setTempColor(clickedColorChooser.data('color'));
 		$('#color-chooser').modal('hide');
-	})
+	});
+
+	Mousetrap.bind('left', function(e) {
+		var sel = $('.current').prev();
+		if (sel != undefined && sel.length > 0) {
+			$('.current').removeClass('current');
+			sel.addClass('current');
+		} else {
+			var col = $('.current').index();
+			var last = $('.current').parent().children().length - 1 == col;
+			var row = $('.current').parent().index();
+			if (row > 0) {
+				$('.current').removeClass('current');
+				$('#row'+(row-1)+' > span:last-child').addClass('current');
+			}
+		}
+		return false;
+	});
+	Mousetrap.bind('right', function(e) { 
+		var sel = $('.current').next();
+		if (sel != undefined && sel.length > 0) {
+			$('.current').removeClass('current');
+			sel.addClass('current');
+		} else {
+			var col = $('.current').index();
+			var last = $('.current').parent().children().length - 1 == col;
+			var row = $('.current').parent().index();
+			if (row + 1 < $('.current').parent().parent().children().length) {
+				$('.current').removeClass('current');
+				$('#row'+(row+1)+' > span:first-child').addClass('current');
+			}
+		}
+		return false;
+	});
+	Mousetrap.bind('up', function(e) { 
+		var col = $('.current').index();
+		var last = $('.current').parent().children().length - 1 == col;
+		var row = $('.current').parent().index();
+		if (row > 0) {
+			$('.current').removeClass('current');
+			if (last) {
+				$('#row'+(row-1)+' > span:last-child').addClass('current');
+			} else {
+				$('#row'+(row-1)+' > span:nth-child('+(col+1)+')').addClass('current');
+			}
+		}
+		return false;
+	});
+	Mousetrap.bind('down', function(e) { 
+		var col = $('.current').index();
+		var last = $('.current').parent().children().length - 1 == col;
+		var row = $('.current').parent().index();
+		var rowCount = $('.current').parent().index();
+		if (row + 1 < $('.current').parent().parent().children().length) {
+			$('.current').removeClass('current');
+			if (last) {
+				$('#row'+(row+1)+' > span:last-child').addClass('current');
+			} else {
+				$('#row'+(row+1)+' > span:nth-child('+(col+1)+')').addClass('current');
+			}
+		}
+		return false;
+	});
+	Mousetrap.bind(['1', '2', '3', '4', 'space'], function(e) {
+		changeType($('.current'), $('.current').parent().index(), $('.current').index(), e.keyCode == 32 ? undefined : e.keyCode - 48);
+		return false;
+	});
+	Mousetrap.bind(['.', '>'], function(e) {
+		addKnotColumnButton('colorsInput');
+		return false;
+	});
+	Mousetrap.bind([',', '<'], function(e) {
+		removeInput();
+		return false;
+	});
+	Mousetrap.bind('del', function(e) {
+		removeRow();
+		return false;
+	});
+	Mousetrap.bind('ins', function(e) {
+		addRow();
+		return false;
+	});
+	Mousetrap.bind('home', function(e) {
+		$('.current').removeClass('current');
+		$('#row0 > span:first-child').addClass('current');
+		return true;
+	});
+	Mousetrap.bind('end', function(e) {
+		$('.current').removeClass('current');
+		$('#pattern-designer > div:last-child > span:last-child').addClass('current');
+		return true;
+	});
 });
 
 function generateTemplate() {
@@ -260,6 +352,12 @@ function initDesigner() {
 }
 
 function drawPattern() {
+	var col = 0;
+	var row = 0;
+	if ($('.current').length > 0) {
+		col = $('.current').index();
+		row = $('.current').parent().index();
+	}
 	$('#pattern-canvas').empty();
 	$('#pattern-thumb').empty();
 	$('#pattern-designer').empty();
@@ -318,14 +416,21 @@ function drawPattern() {
 			$('<span class="str'+knotColors[i][2*j+1]+' string'+directions[1]+'"></span>').appendTo('#row-strings'+i);
 		}
 	}
+	$('#row'+(row)+' > span:nth-child('+(col+1)+')').addClass('current');
 }
 
-function changeType(obj, i, j) {
+function changeType(obj, i, j, newType) {
 	var prevType = knotTypes[i][j];
 	$(obj).removeClass('knot'+prevType);
 	
-	knotTypes[i][j]=(prevType%4+1);
+	if (newType == undefined) {
+		newType = prevType%4+1;
+	}
+	knotTypes[i][j]=newType;
 	$(obj).addClass('knot'+knotTypes[i][j]);
+
+	$('.current').removeClass('current');
+	$('#row'+i+' > span:nth-child('+(j+1)+')').addClass('current');
 	
 	evaluateColors();
 	drawPattern();
