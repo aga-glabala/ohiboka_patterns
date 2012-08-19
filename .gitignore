@@ -6,3 +6,5 @@
 *.orig
 static/media/images/*
 static/media/bracelet_thumbs/*
+private.py
+build/*

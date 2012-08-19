@@ -1,8 +1,6 @@
 # Django settings for ohiboka_patterns project.
 import os.path
-
-siteaddress = 'http://localhost:8000/'
-projectaddress = '/files/aptana-workspace/ohibokapatterns/' #'/home/agnis/ohibokapatterns/' 
+from private import *
 #projectaddress = ''
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -24,13 +22,7 @@ DATABASES = {
     }
 }
 
-FACEBOOK_APP_ID = '159476740845097'
-FACEBOOK_SECRET_KEY = 'cd8c09d3afc4796e18199466df0d4db8'
 FACEBOOK_REDIRECT_URL = siteaddress + 'facebook_login_success/'
-
-#recaptcha account: https://www.google.com/recaptcha/admin/site?siteid=315859431
-RECAPTCHA_PUBLIC_KEY = '6LfnodMSAAAAAGKD-qOokFqpKC1Fb8Jl7arec_54'
-RECAPTCHA_PRIVATE_KEY = '6LfnodMSAAAAANWiwrfvSXLHXt6xt27W4zJuQvB8'
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -171,6 +163,4 @@ LOGGING = {
 #EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'ohiboka@gmail.com'
-EMAIL_HOST_PASSWORD = '4C%ZWqX>.1'
 EMAIL_USE_TLS = True
