@@ -250,4 +250,4 @@ def search(request):
 	return render_to_response('common/index.html', context, RequestContext(request))
 
 def contact_success(request):
-	return render_to_response('contact_ok.html', get_context(request))
+	return render_to_response('contact_ok.html', get_context(request), RequestContext(request))

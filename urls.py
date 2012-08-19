@@ -20,7 +20,7 @@ urlpatterns = patterns('',
     url(r'^about/$', 'ohibokapatterns.common.views.about'),
     url(r'^privacypolicy/$', 'ohibokapatterns.common.views.privacypolicy'),
     url(r'^lang/(?P<lang>\w+)', 'ohibokapatterns.common.views.setlang'),
-    url(r'^contact/success/$', 'contact_success'),
+    url(r'^contact/success/$', 'ohibokapatterns.common.views.contact_success'),
 
     # MODULE BRACELET
     url(r'^bracelet/photos/(?P<bracelet_id>\d+)/$', 'ohibokapatterns.bracelet.views.photos'),
