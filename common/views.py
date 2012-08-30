@@ -17,6 +17,7 @@ from pyfb.pyfb import Pyfb
 from common.utils import FacebookBackend
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import send_mail
+from django.contrib.auth.decorators import login_required
 
 def get_context(request):
 	context = {'loginform': AuthenticationForm(), "FACEBOOK_APP_ID": settings.FACEBOOK_APP_ID}
@@ -48,6 +49,7 @@ def register(request):
                                'captcha': captcha.displayhtml(settings.RECAPTCHA_PUBLIC_KEY)})
 	return render_to_response("common/register.html", context, context_instance = RequestContext(request))
 
+@login_required
 def userprofile(request, error_message = "", ok_message = ""):
 	if request.user.is_authenticated():
 		bracelets = get_all_bracelets(0, request.user, False)
@@ -251,3 +253,4 @@ def search(request):
 
 def contact_success(request):
 	return render_to_response('contact_ok.html', get_context(request), RequestContext(request))
+

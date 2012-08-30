@@ -64,7 +64,7 @@
 			
 		<div id="content">
 			<div class="box ok_box">
-				{% trans  "Hey! It's super-beta version of my new site. You probably find some errors. Feel free to" %} <a href="/about/">{% trans "contact me" %}</a> {% trans "when you will find some error or you will have some suggestions how to make this site better." %}
+				{% trans  "Hey! It's super-beta version of my new site. You probably find some errors. Feel free to" %} <a href="/about/">{% trans "contact me" %}</a> {% trans "when you find some errors or you have some suggestions how to make this site better." %}
 			</div>
 			<div class="spacer"></div>
 			{% if error_message %}
@@ -89,7 +89,8 @@
 					{% csrf_token %}
 					<table>
 					<tr><td>{{ loginform.username }}</td></tr>
-					<tr><td>{{ loginform.password }}</td></tr>
+					<tr><td>{{ loginform.password }}
+						<a href="{% url 'password_reset' %}">Forgot your password?</a></td></tr>
 					<tr><td><input class="pull-right btn btn-primary" type="submit" value="{% trans 'Login' %}" /></td></tr>
 					</table>
 					</form>

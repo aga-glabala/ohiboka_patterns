@@ -2351,6 +2351,9 @@ input[type="submit"].btn.btn-mini {
 .icon-new {
 	background-position: -168px -168px;
 }
+.icon-back {
+	background-position: -192px -168px;
+}
 .icon-knot1 {
 	background-position: 0 -192px;
 }
@@ -3297,7 +3300,6 @@ input[type="submit"].btn.btn-mini {
 }
 .pager {
   margin-left: 0;
-  margin-bottom: 18px;
   list-style: none;
   text-align: center;
   *zoom: 1;

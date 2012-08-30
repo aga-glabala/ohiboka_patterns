@@ -15,6 +15,7 @@ import time
 from django.core.exceptions import ObjectDoesNotExist
 from common.views import userprofile, index, get_context
 import unicodedata
+from django.contrib.auth.decorators import login_required
 
 
 def add(request):
@@ -73,6 +74,7 @@ def bracelet(request, bracelet_url, context = {}):
 
 	return render_to_response('bracelet/bracelet.html', context, RequestContext(request))
 
+@login_required
 def addpattern(request):
 	colors_tmp = request.POST['colors'][:-1].split(' ')
 	colors = []
@@ -118,6 +120,7 @@ def photos(request, bracelet_id):
 	form = UploadFileForm()
 	return render_to_response('bracelet/tabs/photos.html', {'form': form, 'bracelet_id':bracelet_id, 'photos':photos, 'selectTab':3}, RequestContext(request))
 
+@login_required
 def photo_upload(request, bracelet_id):
 	try:
 		bracelet_obj = Bracelet.objects.get(id = bracelet_id)
@@ -132,6 +135,7 @@ def photo_upload(request, bracelet_id):
 		return bracelet(request, bracelet_obj.url, {'form': form, 'bracelet_id':bracelet_id, 'photos':photos, 'selectTab':3, 'ok_message':_('Photo upload successfully. It will show up here after admin acceptance.')})
 	return bracelet(request, bracelet_obj.url, {'form': form, 'bracelet_id':bracelet_id, 'photos':photos, 'selectTab':3, 'error_message':_('Error has occured when uploading photo.')})
 
+@login_required
 def rate(request, bracelet_id, bracelet_rate):
 	try:
 		rate = int(bracelet_rate)
@@ -161,7 +165,7 @@ def rate(request, bracelet_id, bracelet_rate):
 	return HttpResponse(_("You need to be logged in to rate patterns"))
 
 
-
+@login_required
 def delete_bracelet(request, bracelet_id):
 	try:
 		b = Bracelet.objects.get(id = bracelet_id)
@@ -173,6 +177,7 @@ def delete_bracelet(request, bracelet_id):
 	b.save()
 	return index(request, {'ok_message': _('Bracelet was successfully deleted') + '.'})
 
+@login_required
 def change_status(request, bracelet_id):
 	try:
 		b = Bracelet.objects.get(id = bracelet_id)
@@ -184,6 +189,7 @@ def change_status(request, bracelet_id):
 	b.save()
 	return bracelet(request, b.url, {'ok_message': _('Bracelet\'s status was successfully changed') + '.'})
 
+@login_required
 def accept(request, bracelet_id, bracelet_status):
 	try:
 		b = Bracelet.objects.get(id = bracelet_id)
@@ -201,6 +207,7 @@ def accept(request, bracelet_id, bracelet_status):
 	b.save()
 	return bracelet(request, b.url, {'ok_message': _('Bracelet\'s status was successfully changed') + '.'})
 
+@login_required
 def delete_photo(request, photo_id):
 	try:
 		photo = Photo.objects.get(id = photo_id)
@@ -213,6 +220,7 @@ def delete_photo(request, photo_id):
 	photo.delete()
 	return userprofile(request, ok_message = _("Photo deleted successfully."))
 
+@login_required
 def delete_rate(request, rate_id):
 	try:
 		rate = Rate.objects.get(id = rate_id)

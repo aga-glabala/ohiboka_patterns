@@ -168,7 +168,7 @@
 	<hr />
 	{% for photo in photos_accepted %}
 		<div class="photo">
-        	<a href="{{ MEDIA_URL }}images/{{ photo.name }}"><img src="{{ MEDIA_URL }}bracelet_thumbs/{{ photo.name }}" /></a>
+        	<a class='lightbox' href="{{ MEDIA_URL }}images/{{ photo.name }}"><img src="{{ MEDIA_URL }}bracelet_thumbs/{{ photo.name }}" /></a>
     	    <a href="/bracelet/{{ photo.bracelet.id }}">{{photo.bracelet.name}}</a>
     	    <a href="/bracelet/photo/remove/{{photo.id}}" title="{% trans 'Remove' %}"><i class="icon-trash"></i></a>
 		</div>
@@ -180,14 +180,14 @@
 	<hr />
 	{% for photo in photos_not_accepted %}
 		<div class="photo">
-        	<a href="{{ MEDIA_URL }}images/{{ photo.name }}"><img src="{{ MEDIA_URL }}bracelet_thumbs/{{ photo.name }}" /></a>
+        	<a class='lightbox' href="{{ MEDIA_URL }}images/{{ photo.name }}"><img src="{{ MEDIA_URL }}bracelet_thumbs/{{ photo.name }}" /></a>
     	    <a href="/bracelet/{{ photo.bracelet.id }}">{{photo.bracelet.name}}</a>
     	    <a href="/bracelet/photo/remove/{{photo.id}}" title="{% trans 'Remove' %}"><i class="icon-trash"></i></a>
 		</div>
 	{% endfor %}
 {% endif %}
 	<script type="text/javascript">
-		$('.photo a').lightBox(
+		$('.lightbox').lightBox(
 					{
 						imageLoading: {{STATIC_URL}}+'gfx/lightbox-ico-loading.gif',
 						imageBtnClose: {{STATIC_URL}}+'gfx/lightbox-btn-close.gif',

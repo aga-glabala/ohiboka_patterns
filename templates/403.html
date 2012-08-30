@@ -1,0 +1,9 @@
+{% extends "template.html" %}
+{% load i18n %}
+
+{% block content %}
+<h2>{% trans "Hey! You should not be here!" %} :(</h2>
+<hr />
+{% trans 'You do not have access to this page, if you followed one of link from my site' %}, <a href="/about/">{% trans 'let me knot about it'%}</a><br />
+{% trans 'You can go back to' %} <a href="/">{% trans 'main page' %}</a>
+{% endblock %}
