@@ -258,7 +258,12 @@ function setTempColor(color) {
 	var i = clickedColorChooser.attr('id').slice(5,6);
 	var x = color;
 	chosedColor = color;
-	document.styleSheets[document.styleSheets.length-1].insertRule('.str'+i+' {background-color: '+x+'}', document.styleSheets[document.styleSheets.length-1].rules.length);
+	var styleSheet = document.styleSheets[document.styleSheets.length-1];
+	var crossrule = styleSheet.rules;
+	if (styleSheet.cssRules)
+		crossrule=styleSheet.cssRules;
+	styleSheet.crossInsertRule = styleSheet.insertRule ? styleSheet.insertRule : styleSheet.addRule;
+	styleSheet.crossInsertRule('.str'+i+' {background-color: '+x+'}', crossrule.length);
 	if((parseInt(x.slice(1,3), 16) + parseInt(x.slice(3,5), 16) + parseInt(x.slice(5,7), 16)) / 3.0<128) {
 		if_white[i]= '-white';
 	} else {
