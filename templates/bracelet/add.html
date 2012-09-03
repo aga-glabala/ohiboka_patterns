@@ -13,6 +13,29 @@
 
 
 {% block content %}
+	{% if not user.is_authenticated %}
+		{% trans "You are not logged in, which means you won't be able to save your work!" %}
+		</div>
+		<div class='spacer'></div>
+		<div class='box'>
+	{% endif %}	
+	<div id="carousel-addpattern" class="carousel slide">
+	   <!-- Carousel items -->
+	   <div class="carousel-inner">
+	    	<div class="active item"><p><strong>{% trans 'Did you know..?' %}</strong> {% trans 'You can use arrows ( <span class="label">&larr;</span> <span class="label">&uarr;</span> <span class="label">&rarr;</span> <span class="label">&darr;</span> ) on your keyboard to navigate between knots.' %}</p></div>
+	    	<div class="item"><p><strong>{% trans 'Did you know..?' %}</strong> {% trans 'You can use <span class="label">1</span> <span class="label">2</span> <span class="label">3</span> <span class="label">4</span> and <span class="label" title="space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> key from your keyboard to change knot type.' %}</p></div>
+	    	<div class="item"><p><strong>{% trans 'Did you know..?' %}</strong> {% trans 'With <span class="label">home</span> and <span class="label">end</span> keys you can navigate between first and last knot.' %}</p></div>
+	    	<div class="item"><p><strong>{% trans 'Did you know..?' %}</strong> {% trans '<span class="label">Insert</span> key adds new row to you pattern and <span class="label">delete</span> removes last row.' %}</p></div>
+	   </div>
+	   <!-- Carousel nav -->
+	   <a class="carousel-control left" href="#carousel-addpattern" data-slide="prev">&lsaquo;</a>
+	   <a class="carousel-control right" href="#carousel-addpattern" data-slide="next">&rsaquo;</a>
+	</div>
+		
+	</div>
+	<div class='spacer'></div>
+	<div class='box'>
+	
 	{% if user.is_authenticated %}
 		<form action="addpattern" method="post" id="addbracelet">
 		{% csrf_token %}
@@ -53,11 +76,6 @@
 				</div>
 			</fieldset>
 		</div>
-	{% else %}
-		{% trans "You are not logged in, which means you won't be able to save your work!" %}
-		</div>
-		<div class='spacer'></div>
-		<div class='box'>
 	{% endif %}
 	<div class="form-horizontal div-form second">
 		<fieldset>

@@ -26,7 +26,40 @@
     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
+	$(document).ready(function() {
+		
+		$('#login').click(function() {
+			if($('#login-box').is(':visible')) {
+				$('#login-box').slideUp();
+				$('#login-box').next().slideUp();
+			} else {
+				$('#login-box').slideDown();
+				$('#login-box').next().slideDown();
+			}
+			// prevent the default action, e.g., following a link
+			return false;
+		});
 
+		var i = document.createElement('input');
+		if ( 'placeholder' in i) {
+			$('#login-form input:text').attr('placeholder', '{{ loginform.username.label }}');
+			$('#login-form input:password').attr('placeholder', '{{ loginform.password.label }}');
+		} else {
+			$('#login-form input:text').val('{{ loginform.username.label }}');
+			$('#login-form input:password').val('{{ loginform.password.label }}');
+		}
+
+		$('#fb').hover(function() {
+			$('.fb-like-box').fadeIn();
+		});
+		$('.fb-like-box').hover(function() {}, function() {
+			$('.fb-like-box').fadeOut();
+		});
+		
+		if($('.login-errors').length>0) {
+			$('#login').click();
+		}
+	});
 </script>
 </head>
 
@@ -84,13 +117,12 @@
 				<div id="login-form">
 					<form method="post" action="{% url "common.views.login_user" %}">
 					{% if loginform.errors %}
-							<p class="errors">{% trans "Your username and password didn't match. Please try again." %}</p>
+							<p class="login-errors">{% trans "Your username and password didn't match. Please try again." %}</p>
 					{% endif %}
 					{% csrf_token %}
 					<table>
 					<tr><td>{{ loginform.username }}</td></tr>
-					<tr><td>{{ loginform.password }}
-						<a href="{% url 'password_reset' %}">Forgot your password?</a></td></tr>
+					<tr><td>{{ loginform.password }}</td></tr>
 					<tr><td><input class="pull-right btn btn-primary" type="submit" value="{% trans 'Login' %}" /></td></tr>
 					</table>
 					</form>
@@ -132,35 +164,7 @@
 	</div>
 	<div class="stitches stitches-bottom2"></div>
 	<script>
-		$(document).ready(function() {
-			$('#login').click(function() {
-				if($('#login-box').is(':visible')) {
-					$('#login-box').slideUp();
-					$('#login-box').next().slideUp();
-				} else {
-					$('#login-box').slideDown();
-					$('#login-box').next().slideDown();
-				}
-				// prevent the default action, e.g., following a link
-				return false;
-			});
 
-			var i = document.createElement('input');
-			if ( 'placeholder' in i) {
-				$('#login-form input:text').attr('placeholder', '{{ loginform.username.label }}');
-				$('#login-form input:password').attr('placeholder', '{{ loginform.password.label }}');
-			} else {
-				$('#login-form input:text').val('{{ loginform.username.label }}');
-				$('#login-form input:password').val('{{ loginform.password.label }}');
-			}
-
-			$('#fb').hover(function() {
-				$('.fb-like-box').fadeIn();
-			});
-			$('.fb-like-box').hover(function() {}, function() {
-				$('.fb-like-box').fadeOut();
-			});
-		});
 		
 	</script>
 	<div id="fb-root"></div>

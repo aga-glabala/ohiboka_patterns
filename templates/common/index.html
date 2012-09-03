@@ -30,6 +30,9 @@ $(document).ready(function(){
 		$('.pattern-details').hide();
 	});
 	
+	{% if search %}
+		window.location.hash = '#search';
+	{% endif %}
 	showSearchBox(window.location.hash.substring(1))
 	if ("onhashchange" in window) { 
         window.onhashchange = function () {
@@ -104,7 +107,11 @@ $(document).ready(function(){
     			<div class="control-group">
       				<label for="search-form-color" class="control-label" >{% trans "Color" %}</label>
       				<div class="controls">
-        				<select name="color" onchange='setColor(this.options[this.selectedIndex].value, this)' id="search-form-color">
+        				<select name="color" onchange='setColor(this.options[this.selectedIndex].value, this)' id="search-form-color"
+        					{% if color %}
+        						 style="background-color:{{ color }}"
+        					{% endif %}
+        				>
 							<option value="0">{% trans "All" %}</option>
 							{% if colors %}
 								{% for c in colors %}
@@ -203,7 +210,7 @@ $(document).ready(function(){
 				    <div class="darken" style="margin-top:37px">
 				    	{% trans 'by' %}: {{ bt.author.username }} {% trans 'on' %}: {{ bt.date }}
 				    </div>
-				    <div class="darken">
+				    <div class="darken" style='height:19px;'>
 			    		{% for c in bt.colors %}
 		    	    		<div class="knot" style="background-color:{{c}};"></div>
 		    	    	{% endfor %}

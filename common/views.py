@@ -16,7 +16,7 @@ from django.contrib.auth import authenticate, login, logout
 from pyfb.pyfb import Pyfb
 from common.utils import FacebookBackend
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.mail import send_mail
+from django.core.mail import EmailMessage
 from django.contrib.auth.decorators import login_required
 
 def get_context(request):
@@ -136,8 +136,10 @@ def about(request, context = {}, errors = 0):
 				subject = form.cleaned_data['subject']
 				msg_content = form.cleaned_data['message']
 				sender = form.cleaned_data['sender']
+				print 'aaaaaaaa', sender
 				receiver = ['aga@ohiboka.com']
-				send_mail(subject, msg_content, sender, receiver)
+				EmailMessage(subject, msg_content, sender, receiver, headers = {'Reply-To': sender}).send()
+				#send_mail(subject, msg_content, sender, receiver)
 				return HttpResponseRedirect('/contact/success/')
 			else:
 				return about(request, {'error_message': _("An error has occured. Correct entered data.")}, errors = 1)

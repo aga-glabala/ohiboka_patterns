@@ -87,7 +87,7 @@
 	margin: 0 7px;
 }
 .odd {
-	margin-left:20px;
+	margin-left:17px;
 }
 .column-margin {
 	margin-top:8px;
@@ -152,4 +152,16 @@
 	border: 1px solid black;
 	-webkit-box-shadow: 0 0 5px 2px #000;
 	box-shadow: 0 0 5px 2px #000;
+}
+#carousel-addpattern .item p {
+	padding: 18px 80px 0;
+	height: 20px;
+}
+#carousel-addpattern .carousel-control {
+	top: 65%;
+	left: 0;
+}
+#carousel-addpattern .carousel-control.right{
+	left: auto;
+	right: 0;
 }

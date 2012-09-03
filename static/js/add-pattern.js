@@ -255,7 +255,7 @@ function addKnotColumn() {
 function setTempColor(color) {
 	//var selectbox = $('#color'+i);
 	//selectbox.css("background",''+selectbox.val()+'');
-	var i = clickedColorChooser.attr('id').slice(5,6);
+	var i = clickedColorChooser.attr('id').slice(5);
 	var x = color;
 	chosedColor = color;
 	var styleSheet = document.styleSheets[document.styleSheets.length-1];
