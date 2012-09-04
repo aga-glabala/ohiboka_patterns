@@ -18,6 +18,8 @@ $(document).ready(function(){
 		}
 	});
 
+	$("[rel=tooltip]").tooltip();
+
 	// Mousetrap
 	$( "#tabs" ).bind( "tabsshow", function(event, ui) {
 		Mousetrap.reset();

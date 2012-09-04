@@ -183,11 +183,10 @@
 		</div>
 		<div id="instructionbox">
 			<div id="buttons">
-				<button class='btn' onclick="del5Knots()"><i class="icon-backward">&nbsp;</i> {% trans "Back 5" %}</button>
-				<button class='btn' onclick="delKnot()"><i class="icon-back">&nbsp;</i> {% trans "Back" %}</button>
-				<button class='btn' onclick="addKnotButton()">{% trans "Next" %} <i class="icon-play">&nbsp;</i></button>
-				<button class='btn' onclick="add5Knots()">{% trans "Next 5" %} <i class="icon-forward">&nbsp;</i></button>
-				
+				<button class='btn' onclick="del5Knots()" rel="tooltip" data-original-title='{% trans "&larr;" %}'><i class="icon-backward">&nbsp;</i> {% trans "Back 5" %}</button>
+				<button class='btn' onclick="delKnot()" rel="tooltip" data-original-title='{% trans "Backspace" %}'><i class="icon-back">&nbsp;</i> {% trans "Back" %}</button>
+				<button class='btn' onclick="addKnotButton()" rel="tooltip" data-original-title='{% trans "Space" %}'>{% trans "Next" %} <i class="icon-play">&nbsp;</i></button>
+				<button class='btn' onclick="add5Knots()" rel="tooltip" data-original-title='{% trans "&rarr;" %}'>{% trans "Next 5" %} <i class="icon-forward">&nbsp;</i></button>
 			</div>
 			<div id="instructions"></div>
 		</div>
