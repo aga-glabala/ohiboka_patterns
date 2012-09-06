@@ -18,10 +18,11 @@ import unicodedata
 from django.contrib.auth.decorators import login_required
 
 
-def add(request):
+def add(request, context_ = {}):
 	context = {'colors': get_colors(),
 			'categories': BraceletCategory.objects.all(),
 			}
+	context.update(context_)
 	context.update(get_context(request))
 	return render_to_response('bracelet/add.html', context, RequestContext(request))
 
@@ -76,6 +77,8 @@ def bracelet(request, bracelet_url, context = {}):
 
 @login_required
 def addpattern(request):
+	if not request.POST['name']:
+		return add(request, {'error_message':_('You need to set name to bracelet')})
 	colors_tmp = request.POST['colors'][:-1].split(' ')
 	colors = []
 	for c in colors_tmp:
@@ -86,7 +89,10 @@ def addpattern(request):
 	brs = Bracelet.objects.filter(url__contains = url)
 	if brs:
 		url += '-' + str(len(brs))
-	if request.POST['public']:
+
+	print 'aaa', request.POST['public'] == '1'
+
+	if request.POST['public'] == '1':
 		public = True
 	else:
 		public = False

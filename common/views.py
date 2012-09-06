@@ -32,6 +32,7 @@ def register(request):
 	form = None
 	error = None
 	if request.method == 'POST':
+
 		captcha_response = captcha.submit(request.POST['recaptcha_challenge_field'], request.POST['recaptcha_response_field'],
                                           settings.RECAPTCHA_PRIVATE_KEY, request.META['REMOTE_ADDR'])
 		if captcha_response.is_valid:
@@ -43,7 +44,7 @@ def register(request):
 				error = _("An error has occured. Correct entered data.")
 		else:
 			error = _("Wrong captcha, try again.")
-	form = UserCreationFormExtended()
+	form = UserCreationFormExtended(request.POST)
 	context = get_context(request)
 	context.update({'form': form, 'error_message': error,
                                'captcha': captcha.displayhtml(settings.RECAPTCHA_PUBLIC_KEY)})
@@ -187,12 +188,13 @@ def login_user(request):
 		password = request.POST['password']
 		form = AuthenticationForm(data = request.POST)
 		user = authenticate(username = username, password = password)
+		context = {'loginform':form}
 		if user is not None and user.is_active:
 			login(request, user)
-		context = {'loginform':form, }
+			context['ok_message'] = _('You are logged in now')
 		return index(request, context)
 	else:
-		index(request)
+		return index(request)
 
 def facebook_login(request):
 	facebook = Pyfb(settings.FACEBOOK_APP_ID)

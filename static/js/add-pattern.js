@@ -42,10 +42,6 @@ $(document).ready(function(){
 		setTempColor($(this).data('color'));
 	});
 	
-	//$('.color-chooser-cancel').click(function(e) {
-		
-	//});
-	
 	$('#color-chooser-ok').click(function(e) {
 		e.preventDefault();
 		setColor();
@@ -154,12 +150,17 @@ $(document).ready(function(){
 function generateTemplate() {
 	nofrows = parseInt($('#generate-form-rows').val());
 	nofcols = parseInt($('#generate-form-columns').val());
-	
-	knottype = $('#generate-form-knots').val();
-	var els = $('span[class*="icon-knot"]');
-	els.removeClass();
-	els.addClass('icon-knot'+knottype);
-	initDesigner();
+	if(parseInt(nofcols)<3) {
+		alert('You cannot add less than 3 strings.');
+	} else if(parseInt(nofcols)<30) {
+		knottype = $('#generate-form-knots').val();
+		var els = $('span[class*="icon-knot"]');
+		els.removeClass();
+		els.addClass('icon-knot'+knottype);
+		initDesigner();
+	} else {
+		alert('You cannot add more than 30 strings.');
+	}
 }
 
 function changeBraceletType(aElement) {
@@ -459,5 +460,11 @@ function submit() {
 		str+=$(colors[i]).data('color')+' ';
 	}
 	$('#pattern-colors').text(str);
+	
+	if($('#generate-form-name').val().length == 0) {
+		alert(noNameError);
+		return false;
+	} 
+	
 	return true;
 }

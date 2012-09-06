@@ -16,9 +16,6 @@
 {% block content %}
   <h1>Create an account</h1>
 <hr />
-  {% if error_message %}
-  <div class='error_message'>{{ error_message }}</div>
-  {% endif %}
   <form action="" method="post" id="registerForm" class='form-horizontal'>
   	{% csrf_token %}
 	<fieldset>

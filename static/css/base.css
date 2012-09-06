@@ -117,6 +117,9 @@ ul#menu {
 #login-box {
 	background: url('/static/gfx/or.png') center center no-repeat #f8f8f7;
 }
+#login-box * {
+	vertical-align: middle;
+}
 #login-form {
 	display:inline-block;
 	width: 45%;
@@ -127,10 +130,9 @@ ul#menu {
 }
 .facebook_login {
 	display:inline-block;
-	width: 45%;
+	width: 54%;
 	text-align: right;
 	margin: 0;
-	line-height: 75px;
 }
 .facebook_login button {
 	width: 154px;
