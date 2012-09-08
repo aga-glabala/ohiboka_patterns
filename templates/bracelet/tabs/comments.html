@@ -27,6 +27,7 @@ $(document).ready(function() {
 					tabname = $(tabname);
 					var vals = tabname.html().split("(");
 					tabname.html(vals[0]+"("+(parseInt(vals[1].split(")")[0])+1)+")");
+					$('.thereisnocomments').hide(); 
 				} else {
 					$('.comment_start').after($('<div class="posterror">{% trans "Unexpected error occured. Try reload page or try again later." %}</div>'));
 				}
