@@ -192,6 +192,8 @@ def login_user(request):
 		if user is not None and user.is_active:
 			login(request, user)
 			context['ok_message'] = _('You are logged in now')
+			if not request.POST.get('remember_me', None):
+				request.session.set_expiry(0)
 		return index(request, context)
 	else:
 		return index(request)

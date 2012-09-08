@@ -1,5 +1,5 @@
 from django.shortcuts import render_to_response
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template.context import RequestContext
 from bracelet.models import BraceletColor, Bracelet, BraceletCategory, \
 	BraceletString, BraceletKnot, BraceletKnotType, Photo, Rate
@@ -36,6 +36,7 @@ def bracelet(request, bracelet_url, context = {}):
 	context.update(get_context(request))
 
 	texts = [gettext(s.text) for s in BraceletKnotType.objects.all().order_by('id')]
+	print bracelet.rate
 	context.update({'bracelet': bracelet,
 			'style':bp.get_style(),
 			'nofstr':bp.get_n_of_strings(),
@@ -48,8 +49,9 @@ def bracelet(request, bracelet_url, context = {}):
 			'nofphotos': len(Photo.objects.filter(bracelet = bracelet, accepted = True)),
 			'request': request,
 			})
-
-	if bracelet.accepted == 0:
+	if not bracelet.public:
+		context['message'] = _("""This bracelet is private. It means you can see it only if you have link to this page.""")
+	elif bracelet.accepted == 0:
 		context['message'] = _("""This bracelet is not accepted yet. It means you can see it only if you have link to this page.""")
 	elif bracelet.accepted == -1:
 		context['message'] = _("""This bracelet has been rejected. It means you can see it only if you have link to this page.""")
@@ -58,21 +60,13 @@ def bracelet(request, bracelet_url, context = {}):
 		rates = Rate.objects.filter(user = request.user, bracelet = bracelet)
 	if len(rates) > 0:
 		context['rate'] = rates[0].rate
+	elif 'rate' in context:
+		del context['rate']
 
-	'''
-		for bracelet in Bracelet.objects.all():
-			photo_name = str(int(time.time() * 1000)) + "-" + str(bracelet.id) + '.png'
-			bp = BraceletPattern(bracelet.id)
-			bp.generate_pattern()
-			bp.generate_photo(settings.MEDIA_ROOT + 'images/' + photo_name)
-			scale(photo_name, settings.MEDIA_ROOT + 'images/', settings.MEDIA_ROOT + 'bracelet_thumbs/')
-			photo = Photo(user = request.user, name = photo_name, accepted = True, bracelet = bracelet)
-			photo.save()
-	
-			bracelet.photo_id = photo.id
-			bracelet.save()
-	'''
-
+	if 'change_status' in request.GET:
+		context['ok_message'] = _('Bracelet\'s status was successfully changed') + '.'
+	elif 'ok_message' in context and context['ok_message'] == _('Bracelet\'s status was successfully changed') + '.':
+		del context['ok_message']
 	return render_to_response('bracelet/bracelet.html', context, RequestContext(request))
 
 @login_required
@@ -89,8 +83,6 @@ def addpattern(request):
 	brs = Bracelet.objects.filter(url__contains = url)
 	if brs:
 		url += '-' + str(len(brs))
-
-	print 'aaa', request.POST['public'] == '1'
 
 	if request.POST['public'] == '1':
 		public = True
@@ -138,7 +130,7 @@ def photo_upload(request, bracelet_id):
 	if form.is_valid():
 		handle_uploaded_file(request.FILES['file'], request.POST['bracelet_id'], request.user)
 		return bracelet(request, bracelet_obj.url, {'form': form, 'bracelet_id':bracelet_id, 'photos':photos, 'selectTab':3, 'ok_message':_('Photo was uploaded successfully. It will show up here after admin acceptance.')})
-	return bracelet(request, bracelet_obj.url, {'form': form, 'bracelet_id':bracelet_id, 'photos':photos, 'selectTab':3, 'error_message':_('Error has occured when uploading photo.')})
+	return bracelet(request, bracelet_obj.url, {'form': form, 'bracelet_id':bracelet_id, 'photos':photos, 'selectTab':3, 'error_message':_('Error has occured when uploading photo, choose photo and try again.')})
 
 @login_required
 def rate(request, bracelet_id, bracelet_rate):
@@ -192,7 +184,7 @@ def change_status(request, bracelet_id):
 		return index(request, {'error_message': _('This bracelet is not yours') + '!'})
 	b.public = not b.public
 	b.save()
-	return bracelet(request, b.url, {'ok_message': _('Bracelet\'s status was successfully changed') + '.'})
+	return HttpResponseRedirect('/bracelet/{0}?change_status=ok'.format(b.url))
 
 @login_required
 def accept(request, bracelet_id, bracelet_status):
@@ -235,5 +227,11 @@ def delete_rate(request, rate_id):
 		return userprofile(request, error_message = _("You need to be logged in to edit rates."))
 	if rate.user != request.user:
 		return userprofile(request, error_message = _("You are not owner of this rate."))
+
+	bracelet = Bracelet.objects.get(id = rate.bracelet.id)
 	rate.delete()
+	bracelet.rate = bracelet.get_average_rate()
+	print bracelet.rate
+	bracelet.save()
+
 	return userprofile(request, ok_message = _("Rate deleted successfully."))

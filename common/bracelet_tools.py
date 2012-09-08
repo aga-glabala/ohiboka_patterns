@@ -49,10 +49,13 @@ def find_bracelets(orderby = "0", category = "0", difficulty = "0", color = "0",
 
 	rate = int(rate)
 	if	rate > 0:
-		print 'rate', rate
 		patterns = patterns.filter(rate__gte = int(rate))
+
 	if photo:
-		patterns = patterns.filter(photo__isnull = False)
+		for pattern in patterns:
+			print pattern, pattern.photos.filter(accepted = 1).all()
+			if len(pattern.photos.all()) < 1:
+				del pattern
 
 	if color != "0":
 		color = BraceletColor.objects.get(hexcolor = int('0x' + color[1:], 16))

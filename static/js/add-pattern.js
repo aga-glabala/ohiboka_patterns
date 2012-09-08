@@ -150,16 +150,14 @@ $(document).ready(function(){
 function generateTemplate() {
 	nofrows = parseInt($('#generate-form-rows').val());
 	nofcols = parseInt($('#generate-form-columns').val());
-	if(parseInt(nofcols)<3) {
-		alert('You cannot add less than 3 strings.');
-	} else if(parseInt(nofcols)<30) {
+	if(parseInt(nofcols) > 2 && parseInt(nofcols)<30 && parseInt(nofrows) > 2 && parseInt(nofrows)<95) {
 		knottype = $('#generate-form-knots').val();
 		var els = $('span[class*="icon-knot"]');
 		els.removeClass();
 		els.addClass('icon-knot'+knottype);
 		initDesigner();
 	} else {
-		alert('You cannot add more than 30 strings.');
+		alert(patternGeneratorError);
 	}
 }
 
@@ -189,35 +187,39 @@ function removeInput() {
 }
 
 function addRow() {
-	knotTypes[nofrows] = [];
-	var num = parseInt(nofstrings/2);
-	if(nofstrings%2==0 && knotTypes[nofrows-1].length==num) {
-		num--;
-	}
-	
-	var kt = knottype;
-	if(kt == 5) {
-		kt = knotTypes[nofrows-1][0];
-		if(kt==3) {
-			kt=4;
-		} else {
-			kt=3;
+	if(nofrows<95) {
+		knotTypes[nofrows] = [];
+		var num = parseInt(nofstrings/2);
+		if(nofstrings%2==0 && knotTypes[nofrows-1].length==num) {
+			num--;
 		}
+		
+		var kt = knottype;
+		if(kt == 5) {
+			kt = knotTypes[nofrows-1][0];
+			if(kt==3) {
+				kt=4;
+			} else {
+				kt=3;
+			}
+		}
+		
+		for(var i=0; i<num; i++) {
+			knotTypes[nofrows][i]=kt;
+		}
+		nofrows++;
+		evaluateColors();
+		drawPattern();	
 	}
-	
-	for(var i=0; i<num; i++) {
-		knotTypes[nofrows][i]=kt;
-	}
-	nofrows++;
-	evaluateColors();
-	drawPattern();	
 }
 
 function removeRow() {
-	knotTypes.slice(0, nofrows-1);
-	nofrows--;
-	evaluateColors();
-	drawPattern();	
+	if(nofrows>3) {
+		knotTypes.slice(0, nofrows-1);
+		nofrows--;
+		evaluateColors();
+		drawPattern();
+	}	
 }
 
 function addInput(divColor){

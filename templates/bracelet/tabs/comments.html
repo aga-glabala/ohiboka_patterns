@@ -10,29 +10,31 @@ $(document).ready(function() {
 	});
 	
 	$('#submit_comment').click(function(e) {
-		  e.preventDefault();
-		
-		  $.post("/comments/post/", $('#commentbox').serialize(), function(data) {
-		  	if(data == 1) {
-				  var el = $('<div class="comment"><h4><span class="comment-user"></span> <span class="comment-time">{% trans "now" %}</span></h4></div>');
-		   		  $('.comment_start').after(el);
-				  $('.comment-user', el).html($('#comment-form-username').val());
-				  el.append($('#id_comment').val());
-				  el.append($('<hr />'));
-		   		  $("#commentbox").hide();
-		   		  $('#id_comment').val('');
-		   		  $('#comment-input').show();
-		   		  $('.posterror').remove();
-		   		  var tabname = $('.ui-tabs-nav li a')[2];
-		   		  tabname = $(tabname);
-		   		  var vals = tabname.html().split("(");
-		   		  tabname.html(vals[0]+"("+(parseInt(vals[1].split(")")[0])+1)+")");
-			 } else {
-	  			$('.comment_start').after($('<div class="posterror">{% trans "Unexpected error occured. Try reload page or try again later." %}</div>'));
-			 }
-			 
-	  	  });
-	  return false;
+		e.preventDefault();
+		$('.posterror').remove();
+		if($('#id_honeypot').val().length==0 && $('#id_comment').val().length>0) {
+			$.post("/comments/post/", $('#commentbox').serialize(), function(data) {
+				if(data == 1) {
+					var el = $('<div class="comment"><h4><span class="comment-user"></span> <span class="comment-time">{% trans "now" %}</span></h4></div>');
+					$('.comment_start').after(el);
+					$('.comment-user', el).html($('#comment-form-username').val());
+					el.append($('#id_comment').val());
+					el.append($('<hr />'));
+					$("#commentbox").hide();
+					$('#id_comment').val('');
+					$('#comment-input').show();
+					var tabname = $('.ui-tabs-nav li a')[2];
+					tabname = $(tabname);
+					var vals = tabname.html().split("(");
+					tabname.html(vals[0]+"("+(parseInt(vals[1].split(")")[0])+1)+")");
+				} else {
+					$('.comment_start').after($('<div class="posterror">{% trans "Unexpected error occured. Try reload page or try again later." %}</div>'));
+				}
+			});
+		} else {
+			$('.comment_start').after($('<div class="posterror">{% trans "Validation error, try again please" %}</div>'));
+		}
+		return false;
 	});
 	$('#comment-form-username').val($('#username').val());
 	
