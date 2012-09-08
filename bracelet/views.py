@@ -67,17 +67,6 @@ def bracelet(request, bracelet_url, context = {}):
 	elif 'ok_message' in context and context['ok_message'] == _('Bracelet\'s status was successfully changed') + '.':
 		del context['ok_message']
 
-	for bracelet in Bracelet.objects.all():
-		photo_name = str(int(time.time() * 1000)) + "-" + str(bracelet.id) + '.png'
-		bp = BraceletPattern(bracelet.id)
-		bp.generate_pattern()
-		bp.generate_photo(settings.MEDIA_ROOT + 'images/' + photo_name)
-		scale(photo_name, settings.MEDIA_ROOT + 'images/', settings.MEDIA_ROOT + 'bracelet_thumbs/')
-		photo = Photo(user = request.user, name = photo_name, accepted = True, bracelet = bracelet)
-		photo.save()
-		bracelet.photo_id = photo.id
-		bracelet.save()
-
 	return render_to_response('bracelet/bracelet.html', context, RequestContext(request))
 
 @login_required
