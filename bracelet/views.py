@@ -36,7 +36,6 @@ def bracelet(request, bracelet_url, context = {}):
 	context.update(get_context(request))
 
 	texts = [gettext(s.text) for s in BraceletKnotType.objects.all().order_by('id')]
-	print bracelet.rate
 	context.update({'bracelet': bracelet,
 			'style':bp.get_style(),
 			'nofstr':bp.get_n_of_strings(),
@@ -113,7 +112,6 @@ def addpattern(request):
 	return bracelet(request, b.url, {'ok_message':_('Bracelet was successfully saved.')})
 
 def photos(request, bracelet_id):
-	print bracelet_id
 	photos = Photo.objects.filter(bracelet = Bracelet.objects.get(id = bracelet_id), accepted = True)
 	form = UploadFileForm()
 	return render_to_response('bracelet/tabs/photos.html', {'form': form, 'bracelet_id':bracelet_id, 'photos':photos, 'selectTab':3}, RequestContext(request))
@@ -231,7 +229,6 @@ def delete_rate(request, rate_id):
 	bracelet = Bracelet.objects.get(id = rate.bracelet.id)
 	rate.delete()
 	bracelet.rate = bracelet.get_average_rate()
-	print bracelet.rate
 	bracelet.save()
 
 	return userprofile(request, ok_message = _("Rate deleted successfully."))
