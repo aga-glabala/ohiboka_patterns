@@ -32,7 +32,7 @@ urlpatterns = patterns('',
     url(r'^bracelet/change_status/(?P<bracelet_id>\d+)$', 'ohibokapatterns.bracelet.views.change_status'),
     url(r'^bracelet/delete/(?P<bracelet_id>\d+)/?$', 'ohibokapatterns.bracelet.views.delete_bracelet'),
     # TODO minus przy statusie!
-    url(r'^bracelet/accept/(?P<bracelet_id>\d+)/(?P<bracelet_status>\d+)/?$', 'ohibokapatterns.bracelet.views.accept'),
+    url(r'^bracelet/accept/(?P<bracelet_id>\d+)/(?P<bracelet_status>\-?\d?)/?$', 'ohibokapatterns.bracelet.views.accept'),
     url(r'^add/?$', 'ohibokapatterns.bracelet.views.add'),
     url(r'^addpattern/?$', 'ohibokapatterns.bracelet.views.addpattern'),
     url(r'^bracelet/(?P<bracelet_url>.+)/?$', 'ohibokapatterns.bracelet.views.bracelet'),

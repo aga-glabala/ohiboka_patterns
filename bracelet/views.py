@@ -48,6 +48,8 @@ def bracelet(request, bracelet_url, context = {}):
 			'nofphotos': len(Photo.objects.filter(bracelet = bracelet, accepted = True)),
 			'request': request,
 			})
+	if 'message' in context:
+		del context['message']
 	if not bracelet.public:
 		context['message'] = _("""This bracelet is private. It means you can see it only if you have link to this page.""")
 	elif bracelet.accepted == 0:
@@ -191,7 +193,7 @@ def accept(request, bracelet_id, bracelet_status):
 		b = Bracelet.objects.get(id = bracelet_id)
 	except ObjectDoesNotExist:
 		return index(request, {'error_message': _('Bracelet do not exists') + '!'})
-	if b.user != request.user:
+	if not request.user.is_staff:
 		return index(request, {'error_message': _('This bracelet is not yours') + '!'})
 	try:
 		status = int(bracelet_status)
@@ -233,3 +235,9 @@ def delete_rate(request, rate_id):
 	bracelet.save()
 
 	return userprofile(request, ok_message = _("Rate deleted successfully."))
+
+def _fake_for_translate():
+	_("Make one knot {0} in forward on {1}")
+	_("Make one knot {0} in backward on {1}")
+	_("Make one knot {0} in forward-backward on {1}")
+	_("Make one knot {0} in backward-forward on {1}")
