@@ -10,6 +10,7 @@ from bracelet.forms import UploadFileForm
 from bracelet.helper import handle_uploaded_file, scale
 from django.utils.translation import ugettext as _
 from django.utils.translation import gettext
+import gettext as gt
 from django.conf import settings
 import time
 from django.core.exceptions import ObjectDoesNotExist
@@ -204,27 +205,28 @@ def accept(request, bracelet_id, bracelet_status):
 		return index(request, {'error_message': _('Wrong value for bracelet status') + '!'})
 	b.accepted = status
 	b.save()
-	print 'aaaa', b.user.email
+	trans = gt.translation('django', 'locale', ['pl'], fallback=True).ugettext
+	msg_content = ''
 	if status == -1:
-		subject = _('Your bracelet was rejected')
-		msg_content = _('Hey! I\'m sorry, but your bracelet was rejected. It was probably to easy or same pattern was already submitted. You can still see this bracelet from your profile\
-									(http://patterns.ohiboka.com/profile). Thanks for using my site and hope to see you again.\
-									\r\nGo to pattern: http://patterns.ohiboka.com/bracelet/{0}\
-									\r\nAdd new bracelet: http://patterns.ohiboka.com/add\
-									\r\nRegards,\
-									\r\nAga\
-									\r\nhttp://ohiboka.com')
+		subject = 'Your bracelet was rejected'
+		msg_content = 'Hey! I\'m sorry, but your bracelet was rejected. It was probably to easy or same pattern was already submitted. You can still see this bracelet from your profile'+\
+						'(http://patterns.ohiboka.com/profile). Thanks for using my site and hope to see you again.'+\
+						'\r\nGo to pattern: http://patterns.ohiboka.com/bracelet/{0}'+\
+						'\r\nAdd new bracelet: http://patterns.ohiboka.com/add'+\
+						'\r\nRegards,'+\
+						'\r\nAga'+\
+						'\r\nhttp://ohiboka.com'
 		EmailMessage(subject, msg_content, ['aga@ohiboka.com'], b.user.email, headers = {'Reply-To': 'aga@ohiboka.com'}).send()
 	elif status == 1:
-		subject = _('Your bracelet was accepted')
-		msg_content = _('Hey! Congratulations, but your bracelet was accepted. Thanks for great pattern. You can see this bracelet from your profile and on main page\
-									(http://patterns.ohiboka.com/profile and http://patterns.ohiboka.com). Thanks for using my site and hope to see you again.\
-									\r\nGo to pattern: http://patterns.ohiboka.com/bracelet/{0}\
-									\r\nAdd new bracelet: http://patterns.ohiboka.com/add\
-									\r\nRegards,\
-									\r\nAga\
-									\r\nhttp://ohiboka.com')
-		EmailMessage(subject, msg_content, 'ohiboka@ohiboka.com', [b.user.email], headers = {'Reply-To': ['aga@ohiboka.com']}).send()
+		subject = 'Your bracelet was accepted'
+		msg_content = 'Hey! Congratulations, your bracelet was accepted. Thanks for great pattern. You can see this bracelet from your profile and on main page'+\
+						'(http://patterns.ohiboka.com/profile and http://patterns.ohiboka.com). Thanks for using my site and hope to see you again.'+\
+						'\r\nGo to pattern: http://patterns.ohiboka.com/bracelet/{0}'+\
+						'\r\nAdd new bracelet: http://patterns.ohiboka.com/add'+\
+						'\r\nRegards,'+\
+						'\r\nAga'+\
+						'\r\nhttp://ohiboka.com'
+	EmailMessage(subject+' | '+trans(subject), msg_content+'\r\n\r\n-----\r\n\r\n'+trans(msg_content), 'ohiboka@ohiboka.com', [b.user.email], headers = {'Reply-To': ['aga@ohiboka.com']}).send()
 	return bracelet(request, b.url, {'ok_message': _('Bracelet\'s status was successfully changed') + '.'})
 
 @login_required
