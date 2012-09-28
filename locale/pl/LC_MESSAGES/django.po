@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-28 10:56+0200\n"
+"POT-Creation-Date: 2012-09-28 17:31+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,11 +23,11 @@ msgstr ""
 msgid "You have no permission to see this"
 msgstr "Nie masz uprawnień, żeby to zobaczyć"
 
-#: bracelet/views.py:33
+#: bracelet/views.py:35
 msgid "There is no bracelet with this id."
 msgstr "Nie ma bransoletki z tym id"
 
-#: bracelet/views.py:54
+#: bracelet/views.py:56
 #, fuzzy
 msgid ""
 "This bracelet is private. It means you can see it only if you have link to "
@@ -36,7 +36,7 @@ msgstr ""
 "Bransoletka jest niezaakceptowana. Możesz ją zobaczyć tylko jeśli masz do "
 "niej linka"
 
-#: bracelet/views.py:56
+#: bracelet/views.py:58
 msgid ""
 "This bracelet is not accepted yet. It means you can see it only if you have "
 "link to this page."
@@ -44,7 +44,7 @@ msgstr ""
 "Bransoletka jest niezaakceptowana. Możesz ją zobaczyć tylko jeśli masz do "
 "niej linka"
 
-#: bracelet/views.py:58
+#: bracelet/views.py:60
 msgid ""
 "This bracelet has been rejected. It means you can see it only if you have "
 "link to this page."
@@ -52,112 +52,112 @@ msgstr ""
 "Bransoletka jest niezaakceptowana. Możesz ja zobaczyć tylko jeśli masz do "
 "niej linka"
 
-#: bracelet/views.py:68 bracelet/views.py:69 bracelet/views.py:206
+#: bracelet/views.py:70 bracelet/views.py:71 bracelet/views.py:245
 msgid "Bracelet's status was successfully changed"
 msgstr "Status bransoletki zmieniony pomyślnie."
 
-#: bracelet/views.py:77
+#: bracelet/views.py:79
 #, fuzzy
 msgid "You need to set name to bracelet"
 msgstr "Musisz być zalogowany, żeby edytować bransoletki."
 
-#: bracelet/views.py:115
+#: bracelet/views.py:117
 msgid "Bracelet was successfully saved."
 msgstr "Bransoletka zapisana pomyślnie."
 
-#: bracelet/views.py:127
+#: bracelet/views.py:129
 msgid "There is no bracelet with this id {0}"
 msgstr "Nie ma bransoletki o id {0}"
 
-#: bracelet/views.py:133
+#: bracelet/views.py:135
 msgid ""
 "Photo was uploaded successfully. It will show up here after admin acceptance."
 msgstr ""
 "Zdjęcie zostało dodane. Pokaże się tutaj po zaakceptowaniu przez "
 "administratora."
 
-#: bracelet/views.py:134
+#: bracelet/views.py:136
 #, fuzzy
 msgid "Error has occured when uploading photo, choose photo and try again."
 msgstr "Wystąpił błąd przy wysyłaniu zdjęcia."
 
-#: bracelet/views.py:141
+#: bracelet/views.py:143
 msgid "Rate is not a number"
 msgstr "Ocena musi być liczbą"
 
-#: bracelet/views.py:143
+#: bracelet/views.py:145
 msgid "Rate must be between 1 and 5"
 msgstr "Ocena musi być z przedziału [1; 5]"
 
-#: bracelet/views.py:162
+#: bracelet/views.py:164
 msgid "Pattern do not exist"
 msgstr "Wzór nie istnieje"
 
-#: bracelet/views.py:163
+#: bracelet/views.py:165
 msgid "You need to be logged in to rate patterns"
 msgstr "Musisz być zalogowany, żeby ocenić wzór"
 
-#: bracelet/views.py:171 bracelet/views.py:183 bracelet/views.py:195
+#: bracelet/views.py:173 bracelet/views.py:185 bracelet/views.py:197
 msgid "Bracelet do not exists"
 msgstr "Wzór nie istnieje"
 
-#: bracelet/views.py:173 bracelet/views.py:185 bracelet/views.py:197
+#: bracelet/views.py:175 bracelet/views.py:187 bracelet/views.py:199
 msgid "This bracelet is not yours"
 msgstr "Ta bransoletka nie jest Twoja"
 
-#: bracelet/views.py:176
+#: bracelet/views.py:178
 msgid "Bracelet was successfully deleted"
 msgstr "Bransoletka usunięta pomyślnie."
 
-#: bracelet/views.py:201 bracelet/views.py:203
+#: bracelet/views.py:203 bracelet/views.py:205
 msgid "Wrong value for bracelet status"
 msgstr "Zła wartość statusu bransoletki"
 
-#: bracelet/views.py:213
+#: bracelet/views.py:252
 msgid "There is no photo with id: {0}."
 msgstr "Nie ma zdjęcia o id {0}"
 
-#: bracelet/views.py:215
+#: bracelet/views.py:254
 msgid "You need to be logged in to edit bracelets."
 msgstr "Musisz być zalogowany, żeby edytować bransoletki."
 
-#: bracelet/views.py:217
+#: bracelet/views.py:256
 msgid "You are not owner of this photo."
 msgstr "Nie jesteś właścicielem tego zdjęcia"
 
-#: bracelet/views.py:219
+#: bracelet/views.py:258
 msgid "Photo deleted successfully."
 msgstr "Zdjęcie usunięte pomyślnie."
 
-#: bracelet/views.py:226
+#: bracelet/views.py:265
 msgid "There is no rate with id: {0}."
 msgstr "Nie ma oceny o id {0}"
 
-#: bracelet/views.py:228
+#: bracelet/views.py:267
 msgid "You need to be logged in to edit rates."
 msgstr "Musisz być zalogowany, żeby edytować oceny."
 
-#: bracelet/views.py:230
+#: bracelet/views.py:269
 msgid "You are not owner of this rate."
 msgstr "Nie jesteś właścicielem tej oceny."
 
-#: bracelet/views.py:237
+#: bracelet/views.py:276
 msgid "Rate deleted successfully."
 msgstr "Ocena usunięta pomyślnie."
 
-#: bracelet/views.py:240
+#: bracelet/views.py:279
 msgid "Make one knot {0} in forward on {1}"
 msgstr "Zrób jeden supełek {0} w prawo {1}"
 
-#: bracelet/views.py:241
+#: bracelet/views.py:280
 msgid "Make one knot {0} in backward on {1}"
 msgstr "Zrób jeden supełek {0} w lewo {1}"
 
-#: bracelet/views.py:242
+#: bracelet/views.py:281
 msgid "Make one knot {0} in forward-backward on {1}"
 msgstr "Zrób jeden supełek {0} zwrotny prawo-lewo na {1}"
 
-#: bracelet/views.py:243
+#: bracelet/views.py:282
 msgid "Make one knot {0} in backward-forward on {1}"
 msgstr "Zrób jeden supełek {0} zwrotny lewo-prawo {1}"
 
@@ -177,7 +177,7 @@ msgstr "Wiadomość"
 msgid "Success! You can log in now."
 msgstr "Sukces! Możesz się teraz zalogować."
 
-#: common/views.py:44 common/views.py:146
+#: common/views.py:44 common/views.py:145
 msgid "An error has occured. Correct entered data."
 msgstr "Wystąpił błąd. Popraw dane."
 
@@ -193,11 +193,11 @@ msgstr "Musisz być zalogowany."
 msgid "There is no user with login: {0}"
 msgstr "Nie ma użytkownika o loginie: {0}"
 
-#: common/views.py:148
+#: common/views.py:147
 msgid "Wrong captcha."
 msgstr "Nieprawidłowy tekst z obrazka, spróbuj jeszcze raz."
 
-#: common/views.py:194
+#: common/views.py:193
 #, fuzzy
 msgid "You are logged in now"
 msgstr "Sukces! Możesz się teraz zalogować."
