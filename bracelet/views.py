@@ -243,7 +243,7 @@ def accept(request, bracelet_id, bracelet_status):
 						'\r\nPozdrowienia,'+\
 						'\r\nAga'+\
 						'\r\nhttp://ohiboka.com'
-	EmailMessage(subject+' | '+trans(subject), msg_content+'\r\n\r\n-----\r\n\r\n'+trans(msg_content), 'ohiboka@ohiboka.com', [b.user.email], headers = {'Reply-To': ['aga@ohiboka.com']}).send()
+	EmailMessage(subject, msg_content, 'ohiboka@ohiboka.com', [b.user.email], headers = {'Reply-To': ['aga@ohiboka.com']}).send()
 	return bracelet(request, b.url, {'ok_message': _('Bracelet\'s status was successfully changed') + '.'})
 
 @login_required
