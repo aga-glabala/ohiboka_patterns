@@ -137,7 +137,6 @@ def about(request, context = {}, errors = 0):
 				subject = form.cleaned_data['subject']
 				msg_content = form.cleaned_data['message']
 				sender = form.cleaned_data['sender']
-				print 'aaaaaaaa', sender
 				receiver = ['aga@ohiboka.com']
 				EmailMessage(subject, msg_content, sender, receiver, headers = {'Reply-To': sender}).send()
 				#send_mail(subject, msg_content, sender, receiver)

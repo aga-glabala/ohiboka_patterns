@@ -16,6 +16,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from common.views import userprofile, index, get_context
 import unicodedata
 from django.contrib.auth.decorators import login_required
+from django.core.mail import EmailMessage
 
 
 def add(request, context_ = {}):
@@ -203,6 +204,27 @@ def accept(request, bracelet_id, bracelet_status):
 		return index(request, {'error_message': _('Wrong value for bracelet status') + '!'})
 	b.accepted = status
 	b.save()
+	print 'aaaa', b.user.email
+	if status == -1:
+		subject = _('Your bracelet was rejected')
+		msg_content = _('Hey! I\'m sorry, but your bracelet was rejected. It was probably to easy or same pattern was already submitted. You can still see this bracelet from your profile\
+									(http://patterns.ohiboka.com/profile). Thanks for using my site and hope to see you again.\
+									\r\nGo to pattern: http://patterns.ohiboka.com/bracelet/{0}\
+									\r\nAdd new bracelet: http://patterns.ohiboka.com/add\
+									\r\nRegards,\
+									\r\nAga\
+									\r\nhttp://ohiboka.com')
+		EmailMessage(subject, msg_content, ['aga@ohiboka.com'], b.user.email, headers = {'Reply-To': 'aga@ohiboka.com'}).send()
+	elif status == 1:
+		subject = _('Your bracelet was accepted')
+		msg_content = _('Hey! Congratulations, but your bracelet was accepted. Thanks for great pattern. You can see this bracelet from your profile and on main page\
+									(http://patterns.ohiboka.com/profile and http://patterns.ohiboka.com). Thanks for using my site and hope to see you again.\
+									\r\nGo to pattern: http://patterns.ohiboka.com/bracelet/{0}\
+									\r\nAdd new bracelet: http://patterns.ohiboka.com/add\
+									\r\nRegards,\
+									\r\nAga\
+									\r\nhttp://ohiboka.com')
+		EmailMessage(subject, msg_content, 'ohiboka@ohiboka.com', [b.user.email], headers = {'Reply-To': ['aga@ohiboka.com']}).send()
 	return bracelet(request, b.url, {'ok_message': _('Bracelet\'s status was successfully changed') + '.'})
 
 @login_required
