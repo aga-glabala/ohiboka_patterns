@@ -691,7 +691,7 @@ msgstr "prywatny"
 
 #: templates/bracelet/bracelet.html:114
 msgid "Change to"
-msgstr "Zmanień na"
+msgstr "Zmień na"
 
 #: templates/bracelet/bracelet.html:121
 msgid "Delete bracelet"
