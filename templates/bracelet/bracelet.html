@@ -24,6 +24,7 @@
 	var errorText = '{% trans "Could not load this tab. Try reload page if problem will still exist - let me know." %}';
 	var knotsColor = {{ knotsColor }};
 	var knotsType = {{ knotsType }};
+	var braceletType = {{ braceletType }};
 	var texts = [];
 	{% for text in texts %}
 		texts[{{forloop.counter0}}] = '{{ text|safe }}';
@@ -66,7 +67,7 @@
 	</div>
 	<hr />
 	<div id="tabs-1">
-		<div class="pattern-container">
+		<div class="pattern-container pattern-type{{ braceletType }}">
 			<div id="pattern-thumb"></div>
 			<div class="pattern-box">
 				<div id="pattern-canvas"></div>

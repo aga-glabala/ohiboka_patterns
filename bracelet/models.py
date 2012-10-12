@@ -18,10 +18,11 @@ class Bracelet(models.Model):
 	public = models.BooleanField(default = False)
 	url = models.CharField(max_length = 52, unique = True, null = False)
 	deleted = models.BooleanField(default = False)
+	type = models.IntegerField(choices = ((1, 'Diagonal'), (2, 'Straight')))
 
 	def __unicode__(self):
 		return "[id=" + str(self.id) + ", user=" + str(self.user) + ", name=" + self.name + ", accepted=" + str(self.accepted) + ", difficulty=" + str(self.difficulty) + \
-				 ", category=" + str(self.category) + ", rate=" + str(self.rate) + ", public=" + str(self.public) + "]"
+				 ", category=" + str(self.category) + ", rate=" + str(self.rate) + ", public=" + str(self.public) + ", type = "+ str(self.type) +"]"
 
 	def get_average_rate(self):
 		rate = 0

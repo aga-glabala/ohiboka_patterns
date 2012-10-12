@@ -32,6 +32,78 @@ $(document).ready(function(){
 	}
 	
 	// pattern creating
+	if (braceletType == 1) {
+		createDiagonalPattern();
+	} else if (braceletType == 2) {
+		createStraightPattern();
+	}
+	addKnot();
+	
+	
+	// rates
+	$('#ratepattern i').hover(
+		function () {
+			var els = $('#ratepattern i');
+		    els.slice(0,$(this).attr('id').substring(4,5)).removeClass('icon-heart-empty');
+		    els.slice(0,$(this).attr('id').substring(4,5)).addClass('icon-heart-full');
+		    els.slice($(this).attr('id').substring(4,5),5).removeClass('icon-heart-full');
+		    els.slice($(this).attr('id').substring(4,5),5).addClass('icon-heart-empty');
+	});
+	$('#ratepattern').hover(function () {},
+		function () {
+	    	setRate();
+	});
+	$('#ratepattern i').click(
+		function () {
+			var id = $(this).attr('id').substring(4,5)
+			$.ajax({
+			  url: "/bracelet/rate/"+bracelet_id+"/"+id
+			}).done(function( html ) {
+				if(html == "OK") {
+					rate = id;
+					setRate();
+				} else {
+			  		alert(html);
+			  	}
+			});
+		}
+	);
+	setRate();
+
+	$('#delete-link').click(function() {
+		$('#delete-confirm').modal();
+		return False;
+	});
+
+ });
+ 
+function addKnotButton() {
+	$('.new').removeClass('new');
+	addKnot();
+}
+
+function createStraightPattern() {
+	var nofcols = knotsType[0].length;
+	for (var i=0; i<nofrows;i++) {
+		$('<div id="row-strings'+i+'" />').appendTo('#pattern-canvas');
+		$('<span class="str0 string-'+( i%2 == 0 ? 'ur' : 'dr' )+'"></span>').appendTo('#row-strings'+i);
+		for(var j=0; j<nofcols; j++) {
+			$('<span class="str'+(j+1)+' string-v"></span>').appendTo('#row-strings'+i);
+			if (j<nofcols-1) 
+				$('<span class="str0 string-h"></span>').appendTo('#row-strings'+i);
+		}
+		$('<span class="str0 string-'+( i%2 == 0 ? 'dl' : 'ul' )+'"></span>').appendTo('#row-strings'+i);
+		
+		$('<div id="row'+i+'" class="straight" />').appendTo('#pattern');
+		$('<div id="column'+i+'" class="column-straight" />').appendTo('#pattern-thumb');
+		for(var j=0; j<nofcols; j++) {
+			$('<span class="str'+knotsColor[i][j]+' knot knot'+knotsType[i][j]+ifwhite[knotsColor[i][j]]+'"></span>').appendTo('#row'+i);
+			$('<span class="str'+knotsColor[i][knotsType[i].length-1-j]+' knot-thumb"></span>').appendTo('#column'+i); 
+		}
+	}
+}
+
+function createDiagonalPattern() {
 	for (var i=0; i<nofrows;i++) {
 		var cl = "odd";
 		var cl_thumb = "";
@@ -83,49 +155,6 @@ $(document).ready(function(){
 			$('<span class="str'+strings[0][2*i+1]+' string'+1+'"></span>').appendTo('#step-row-strings'+0);
 		}
 	}	
-	addKnot();
-	
-	
-	// rates
-	$('#ratepattern i').hover(
-		function () {
-			var els = $('#ratepattern i');
-		    els.slice(0,$(this).attr('id').substring(4,5)).removeClass('icon-heart-empty');
-		    els.slice(0,$(this).attr('id').substring(4,5)).addClass('icon-heart-full');
-		    els.slice($(this).attr('id').substring(4,5),5).removeClass('icon-heart-full');
-		    els.slice($(this).attr('id').substring(4,5),5).addClass('icon-heart-empty');
-	});
-	$('#ratepattern').hover(function () {},
-		function () {
-	    	setRate();
-	});
-	$('#ratepattern i').click(
-		function () {
-			var id = $(this).attr('id').substring(4,5)
-			$.ajax({
-			  url: "/bracelet/rate/"+bracelet_id+"/"+id
-			}).done(function( html ) {
-				if(html == "OK") {
-					rate = id;
-					setRate();
-				} else {
-			  		alert(html);
-			  	}
-			});
-		}
-	);
-	setRate();
-
-	$('#delete-link').click(function() {
-		$('#delete-confirm').modal();
-		return False;
-	});
-
- });
- 
-function addKnotButton() {
-	$('.new').removeClass('new');
-	addKnot();
 }
 
 function addKnot() {

@@ -42,6 +42,7 @@ def bracelet(request, bracelet_url, context = {}):
 	texts = [gettext(s.text) for s in BraceletKnotType.objects.all().order_by('id')]
 	context.update({'bracelet': bracelet,
 			'style':bp.get_style(),
+			'braceletType':bp.bracelet.type,
 			'nofstr':bp.get_n_of_strings(),
 			'knotsType':bp.get_knots_types(),
 			'knotsColor':bp.get_knots_colors(),
