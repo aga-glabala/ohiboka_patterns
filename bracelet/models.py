@@ -12,7 +12,7 @@ class Bracelet(models.Model):
 	date = models.DateTimeField('Creation date')
 	name = models.CharField(max_length = 50)
 	accepted = models.IntegerField(default = 0)
-	difficulty = models.IntegerField(choices = ((0, ' Easy'), (1, 'Medium'), (2, 'Hard')))
+	difficulty = models.IntegerField(choices = ((1, ' Easy'), (2, 'Medium'), (3, 'Hard')))
 	category = models.ForeignKey(BraceletCategory, related_name = 'bracelets')
 	rate = models.DecimalField(max_digits = 3, decimal_places = 2)
 	public = models.BooleanField(default = False)

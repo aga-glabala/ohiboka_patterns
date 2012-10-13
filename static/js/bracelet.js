@@ -33,7 +33,7 @@ $(document).ready(function(){
 	
 	// pattern creating
 	if (braceletType == 1) {
-		createDiagonalPattern();
+		createDiagonalPattern('#pattern');
 	} else if (braceletType == 2) {
 		createStraightPattern();
 	}
@@ -103,7 +103,7 @@ function createStraightPattern() {
 	}
 }
 
-function createDiagonalPattern() {
+function createDiagonalPattern(patternDivId) {
 	for (var i=0; i<nofrows;i++) {
 		var cl = "odd";
 		var cl_thumb = "";
@@ -125,7 +125,7 @@ function createDiagonalPattern() {
 			}
 		}	
 		
-		$('<div id="row'+i+'" class="'+cl+'" />').appendTo('#pattern');
+		$('<div id="row'+i+'" class="'+cl+'" />').appendTo(patternDivId);
 		$('<div id="column'+i+'" class="column-'+cl+cl_thumb+'" />').appendTo('#pattern-thumb');
 		for(var j=0; j<knotsType[i].length; j++) {
 			$('<span class="str'+knotsColor[i][j]+' knot knot'+knotsType[i][j]+ifwhite[knotsColor[i][j]]+'"></span>').appendTo('#row'+i);

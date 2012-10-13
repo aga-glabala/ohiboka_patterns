@@ -98,9 +98,13 @@
 					<span class="error_box">{% trans 'Rejected' %}</span>
 				{% endif %}{% endif %}{% endif %}
 				<br />
-				<a href='/bracelet/accept/{{bracelet.id}}/0'>{% trans "Hide this, I'll check later" %}</a><br />
-				<a href='/bracelet/accept/{{bracelet.id}}/-1'>{% trans 'Do not accept'%}</a><br />
-				<a href='/bracelet/accept/{{bracelet.id}}/1'>{% trans 'Accept bracelet'%}</a><br />
+				{% if bracelet.public %}
+					<a href='/bracelet/accept/{{bracelet.id}}/0'>{% trans "Hide this, I'll check later" %}</a><br />
+					<a href='/bracelet/accept/{{bracelet.id}}/-1'>{% trans 'Do not accept'%}</a><br />
+					<a href='/bracelet/accept/{{bracelet.id}}/1'>{% trans 'Accept bracelet'%}</a><br />
+				{% else %}
+					{% trans 'Private' %}
+				{% endif %}
 			{% endif %}
 			<hr />
 			{% if user == bracelet.user %}
@@ -119,6 +123,7 @@
 							{% trans 'public' %}
 						{% endif %}
 					</a><br />
+					<i class='icon-edit'>&nbsp;</i>  <a href='/bracelet/edit/{{bracelet.id}}' id='edit-link'>{% trans 'Edit bracelet' %}</a><br />
 					<i class='icon-trash'>&nbsp;</i>  <a href='#' style='color:red;' id='delete-link'>{% trans 'Delete bracelet' %}</a>	<br />	<br />
 					<div class="modal hide" id="delete-confirm">
 					  	<div class="modal-header">

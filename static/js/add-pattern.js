@@ -1,16 +1,21 @@
-var nofrows = 10;
+/*var nofrows = 10;
+var knotsColor = [];
+var ifwhite = [];
+var knotsType = [];
+var nofstr = 0;
+var nofcols = 5;*/
 var nofcols = 5;
-var knotColors = [];
-var if_white = [];
-var knotTypes = [];
-var loaded = false;
-var nofstrings = 0;
-var limit = 30;
 var knottype = 1;
+var loaded = false;
+var limit = 30;
 var clickedColorChooser = undefined;
 var chosedColor = '';
-$(document).ready(function(){	
-	initDesigner();
+$(document).ready(function(){
+	if (bracelet_id != undefined) {
+		createDiagonalPattern();
+	} else {
+		initDesigner();
+	}
 	$('#addbracelet').submit(function() { 
 		return submit();
 	});
@@ -147,6 +152,26 @@ $(document).ready(function(){
 	});
 });
 
+function createDiagonalPattern() {
+	$('#colorsInput').empty();
+	loaded = false;
+	var nofstrTemp = nofstr;
+	nofstr = 0;
+	for(var i=0; i<nofstrTemp; i++) {
+		addInput('colorsInput');
+		$('#color'+i+' option:eq(0)').attr("selected", "selected");
+	}
+	loaded = true;
+	//evaluateColors();
+	$('#colorsInput .color-chooser-button').each(function(i, el) {
+		clickedColorChooser = $(el);
+		setTempColor(stringColors[i]);
+		setColor(stringColors[i]);
+		clickedColorChooser = undefined;
+	});
+	drawPattern();
+}
+
 function generateTemplate() {
 	nofrows = parseInt($('#generate-form-rows').val());
 	nofcols = parseInt($('#generate-form-columns').val());
@@ -174,13 +199,13 @@ function addKnotColumnButton(divColor) {
 }
 
 function removeInput() {
-	if(nofstrings>3) {		
-		for(var i=(nofstrings%2); i<knotTypes.length;i+=2) {
-			knotTypes[i] = knotTypes[i].slice(0, knotTypes[i].length-1);
+	if(nofstr>3) {		
+		for(var i=(nofstr%2); i<knotsType.length;i+=2) {
+			knotsType[i] = knotsType[i].slice(0, knotsType[i].length-1);
 		}
-		element = document.getElementById("color"+(nofstrings-1));
+		element = document.getElementById("color"+(nofstr-1));
 		element.parentNode.removeChild(element);
-		nofstrings--;			
+		nofstr--;			
 		evaluateColors();
 		drawPattern();
 	}
@@ -188,15 +213,15 @@ function removeInput() {
 
 function addRow() {
 	if(nofrows<95) {
-		knotTypes[nofrows] = [];
-		var num = parseInt(nofstrings/2);
-		if(nofstrings%2==0 && knotTypes[nofrows-1].length==num) {
+		knotsType[nofrows] = [];
+		var num = parseInt(nofstr/2);
+		if(nofstr%2==0 && knotsType[nofrows-1].length==num) {
 			num--;
 		}
 		
 		var kt = knottype;
 		if(kt == 5) {
-			kt = knotTypes[nofrows-1][0];
+			kt = knotsType[nofrows-1][0];
 			if(kt==3) {
 				kt=4;
 			} else {
@@ -205,7 +230,7 @@ function addRow() {
 		}
 		
 		for(var i=0; i<num; i++) {
-			knotTypes[nofrows][i]=kt;
+			knotsType[nofrows][i]=kt;
 		}
 		nofrows++;
 		evaluateColors();
@@ -215,7 +240,7 @@ function addRow() {
 
 function removeRow() {
 	if(nofrows>3) {
-		knotTypes.slice(0, nofrows-1);
+		knotsType.slice(0, nofrows-1);
 		nofrows--;
 		evaluateColors();
 		drawPattern();
@@ -223,19 +248,19 @@ function removeRow() {
 }
 
 function addInput(divColor){
-	if (nofstrings == limit)  {
-		alert("You have reached the limit of adding " + nofstrings + " inputs");
+	if (nofstr == limit)  {
+		alert("You have reached the limit of adding " + nofstr + " inputs");
 	} else {
-		var el = $("<a class='btn color-chooser-button' id='color"+nofstrings+"' name='color"+nofstrings +"' href='#color-chooser'>"); 
+		var el = $("<a class='btn color-chooser-button' id='color"+nofstr+"' name='color"+nofstr +"' href='#color-chooser'>"); 
 		el.click(function(e) {
 			e.preventDefault();
 			clickedColorChooser = $(this);
 			$('#color-chooser').modal();
 		});
 		$("#"+divColor).append(el);
-		$('#color'+nofstrings+' option:eq(0)').attr("selected", "selected");
-		//setColor(nofstrings);
-		nofstrings++;
+		$('#color'+nofstr+' option:eq(0)').attr("selected", "selected");
+		//setColor(nofstr);
+		nofstr++;
 		clickedColorChooser = el;
 		setTempColor('#ffffff');
 		setColor('#ffffff');
@@ -244,12 +269,12 @@ function addInput(divColor){
 }
 
 function addKnotColumn() {
-	for(var i=(nofstrings%2); i<nofrows; i+=2) {
+	for(var i=(nofstr%2); i<nofrows; i+=2) {
 		var kt = knottype;
 		if(kt == 5) {
-			kt = knotTypes[i][knotTypes[i].length-1];
+			kt = knotsType[i][knotsType[i].length-1];
 		}
-		knotTypes[i][knotTypes[i].length]=kt;
+		knotsType[i][knotsType[i].length]=kt;
 	}
 	evaluateColors();
 	drawPattern();
@@ -268,9 +293,9 @@ function setTempColor(color) {
 	styleSheet.crossInsertRule = styleSheet.insertRule ? styleSheet.insertRule : styleSheet.addRule;
 	styleSheet.crossInsertRule('.str'+i+' {background-color: '+x+'}', crossrule.length);
 	if((parseInt(x.slice(1,3), 16) + parseInt(x.slice(3,5), 16) + parseInt(x.slice(5,7), 16)) / 3.0<128) {
-		if_white[i]= '-white';
+		ifwhite[i]= '-white';
 	} else {
-		if_white[i]= '';
+		ifwhite[i]= '';
 	}
 	if(loaded) {
 		drawPattern();
@@ -284,47 +309,47 @@ function setColor() {
 }
 
 function evaluateColors() {
-	knotColors[0] = [];
-	for(var i=0; i<nofstrings;i++) {
-		knotColors[0][i] = i;
+	knotsColor[0] = [];
+	for(var i=0; i<nofstr;i++) {
+		knotsColor[0][i] = i;
 	}
 	for(var i=1; i<nofrows+1;i++) {
-		knotColors[i] = [];
+		knotsColor[i] = [];
 		var even = 0;
 		var evenstr_evenrow = 0;
 		if(i%2==0) {
 			even = 1;
-			knotColors[i][0] = knotColors[i-1][0];
-			if(nofstrings%2==0) {
+			knotsColor[i][0] = knotsColor[i-1][0];
+			if(nofstr%2==0) {
 				evenstr_evenrow = 1;
 			}
 		}
-		for(var j=0; j<parseInt(nofstrings/2)-evenstr_evenrow; j++){
-			if(knotTypes[i-1][j]<3) {
-				knotColors[i][2*j+even] = knotColors[i-1][2*j+1+even];
-				if(2*j+1+even<nofstrings) {
-					knotColors[i][2*j+1+even] = knotColors[i-1][2*j+even];
+		for(var j=0; j<parseInt(nofstr/2)-evenstr_evenrow; j++){
+			if(knotsType[i-1][j]<3) {
+				knotsColor[i][2*j+even] = knotsColor[i-1][2*j+1+even];
+				if(2*j+1+even<nofstr) {
+					knotsColor[i][2*j+1+even] = knotsColor[i-1][2*j+even];
 				}
 			} else {
-				knotColors[i][2*j+even] = knotColors[i-1][2*j+even];
-				if(2*j+1+even<nofstrings) {
-					knotColors[i][2*j+1+even] = knotColors[i-1][2*j+1+even];
+				knotsColor[i][2*j+even] = knotsColor[i-1][2*j+even];
+				if(2*j+1+even<nofstr) {
+					knotsColor[i][2*j+1+even] = knotsColor[i-1][2*j+1+even];
 				}
 			}
 		}
-		if(even && nofstrings%2==0) {
-			knotColors[i][nofstrings-1] = knotColors[i-1][nofstrings-1];
-		} else if(nofstrings%2==1 && !even){
-			knotColors[i][nofstrings-1] = knotColors[i-1][nofstrings-1];
+		if(even && nofstr%2==0) {
+			knotsColor[i][nofstr-1] = knotsColor[i-1][nofstr-1];
+		} else if(nofstr%2==1 && !even){
+			knotsColor[i][nofstr-1] = knotsColor[i-1][nofstr-1];
 		}
 	}
 }
 
 function initDesigner() {
-	knotColors = [];
-	if_white = [];
-	knotTypes = [];
-	nofstrings = 0;
+	knotsColor = [];
+	ifwhite = [];
+	knotsType = [];
+	nofstr = 0;
 	$('#pattern-canvas').empty();
 	$('#pattern-thumb').empty();
 	$('#pattern-designer').empty();
@@ -336,9 +361,9 @@ function initDesigner() {
 	}
 	var kt = knottype;
 	for(var i=0; i<nofrows;i++) {
-		knotTypes[i] = [];
-		if(knottype==5 && knotTypes[i-1]!=undefined) {
-			kt=knotTypes[i-1][0];
+		knotsType[i] = [];
+		if(knottype==5 && knotsType[i-1]!=undefined) {
+			kt=knotsType[i-1][0];
 			if(kt==3) {
 				kt=4;
 			} else {
@@ -347,11 +372,11 @@ function initDesigner() {
 		} else if(knottype==5 && i==0) {
 			kt=3;
 		}
-		for(var j=0; j<parseInt(nofstrings/2)-i%2; j++){
-			knotTypes[i][j] = kt;
+		for(var j=0; j<parseInt(nofstr/2)-i%2; j++){
+			knotsType[i][j] = kt;
 		}
-		if(nofstrings%2==1 && i%2==1) {
-			knotTypes[i][knotTypes[i].length] = kt;
+		if(nofstr%2==1 && i%2==1) {
+			knotsType[i][knotsType[i].length] = kt;
 		}
 	}
 	loaded = true;
@@ -376,40 +401,40 @@ function drawPattern() {
 		if(i%2==0) {
 			cl = "even";
 			var directions = [0,1];
-			if(nofstrings%2==1) {
+			if(nofstr%2==1) {
 				cl_thumb = " column-margin";
 			}
-		} else if(nofstrings%2==0) {
+		} else if(nofstr%2==0) {
 			cl_thumb = " column-margin";
 		}
 		
 		$('<div id="row-strings'+i+'" />').appendTo('#pattern-canvas');
-		for(var j=0; j<knotColors[i].length/2;j++) {
-			$('<span class="str'+knotColors[i][2*j]+' string'+directions[0]+'"></span>').appendTo('#row-strings'+i);
-			if(knotColors[i][2*j+1] != undefined) {
-				$('<span class="str'+knotColors[i][2*j+1]+' string'+directions[1]+'"></span>').appendTo('#row-strings'+i);
+		for(var j=0; j<knotsColor[i].length/2;j++) {
+			$('<span class="str'+knotsColor[i][2*j]+' string'+directions[0]+'"></span>').appendTo('#row-strings'+i);
+			if(knotsColor[i][2*j+1] != undefined) {
+				$('<span class="str'+knotsColor[i][2*j+1]+' string'+directions[1]+'"></span>').appendTo('#row-strings'+i);
 			}
 		}
 		
 		$('<div id="row'+i+'" class="'+cl+'" />').appendTo('#pattern-designer');
 		$('<div id="column'+i+'" class="column-'+cl+cl_thumb+'" />').appendTo('#pattern-thumb');
 		var minus = 0;
-		if(nofstrings%2==0 && (i)%2==1) {
+		if(nofstr%2==0 && (i)%2==1) {
 			minus=1; //if number of strings is even and row is odd draw one knot less
 		}
-		for(var j=0; j<parseInt(knotColors[i].length/2)-minus; j++) {
+		for(var j=0; j<parseInt(knotsColor[i].length/2)-minus; j++) {
 			var move = 0;
-			if(knotTypes[i][j]%2==0) {
+			if(knotsType[i][j]%2==0) {
 				move = 1;
 			}
-			$('<span class="str'+knotColors[i][2*j+i%2+move]+' knot knot'+knotTypes[i][j]+if_white[knotColors[i][2*j+i%2+move]]+'" onclick="changeType(this, '+i+','+j+')"></span>').appendTo('#row'+i);
+			$('<span class="str'+knotsColor[i][2*j+i%2+move]+' knot knot'+knotsType[i][j]+ifwhite[knotsColor[i][2*j+i%2+move]]+'" onclick="changeType(this, '+i+','+j+')"></span>').appendTo('#row'+i);
 		}
-		for(var j=parseInt(knotColors[i].length/2)-minus-1; j>=0; j--) {
+		for(var j=parseInt(knotsColor[i].length/2)-minus-1; j>=0; j--) {
 			var move = 0;
-			if(knotTypes[i][j]%2==0) {
+			if(knotsType[i][j]%2==0) {
 				move = 1;
 			}
-			$('<span class="str'+knotColors[i][2*j+i%2+move]+' knot-thumb"></span>').appendTo('#column'+i);
+			$('<span class="str'+knotsColor[i][2*j+i%2+move]+' knot-thumb"></span>').appendTo('#column'+i);
 		}
 	}
 	var i = nofrows;
@@ -418,24 +443,24 @@ function drawPattern() {
 		var directions = [0,1];
 	}
 	$('<div id="row-strings'+i+'" />').appendTo('#pattern-canvas');
-	for(var j=0; j<knotColors[i].length/2;j++) {
-		$('<span class="str'+knotColors[i][2*j]+' string'+directions[0]+'"></span>').appendTo('#row-strings'+i);
-		if(knotColors[i][2*j+1] != undefined) {
-			$('<span class="str'+knotColors[i][2*j+1]+' string'+directions[1]+'"></span>').appendTo('#row-strings'+i);
+	for(var j=0; j<knotsColor[i].length/2;j++) {
+		$('<span class="str'+knotsColor[i][2*j]+' string'+directions[0]+'"></span>').appendTo('#row-strings'+i);
+		if(knotsColor[i][2*j+1] != undefined) {
+			$('<span class="str'+knotsColor[i][2*j+1]+' string'+directions[1]+'"></span>').appendTo('#row-strings'+i);
 		}
 	}
 	$('#row'+(row)+' > span:nth-child('+(col+1)+')').addClass('current');
 }
 
 function changeType(obj, i, j, newType) {
-	var prevType = knotTypes[i][j];
+	var prevType = knotsType[i][j];
 	$(obj).removeClass('knot'+prevType);
 	
 	if (newType == undefined) {
 		newType = prevType%4+1;
 	}
-	knotTypes[i][j]=newType;
-	$(obj).addClass('knot'+knotTypes[i][j]);
+	knotsType[i][j]=newType;
+	$(obj).addClass('knot'+knotsType[i][j]);
 
 	$('.current').removeClass('current');
 	$('#row'+i+' > span:nth-child('+(j+1)+')').addClass('current');

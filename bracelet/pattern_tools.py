@@ -28,6 +28,12 @@ class BraceletPattern(object):
 		for i in range(len(self.strings)):
 			style += ".str" + str(i) + " {background-color:" + str(self.strings[i].color) + ";}"
 		return style
+	
+	def get_colors(self):
+		colors = []
+		for i in range(len(self.strings)):
+			colors.append(str(self.strings[i].color))
+		return colors
 
 	def get_ifwhite(self):
 		ifwhite = []
@@ -37,7 +43,7 @@ class BraceletPattern(object):
 		return ifwhite
 
 	def generate_pattern(self):
-		if self.bracelet.type == 1:
+		if int(self.bracelet.type) == 1:
 			self.nofrows = 2 * len(self.knots) / (len(self.strings) - 1)
 			if(len(self.knots) - self.nofrows * (len(self.strings) / 2.0) > 0):
 				self.nofrows += 1
@@ -77,7 +83,7 @@ class BraceletPattern(object):
 			for j in range(noc):
 				colors.append(self.get_knot_color(self.strings_order[self.nofrows - 1], self.knots_types[self.nofrows - 1], j, (self.nofrows - 1) % 2))
 			self.knots_colors.append(colors)
-		elif self.bracelet.type == 2:
+		elif int(self.bracelet.type) == 2:
 			self.nofrows = (len(self.knots)+1) / (len(self.strings)-1)
 			nofcols = len(self.strings)-1
 			for i in range(self.nofrows):

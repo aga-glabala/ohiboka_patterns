@@ -9,7 +9,7 @@ import datetime
 from bracelet.pattern_tools import BraceletPattern
 from common.bracelet_tools import get_colors
 from bracelet.forms import UploadFileForm
-from bracelet.helper import handle_uploaded_file, scale
+from bracelet.helper import handle_uploaded_file, scale, delete_image_file
 from django.utils.translation import ugettext as _
 from django.utils.translation import gettext
 import gettext as gt
@@ -23,8 +23,18 @@ from django.core.mail import EmailMessage
 
 
 def add(request, context_ = {}):
-	context = {'colors': get_colors(),
+	context = {
+			'stringColors': [],
+			'colors': get_colors(),
 			'categories': BraceletCategory.objects.all(),
+			'bracelet': None,
+			'nofrows': 10,
+			'nofstr': 5,
+			'braceletType': 1,
+			'knotsType': [],
+			'knotsColor': [],
+			'strings': [],
+			'ifwhite': []
 			}
 	context.update(context_)
 	context.update(get_context(request))
@@ -85,38 +95,50 @@ def addpattern(request):
 	for c in colors_tmp:
 		colors.append((int('0x' + c[1:], 16)))
 	knots = request.POST['pattern'].split()
-	url = unicodedata.normalize('NFKD', request.POST['name'].lower().replace(' ', '_')).encode('ascii', 'ignore')
-
-	brs = Bracelet.objects.filter(url__contains = url)
-	if brs:
-		url += '-' + str(len(brs))
 
 	if request.POST['public'] == '1':
 		public = True
 	else:
 		public = False
-	b = Bracelet(user = request.user, date = datetime.datetime.today(), url = url, public = public, name = request.POST['name'], accepted = False, difficulty = request.POST['difficulty'], category = BraceletCategory.objects.filter(name = request.POST['category'])[0], rate = 0)
-
+	if request.POST['bracelet_id']:
+		b = Bracelet.objects.filter(id = request.POST['bracelet_id'])[0]
+		b.public = public
+		b.difficulty = request.POST['difficulty'] 
+		b.category = BraceletCategory.objects.filter(name = request.POST['category'])[0]
+		b.accepted = 0
+	else:
+		url = unicodedata.normalize('NFKD', request.POST['name'].lower().replace(' ', '_')).encode('ascii', 'ignore')
+		brs = Bracelet.objects.filter(url__contains = url)
+		if brs:
+			url += '-' + str(len(brs)) 
+		b = Bracelet(user = request.user, date = datetime.datetime.today(), url = url, public = public, name = request.POST['name'], accepted = False, difficulty = request.POST['difficulty'], category = BraceletCategory.objects.filter(name = request.POST['category'])[0], rate = 0, type = request.POST['type'])
 	b.save()
 	index = 0
+	BraceletString.objects.filter(bracelet = b).delete()
 	for color in colors:
 		bs = BraceletString(index = index, color = BraceletColor.objects.filter(hexcolor = color)[0], bracelet = b)
 		index += 1
 		bs.save()
+	BraceletKnot.objects.filter(bracelet = b).delete()
 	for i in range(len(knots)):
 		bk = BraceletKnot(bracelet = b, knottype = BraceletKnotType.objects.filter(id = knots[i])[0], index = i)
 		bk.save()
 
 	photo_name = str(int(time.time() * 1000)) + "-" + str(b.id) + '.png'
-	bp = BraceletPattern(b.id)
+	bp = BraceletPattern(b)
 	bp.generate_pattern()
 	bp.generate_photo(settings.MEDIA_ROOT + 'images/' + photo_name)
 	scale(photo_name, settings.MEDIA_ROOT + 'images/', settings.MEDIA_ROOT + 'bracelet_thumbs/')
-	photo = Photo(user = request.user, name = photo_name, accepted = True, bracelet = b)
-	photo.save()
-
-	b.photo_id = photo.id
-	b.save()
+	if b.photo_id:
+		photo = Photo.objects.filter(id = b.photo_id)[0]
+		delete_image_file(photo.name)
+		photo.name = photo_name
+		photo.save()
+	else:
+		photo = Photo(user = request.user, name = photo_name, accepted = True, bracelet = b)
+		photo.save()
+		b.photo_id = photo.id
+		b.save()
 	return bracelet(request, b.url, {'ok_message':_('Bracelet was successfully saved.')})
 
 def photos(request, bracelet_id):
@@ -167,6 +189,32 @@ def rate(request, bracelet_id, bracelet_rate):
 			return HttpResponse(_("Pattern do not exist"))
 	return HttpResponse(_("You need to be logged in to rate patterns"))
 
+
+@login_required
+def edit_bracelet(request, bracelet_id, context = {}):
+	try:
+		bracelet = Bracelet.objects.get(id = bracelet_id)
+	except ObjectDoesNotExist:
+		return index(request, {'error_message':_('There is no bracelet with this id.')})
+	bp = BraceletPattern(bracelet)
+	bp.generate_pattern()
+	context.update(get_context(request))
+	context.update({'bracelet': bracelet,
+			'stringColors':bp.get_colors(),
+			'braceletType':bp.bracelet.type,
+			'nofstr':bp.get_n_of_strings(),
+			'knotsType':bp.get_knots_types(),
+			'knotsColor':bp.get_knots_colors(),
+			'strings':bp.get_strings(),
+			'nofrows':bp.nofrows,
+			'ifwhite':bp.get_ifwhite(),
+			'nofphotos': len(Photo.objects.filter(bracelet = bracelet, accepted = True)),
+			'request': request,
+			'colors': get_colors(),
+			'categories': BraceletCategory.objects.all(),
+	})
+	#wtf? context.update(context_)
+	return render_to_response('bracelet/add.html', context, RequestContext(request))
 
 @login_required
 def delete_bracelet(request, bracelet_id):
@@ -258,6 +306,7 @@ def delete_photo(request, photo_id):
 	if photo.user != request.user:
 		return userprofile(request, error_message = _("You are not owner of this photo."))
 	photo.delete()
+	delete_image_file(photo.name)
 	return userprofile(request, ok_message = _("Photo deleted successfully."))
 
 @login_required
