@@ -10,9 +10,9 @@ import datetime
 class Command(NoArgsCommand):
 	def handle_noargs(self, **options):
 		nowe_bracelety = Bracelet.objects.filter(accepted = 0)
-		subject = 'Your bracelet was accepted | Twoja bransoletka została zaakceptowana'
-		msg_content = u'Cześć (witam samą siebie - 4ever alone)!'+\
-			u'\r\nW ciągu ostatniego tygodnia pojawiło się '+str(len(nowe_bracelety))+u' nowych wzorów.'+\
+		subject = '[Ohiboka Patterns] Raport z ' + str(datetime.date.today())
+		msg_content = u'Raport z '+str(datetime.date.today())+\
+			u'\r\n\r\nW ciągu ostatniego tygodnia pojawiło się '+str(len(nowe_bracelety))+u' nowych wzorów.'+\
 			u'Przejrzyj je tutaj: http://patterns.ohiboka.com/admin/manage_bracelets .'
 		for b in nowe_bracelety:
 			msg_content += u'\r\n- '+b.name+ u', dodany '+str(b.date)+ u': http://patterns.ohiboka.com/bracelet/'+b.url
