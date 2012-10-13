@@ -110,6 +110,7 @@
 	position:relative;
 	z-index:3;
 	padding-top: 14px;
+	display:inline-block;
 }
 #pattern-canvas, #step-pattern-canvas {
 	position: absolute;
@@ -117,7 +118,7 @@
 	top: 5px;
 	left:0;
 }
-.pattern-type2 #pattern {
+.pattern-type2 #pattern, .pattern-type2 #step-pattern {
 	padding: 2px 8px 0;
 }
 
@@ -138,6 +139,9 @@
 .pattern-type2 .knot {
 	margin: 8px 5px 0;
 }
+.pattern-type2 #step-pattern .new {
+	margin: 8px 4px 0;
+}
 
 .odd {
 	margin-left: 17px;
@@ -145,6 +149,10 @@
 
 .even {
 	
+}
+
+.pattern-type2 .row-odd {
+	text-align: right;
 }
 
 .oddstring {
