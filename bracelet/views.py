@@ -6,12 +6,13 @@ from django.template.context import RequestContext
 from bracelet.models import BraceletColor, Bracelet, BraceletCategory, \
 	BraceletString, BraceletKnot, BraceletKnotType, Photo, Rate
 import datetime
-from bracelet.pattern_tools import BraceletPattern
+from bracelet.pattern_tools import BraceletPattern, get_custom_characters
 from common.bracelet_tools import get_colors
 from bracelet.forms import UploadFileForm
 from bracelet.helper import handle_uploaded_file, scale, delete_image_file
 from django.utils.translation import ugettext as _
 from django.utils.translation import gettext
+from django.utils import simplejson
 import gettext as gt
 from django.conf import settings
 import time
@@ -22,14 +23,15 @@ from django.contrib.auth.decorators import login_required
 from django.core.mail import EmailMessage
 
 
-def add(request, context_ = {}):
+def add(request, bracelet_type, context_ = {}):
 	context = {
 			'colors': get_colors(),
+			'characters': get_custom_characters(),
 			'categories': BraceletCategory.objects.all(),
 			'bracelet': None,
 			'nofrows': 10,
 			'nofstr': 5,
-			'braceletType': 1,
+			'braceletType': 2 if bracelet_type == 'straight'  else 1,
 			'knotsType': [],
 			'stringColors': [],
 			'ifwhite': []
@@ -322,6 +324,20 @@ def delete_rate(request, rate_id):
 	bracelet.save()
 
 	return userprofile(request, ok_message = _("Rate deleted successfully."))
+
+def generate_text_pattern(request, pattern_text, text_height):
+	if text_height != "7" and text_height != "10":
+		return HttpResponse("Bad text_height parameter value (7 or 10 allowed)", status = 400, mimetype='application/json')
+	empty = [[5,5,5,5,5,5,5]] if text_height == "7" else [[5,5,5,5,5,5,5,5,5,5]]
+	to_json = []
+	to_json += empty
+	characters = simplejson.load(open(settings.PROJECT_ROOT+"/bracelet/"+text_height+".json"))
+	for char in pattern_text:
+		if char not in characters:
+			return HttpResponse("Unknown character '"+char+"' in given text", status = 400, mimetype='application/json')
+		to_json += characters[char]
+		to_json += empty
+	return HttpResponse(simplejson.dumps(to_json), mimetype='application/json')
 
 def _fake_for_translate():
 	_("Make one knot {0} in forward on {1}")

@@ -8,7 +8,7 @@ var chosedColor = '';
 $(document).ready(function(){
 	knottype = braceletType == 1 ? 1 : 5;
 	if (bracelet_id != undefined) {
-		createDiagonalPattern();
+		createPattern();
 	} else {
 		initDesigner();
 	}
@@ -38,22 +38,47 @@ $(document).ready(function(){
 	});
 	
 	$('#generate-template-button').click(generateTemplate);	
-	$('.modal-body a').click(function(e) {
-		e.preventDefault()
+	$('#color-chooser .modal-body a').click(function(e) {
+		e.preventDefault();
 		setTempColor($(this).data('color'));
 	});
-	
 	$('#color-chooser-ok').click(function(e) {
 		e.preventDefault();
 		setColor();
 		$('#color-chooser').modal('hide');
 	});
-	
 	$('#color-chooser').on('hidden', function () {
 	  	//e.preventDefault()
 		setTempColor(clickedColorChooser.data('color'));
 		$('#color-chooser').modal('hide');
 	});
+	
+	$('#generate-form-insert-char').click(function(e) {
+		e.preventDefault();
+		clickedColorChooser = $(this);
+		$('#character-chooser').modal();
+	});
+	$('#character-chooser .modal-body a').click(function(e) {
+		e.preventDefault();
+		$('#generate-form-text').val($('#generate-form-text').val()+$(e.target).data('character'));
+		$('#character-chooser').modal('hide');
+	});
+	$('#character-chooser').on('hidden', function () {
+		$('#character-chooser').modal('hide');
+	});
+	
+	if (braceletType == 2) {
+	$('input[name=generate-form-kind]').change(function() {
+		var checked = $('input[name=generate-form-kind]:checked').val();
+		if (checked == 'text') {
+			$('.kind-empty').hide();
+			$('.kind-text').show();
+		} else {
+			$('.kind-empty').show();
+			$('.kind-text').hide();
+		}
+	}).change();
+	}
 
 	Mousetrap.bind('left', function(e) {
 		var sel = $('.current').prev();
@@ -148,7 +173,7 @@ $(document).ready(function(){
 	});
 });
 
-function createDiagonalPattern() {
+function createPattern() {
 	$('#colorsInput').empty();
 	loaded = false;
 	var nofstrTemp = nofstr;
@@ -169,16 +194,33 @@ function createDiagonalPattern() {
 }
 
 function generateTemplate() {
-	nofrows = parseInt($('#generate-form-rows').val());
-	nofcols = parseInt($('#generate-form-columns').val());
-	if(parseInt(nofcols) > 2 && parseInt(nofcols)<30 && parseInt(nofrows) > 2 && parseInt(nofrows)<95) {
-		knottype = $('#generate-form-knots').val();
-		var els = $('span[class*="icon-knot"]');
-		els.removeClass();
-		els.addClass('icon-knot'+knottype);
-		initDesigner();
-	} else {
-		alert(patternGeneratorError);
+	if (braceletType == 1) {
+		nofrows = parseInt($('#generate-form-rows').val());
+		nofcols = parseInt($('#generate-form-columns').val());
+		if(parseInt(nofcols) > 2 && parseInt(nofcols)<30 && parseInt(nofrows) > 2 && parseInt(nofrows)<95) {
+			knottype = $('#generate-form-knots').val();
+			var els = $('span[class*="icon-knot"]');
+			els.removeClass();
+			els.addClass('icon-knot'+knottype);
+			initDesigner();
+		} else {
+			alert(patternGeneratorError);
+		}
+	} else if (braceletType == 2) {
+		nofcols = parseInt($('input[name=generate-form-letter-height]:checked').val());
+		$.getJSON("/bracelet/generate/"+escape($('#generate-form-text').val())+"/"+nofcols, function(data) {
+			if (data == undefined || data.length == 0 || data[0].length == 0) {
+				alert(patternTextGeneratorError);
+			}
+			knotsType = data;
+			nofrows = knotsType.length;
+			nofstr = knotsType[0].length+1;
+			stringColors = ['#000000'];
+			for (var i=0; i<nofcols; i++) {
+				stringColors[stringColors.length] = '#ffffff';
+			}
+			createPattern();
+		}).error(function(jqXHR, textStatus, errorThrown) { alert(jqXHR.responseText); });
 	}
 }
 
@@ -389,6 +431,10 @@ function initDesigner() {
 			if(nofstr%2==1 && i%2==1) {
 				knotsType[i][knotsType[i].length] = kt;
 			}
+		} else if (braceletType == 2) {
+			for(var j=0; j<nofstr; j++){
+				knotsType[i][j] = kt;
+			}
 		}
 	}
 	loaded = true;
@@ -505,6 +551,26 @@ function changeType(obj, i, j, newType) {
 	
 	evaluateColors();
 	drawPattern();
+}
+
+function getCode() {
+	var rows = $('#pattern-designer').children();
+	var str = '[';
+	for(var i=0; i<rows.length; i++) {
+		var knots = $(rows[i]).children();
+		if (i>0)
+			str += ",";
+		str += '[';
+		for(var j=0; j<knots.length; j++) {
+			var cls = $(knots[j]).attr('class').split(/\s+/)[2].slice(4,5);
+			if (j>0)
+				str += ",";
+			str += cls;
+		}
+		str += ']';
+	}
+	str += ']';
+	window.alert(str);
 }
 
 function submit() {

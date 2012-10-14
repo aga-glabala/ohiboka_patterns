@@ -168,3 +168,7 @@ class BraceletPattern(object):
 					draw.ellipse((x - 4, y - 4, x + 104, y + 104), fill = color)
 			im = im.resize((self.nofrows * 10 + 1, len(self.strings) * 10 + 1), Image.ANTIALIAS)
 		im.save(path)
+
+def get_custom_characters():
+	characters = ['#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#']
+	return characters

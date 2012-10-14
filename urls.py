@@ -30,11 +30,12 @@ urlpatterns = patterns('',
     url(r'^bracelet/rate/(?P<bracelet_id>\d+)/(?P<bracelet_rate>\d+)/?$', 'bracelet.views.rate'),
     url(r'^bracelet/rate/remove/(?P<rate_id>\d+)', 'bracelet.views.delete_rate'),
     url(r'^bracelet/change_status/(?P<bracelet_id>\d+)$', 'bracelet.views.change_status'),
+    url(r'^bracelet/generate/(?P<pattern_text>.+)/(?P<text_height>.+)/?$', 'bracelet.views.generate_text_pattern'),
     url(r'^bracelet/delete/(?P<bracelet_id>\d+)/?$', 'bracelet.views.delete_bracelet'),
     url(r'^bracelet/edit/(?P<bracelet_id>\d+)/?$', 'bracelet.views.edit_bracelet'),
     # TODO minus przy statusie!
     url(r'^bracelet/accept/(?P<bracelet_id>\d+)/(?P<bracelet_status>\-?\d?)/?$', 'bracelet.views.accept'),
-    url(r'^add/?$', 'bracelet.views.add'),
+    url(r'^add/(?P<bracelet_type>.*)/?$', 'bracelet.views.add'),
     url(r'^addpattern/?$', 'bracelet.views.addpattern'),
     url(r'^bracelet/(?P<bracelet_url>.+)/?$', 'bracelet.views.bracelet'),
 
