@@ -17,91 +17,6 @@
 .modal {
 	width: 600px;
 }
-.string0 {
-	background: url('/static/gfx/pattern-strings-0.png');	
-	width: 15px;
-	height: 25px;
-	display: inline-block;
-	margin: -5px 1px 0 1px;
-}
-.string1 {
-	background: url('/static/gfx/pattern-strings-1.png');	
-	width: 15px;
-	height: 25px;
-	display: inline-block;
-	margin: -5px 1px 0 1px;
-}
-.knot1 {
-	background: url('/static/gfx/knot1.png');
-}
-.knot1-white {
-	background: url('/static/gfx/knot1-w.png');
-}
-
-.knot2 {
-	background: url('/static/gfx/knot2.png');
-}
-.knot2-white {
-	background: url('/static/gfx/knot2-w.png');
-}
-
-.knot3 {
-	background: url('/static/gfx/knot3.png');
-}
-.knot3-white {
-	background: url('/static/gfx/knot3-w.png');
-}
-
-.knot4 {
-	background: url('/static/gfx/knot4.png');
-}
-.knot4-white {
-	background: url('/static/gfx/knot4-w.png');
-}
-
-.knot-thumb {
-	-webkit-border-radius: 10px;
-	-moz-border-radius: 10px;
-	border-radius: 10px;
-	-moz-background-clip: padding;
-	-webkit-background-clip: padding-box;
-	background-clip: padding-box;
-	-webkit-box-shadow: 0px 0px 6px 0px #000; /* Saf3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
-    box-shadow: 0px 0px 6px 0px #000;
-	width: 12px;
-	height: 10px;
-	display: inline-block;
-}
-.knot {
-	-webkit-border-radius: 10px;
-	-moz-border-radius: 10px;
-	border-radius: 10px;
-	-moz-background-clip: padding;
-	-webkit-background-clip: padding-box;
-	background-clip: padding-box;
-	-webkit-box-shadow: 0px 0px 6px 0px #000; /* Saf3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
-    box-shadow: 0px 0px 6px 0px #000;
-	width: 20px;
-	height: 20px;
-	display: inline-block;
-	margin: 0 7px;
-}
-.odd {
-	margin-left:17px;
-}
-.column-margin {
-	margin-top:8px;
-}
-.column-odd {
-	width:10px;
-	vertical-align: top;
-	display:inline-block;
-}
-.column-even {
-	width:10px;
-	vertical-align: top;
-	display:inline-block;
-}
 #pattern-string, #pattern-colors {
 	display: none;
 }
@@ -130,20 +45,9 @@
 #floating-top div#pattern-thumb {
 	display: block;
 }
-#pattern-container {
+#pattern-designer-container {
 	position: relative;
 	margin:30px 0;
-}
-#pattern-designer {
-	z-index:3;
-	position: relative;
-	margin-top:15px;
-}
-#pattern-canvas {
-	position: absolute;
-	z-index:2;
-	top: -10px;
-	left: 0px;
 }
 .btn-group {
 	display: inline-block;

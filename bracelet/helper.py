@@ -5,6 +5,7 @@ Created on Mar 20, 2012
 '''
 import Image as pil
 import time
+import os
 from bracelet.models import Bracelet, Photo
 from django.conf import settings
 
@@ -37,3 +38,9 @@ def handle_uploaded_file(f, bracelet_id, user):
 		destination.write(chunk)
 	destination.close()
 	scale(name, settings.MEDIA_ROOT + 'images/', settings.MEDIA_ROOT + 'bracelet_thumbs/')
+
+def delete_image_file(photo_name):
+	if os.access(settings.MEDIA_ROOT + 'images/' + photo_name, os.F_OK):
+		os.remove(settings.MEDIA_ROOT + 'images/' + photo_name)
+	if os.access(settings.MEDIA_ROOT + 'bracelet_thumbs/' + photo_name, os.F_OK):
+		os.remove(settings.MEDIA_ROOT + 'bracelet_thumbs/' + photo_name)

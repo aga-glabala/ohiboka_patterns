@@ -4,14 +4,28 @@
 {% block title %} - Add new pattern{% endblock %}
 
 {% block css %} 
+<link rel="stylesheet" href="{{ STATIC_URL }}css/bracelet.css" type="text/css">
 <link rel="stylesheet" href="{{ STATIC_URL }}css/add.css" type="text/css">
 <style type="text/css">
 </style>
+<script>
+	//var knotsColor = {{ strings }};
+	var knotsType = {{ knotsType }};
+	var braceletType = {{ braceletType }};
+	var nofrows = {{nofrows}};
+	var nofstr = {{nofstr}};
+	var bracelet_id = {% if bracelet %}{{ bracelet.id }}{% else %}undefined{% endif %};
+	//var strings = {{ strings }};
+	var stringColors = {{ stringColors|safe }};
+	var ifwhite = {{ ifwhite|safe }};
+	var STATIC_URL = {{ STATIC_URL }};
+</script>
 <script src="{{ STATIC_URL }}js/add-pattern.js" type="text/javascript" ></script>
 <script src="{{ STATIC_URL }}js/bootstrap-dropdown.js" type="text/javascript" ></script>
 <script type="text/javascript" >
 	var noNameError = "{% trans 'You need to set name to bracelet before saving' %}";
 	var patternGeneratorError = "{% trans 'Bracelet can have from 3 to 30 strings and from 3 to 95 rows' %}";
+	var patternTextGeneratorError = "{% trans 'There are not allowed characters in your text' %}";
 </script>
 {% endblock %}
 
@@ -42,21 +56,21 @@
 	<div class='box'>
 	
 	{% if user.is_authenticated %}
-		<form action="addpattern" method="post" id="addbracelet">
+		<form action="/addpattern" method="post" id="addbracelet">
 		{% csrf_token %}
 		<div class="form-horizontal div-form">
 			<fieldset>
 				<legend>{% trans "Fill basic pattern information" %}</legend>
 				<div class='control-group'>
 					<label for="generate-form-name" class="control-label">{% trans "Name" %}: </label>
-					<div class="controls"><input type="text" name="name" id='generate-form-name'></div>
+					<div class="controls"><input type="text" name="name" id='generate-form-name'  {% if bracelet %}readonly="readonly"{% endif %} value="{% if bracelet %}{{ bracelet.name }}{% endif %}" /></div>
 				</div>
 				<div class='control-group'>
 					<label for="generate-form-difficulty" class="control-label">{% trans "Difficulty" %}:</label>
 					<div class="controls"><select class='btn' name="difficulty" id='generate-form-difficulty'>
-						<option value="1" {% if difficulty == "1" %}selected="selected" {% endif %}>{% trans "Easy" %}</option>
-						<option value="2" {% if difficulty == "2" %}selected="selected" {% endif %}>{% trans "Medium" %}</option>
-						<option value="3" {% if difficulty == "3" %}selected="selected" {% endif %}>{% trans "Hard" %}</option>
+						<option value="1" {% if bracelet and bracelet.difficulty == 1 %}selected="selected" {% endif %}>{% trans "Easy" %}</option>
+						<option value="2" {% if bracelet and bracelet.difficulty == 2 %}selected="selected" {% endif %}>{% trans "Medium" %}</option>
+						<option value="3" {% if bracelet and bracelet.difficulty == 3 %}selected="selected" {% endif %}>{% trans "Hard" %}</option>
 					</select></div>
 				</div>
 				<div class='control-group'>
@@ -64,7 +78,7 @@
 					<div class="controls"><select class='btn' name="category" id='generate-form-category'>
 						{% if categories %}
 							{% for c in categories %}
-								<option {% if category == c.name %}selected="selected" {% endif %}>{{ c.name }}</option>
+								<option {% if bracelet and bracelet.category.name == c.name %}selected="selected" {% endif %}>{{ c.name }}</option>
 							{% endfor %}
 						{% endif %}
 						</select>
@@ -74,37 +88,80 @@
 					<label for="generate-form-public" class="control-label">{% trans "Public" %}:</label>
 					<div class="controls">
 						<select class='btn' name="public" id='generate-form-public'>
-								<option value="1" selected="selected" >{% trans "Public" %}</option>
-								<option value="0" >{% trans "Private" %}</option>
+								<option value="1" {% if bracelet and bracelet.public %}selected="selected" {% endif %}>{% trans "Public" %}</option>
+								<option value="0" {% if bracelet and not bracelet.public %}selected="selected" {% endif %}>{% trans "Private" %}</option>
 						</select>
 					</div>
 				</div>
 			</fieldset>
 		</div>
 	{% endif %}
-	<div class="form-horizontal div-form second">
-		<fieldset>
-			<legend>{% trans "Fast generating empty template" %}</legend>
-			<div class='control-group'><label for="generate-form-rows" class="control-label">{%trans 'Row' %}:</label>
-				<div class="controls"><input id="generate-form-rows" name="rows" type="text" value='10' /></div>
-			</div>
-			<div class='control-group'><label for="generate-form-columns" class="control-label">{%trans 'Columns' %}:</label>
-				<div class="controls"><input id="generate-form-columns" name="columns" type="text" value='5'  /></div>
-			</div>
-			<div class='control-group'><label for="generate-form-knots" class="control-label">{%trans 'Knot types' %}:</label>
-				<div class="controls"><select class='btn' id="generate-form-knots" name="knots">
-							<option value="1">{% trans 'All forward' %}</option>
-							<option value="2">{% trans 'All backward' %}</option>
-							<option value="3">{% trans 'All forward-backward' %}</option>
-							<option value="4">{% trans 'All backward-forward' %}</option>
-							<option value="5">{% trans 'Forward-backward and backward-forward' %}</option>
-				</select></div>
-			</div>
-			<div class='control-group'>
-				<div class="controls"><button class='btn btn-primary' id='generate-template-button' type='button'>{% trans 'Generate template' %}</button></div>
-			</div>
-		</fieldset>
-	</div>
+	{% if not bracelet %}
+		<div class="form-horizontal div-form second">
+			<fieldset>
+				{% if braceletType == 1 %}
+				<legend>{% trans "Fast generating empty template" %}</legend>
+				{% else %}
+				<legend>{% trans "Pattern generator" %}</legend>
+				<div class='control-group'>
+					<label class="control-label">{% trans "Type:" %}</label>
+					<div class="controls">
+						<label class="radio inline">
+						  <input type="radio" name="generate-form-kind" id="generate-form-kind-text" value="text" checked="checked" />
+						  {% trans "Text" %}
+						</label>
+						<label class="radio inline">
+						  <input type="radio" name="generate-form-kind" id="generate-form-kind-empty" value="empty" />
+						  {% trans "Empty" %}
+						</label>
+					</div>
+				</div>
+				<div class='control-group kind-text'>
+					<label class="control-label">{% trans "Letter height:" %}</label>
+					<div class="controls">
+						<label class="radio inline">
+							<input type="radio" name="generate-form-letter-height" id="generate-form-letter-height-7" value="7" checked="checked" />
+							7 {% trans "strings" %}
+						</label>
+						<label class="radio inline">
+							<input type="radio" name="generate-form-letter-height" id="generate-form-letter-height-10" value="10" />
+							10 {% trans "strings" %}
+						</label>
+					</div>
+				</div>
+				{% endif %}
+				<div class='control-group kind-empty'><label for="generate-form-rows" class="control-label">{%trans 'Row' %}:</label>
+					<div class="controls"><input id="generate-form-rows" name="rows" type="text" value='10' /></div>
+				</div>
+				<div class='control-group kind-empty'><label for="generate-form-columns" class="control-label">{%trans 'Columns' %}:</label>
+					<div class="controls"><input id="generate-form-columns" name="columns" type="text" value='5'  /></div>
+				</div>
+			  	{% if braceletType == 1 %}
+				<div class='control-group'><label for="generate-form-knots" class="control-label">{%trans 'Knot types' %}:</label>
+					<div class="controls"><select class='btn' id="generate-form-knots" name="knots">
+								<option value="1">{% trans 'All forward' %}</option>
+								<option value="2">{% trans 'All backward' %}</option>
+								<option value="3">{% trans 'All forward-backward' %}</option>
+								<option value="4">{% trans 'All backward-forward' %}</option>
+								<option value="5">{% trans 'Forward-backward and backward-forward' %}</option>
+					</select></div>
+				</div>
+				{% else %}
+				<div class='control-group kind-text'><label for="generate-form-text" class="control-label">{%trans 'Text' %}:</label>
+					<div class="controls">
+						<div class="input-append">
+							<input id="generate-form-text" name="text" type="text" value=""  />
+							<button id="generate-form-insert-char" class="btn" type="button">{% trans "Wstaw znak" %}</button>
+						</div>
+					</div>
+				</div>
+				{% endif %}
+				<div class='control-group'>
+					<div class="controls"><button class='btn btn-primary' id='generate-template-button' type='button'>{% trans 'Generate template' %}</button></div>
+				</div>
+			</fieldset>
+		</div>
+	{% endif %}
 	<div id='floating-top' class='pattern-tool'>
 		<div class='pattern-tool-inside'>
 			{% trans "Set color of strings (use buttons below to add and remove strings)" %}: <br />
@@ -115,11 +172,16 @@
 			    	<span class='icon-knot1'></span> <span class="caret"></span>
 			  	</button>
 			  	<ul class="dropdown-menu">
+			  	{% if braceletType == 1 %}
 			    	<li><a href='#' data-knot-type='1'>{% trans 'All forward' %}</a></li>
 					<li><a href='#' data-knot-type='2'>{% trans 'All backward' %}</a></li>
 					<li><a href='#' data-knot-type='3'>{% trans 'All forward-backward' %}</a></li>
 					<li><a href='#' data-knot-type='4'>{% trans 'All backward-forward' %}</a></li>
 					<li><a href='#' data-knot-type='5'>{% trans 'Forward-backward and backward-forward' %}</a></li>
+				{% else %}
+					<li><a href='#' data-knot-type='5'>{% trans 'All horizontal' %}</a></li>
+					<li><a href='#' data-knot-type='6'>{% trans 'All vertical' %}</a></li>
+				{% endif %}
 			  	</ul>
 		    </div>
 		    <input class='btn' type="button" value='{% trans "Remove string" %}' onClick="removeInput();">
@@ -144,7 +206,23 @@
 			<a href="#" class="btn btn-primary" id='color-chooser-ok'>{% trans 'OK' %}</a>
 		</div>
 	</div>
-    <div id="pattern-container">
+    <div class="modal hide" id="character-chooser">
+	  	<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" class='character-chooser-cancel'>×</button>
+			<h3>{% trans 'Choose character' %}</h3>
+		</div>
+		<div class="modal-body">
+			<p>
+				{% for char in characters %}
+					<a class='btn character-chooser-button' data-character='{{ char }}'>{{ char }}</a>
+				{% endfor %}
+			</p>
+		</div>
+		<div class="modal-footer">
+			<a href="#" class="btn" data-dismiss="modal" class='character-chooser-cancel'>{% trans 'Cancel' %}</a>
+		</div>
+	</div>
+    <div id="pattern-designer-container" class="pattern-type{{ braceletType }}">
     	<div id="pattern-canvas"></div>
     	<div id="pattern-designer"></div>
     </div>
@@ -156,11 +234,16 @@
 			    	<span class='icon-knot1'></span> <span class="caret"></span>
 			  	</button>
 			  	<ul class="dropdown-menu">
+			  	{% if braceletType == 1 %}
 			    	<li><a href='#' data-knot-type='1'>{% trans 'All forward' %}</a></li>
 					<li><a href='#' data-knot-type='2'>{% trans 'All backward' %}</a></li>
 					<li><a href='#' data-knot-type='3'>{% trans 'All forward-backward' %}</a></li>
 					<li><a href='#' data-knot-type='4'>{% trans 'All backward-forward' %}</a></li>
 					<li><a href='#' data-knot-type='5'>{% trans 'Forward-backward and backward-forward' %}</a></li>
+				{% else %}
+					<li><a href='#' data-knot-type='5'>{% trans 'All horizontal' %}</a></li>
+					<li><a href='#' data-knot-type='6'>{% trans 'All vertical' %}</a></li>
+				{% endif %}
 			  	</ul>
 			</div>
 			<input class='btn' type="button" value='{% trans "Remove row" %}' onClick="removeRow();"><br /> 
@@ -169,8 +252,13 @@
    
 	<textarea id="pattern-string" rows="20" cols="100" hidden="hidden" name="pattern"></textarea>
 	<textarea id="pattern-colors" rows="20" cols="100" hidden="hidden" name="colors"></textarea>
+	<input type="hidden" name="bracelet_id" value="{% if bracelet %}{{ bracelet.id }}{% endif %}" />
+	<input type="hidden" name="type" value="{% if bracelet %}{{ bracelet.type }}{% else %}{% if braceletType %}{{ braceletType }}{% else %}1{% endif %}{% endif %}" />
+{% if user.is_staff %}
+	<button type="button" class="btn" onclick="getCode();">Get code</button>
+{% endif %}
 {% if user.is_authenticated %}
-	<input class='btn' type="submit" value='{% trans "Add pattern" %}'>
+	<input class='btn' type="submit" value='{% if bracelet %}{% trans "Save pattern" %}{% else %}{% trans "Add pattern" %}{% endif %}'>
 	</div>
 </form>
 {% endif %}

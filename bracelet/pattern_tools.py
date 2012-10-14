@@ -28,6 +28,12 @@ class BraceletPattern(object):
 		for i in range(len(self.strings)):
 			style += ".str" + str(i) + " {background-color:" + str(self.strings[i].color) + ";}"
 		return style
+	
+	def get_colors(self):
+		colors = []
+		for i in range(len(self.strings)):
+			colors.append(str(self.strings[i].color))
+		return colors
 
 	def get_ifwhite(self):
 		ifwhite = []
@@ -37,45 +43,58 @@ class BraceletPattern(object):
 		return ifwhite
 
 	def generate_pattern(self):
-		self.nofrows = 2 * len(self.knots) / (len(self.strings) - 1)
-		if(len(self.knots) - self.nofrows * (len(self.strings) / 2.0) > 0):
-			self.nofrows += 1
-		nofcols = len(self.strings) / 2
-		types = []
-		colors = []
-		for i in range(nofcols):
-			types.append(int(self.knots[i].knottype.id))
-		self.knots_types.append(types)
-		for i in range(nofcols):
-			colors.append(self.get_knot_color(self.strings_order[0], self.knots_types[0], i, 0))
-		self.knots_colors.append(colors)
-		index = nofcols
-		for i in range(1, self.nofrows):
-			self.strings_order.append(self.get_next_strings_order(self.strings_order[i - 1], self.knots_types[i - 1], (i - 1) % 2))
-			colors = []
+		if int(self.bracelet.type) == 1:
+			self.nofrows = 2 * len(self.knots) / (len(self.strings) - 1)
+			if(len(self.knots) - self.nofrows * (len(self.strings) / 2.0) > 0):
+				self.nofrows += 1
+			nofcols = len(self.strings) / 2
 			types = []
+			colors = []
+			for i in range(nofcols):
+				types.append(int(self.knots[i].knottype.id))
+			self.knots_types.append(types)
+			for i in range(nofcols):
+				colors.append(self.get_knot_color(self.strings_order[0], self.knots_types[0], i, 0))
+			self.knots_colors.append(colors)
+			index = nofcols
+			for i in range(1, self.nofrows):
+				self.strings_order.append(self.get_next_strings_order(self.strings_order[i - 1], self.knots_types[i - 1], (i - 1) % 2))
+				colors = []
+				types = []
+				if self.odd == 0:
+					noc = nofcols - (i % 2) # dla parzystej liczby nitek 
+				else:
+					noc = nofcols
+	
+				for j in range(noc):
+					types.append(int(self.knots[index].knottype.id))
+					index += 1
+				self.knots_types.append(types)
+				for j in range(noc):
+					colors.append(self.get_knot_color(self.strings_order[i], self.knots_types[i], j, i % 2))
+				self.knots_colors.append(colors)
+			#last row of strings
+			self.strings_order.append(self.get_next_strings_order(self.strings_order[self.nofrows - 1], self.knots_types[self.nofrows - 1], (self.nofrows - 1) % 2))
 			if self.odd == 0:
 				noc = nofcols - (i % 2) # dla parzystej liczby nitek 
 			else:
 				noc = nofcols
-
+			colors = []
 			for j in range(noc):
-				types.append(int(self.knots[index].knottype.id))
-				index += 1
-			self.knots_types.append(types)
-			for j in range(noc):
-				colors.append(self.get_knot_color(self.strings_order[i], self.knots_types[i], j, i % 2))
+				colors.append(self.get_knot_color(self.strings_order[self.nofrows - 1], self.knots_types[self.nofrows - 1], j, (self.nofrows - 1) % 2))
 			self.knots_colors.append(colors)
-		#last row of strings
-		self.strings_order.append(self.get_next_strings_order(self.strings_order[self.nofrows - 1], self.knots_types[self.nofrows - 1], (self.nofrows - 1) % 2))
-		if self.odd == 0:
-			noc = nofcols - (i % 2) # dla parzystej liczby nitek 
-		else:
-			noc = nofcols
-		colors = []
-		for j in range(noc):
-			colors.append(self.get_knot_color(self.strings_order[self.nofrows - 1], self.knots_types[self.nofrows - 1], j, (self.nofrows - 1) % 2))
-		self.knots_colors.append(colors)
+		elif int(self.bracelet.type) == 2:
+			self.nofrows = (len(self.knots)+1) / (len(self.strings)-1)
+			nofcols = len(self.strings)-1
+			for i in range(self.nofrows):
+				types = []
+				colors = []
+				for j in range(nofcols):
+					knotType = int(self.knots[i * nofcols + j].knottype.id)
+					types.append(knotType)
+					colors.append(0 if knotType == 5 else j+1)
+				self.knots_types.append(types)
+				self.knots_colors.append(colors)
 
 	def get_next_strings_order(self, strings_order, knots_type, odd):
 		so = []
@@ -120,19 +139,36 @@ class BraceletPattern(object):
 		return self.knots_types
 
 	def generate_photo(self, path):
-		im = Image.new(mode = "RGB", size = (self.nofrows * 100 + 16, len(self.strings) / 2 * 160 + 16 + 36), color = "#fff")
-		draw = ImageDraw.Draw(im)
-
-		for i in range(self.nofrows):
-			if i % 2 == 0 and self.odd or i % 2 == 1 and not self.odd:
-				marginTop = 80
-			else:
-				marginTop = 0
-			for j in range(len(self.knots_colors[i])):
-				color = str(self.strings[self.knots_colors[i][len(self.knots_colors[i]) - 1 - j]].color)
-				x = 8 + i * 100
-				y = 8 + j * 160 + marginTop
-				draw.ellipse((x - 8, y - 8, x + 116, y + 116), fill = 0x666666)
-				draw.ellipse((x - 4, y - 4, x + 108, y + 108), fill = color)
-		im = im.resize((self.nofrows * 10 + 1, len(self.strings) / 2 * 16 + 4), Image.ANTIALIAS)
+		if int(self.bracelet.type) == 1:
+			im = Image.new(mode = "RGB", size = (self.nofrows * 100 + 16, len(self.strings) / 2 * 160 + 16 + 36), color = "#fff")
+			draw = ImageDraw.Draw(im)
+	
+			for i in range(self.nofrows):
+				if i % 2 == 0 and self.odd or i % 2 == 1 and not self.odd:
+					marginTop = 80
+				else:
+					marginTop = 0
+				for j in range(len(self.knots_colors[i])):
+					color = str(self.strings[self.knots_colors[i][len(self.knots_colors[i]) - 1 - j]].color)
+					x = 8 + i * 100
+					y = 8 + j * 160 + marginTop
+					draw.ellipse((x - 8, y - 8, x + 116, y + 116), fill = 0x666666)
+					draw.ellipse((x - 4, y - 4, x + 108, y + 108), fill = color)
+			im = im.resize((self.nofrows * 10 + 1, len(self.strings) / 2 * 16 + 4), Image.ANTIALIAS)
+		if int(self.bracelet.type) == 2:
+			im = Image.new(mode = "RGB", size = (self.nofrows * 100 + 16, len(self.strings) * 100 + 16), color = "#fff")
+			draw = ImageDraw.Draw(im)
+	
+			for i in range(self.nofrows):
+				for j in range(len(self.knots_colors[i])):
+					color = str(self.strings[self.knots_colors[i][len(self.knots_colors[i]) - 1 - j]].color)
+					x = 8 + i * 100
+					y = 8 + j * 100
+					draw.ellipse((x - 8, y - 8, x + 108, y + 108), fill = 0x666666)
+					draw.ellipse((x - 4, y - 4, x + 104, y + 104), fill = color)
+			im = im.resize((self.nofrows * 10 + 1, len(self.strings) * 10 + 1), Image.ANTIALIAS)
 		im.save(path)
+
+def get_custom_characters():
+	characters = ['#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#']
+	return characters

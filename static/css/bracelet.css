@@ -106,16 +106,20 @@
 	z-index:1;
 	vertical-align: top; 
 }
-#pattern, #step-pattern {
+#pattern, #step-pattern, #pattern-designer {
 	position:relative;
 	z-index:3;
 	padding-top: 14px;
+	display:inline-block;
 }
 #pattern-canvas, #step-pattern-canvas {
 	position: absolute;
 	z-index:2;
 	top: 5px;
 	left:0;
+}
+.pattern-type2 #pattern, .pattern-type2 #step-pattern, .pattern-type2 #pattern-designer {
+	padding: 2px 8px 0;
 }
 
 .knot {
@@ -132,6 +136,12 @@
 	display: inline-block;
 	margin: 0 7px;
 }
+.pattern-type2 .knot {
+	margin: 8px 5px 0;
+}
+.pattern-type2 #step-pattern .new {
+	margin: 8px 4px 0;
+}
 
 .odd {
 	margin-left: 17px;
@@ -139,6 +149,10 @@
 
 .even {
 	
+}
+
+.pattern-type2 .row-odd {
+	text-align: right;
 }
 
 .oddstring {
@@ -177,6 +191,20 @@
 	background: url('/static/gfx/knot4-w.png');
 }
 
+.knot5 {
+	background: url('/static/gfx/knot5.png');
+}
+.knot5-white {
+	background: url('/static/gfx/knot5-w.png');
+}
+
+.knot6 {
+	background: url('/static/gfx/knot6.png');
+}
+.knot6-white {
+	background: url('/static/gfx/knot6-w.png');
+}
+
 .knot-thumb {
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
@@ -187,36 +215,55 @@
 	-webkit-box-shadow: 0px 0px 6px 0px #000; /* Saf3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
     box-shadow: 0px 0px 6px 0px #000;
 	width: 12px;
-	height: 10px;
-	display: inline-block;
+	height: 12px;
+	display: block;
 }
 .column-margin {
-	margin-top:8px;
+	margin-top: 5px;
 }
-.column-odd {
-	width:10px;
+.column-odd, .column-even, .column-straight {
+	width:12px;
 	vertical-align: top;
 	display:inline-block;
 }
-.column-even {
-	width:10px;
-	vertical-align: top;
-	display:inline-block;
+
+.string0, .string1 {	
+	width: 15px;
+	height: 25px;
+	display: inline-block;
+	margin: -5px 1px 0 1px;
 }
 .string0 {
-	background: url('/static/gfx/pattern-strings-0.png');	
-	width: 15px;
-	height: 25px;
-	display: inline-block;
-	margin: -5px 1px 0 1px;
+	background: url('/static/gfx/pattern-strings-0.png');
 }
 .string1 {
-	background: url('/static/gfx/pattern-strings-1.png');	
-	width: 15px;
-	height: 25px;
-	display: inline-block;
-	margin: -5px 1px 0 1px;
+	background: url('/static/gfx/pattern-strings-1.png');
 }
+.string-v, .string-h, .string-ur, .string-ul, .string-dr, .string-dl {	
+	width: 15px;
+	height: 32px;
+	display: inline-block;
+	vertical-align:middle;
+}
+.string-v {
+	background: url('/static/gfx/pattern-strings-v.png');
+}
+.string-h {
+	background: url('/static/gfx/pattern-strings-h.png');
+}
+.string-ur {
+	background: url('/static/gfx/pattern-strings-ur.png');
+}
+.string-ul {
+	background: url('/static/gfx/pattern-strings-ul.png');
+}
+.string-dr {
+	background: url('/static/gfx/pattern-strings-dr.png');
+}
+.string-dl {
+	background: url('/static/gfx/pattern-strings-dl.png');
+}
+
 #tabs-name {
 	margin-bottom: 5px;
 }
