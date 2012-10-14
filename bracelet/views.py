@@ -24,7 +24,6 @@ from django.core.mail import EmailMessage
 
 def add(request, context_ = {}):
 	context = {
-			'stringColors': [],
 			'colors': get_colors(),
 			'categories': BraceletCategory.objects.all(),
 			'bracelet': None,
@@ -32,8 +31,7 @@ def add(request, context_ = {}):
 			'nofstr': 5,
 			'braceletType': 1,
 			'knotsType': [],
-			'knotsColor': [],
-			'strings': [],
+			'stringColors': [],
 			'ifwhite': []
 			}
 	context.update(context_)
@@ -204,8 +202,6 @@ def edit_bracelet(request, bracelet_id, context = {}):
 			'braceletType':bp.bracelet.type,
 			'nofstr':bp.get_n_of_strings(),
 			'knotsType':bp.get_knots_types(),
-			'knotsColor':bp.get_knots_colors(),
-			'strings':bp.get_strings(),
 			'nofrows':bp.nofrows,
 			'ifwhite':bp.get_ifwhite(),
 			'nofphotos': len(Photo.objects.filter(bracelet = bracelet, accepted = True)),

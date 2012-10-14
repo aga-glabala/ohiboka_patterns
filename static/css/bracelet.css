@@ -106,7 +106,7 @@
 	z-index:1;
 	vertical-align: top; 
 }
-#pattern, #step-pattern {
+#pattern, #step-pattern, #pattern-designer {
 	position:relative;
 	z-index:3;
 	padding-top: 14px;
@@ -118,7 +118,7 @@
 	top: 5px;
 	left:0;
 }
-.pattern-type2 #pattern, .pattern-type2 #step-pattern {
+.pattern-type2 #pattern, .pattern-type2 #step-pattern, .pattern-type2 #pattern-designer {
 	padding: 2px 8px 0;
 }
 

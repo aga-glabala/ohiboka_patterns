@@ -9,13 +9,13 @@
 <style type="text/css">
 </style>
 <script>
-	var knotsColor = {{ strings }};
+	//var knotsColor = {{ strings }};
 	var knotsType = {{ knotsType }};
 	var braceletType = {{ braceletType }};
 	var nofrows = {{nofrows}};
 	var nofstr = {{nofstr}};
 	var bracelet_id = {% if bracelet %}{{ bracelet.id }}{% else %}undefined{% endif %};
-	var strings = {{ strings }};
+	//var strings = {{ strings }};
 	var stringColors = {{ stringColors|safe }};
 	var ifwhite = {{ ifwhite|safe }};
 	var STATIC_URL = {{ STATIC_URL }};
@@ -130,11 +130,16 @@
 			    	<span class='icon-knot1'></span> <span class="caret"></span>
 			  	</button>
 			  	<ul class="dropdown-menu">
+			  	{% if type == 1 %}
 			    	<li><a href='#' data-knot-type='1'>{% trans 'All forward' %}</a></li>
 					<li><a href='#' data-knot-type='2'>{% trans 'All backward' %}</a></li>
 					<li><a href='#' data-knot-type='3'>{% trans 'All forward-backward' %}</a></li>
 					<li><a href='#' data-knot-type='4'>{% trans 'All backward-forward' %}</a></li>
 					<li><a href='#' data-knot-type='5'>{% trans 'Forward-backward and backward-forward' %}</a></li>
+				{% else %}
+					<li><a href='#' data-knot-type='5'>{% trans 'All horizontal' %}</a></li>
+					<li><a href='#' data-knot-type='6'>{% trans 'All vertical' %}</a></li>
+				{% endif %}
 			  	</ul>
 		    </div>
 		    <input class='btn' type="button" value='{% trans "Remove string" %}' onClick="removeInput();">
@@ -159,7 +164,7 @@
 			<a href="#" class="btn btn-primary" id='color-chooser-ok'>{% trans 'OK' %}</a>
 		</div>
 	</div>
-    <div id="pattern-container">
+    <div id="pattern-designer-container" class="pattern-type{{ braceletType }}">
     	<div id="pattern-canvas"></div>
     	<div id="pattern-designer"></div>
     </div>
@@ -171,11 +176,16 @@
 			    	<span class='icon-knot1'></span> <span class="caret"></span>
 			  	</button>
 			  	<ul class="dropdown-menu">
+			  	{% if type == 1 %}
 			    	<li><a href='#' data-knot-type='1'>{% trans 'All forward' %}</a></li>
 					<li><a href='#' data-knot-type='2'>{% trans 'All backward' %}</a></li>
 					<li><a href='#' data-knot-type='3'>{% trans 'All forward-backward' %}</a></li>
 					<li><a href='#' data-knot-type='4'>{% trans 'All backward-forward' %}</a></li>
 					<li><a href='#' data-knot-type='5'>{% trans 'Forward-backward and backward-forward' %}</a></li>
+				{% else %}
+					<li><a href='#' data-knot-type='5'>{% trans 'All horizontal' %}</a></li>
+					<li><a href='#' data-knot-type='6'>{% trans 'All vertical' %}</a></li>
+				{% endif %}
 			  	</ul>
 			</div>
 			<input class='btn' type="button" value='{% trans "Remove row" %}' onClick="removeRow();"><br /> 

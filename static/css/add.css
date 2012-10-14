@@ -45,20 +45,9 @@
 #floating-top div#pattern-thumb {
 	display: block;
 }
-#pattern-container {
+#pattern-designer-container {
 	position: relative;
 	margin:30px 0;
-}
-#pattern-designer {
-	z-index:3;
-	position: relative;
-	margin-top:15px;
-}
-#pattern-canvas {
-	position: absolute;
-	z-index:2;
-	top: -10px;
-	left: 0px;
 }
 .btn-group {
 	display: inline-block;
