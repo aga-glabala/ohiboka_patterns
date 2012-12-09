@@ -18,6 +18,7 @@ from common.utils import FacebookBackend
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import EmailMessage
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 def get_context(request):
 	context = {'loginform': AuthenticationForm(), "FACEBOOK_APP_ID": settings.FACEBOOK_APP_ID}
@@ -39,10 +40,13 @@ def register(request):
 			form = UserCreationFormExtended(request.POST)
 			if form.is_valid():
 				form.save()
+				messages.error(request, _('Wrong value for bracelet status'))
 				return  index(request, {'ok_message': _('Success! You can log in now.')})
 			else:
+				messages.error(request, _('Wrong value for bracelet status'))
 				error = _("An error has occured. Correct entered data.")
 		else:
+			messages.error(request, _('Wrong value for bracelet status'))
 			error = _("Wrong captcha, try again.")
 	form = UserCreationFormExtended(request.POST)
 	context = get_context(request)
@@ -78,11 +82,14 @@ def userprofile(request, error_message = "", ok_message = ""):
 		context['photos_not_accepted'] = photos_not_accepted
 		context['rates'] = Rate.objects.filter(user = request.user)
 		if error_message:
+			messages.error(request, _('Wrong value for bracelet status'))
 			context['error_message'] = error_message
 		if ok_message:
+			messages.error(request, _('Wrong value for bracelet status'))
 			context['ok_message'] = ok_message
 		return render_to_response("common/userprofile.html", context, RequestContext(request))
 	else:
+		messages.error(request, _('Wrong value for bracelet status'))
 		return index(request, {'error_message': _('You need to be logged in.')})
 
 '''
@@ -119,7 +126,8 @@ def user(request, user_name):
 	try:
 		user = User.objects.get(username = user_name)
 	except ObjectDoesNotExist:
-		return index(request, {'error_message': _('There is no user with login: {0}').format(user_name)})
+		messages.error(request, _('There is no user with login: {0}').format(user_name))
+		return index(request)
 
 	context = get_context(request)
 	context['user_content'] = user
@@ -142,9 +150,11 @@ def about(request, context = {}, errors = 0):
 				#send_mail(subject, msg_content, sender, receiver)
 				return HttpResponseRedirect('/contact/success/')
 			else:
-				return about(request, {'error_message': _("An error has occured. Correct entered data.")}, errors = 1)
+				messages.error(request, _("An error has occured. Correct entered data."))
+				return about(request, errors = 1)
 		else:
-			return about(request, {'error_message': _('Wrong captcha.')}, errors = 1)
+			messages.error(request, _('Wrong captcha.'))
+			return about(request, errors = 1)
 	else:
 		form = ContactForm()
 	context.update(get_context(request))
@@ -190,7 +200,7 @@ def login_user(request):
 		context = {'loginform':form}
 		if user is not None and user.is_active:
 			login(request, user)
-			context['ok_message'] = _('You are logged in now')
+			messages.success(request, _('You are logged in now'))
 			if not request.POST.get('remember_me', None):
 				request.session.set_expiry(0)
 		return index(request, context)
@@ -215,9 +225,12 @@ def facebook_login_success(request):
 
 def setlang(request, lang):
 	request.session['django_language'] = lang
-	r = HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-	r.set_cookie('django_language', lang)
-	return r
+	if request.META.get('HTTP_REFERER'):
+		r = HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+		r.set_cookie('django_language', lang)
+		return r
+	else:
+		return HttpResponseRedirect('/')
 
 def search(request):
 	# TODO bracelets filter

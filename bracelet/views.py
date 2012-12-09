@@ -13,7 +13,6 @@ from bracelet.helper import handle_uploaded_file, scale, delete_image_file
 from django.utils.translation import ugettext as _
 from django.utils.translation import gettext
 from django.utils import simplejson
-import gettext as gt
 from django.conf import settings
 import time
 from django.core.exceptions import ObjectDoesNotExist
@@ -21,7 +20,8 @@ from common.views import userprofile, index, get_context
 import unicodedata
 from django.contrib.auth.decorators import login_required
 from django.core.mail import EmailMessage
-
+from django.contrib import messages
+import re
 
 def add(request, bracelet_type, context_ = {}):
 	context = {
@@ -44,7 +44,8 @@ def bracelet(request, bracelet_url, context = {}):
 	try:
 		bracelet = Bracelet.objects.get(url = bracelet_url)
 	except ObjectDoesNotExist:
-		return index(request, {'error_message':_('There is no bracelet with this id.')})
+		messages.error(request, _('There is no bracelet with this id.'))
+		return index(request)
 	bp = BraceletPattern(bracelet)
 	bp.generate_pattern()
 	context.update(get_context(request))
@@ -66,11 +67,11 @@ def bracelet(request, bracelet_url, context = {}):
 	if 'message' in context:
 		del context['message']
 	if not bracelet.public:
-		context['message'] = _("""This bracelet is private. It means you can see it only if you have link to this page.""")
+		messages.info(request, _("""This bracelet is private. It means you can see it only if you have link to this page."""))
 	elif bracelet.accepted == 0:
-		context['message'] = _("""This bracelet is not accepted yet. It means you can see it only if you have link to this page.""")
+		messages.info(request, _("""This bracelet is not accepted yet. It means you can see it only if you have link to this page."""))
 	elif bracelet.accepted == -1:
-		context['message'] = _("""This bracelet has been rejected. It means you can see it only if you have link to this page.""")
+		messages.info(request, _("""This bracelet has been rejected. It means you can see it only if you have link to this page."""))
 	rates = []
 	if request.user.is_authenticated():
 		rates = Rate.objects.filter(user = request.user, bracelet = bracelet)
@@ -80,16 +81,15 @@ def bracelet(request, bracelet_url, context = {}):
 		del context['rate']
 
 	if 'change_status' in request.GET:
-		context['ok_message'] = _('Bracelet\'s status was successfully changed') + '.'
-	elif 'ok_message' in context and context['ok_message'] == _('Bracelet\'s status was successfully changed') + '.':
-		del context['ok_message']
+		messages.success(request, _('Bracelet\'s status was successfully changed'))
 
 	return render_to_response('bracelet/bracelet.html', context, RequestContext(request))
 
 @login_required
 def addpattern(request):
 	if not request.POST['name']:
-		return add(request, {'error_message':_('You need to set name to bracelet')})
+		messages.error(request, _('You need to set name to bracelet'))
+		return add(request)
 	colors_tmp = request.POST['colors'][:-1].split(' ')
 	colors = []
 	for c in colors_tmp:
@@ -103,14 +103,17 @@ def addpattern(request):
 	if request.POST['bracelet_id']:
 		b = Bracelet.objects.filter(id = request.POST['bracelet_id'])[0]
 		b.public = public
-		b.difficulty = request.POST['difficulty'] 
+		b.difficulty = request.POST['difficulty']
 		b.category = BraceletCategory.objects.filter(name = request.POST['category'])[0]
 		b.accepted = 0
 	else:
-		url = unicodedata.normalize('NFKD', request.POST['name'].lower().replace(' ', '_')).encode('ascii', 'ignore')
-		brs = Bracelet.objects.filter(url__contains = url)
+		url = unicodedata.normalize('NFKD', request.POST['name'].lower()).encode('ascii', 'ignore')
+		url = re.sub(r'[^a-zA-Z0-9]', r'_', url)
+		url = re.sub(r'_+', '_', url)
+		brs = Bracelet.objects.filter(url__startswith = url + '-').order_by('id').reverse()
 		if brs:
-			url += '-' + str(len(brs)) 
+			brs = brs[0]
+			url += '-' + str(int(brs.url.split('-')[1]) + 1)
 		b = Bracelet(user = request.user, date = datetime.datetime.today(), url = url, public = public, name = request.POST['name'], accepted = False, difficulty = request.POST['difficulty'], category = BraceletCategory.objects.filter(name = request.POST['category'])[0], rate = 0, type = request.POST['type'])
 	b.save()
 	index = 0
@@ -139,7 +142,8 @@ def addpattern(request):
 		photo.save()
 		b.photo_id = photo.id
 		b.save()
-	return bracelet(request, b.url, {'ok_message':_('Bracelet was successfully saved.')})
+	messages.success(request, _('Bracelet was successfully saved.'))
+	return bracelet(request, b.url)
 
 def photos(request, bracelet_id):
 	photos = Photo.objects.filter(bracelet = Bracelet.objects.get(id = bracelet_id), accepted = True)
@@ -151,14 +155,17 @@ def photo_upload(request, bracelet_id):
 	try:
 		bracelet_obj = Bracelet.objects.get(id = bracelet_id)
 	except ObjectDoesNotExist:
-		return index(request, {'error_message':_('There is no bracelet with this id {0}').format(bracelet_id)})
+		messages.error(request, _('There is no bracelet with this id {0}').format(bracelet_id))
+		return index(request)
 
 	photos = Photo.objects.filter(bracelet = bracelet_obj, accepted = True)
 	form = UploadFileForm(request.POST, request.FILES)
 	if form.is_valid():
 		handle_uploaded_file(request.FILES['file'], request.POST['bracelet_id'], request.user)
-		return bracelet(request, bracelet_obj.url, {'form': form, 'bracelet_id':bracelet_id, 'photos':photos, 'selectTab':3, 'ok_message':_('Photo was uploaded successfully. It will show up here after admin acceptance.')})
-	return bracelet(request, bracelet_obj.url, {'form': form, 'bracelet_id':bracelet_id, 'photos':photos, 'selectTab':3, 'error_message':_('Error has occured when uploading photo, choose photo and try again.')})
+		messages.success(request, _('Photo was uploaded successfully. It will show up here after admin acceptance.'))
+		return bracelet(request, bracelet_obj.url, {'form': form, 'bracelet_id':bracelet_id, 'photos':photos, 'selectTab':3})
+	messages.error(request, _('Error has occured when uploading photo, choose photo and try again.'))
+	return bracelet(request, bracelet_obj.url, {'form': form, 'bracelet_id':bracelet_id, 'photos':photos, 'selectTab':3})
 
 @login_required
 def rate(request, bracelet_id, bracelet_rate):
@@ -195,7 +202,8 @@ def edit_bracelet(request, bracelet_id, context = {}):
 	try:
 		bracelet = Bracelet.objects.get(id = bracelet_id)
 	except ObjectDoesNotExist:
-		return index(request, {'error_message':_('There is no bracelet with this id.')})
+		messages.error(request, _('There is no bracelet with this id.'))
+		return index(request)
 	bp = BraceletPattern(bracelet)
 	bp.generate_pattern()
 	context.update(get_context(request))
@@ -219,21 +227,26 @@ def delete_bracelet(request, bracelet_id):
 	try:
 		b = Bracelet.objects.get(id = bracelet_id)
 	except ObjectDoesNotExist:
-		return index(request, {'error_message': _('Bracelet do not exists') + '!'})
+		messages.error(request, _('Bracelet do not exists'))
+		return index(request)
 	if b.user != request.user:
-		return index(request, {'error_message': _('This bracelet is not yours') + '!'})
+		messages.error(request, _('This bracelet is not yours'))
+		return index(request)
 	b.deleted = True
 	b.save()
-	return index(request, {'ok_message': _('Bracelet was successfully deleted') + '.'})
+	messages.error(request, _('Bracelet was successfully deleted'))
+	return index(request)
 
 @login_required
 def change_status(request, bracelet_id):
 	try:
 		b = Bracelet.objects.get(id = bracelet_id)
 	except ObjectDoesNotExist:
-		return index(request, {'error_message': _('Bracelet do not exists') + '!'})
+		messages.error(request, _('Bracelet do not exists'))
+		return index(request)
 	if b.user != request.user:
-		return index(request, {'error_message': _('This bracelet is not yours') + '!'})
+		messages.error(request, _('This bracelet is not yours'))
+		return index(request)
 	b.public = not b.public
 	b.save()
 	return HttpResponseRedirect('/bracelet/{0}?change_status=ok'.format(b.url))
@@ -243,101 +256,113 @@ def accept(request, bracelet_id, bracelet_status):
 	try:
 		b = Bracelet.objects.get(id = bracelet_id)
 	except ObjectDoesNotExist:
-		return index(request, {'error_message': _('Bracelet do not exists') + '!'})
+		messages.error(request, _('This bracelet is not yours'))
+		return index(request)
 	if not request.user.is_staff:
-		return index(request, {'error_message': _('This bracelet is not yours') + '!'})
+		messages.error(request, _('You have no permission to accept bracelets'))
+		return index(request)
 	try:
 		status = int(bracelet_status)
 	except ValueError:
-		return index(request, {'error_message': _('Wrong value for bracelet status') + '!'})
+		messages.error(request, _('Wrong value for bracelet status'))
+		return index(request)
 	if not status in [-1, 0, 1]:
-		return index(request, {'error_message': _('Wrong value for bracelet status') + '!'})
+		messages.error(request, _('Wrong value for bracelet status'))
+		return index(request)
 	b.accepted = status
 	b.save()
 	msg_content = ''
 	if status == -1:
 		subject = 'Your bracelet was rejected | Twoja bransoletka została odrzucona'
-		msg_content = u'Hey! I\'m sorry, but your bracelet was rejected. It was probably to easy or same pattern was already submitted. You can still see this bracelet from your profile'+\
-						u' (http://patterns.ohiboka.com/profile). Thanks for using my site and hope to see you again.'+\
-						u'\r\nGo to pattern: http://patterns.ohiboka.com/bracelet/'+b.url+\
-						u'\r\nAdd new bracelet: http://patterns.ohiboka.com/add'+\
-						u'\r\nRegards,'+\
-						u'\r\nAga'+\
-						u'\r\nhttp://ohiboka.com'+\
-						u'\r\n\r\n----\r\n\r\n'+\
-						u'Cześć, przykro mi, ale Twoja bransoletka została odrzucona. Prawdopodobnie była zbyt prosta lub jest już taka na stronie. Ciągle możesz ją zobaczyć na swoim profilu'+\
-						u' (http://patterns.ohiboka.com/profile). Dziekuję za skorzystanie z mojej strony i mam nadzieję że jeszcze kiedyś tu zajrzysz.'+\
-						u'\r\nZobacz wzór: http://patterns.ohiboka.com/bracelet/'+b.url+\
-						u'\r\nDodaj nowy wzór: http://patterns.ohiboka.com/add'+\
-						u'\r\nPozdrowienia,'+\
-						u'\r\nAga'+\
-						u'\r\nhttp://ohiboka.com'+\
-		EmailMessage(subject, msg_content, ['aga@ohiboka.com'], b.user.email, headers = {'Reply-To': 'aga@ohiboka.com'}).send()
+		msg_content = u'Hey! I\'m sorry, but your bracelet was rejected. It was probably to easy or same pattern was already submitted. You can still see this bracelet from your profile' + \
+						u' (http://patterns.ohiboka.com/profile). Thanks for using my site and hope to see you again.' + \
+						u'\r\nGo to pattern: http://patterns.ohiboka.com/bracelet/' + b.url + \
+						u'\r\nAdd new bracelet: http://patterns.ohiboka.com/add' + \
+						u'\r\nRegards,' + \
+						u'\r\nAga' + \
+						u'\r\nhttp://ohiboka.com' + \
+						u'\r\n\r\n----\r\n\r\n' + \
+						u'Cześć, przykro mi, ale Twoja bransoletka została odrzucona. Prawdopodobnie była zbyt prosta lub jest już taka na stronie. Ciągle możesz ją zobaczyć na swoim profilu' + \
+						u' (http://patterns.ohiboka.com/profile). Dziekuję za skorzystanie z mojej strony i mam nadzieję że jeszcze kiedyś tu zajrzysz.' + \
+						u'\r\nZobacz wzór: http://patterns.ohiboka.com/bracelet/' + b.url + \
+						u'\r\nDodaj nowy wzór: http://patterns.ohiboka.com/add' + \
+						u'\r\nPozdrowienia,' + \
+						u'\r\nAga' + \
+						u'\r\nhttp://ohiboka.com' + \
+		EmailMessage(subject, msg_content, 'aga@ohiboka.com', [b.user.email], headers = {'Reply-To': 'aga@ohiboka.com'}).send()
 	elif status == 1:
 		subject = 'Your bracelet was accepted | Twoja bransoletka została zaakceptowana'
-		msg_content = u'Hey! Congratulations, your bracelet was accepted. Thanks for great pattern. You can see this bracelet from your profile and on main page'+\
-						u' (http://patterns.ohiboka.com/profile and http://patterns.ohiboka.com). Thanks for using my site and hope to see you again.'+\
-						u'\r\nGo to pattern: http://patterns.ohiboka.com/bracelet/'+b.url+\
-						u'\r\nAdd new bracelet: http://patterns.ohiboka.com/add'+\
-						u'\r\nRegards,'+\
-						u'\r\nAga'+\
-						u'\r\nhttp://ohiboka.com'+\
-						u'\r\n\r\n----\r\n\r\n'+\
-						u'Cześć! Gratulacje, Twoja bransoletka została zaakceptowana. Dzięki za świetny wzór. Możesz zobaczyć wzór na swoim profilu i na stronie głównej'+\
-						u' (http://patterns.ohiboka.com/profile and http://patterns.ohiboka.com). Dzięki za korzystanie ze strony i do zobaczenia ponownie.'+\
-						u'\r\nZobacz wzór: http://patterns.ohiboka.com/bracelet/'+b.url+\
-						u'\r\nDodaj nowy wzór: http://patterns.ohiboka.com/add'+\
-						u'\r\nPozdrowienia,'+\
-						u'\r\nAga'+\
+		msg_content = u'Hey! Congratulations, your bracelet was accepted. Thanks for great pattern. You can see this bracelet from your profile and on main page' + \
+						u' (http://patterns.ohiboka.com/profile and http://patterns.ohiboka.com). Thanks for using my site and hope to see you again.' + \
+						u'\r\nGo to pattern: http://patterns.ohiboka.com/bracelet/' + b.url + \
+						u'\r\nAdd new bracelet: http://patterns.ohiboka.com/add' + \
+						u'\r\nRegards,' + \
+						u'\r\nAga' + \
+						u'\r\nhttp://ohiboka.com' + \
+						u'\r\n\r\n----\r\n\r\n' + \
+						u'Cześć! Gratulacje, Twoja bransoletka została zaakceptowana. Dzięki za świetny wzór. Możesz zobaczyć wzór na swoim profilu i na stronie głównej' + \
+						u' (http://patterns.ohiboka.com/profile and http://patterns.ohiboka.com). Dzięki za korzystanie ze strony i do zobaczenia ponownie.' + \
+						u'\r\nZobacz wzór: http://patterns.ohiboka.com/bracelet/' + b.url + \
+						u'\r\nDodaj nowy wzór: http://patterns.ohiboka.com/add' + \
+						u'\r\nPozdrowienia,' + \
+						u'\r\nAga' + \
 						u'\r\nhttp://ohiboka.com'
 	EmailMessage(subject, msg_content, 'ohiboka@ohiboka.com', [b.user.email], headers = {'Reply-To': ['aga@ohiboka.com']}).send()
-	return bracelet(request, b.url, {'ok_message': _('Bracelet\'s status was successfully changed') + '.'})
+	messages.error(request, _('Bracelet\'s status was successfully changed'))
+	return bracelet(request, b.url)
 
 @login_required
 def delete_photo(request, photo_id):
 	try:
 		photo = Photo.objects.get(id = photo_id)
 	except:
-		return userprofile(request, error_message = _("There is no photo with id: {0}.").format(photo_id))
+		messages.error(request, _("There is no photo with id: {0}.").format(photo_id))
+		return userprofile(request)
 	if not request.user.is_authenticated():
-		return userprofile(request, error_message = _("You need to be logged in to edit bracelets."))
+		messages.error(request, _("You need to be logged in to edit bracelets."))
+		return userprofile(request)
 	if photo.user != request.user:
-		return userprofile(request, error_message = _("You are not owner of this photo."))
+		messages.error(request, _("You are not owner of this photo."))
+		return userprofile(request)
 	photo.delete()
 	delete_image_file(photo.name)
-	return userprofile(request, ok_message = _("Photo deleted successfully."))
+	messages.success(request, _("Photo deleted successfully."))
+	return userprofile(request)
 
 @login_required
 def delete_rate(request, rate_id):
 	try:
 		rate = Rate.objects.get(id = rate_id)
 	except:
-		return userprofile(request, error_message = _("There is no rate with id: {0}.").format(rate_id))
+		messages.error(request, _("There is no rate with id: {0}.").format(rate_id))
+		return userprofile(request)
 	if not request.user.is_authenticated():
-		return userprofile(request, error_message = _("You need to be logged in to edit rates."))
+		messages.error(request, _("You need to be logged in to edit rates."))
+		return userprofile(request)
 	if rate.user != request.user:
-		return userprofile(request, error_message = _("You are not owner of this rate."))
+		messages.error(request, _("You are not owner of this rate."))
+		return userprofile(request)
 
 	bracelet = Bracelet.objects.get(id = rate.bracelet.id)
 	rate.delete()
 	bracelet.rate = bracelet.get_average_rate()
 	bracelet.save()
-
-	return userprofile(request, ok_message = _("Rate deleted successfully."))
+	messages.success(request, _("Rate deleted successfully."))
+	return userprofile(request)
 
 def generate_text_pattern(request, pattern_text, text_height):
 	if text_height != "7" and text_height != "10":
-		return HttpResponse("Bad text_height parameter value (7 or 10 allowed)", status = 400, mimetype='application/json')
-	empty = [[5,5,5,5,5,5,5]] if text_height == "7" else [[5,5,5,5,5,5,5,5,5,5]]
+		return HttpResponse("Bad text_height parameter value (7 or 10 allowed)", status = 400, mimetype = 'application/json')
+	empty = [[5, 5, 5, 5, 5, 5, 5]] if text_height == "7" else [[5, 5, 5, 5, 5, 5, 5, 5, 5, 5]]
 	to_json = []
 	to_json += empty
-	characters = simplejson.load(open(settings.PROJECT_ROOT+"/bracelet/"+text_height+".json"))
+	characters = simplejson.load(open(settings.PROJECT_ROOT + "/bracelet/" + text_height + ".json"))
 	for char in pattern_text:
 		if char not in characters:
-			return HttpResponse("Unknown character '"+char+"' in given text", status = 400, mimetype='application/json')
+			return HttpResponse("Unknown character '" + char + "' in given text", status = 400, mimetype = 'application/json')
 		to_json += characters[char]
 		to_json += empty
-	return HttpResponse(simplejson.dumps(to_json), mimetype='application/json')
+	return HttpResponse(simplejson.dumps(to_json), mimetype = 'application/json')
 
 def _fake_for_translate():
 	_("Make one knot {0} in forward on {1}")

@@ -170,7 +170,9 @@
 		<div class="photo">
         	<a class='lightbox' href="{{ MEDIA_URL }}images/{{ photo.name }}"><img src="{{ MEDIA_URL }}bracelet_thumbs/{{ photo.name }}" /></a>
     	    <a href="/bracelet/{{ photo.bracelet.url }}">{{photo.bracelet.name}}</a>
-    	    <a href="/bracelet/photo/remove/{{photo.id}}" title="{% trans 'Remove' %}"><i class="icon-trash"></i></a>
+    	    {% if photo.bracelet.photo_id != photo.id %}
+    	    	<a href="/bracelet/photo/remove/{{photo.id}}" title="{% trans 'Remove' %}"><i class="icon-trash"></i>{{photo.bracelet.photo_id}} {{photo.id}}</a>
+    	    {% endif %}
 		</div>
 	{% endfor %}
 {% endif %}
@@ -182,7 +184,9 @@
 		<div class="photo">
         	<a class='lightbox' href="{{ MEDIA_URL }}images/{{ photo.name }}"><img src="{{ MEDIA_URL }}bracelet_thumbs/{{ photo.name }}" /></a>
     	    <a href="/bracelet/{{ photo.bracelet.url }}">{{photo.bracelet.name}}</a>
-    	    <a href="/bracelet/photo/remove/{{photo.id}}" title="{% trans 'Remove' %}"><i class="icon-trash"></i></a>
+    	    {% if photo.bracelet.photo_id != photo.id %}
+    	    	<a href="/bracelet/photo/remove/{{photo.id}}" title="{% trans 'Remove' %}"><i class="icon-trash"></i></a>
+    	    {% endif %}
 		</div>
 	{% endfor %}
 {% endif %}

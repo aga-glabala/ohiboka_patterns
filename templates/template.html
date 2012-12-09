@@ -100,17 +100,11 @@
 				{% trans  "Hey! It's super-beta version of my new site. You probably find some errors. Feel free to" %} <a href="/about/">{% trans "contact me" %}</a> {% trans "when you find some errors or you have some suggestions how to make this site better." %}
 			</div>
 			<div class="spacer"></div>
-			{% if error_message %}
-				<div class="box error_box">{{ error_message }}</div>
+			{% if messages %}
+			    {% for message in messages %}
+			    <div{% if message.tags %} class="box {{ message.tags }}_box"{% endif %}>{{ message }}</div>
 				<div class="spacer"></div>
-			{% endif %}
-			{% if ok_message %}
-				<div class="box ok_box">{{ ok_message }}</div>
-				<div class="spacer"></div>
-			{% endif %}
-			{% if message %}
-				<div class="box">{{ message }}</div>
-				<div class="spacer"></div>
+			    {% endfor %}
 			{% endif %}
 			
 			<div id="login-box" class="box" style="display:none">
