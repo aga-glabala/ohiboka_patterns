@@ -40,8 +40,8 @@ def register(request):
 			form = UserCreationFormExtended(request.POST)
 			if form.is_valid():
 				form.save()
-				messages.error(request, _('Wrong value for bracelet status'))
-				return  index(request, {'ok_message': _('Success! You can log in now.')})
+				messages.success(request, _('Success! You can log in now.'))
+				return  index(request)
 			else:
 				messages.error(request, _('Wrong value for bracelet status'))
 				error = _("An error has occured. Correct entered data.")
