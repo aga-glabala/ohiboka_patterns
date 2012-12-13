@@ -111,7 +111,11 @@ def addpattern(request):
 		url = re.sub(r'[^a-zA-Z0-9]', r'_', url)
 		url = re.sub(r'_+', '_', url)
 		brs = Bracelet.objects.filter(url__startswith = url + '-').order_by('id').reverse()
-		if brs:
+		if not brs:
+			brs = Bracelet.objects.filter(url = url).order_by('id').reverse()
+			if brs:
+				url += '-1'
+		else:
 			brs = brs[0]
 			url += '-' + str(int(brs.url.split('-')[1]) + 1)
 		b = Bracelet(user = request.user, date = datetime.datetime.today(), url = url, public = public, name = request.POST['name'], accepted = False, difficulty = request.POST['difficulty'], category = BraceletCategory.objects.filter(name = request.POST['category'])[0], rate = 0, type = request.POST['type'])

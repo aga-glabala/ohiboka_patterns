@@ -43,15 +43,12 @@ def register(request):
 				messages.success(request, _('Success! You can log in now.'))
 				return  index(request)
 			else:
-				messages.error(request, _('Wrong value for bracelet status'))
-				error = _("An error has occured. Correct entered data.")
+				messages.error(request, _("An error has occured. Correct entered data."))
 		else:
-			messages.error(request, _('Wrong value for bracelet status'))
-			error = _("Wrong captcha, try again.")
+			messages.error(request, _("Wrong captcha, try again."))
 	form = UserCreationFormExtended(request.POST)
 	context = get_context(request)
-	context.update({'form': form, 'error_message': error,
-                               'captcha': captcha.displayhtml(settings.RECAPTCHA_PUBLIC_KEY)})
+	context.update({'form': form, 'captcha': captcha.displayhtml(settings.RECAPTCHA_PUBLIC_KEY)})
 	return render_to_response("common/register.html", context, context_instance = RequestContext(request))
 
 @login_required

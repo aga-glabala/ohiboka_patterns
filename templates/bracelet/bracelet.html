@@ -91,7 +91,7 @@
 				<hr />
 				Status: 
 				{% if bracelet.accepted == 1 %}
-					<span class="ok_box">{% trans 'Accepted' %}</span>
+					<span class="success_box">{% trans 'Accepted' %}</span>
 				{% else %}{% if bracelet.accepted == 0 %}
 					{% trans 'None' %}
 				{% else %}{% if bracelet.accepted == -1 %}
@@ -143,7 +143,7 @@
 				</div>
 			{% else %}
 				<div id="author">
-					author: {{ bracelet.user.username }} <br/>
+					{% trans 'author' %}: {{ bracelet.user.username }} <br/>
 					<a href='/user/{{ bracelet.user.username }}'>{% trans 'See more from this author' %}</a>
 				</div>
 			{% endif %}

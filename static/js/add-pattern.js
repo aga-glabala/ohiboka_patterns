@@ -254,6 +254,7 @@ function addRow() {
 		knotsType[nofrows] = [];
 		var num = 0;
 		if(braceletType == 1) {
+			num = parseInt(nofstr/2);
 			if (nofstr%2==0 && knotsType[nofrows-1].length==num) {
 				num--;
 			}

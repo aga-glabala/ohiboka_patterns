@@ -33,11 +33,10 @@ urlpatterns = patterns('',
     url(r'^bracelet/generate/(?P<pattern_text>.+)/(?P<text_height>.+)/?$', 'bracelet.views.generate_text_pattern'),
     url(r'^bracelet/delete/(?P<bracelet_id>\d+)/?$', 'bracelet.views.delete_bracelet'),
     url(r'^bracelet/edit/(?P<bracelet_id>\d+)/?$', 'bracelet.views.edit_bracelet'),
-    # TODO minus przy statusie!
     url(r'^bracelet/accept/(?P<bracelet_id>\d+)/(?P<bracelet_status>\-?\d?)/?$', 'bracelet.views.accept'),
     url(r'^add/(?P<bracelet_type>.*)/?$', 'bracelet.views.add'),
     url(r'^addpattern/?$', 'bracelet.views.addpattern'),
-    url(r'^bracelet/(?P<bracelet_url>.+)/?$', 'bracelet.views.bracelet'),
+    url(r'^bracelet/(?P<bracelet_url>.+)?$', 'bracelet.views.bracelet'),
 
     # MODULE COMMENT
     url(r'^comments/(?P<bracelet_id>\d+)/$', 'comments.views.pattern_comments'),

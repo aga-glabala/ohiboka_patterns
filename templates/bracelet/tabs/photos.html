@@ -18,7 +18,7 @@ $(document).ready(function() {
 		<input type="hidden" name="bracelet_id" value="{{ bracelet_id }}">
 		{{ form.file }}
 		<br />
-		<input class='btn btn-primary' value="Send photo" type="submit"/>
+		<input class='btn btn-primary' value="{% trans 'Send photo' %}" type="submit"/>
 		<span class='loader'><img src='{{ STATIC_URL }}gfx/lightbox-ico-loading.gif' /></span>
 	</form>
 {% else %}

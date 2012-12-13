@@ -82,7 +82,7 @@ $(document).ready(function(){
       				<label for="search-form-difficulty" class="control-label" >{% trans "Difficulty" %}</label>
       				<div class="controls">
         				<select name="difficulty" id="search-form-difficulty">
-							<option value="0">All</option>
+							<option value="0">{% trans "All" %}</option>
 							<option value="1" {% if difficulty == "1" %}selected="selected" {% endif %}>{% trans "Easy" %}</option>
 							<option value="2" {% if difficulty == "2" %}selected="selected" {% endif %}>{% trans "Medium" %}</option>
 							<option value="3" {% if difficulty == "3" %}selected="selected" {% endif %}>{% trans "Hard" %}</option>
@@ -125,7 +125,7 @@ $(document).ready(function(){
       				<label for="search-form-rate" class="control-label" >{% trans "Rated" %}</label>
       				<div class="controls">
         				<select name="rate" id="search-form-rate">
-							<option value="0">All</option>
+							<option value="0">{% trans "All" %}</option>
 							<option value="1" {% if rate == "1" %}selected="selected" {% endif %}>{% trans "More than" %} *</option>
 							<option value="2" {% if rate == "2" %}selected="selected" {% endif %}>{% trans "More than" %} **</option>
 							<option value="3" {% if rate == "3" %}selected="selected" {% endif %}>{% trans "More than" %} ***</option>
@@ -208,7 +208,7 @@ $(document).ready(function(){
 		        <a href="/bracelet/{{ bt.url }}">
 				    <div class="darken">{{ bt.name }}</div>
 				    <div class="darken" style="margin-top:37px">
-				    	{% trans 'by' %}: {{ bt.author.username }} {% trans 'on' %}: {{ bt.date }}
+				    	{{ bt.user.username }}, {{ bt.date }}
 				    </div>
 				    <div class="darken" style='height:19px;'>
 			    		{% for c in bt.colors %}

@@ -96,7 +96,7 @@
 		<div class="stitches stitches-top2"></div>
 			
 		<div id="content">
-			<div class="box ok_box">
+			<div class="box success_box">
 				{% trans  "Hey! It's super-beta version of my new site. You probably find some errors. Feel free to" %} <a href="/about/">{% trans "contact me" %}</a> {% trans "when you find some errors or you have some suggestions how to make this site better." %}
 			</div>
 			<div class="spacer"></div>
@@ -117,7 +117,7 @@
 					<table>
 					<tr><td>{{ loginform.username }}</td></tr>
 					<tr><td>{{ loginform.password }}</td></tr>
-					<tr><td><label><input type="checkbox" name="remember_me" value="remember_me" /> Remember me</label></td></tr>
+					<tr><td><label><input type="checkbox" name="remember_me" value="remember_me" /> {% trans 'Remember me' %}</label></td></tr>
 					<tr><td><input class="pull-right btn btn-primary" type="submit" value="{% trans 'Login' %}" /></td></tr>
 					</table>
 					</form>

@@ -80,7 +80,7 @@ body {
 	}
 	#top h1 a {
 		text-decoration: none;
-		padding: 50px 100px 55px 0;
+		padding: 50px 60px 55px 0;
 	}
 ul#menu {	
 	list-style-type: none;
@@ -176,7 +176,7 @@ ul#menu {
 .error_box {
 	color: #bc0000;
 }	
-.ok_box {
+.success_box {
 	color: #148c00;
 }
 .spacer {margin:20px;}
