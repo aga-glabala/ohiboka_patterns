@@ -19,7 +19,15 @@ class FacebookBackend(ModelBackend):
 			# Create a new user. Note that we can set password
 			# to anything, because it won't be checked; the password
 			# from settings.py will.
-			username = hashlib.sha224(fb_user.username + fb_user.name).hexdigest()
+			username = fb_user.username
+			users = User.objects.filter(username__startswith = username + '-').order_by('id').reverse()
+			if not users:
+				users = User.objects.filter(username = username).order_by('id').reverse()
+				if users:
+					username += '-1'
+			else:
+				users = users[0]
+				username += '-' + str(int(users.url.split('-')[1]) + 1)
 			user = User(username = username, password = '')
 			user.is_staff = False
 			user.is_superuser = False
