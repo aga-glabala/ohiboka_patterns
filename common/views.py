@@ -14,6 +14,7 @@ from common.bracelet_tools import get_colors, find_bracelets, get_all_bracelets
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib.auth import authenticate, login, logout
 from pyfb.pyfb import Pyfb
+from pyfb import auth
 from common.utils import FacebookBackend
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import EmailMessage
@@ -206,6 +207,7 @@ def login_user(request):
 
 def facebook_login(request):
 	facebook = Pyfb(settings.FACEBOOK_APP_ID)
+	facebook.set_permissions("")
 	return HttpResponseRedirect(facebook.get_auth_code_url(redirect_uri = settings.FACEBOOK_REDIRECT_URL))
 
 
@@ -213,6 +215,7 @@ def facebook_login(request):
 def facebook_login_success(request):
 	code = request.GET.get('code')
 	facebook = Pyfb(settings.FACEBOOK_APP_ID)
+	facebook.set_permissions("")
 	facebook.get_access_token(settings.FACEBOOK_SECRET_KEY, code, redirect_uri = settings.FACEBOOK_REDIRECT_URL)
 	me = facebook.get_myself()
 	authenticator = FacebookBackend()
