@@ -227,6 +227,10 @@
 	vertical-align: top;
 	display:inline-block;
 }
+.column-straight {
+	width:12px;
+	line-height:12px;
+}
 
 .string0, .string1 {	
 	width: 15px;

@@ -237,9 +237,15 @@ function addKnotColumnButton(divColor) {
 }
 
 function removeInput() {
-	if(nofstr>3) {		
-		for(var i=(nofstr%2); i<knotsType.length;i+=2) {
-			knotsType[i] = knotsType[i].slice(0, knotsType[i].length-1);
+	if(nofstr>3) {
+		if (braceletType == 1) {
+			for(var i=(nofstr%2); i<knotsType.length;i+=2) {
+				knotsType[i] = knotsType[i].slice(0, knotsType[i].length-1);
+			}
+		} else if (braceletType == 2) {
+			for(var i=0; i<nofrows; i++) {
+				knotsType[i] = knotsType[i].slice(0, knotsType[i].length-1);
+			}
 		}
 		element = document.getElementById("color"+(nofstr-1));
 		element.parentNode.removeChild(element);
