@@ -194,11 +194,12 @@ function createPattern() {
 }
 
 function generateTemplate() {
-	if (braceletType == 1) {
+	var checked = $('input[name=generate-form-kind]:checked').val();
+	if (braceletType == 1 || checked != 'text') {
 		nofrows = parseInt($('#generate-form-rows').val());
 		nofcols = parseInt($('#generate-form-columns').val());
 		if(parseInt(nofcols) > 2 && parseInt(nofcols)<30 && parseInt(nofrows) > 2 && parseInt(nofrows)<95) {
-			knottype = $('#generate-form-knots').val();
+			knottype = braceletType == 2 ? 5 : $('#generate-form-knots').val();
 			var els = $('span[class*="icon-knot"]');
 			els.removeClass();
 			els.addClass('icon-knot'+knottype);

@@ -226,6 +226,7 @@
 	width:10px;
 	vertical-align: top;
 	display:inline-block;
+	border-bottom: 5px;
 }
 .column-straight {
 	width:12px;
