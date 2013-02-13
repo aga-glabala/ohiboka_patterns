@@ -1,6 +1,5 @@
 from django.contrib.auth.models import User
 from common.models import UserProfile
-import hashlib
 from django.contrib.auth.backends import ModelBackend
 
 class FacebookBackend(ModelBackend):

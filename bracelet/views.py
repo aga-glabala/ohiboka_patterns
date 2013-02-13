@@ -292,8 +292,8 @@ def accept(request, bracelet_id, bracelet_status):
 						u'\r\nDodaj nowy wzór: http://patterns.ohiboka.com/add' + \
 						u'\r\nPozdrowienia,' + \
 						u'\r\nAga' + \
-						u'\r\nhttp://ohiboka.com' + \
-		EmailMessage(subject, msg_content, 'aga@ohiboka.com', [b.user.email], headers = {'Reply-To': 'aga@ohiboka.com'}).send()
+						u'\r\nhttp://ohiboka.com'
+		EmailMessage(subject, msg_content, 'aga@ohiboka.com', [b.user.email], headers = {'Reply-To': ['aga@ohiboka.com']}).send()
 	elif status == 1:
 		subject = 'Your bracelet was accepted | Twoja bransoletka została zaakceptowana'
 		msg_content = u'Hey! Congratulations, your bracelet was accepted. Thanks for great pattern. You can see this bracelet from your profile and on main page' + \
@@ -311,8 +311,8 @@ def accept(request, bracelet_id, bracelet_status):
 						u'\r\nPozdrowienia,' + \
 						u'\r\nAga' + \
 						u'\r\nhttp://ohiboka.com'
-	EmailMessage(subject, msg_content, 'ohiboka@ohiboka.com', [b.user.email], headers = {'Reply-To': ['aga@ohiboka.com']}).send()
-	messages.error(request, _('Bracelet\'s status was successfully changed'))
+	EmailMessage(subject, msg_content, 'aga@ohiboka.com', [b.user.email], headers = {'Reply-To': ['aga@ohiboka.com']}).send()
+	messages.success(request, _('Bracelet\'s status was successfully changed'))
 	return bracelet(request, b.url)
 
 @login_required
