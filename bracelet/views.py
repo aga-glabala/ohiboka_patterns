@@ -361,6 +361,7 @@ def generate_text_pattern(request, pattern_text, text_height):
 	to_json = []
 	to_json += empty
 	characters = simplejson.load(open(settings.PROJECT_ROOT + "/bracelet/" + text_height + ".json"))
+
 	for char in pattern_text:
 		if char not in characters:
 			return HttpResponse("Unknown character '" + char + "' in given text", status = 400, mimetype = 'application/json')

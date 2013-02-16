@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 '''
 Created on Feb 28, 2012
 
@@ -28,7 +29,7 @@ class BraceletPattern(object):
 		for i in range(len(self.strings)):
 			style += ".str" + str(i) + " {background-color:" + str(self.strings[i].color) + ";}"
 		return style
-	
+
 	def get_colors(self):
 		colors = []
 		for i in range(len(self.strings)):
@@ -65,7 +66,7 @@ class BraceletPattern(object):
 					noc = nofcols - (i % 2) # dla parzystej liczby nitek 
 				else:
 					noc = nofcols
-	
+
 				for j in range(noc):
 					types.append(int(self.knots[index].knottype.id))
 					index += 1
@@ -84,15 +85,15 @@ class BraceletPattern(object):
 				colors.append(self.get_knot_color(self.strings_order[self.nofrows - 1], self.knots_types[self.nofrows - 1], j, (self.nofrows - 1) % 2))
 			self.knots_colors.append(colors)
 		elif int(self.bracelet.type) == 2:
-			self.nofrows = (len(self.knots)+1) / (len(self.strings)-1)
-			nofcols = len(self.strings)-1
+			self.nofrows = (len(self.knots) + 1) / (len(self.strings) - 1)
+			nofcols = len(self.strings) - 1
 			for i in range(self.nofrows):
 				types = []
 				colors = []
 				for j in range(nofcols):
 					knotType = int(self.knots[i * nofcols + j].knottype.id)
 					types.append(knotType)
-					colors.append(0 if knotType == 5 else j+1)
+					colors.append(0 if knotType == 5 else j + 1)
 				self.knots_types.append(types)
 				self.knots_colors.append(colors)
 
@@ -142,7 +143,7 @@ class BraceletPattern(object):
 		if int(self.bracelet.type) == 1:
 			im = Image.new(mode = "RGB", size = (self.nofrows * 100 + 16, len(self.strings) / 2 * 160 + 16 + 36), color = "#fff")
 			draw = ImageDraw.Draw(im)
-	
+
 			for i in range(self.nofrows):
 				if i % 2 == 0 and self.odd or i % 2 == 1 and not self.odd:
 					marginTop = 80
@@ -158,7 +159,7 @@ class BraceletPattern(object):
 		if int(self.bracelet.type) == 2:
 			im = Image.new(mode = "RGB", size = (self.nofrows * 100 + 16, len(self.strings) * 100 + 16), color = "#fff")
 			draw = ImageDraw.Draw(im)
-	
+
 			for i in range(self.nofrows):
 				for j in range(len(self.knots_colors[i])):
 					color = str(self.strings[self.knots_colors[i][len(self.knots_colors[i]) - 1 - j]].color)
@@ -170,5 +171,9 @@ class BraceletPattern(object):
 		im.save(path)
 
 def get_custom_characters():
-	characters = ['#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#']
+	characters = [" ", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F", "G", "H",
+				  "I", "J", "K", "L", "M", "N", "O", "P", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "a",
+				  "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "r", "s", "t",
+				  "u", "v", "w", "x", "y", "z", "!", "#", "^", "*", "(", ")", ":", "'", "\"", "<", ">", "?", "/", "\\",
+				  "|", "+", "-", "=", "_", "*", "⁙", "‹", "›", "↓", "←", "↑", "→", "◆", "◇", "▲", "△", "♥"]
 	return characters

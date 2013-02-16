@@ -1,6 +1,8 @@
 from django.contrib.auth.models import User
 from common.models import UserProfile
 from django.contrib.auth.backends import ModelBackend
+import hashlib
+from datetime import date
 
 class FacebookBackend(ModelBackend):
 	"""
@@ -27,7 +29,7 @@ class FacebookBackend(ModelBackend):
 			else:
 				users = users[0]
 				username += '-' + str(int(users.url.split('-')[1]) + 1)
-			user = User(username = username, password = '')
+			user = User(username = username, password = hashlib.sha224(username + str(date.today())).hexdigest())
 			user.is_staff = False
 			user.is_superuser = False
 			user.save()
