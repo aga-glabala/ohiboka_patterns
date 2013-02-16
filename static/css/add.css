@@ -69,3 +69,7 @@
 	left: auto;
 	right: 0;
 }
+.character-chooser-button {
+	width: 14px;
+	height: 16px;
+}
