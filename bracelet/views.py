@@ -360,14 +360,21 @@ def generate_text_pattern(request, pattern_text, text_height):
 	empty = [[5, 5, 5, 5, 5, 5, 5]] if text_height == "7" else [[5, 5, 5, 5, 5, 5, 5, 5, 5, 5]]
 	to_json = []
 	to_json += empty
+	notfound = []
 	characters = simplejson.load(open(settings.PROJECT_ROOT + "/bracelet/" + text_height + ".json"))
 
+	pattern_text = pattern_text.split('\f')
 	for char in pattern_text:
 		if char not in characters:
-			return HttpResponse("Unknown character '" + char + "' in given text", status = 400, mimetype = 'application/json')
-		to_json += characters[char]
-		to_json += empty
-	return HttpResponse(simplejson.dumps(to_json), mimetype = 'application/json')
+			notfound += char
+		else:
+			to_json += characters[char]
+			to_json += empty
+	error = None
+	if len(notfound) > 0:
+		error = _("Not found: ") + " ".join(notfound) 
+	result = {"pattern": to_json, "error": error}
+	return HttpResponse(simplejson.dumps(result), mimetype = 'application/json')
 
 def _fake_for_translate():
 	_("Make one knot {0} in forward on {1}")

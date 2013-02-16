@@ -209,11 +209,15 @@ function generateTemplate() {
 		}
 	} else if (braceletType == 2) {
 		nofcols = parseInt($('input[name=generate-form-letter-height]:checked').val());
-		$.getJSON("/bracelet/generate/"+escape($('#generate-form-text').val())+"/"+nofcols, function(data) {
-			if (data == undefined || data.length == 0 || data[0].length == 0) {
+		var text = encodeURIComponent($('#generate-form-text').val().split('').join('\f'));
+		if (text == undefined || text.length == 0) {
+			return;
+		}
+		$.getJSON("/bracelet/generate/"+text+"/"+nofcols, function(data) {
+			if (data == undefined || data.pattern == undefined || data.pattern[0].length == 0) {
 				alert(patternTextGeneratorError);
 			}
-			knotsType = data;
+			knotsType = data.pattern;
 			nofrows = knotsType.length;
 			nofstr = knotsType[0].length+1;
 			stringColors = ['#000000'];
@@ -221,6 +225,9 @@ function generateTemplate() {
 				stringColors[stringColors.length] = '#ffffff';
 			}
 			createPattern();
+			if (data.error) {
+				alert(data.error);
+			}
 		}).error(function(jqXHR, textStatus, errorThrown) { alert(jqXHR.responseText); });
 	}
 }
