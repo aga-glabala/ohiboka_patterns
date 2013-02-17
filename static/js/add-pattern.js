@@ -194,6 +194,15 @@ function createPattern() {
 }
 
 function generateTemplate() {
+	function setLoader(isLoading) {
+		if (isLoading) {
+			$("#generate-template-button").attr("disabled", "disabled");
+		} else {
+			$("#generate-template-button").removeAttr("disabled");
+		}
+	}
+	
+	setLoader(true);
 	var checked = $('input[name=generate-form-kind]:checked').val();
 	if (braceletType == 1 || checked != 'text') {
 		nofrows = parseInt($('#generate-form-rows').val());
@@ -207,10 +216,12 @@ function generateTemplate() {
 		} else {
 			alert(patternGeneratorError);
 		}
+		setLoader(false);
 	} else if (braceletType == 2) {
 		nofcols = parseInt($('input[name=generate-form-letter-height]:checked').val());
 		var text = encodeURIComponent($('#generate-form-text').val().split('').join('\f'));
 		if (text == undefined || text.length == 0) {
+			setLoader(false);
 			return;
 		}
 		$.getJSON("/bracelet/generate/"+text+"/"+nofcols, function(data) {
@@ -228,7 +239,11 @@ function generateTemplate() {
 			if (data.error) {
 				alert(data.error);
 			}
-		}).error(function(jqXHR, textStatus, errorThrown) { alert(jqXHR.responseText); });
+			setLoader(false);
+		}).error(function(jqXHR, textStatus, errorThrown) { 
+			alert(jqXHR.responseText);
+			setLoader(false);
+		});
 	}
 }
 
