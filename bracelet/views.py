@@ -274,43 +274,44 @@ def accept(request, bracelet_id, bracelet_status):
         return HttpResponseRedirect('/')
     b.accepted = status
     b.save()
-    msg_content = ''
-    if status == -1:
-        subject = 'Your bracelet was rejected | Twoja bransoletka została odrzucona'
-        msg_content = u'Hey! I\'m sorry, but your bracelet was rejected. It was probably to easy or same pattern was already submitted. You can still see this bracelet from your profile' + \
-                        u' (http://patterns.ohiboka.com/profile). Thanks for using my site and hope to see you again.' + \
-                        u'\r\nGo to pattern: http://patterns.ohiboka.com/bracelet/' + b.url + \
-                        u'\r\nAdd new bracelet: http://patterns.ohiboka.com/add' + \
-                        u'\r\nRegards,' + \
-                        u'\r\nAga' + \
-                        u'\r\nhttp://ohiboka.com' + \
-                        u'\r\n\r\n----\r\n\r\n' + \
-                        u'Cześć, przykro mi, ale Twoja bransoletka została odrzucona. Prawdopodobnie była zbyt prosta lub jest już taka na stronie. Ciągle możesz ją zobaczyć na swoim profilu' + \
-                        u' (http://patterns.ohiboka.com/profile). Dziekuję za skorzystanie z mojej strony i mam nadzieję że jeszcze kiedyś tu zajrzysz.' + \
-                        u'\r\nZobacz wzór: http://patterns.ohiboka.com/bracelet/' + b.url + \
-                        u'\r\nDodaj nowy wzór: http://patterns.ohiboka.com/add' + \
-                        u'\r\nPozdrowienia,' + \
-                        u'\r\nAga' + \
-                        u'\r\nhttp://ohiboka.com'
+    if b.user.email:
+        msg_content = ''
+        if status == -1:
+            subject = 'Your bracelet was rejected | Twoja bransoletka została odrzucona'
+            msg_content = u'Hey! I\'m sorry, but your bracelet was rejected. It was probably to easy or same pattern was already submitted. You can still see this bracelet from your profile' + \
+                            u' (http://patterns.ohiboka.com/profile). Thanks for using my site and hope to see you again.' + \
+                            u'\r\nGo to pattern: http://patterns.ohiboka.com/bracelet/' + b.url + \
+                            u'\r\nAdd new bracelet: http://patterns.ohiboka.com/add' + \
+                            u'\r\nRegards,' + \
+                            u'\r\nAga' + \
+                            u'\r\nhttp://ohiboka.com' + \
+                            u'\r\n\r\n----\r\n\r\n' + \
+                            u'Cześć, przykro mi, ale Twoja bransoletka została odrzucona. Prawdopodobnie była zbyt prosta lub jest już taka na stronie. Ciągle możesz ją zobaczyć na swoim profilu' + \
+                            u' (http://patterns.ohiboka.com/profile). Dziekuję za skorzystanie z mojej strony i mam nadzieję że jeszcze kiedyś tu zajrzysz.' + \
+                            u'\r\nZobacz wzór: http://patterns.ohiboka.com/bracelet/' + b.url + \
+                            u'\r\nDodaj nowy wzór: http://patterns.ohiboka.com/add' + \
+                            u'\r\nPozdrowienia,' + \
+                            u'\r\nAga' + \
+                            u'\r\nhttp://ohiboka.com'
+            EmailMessage(subject, msg_content, 'aga@ohiboka.com', [b.user.email], headers = {'Reply-To': ['aga@ohiboka.com']}).send()
+        elif status == 1:
+            subject = 'Your bracelet was accepted | Twoja bransoletka została zaakceptowana'
+            msg_content = u'Hey! Congratulations, your bracelet was accepted. Thanks for great pattern. You can see this bracelet from your profile and on main page' + \
+                            u' (http://patterns.ohiboka.com/profile and http://patterns.ohiboka.com). Thanks for using my site and hope to see you again.' + \
+                            u'\r\nGo to pattern: http://patterns.ohiboka.com/bracelet/' + b.url + \
+                            u'\r\nAdd new bracelet: http://patterns.ohiboka.com/add' + \
+                            u'\r\nRegards,' + \
+                            u'\r\nAga' + \
+                            u'\r\nhttp://ohiboka.com' + \
+                            u'\r\n\r\n----\r\n\r\n' + \
+                            u'Cześć! Gratulacje, Twoja bransoletka została zaakceptowana. Dzięki za świetny wzór. Możesz zobaczyć wzór na swoim profilu i na stronie głównej' + \
+                            u' (http://patterns.ohiboka.com/profile and http://patterns.ohiboka.com). Dzięki za korzystanie ze strony i do zobaczenia ponownie.' + \
+                            u'\r\nZobacz wzór: http://patterns.ohiboka.com/bracelet/' + b.url + \
+                            u'\r\nDodaj nowy wzór: http://patterns.ohiboka.com/add' + \
+                            u'\r\nPozdrowienia,' + \
+                            u'\r\nAga' + \
+                            u'\r\nhttp://ohiboka.com'
         EmailMessage(subject, msg_content, 'aga@ohiboka.com', [b.user.email], headers = {'Reply-To': ['aga@ohiboka.com']}).send()
-    elif status == 1:
-        subject = 'Your bracelet was accepted | Twoja bransoletka została zaakceptowana'
-        msg_content = u'Hey! Congratulations, your bracelet was accepted. Thanks for great pattern. You can see this bracelet from your profile and on main page' + \
-                        u' (http://patterns.ohiboka.com/profile and http://patterns.ohiboka.com). Thanks for using my site and hope to see you again.' + \
-                        u'\r\nGo to pattern: http://patterns.ohiboka.com/bracelet/' + b.url + \
-                        u'\r\nAdd new bracelet: http://patterns.ohiboka.com/add' + \
-                        u'\r\nRegards,' + \
-                        u'\r\nAga' + \
-                        u'\r\nhttp://ohiboka.com' + \
-                        u'\r\n\r\n----\r\n\r\n' + \
-                        u'Cześć! Gratulacje, Twoja bransoletka została zaakceptowana. Dzięki za świetny wzór. Możesz zobaczyć wzór na swoim profilu i na stronie głównej' + \
-                        u' (http://patterns.ohiboka.com/profile and http://patterns.ohiboka.com). Dzięki za korzystanie ze strony i do zobaczenia ponownie.' + \
-                        u'\r\nZobacz wzór: http://patterns.ohiboka.com/bracelet/' + b.url + \
-                        u'\r\nDodaj nowy wzór: http://patterns.ohiboka.com/add' + \
-                        u'\r\nPozdrowienia,' + \
-                        u'\r\nAga' + \
-                        u'\r\nhttp://ohiboka.com'
-    EmailMessage(subject, msg_content, 'aga@ohiboka.com', [b.user.email], headers = {'Reply-To': ['aga@ohiboka.com']}).send()
     messages.success(request, _('Bracelet\'s status was successfully changed'))
     return bracelet(request, b.url)
 
