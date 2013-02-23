@@ -437,7 +437,11 @@ function initDesigner() {
 	$('#pattern-designer').empty();
 	$('#colorsInput').empty();
 	loaded = false;
-	for(var i=0; i<nofcols; i++) {
+	var nofinputs = nofcols;
+	if (braceletType == 2) {
+		nofinputs++;
+	}
+	for(var i=0; i<nofinputs; i++) {
 		addInput('colorsInput');
 		$('#color'+i+' option:eq(0)').attr("selected", "selected");
 	}
@@ -462,7 +466,7 @@ function initDesigner() {
 				knotsType[i][knotsType[i].length] = kt;
 			}
 		} else if (braceletType == 2) {
-			for(var j=0; j<nofstr; j++){
+			for(var j=0; j<nofstr-1; j++){
 				knotsType[i][j] = kt;
 			}
 		}
@@ -479,11 +483,11 @@ function drawPattern() {
 		col = $('.current').index();
 		row = $('.current').parent().index();
 	}
+	$('#pattern-canvas').empty();
+	$('#pattern-thumb').empty();
+	$('#pattern-designer').empty();
 	if (braceletType == 2) {
 		var nofcols = knotsType[0].length;
-		$('#pattern-canvas').empty();
-		$('#pattern-thumb').empty();
-		$('#pattern-designer').empty();
 		for (var i=0; i<nofrows;i++) {
 			$('<div id="row-strings'+i+'" />').appendTo('#pattern-canvas');
 			$('<span class="str0 string-'+( i%2 == 0 ? 'ur' : 'dr' )+'"></span>').appendTo('#row-strings'+i);
@@ -499,15 +503,12 @@ function drawPattern() {
 			for(var j=0; j<nofcols; j++) {
 				var color = knotsType[i][j] == 5 ? 0 : j+1;
 				$('<span class="str'+color+' knot knot'+knotsType[i][j]+ifwhite[color]+'" onclick="changeType(this, '+i+','+j+')"></span>').appendTo('#row'+i);
-				$('<span class="str'+(knotsType[i][knotsType[i].length-1-j] == 5 ? 0 : j+1)+' knot-thumb"></span>').appendTo('#column'+i); 
+				$('<span class="str'+(knotsType[i][knotsType[i].length-1-j] == 5 ? 0 : nofcols-j)+' knot-thumb"></span>').appendTo('#column'+i); 
 			}
 		}
 		$('#row'+(row)+' > span:nth-child('+(col+1)+')').addClass('current');
 		return;
 	}
-	$('#pattern-canvas').empty();
-	$('#pattern-thumb').empty();
-	$('#pattern-designer').empty();
 	for (var i=0; i<nofrows;i++) {
 		var cl = "odd";
 		var cl_thumb = "";
