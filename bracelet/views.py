@@ -247,7 +247,7 @@ def change_status(request, bracelet_id):
     except ObjectDoesNotExist:
         messages.error(request, _('Bracelet do not exists'))
         return HttpResponseRedirect('/')
-    if b.user != request.user or request.user.is_staff():
+    if b.user != request.user or request.user.is_staff:
         messages.error(request, _('This bracelet is not yours'))
         return HttpResponseRedirect('/')
     b.public = not b.public
@@ -354,29 +354,29 @@ def delete_rate(request, rate_id):
     return HttpResponseRedirect('/profile')
 
 def generate_text_pattern(request, pattern_text, text_height):
-	if text_height != "7" and text_height != "10":
-		return HttpResponse("Bad text_height parameter value (7 or 10 allowed)", status = 400, mimetype = 'application/json')
-	empty = [[5, 5, 5, 5, 5, 5, 5]] if text_height == "7" else [[5, 5, 5, 5, 5, 5, 5, 5, 5, 5]]
-	to_json = []
-	to_json += empty
-	notfound = []
-	characters = simplejson.load(open(settings.PROJECT_ROOT + "/bracelet/" + text_height + ".json"))
+    if text_height != "7" and text_height != "10":
+        return HttpResponse("Bad text_height parameter value (7 or 10 allowed)", status = 400, mimetype = 'application/json')
+    empty = [[5, 5, 5, 5, 5, 5, 5]] if text_height == "7" else [[5, 5, 5, 5, 5, 5, 5, 5, 5, 5]]
+    to_json = []
+    to_json += empty
+    notfound = []
+    characters = simplejson.load(open(settings.PROJECT_ROOT + "/bracelet/" + text_height + ".json"))
 
-	pattern_text = pattern_text.split('\f')
-	for char in pattern_text:
-		if char not in characters:
-			notfound += char
-		else:
-			to_json += characters[char]
-			to_json += empty
-	error = None
-	if len(notfound) > 0:
-		error = _("Not found: ") + " ".join(notfound) 
-	result = {"pattern": to_json, "error": error}
-	return HttpResponse(simplejson.dumps(result), mimetype = 'application/json')
+    pattern_text = pattern_text.split('\f')
+    for char in pattern_text:
+        if char not in characters:
+            notfound += char
+        else:
+            to_json += characters[char]
+            to_json += empty
+    error = None
+    if len(notfound) > 0:
+        error = _("Not found: ") + " ".join(notfound)
+    result = {"pattern": to_json, "error": error}
+    return HttpResponse(simplejson.dumps(result), mimetype = 'application/json')
 
 def _fake_for_translate():
-	_("Make one knot {0} in forward on {1}")
-	_("Make one knot {0} in backward on {1}")
-	_("Make one knot {0} in forward-backward on {1}")
-	_("Make one knot {0} in backward-forward on {1}")
+    _("Make one knot {0} in forward on {1}")
+    _("Make one knot {0} in backward on {1}")
+    _("Make one knot {0} in forward-backward on {1}")
+    _("Make one knot {0} in backward-forward on {1}")

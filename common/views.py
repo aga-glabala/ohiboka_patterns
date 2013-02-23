@@ -14,7 +14,6 @@ from common.bracelet_tools import get_colors, find_bracelets, get_all_bracelets
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib.auth import authenticate, login, logout
 from pyfb.pyfb import Pyfb
-from pyfb import auth
 from common.utils import FacebookBackend
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import EmailMessage
@@ -57,7 +56,10 @@ def userprofile(request):
         bracelets = get_all_bracelets(0, request.user, False)
         bracelets_accepted = []
         bracelets_not_accepted = []
+        bracelets_private = []
         for br in bracelets:
+            if not br.public:
+                bracelets_private.append(br)
             if br.accepted:
                 bracelets_accepted.append(br)
             else:
@@ -75,6 +77,7 @@ def userprofile(request):
         context = get_context(request)
         context['bracelets_accepted'] = bracelets_accepted
         context['bracelets_not_accepted'] = bracelets_not_accepted
+        context['bracelets_private'] = bracelets_private
         context['photos_accepted'] = photos_accepted
         context['photos_not_accepted'] = photos_not_accepted
         context['rates'] = Rate.objects.filter(user = request.user)
@@ -142,10 +145,16 @@ def about(request, context = {}):
                 return HttpResponseRedirect('/contact/success/')
             else:
                 messages.error(request, _("An error has occured. Correct entered data."))
-                return about(request)
+                #return about(request, {'subject': form.cleaned_data['subject'], 'msg_content': form.cleaned_data['message'], 'sender': form.cleaned_data['sender']})
+                context.update(get_context(request))
+                context.update({'contactform':form, 'captcha': captcha.displayhtml(settings.RECAPTCHA_PUBLIC_KEY)})
+                return render_to_response('common/about.html', context, RequestContext(request))
         else:
             messages.error(request, _('Wrong captcha.'))
-            return HttpResponseRedirect('/about')
+            #return about(request, {'subject': form.cleaned_data['subject'], 'msg_content': form.cleaned_data['message'], 'sender': form.cleaned_data['sender']})
+            context.update(get_context(request))
+            context.update({'contactform':form, 'captcha': captcha.displayhtml(settings.RECAPTCHA_PUBLIC_KEY)})
+            return render_to_response('common/about.html', context, RequestContext(request))
     else:
         form = ContactForm()
     context.update(get_context(request))

@@ -9,18 +9,18 @@
 <link rel="stylesheet" href="{{ STATIC_URL }}css/userprofile.css" type="text/css">
 <script src="{{ STATIC_URL }}js/jquery.lightbox-0.5.pack.js" type="text/javascript" ></script>
 <script type="text/javascript" >
-	$(document).ready(function(){
-		$('.pattern').hover(function() {
-			$('.pattern-details').hide();
-			$('#pattern_info'+$(this).attr('id').substring(7)).show();
-		});
-		$('.pattern-box').hover(function() {}, function() {
-			$('.pattern-details').hide();
+    $(document).ready(function(){
+        $('.pattern').hover(function() {
+            $('.pattern-details').hide();
+            $('#pattern_info'+$(this).attr('id').substring(7)).show();
+        });
+        $('.pattern-box').hover(function() {}, function() {
+            $('.pattern-details').hide();
 
-		$('.active').removeClass('active');
-		$('#top-profile').addClass('active');
+        $('.active').removeClass('active');
+        $('#top-profile').addClass('active');
 
-	});
+    });
 </script>
 {% endblock %}
 
@@ -28,176 +28,83 @@
 <h2>{% trans "Your content" %}</h2>
 
 {% if bracelets_accepted %}
-<h3>{% trans "Your accepted bracelets" %}</h3>
+    <h3>{% trans "Your accepted bracelets" %}</h3>
 
-<hr />
-	{% for bt in bracelets_accepted %}
-	    <div class="pattern-box">
-		<div class="pattern {% cycle 'pattern-odd' 'pattern-even' %}" id="pattern{{ bt.id }}">
-		        <a href="/bracelet/{{ bt.url }}">
-			        <div class="pattern-thumb">
-				        <img src="{{ MEDIA_URL }}bracelet_thumbs/{{ bt.photo.name }}" />
-			        </div>
-			        <div class="pattern-info">
-			        	{% if bt.now %}
-				    	    <i class="icon-new">&nbsp;</i>
-				    		<br />
-				    	{% endif %}
-				    	<div title=
-		    	    		{% if bt.category.id == 1 %}
-		    	    			"{% trans 'nature' %}"
-		    	    		{% else %}
-		    	    			{% if bt.category.id == 2 %}
-		    	    				"{% trans 'text' %}"
-		    	    			{% else %}
-		    	    				{% if bt.category.id == 4 %}
-		    	    					"{% trans 'zigzak' %}"
-		    	    				{% else %}
-		    	    					"{% trans 'another' %}"
-		    	    				{% endif %}
-		    	    			{% endif %}
-		    	    		{% endif %}
-		    	    		 class="category icon-category{{ bt.category.id }}">&nbsp;
-		    	    	</div>
-				    	<br />
-		    	    	<i class="icon-strings" title="{% trans 'Number of strings' %}">&nbsp;</i> {{ bt.nofstrings }}
-				    	<br />
-		    	    	<i class="icon-heart-full" title="{% trans 'Rate' %}">&nbsp;</i> {{ bt.short_rate }}
-				    	<br />
-		    	    	<i class="icon-difficulty{{ bt.difficulty}}" title="{% trans 'Difficulty' %}">&nbsp;</i>
-			        </div>
-				</a>
-	        </div>
-	        <div class="pattern-details" id="pattern_info{{ bt.id }}" style="display:none">
-		        <a href="/bracelet/{{ bt.url }}">
-				    <div class="darken">{{ bt.name }}</div>
-				    <div class="darken" style="margin-top:48px">
-				    	{% trans 'by' %}: {{ bt.user.username }} {% trans 'on' %}: {{ bt.date }}
-				    </div>
-				    <div class="darken">
-			    		{% for c in bt.colors %}
-		    	    		<div class="knot" style="background-color:{{c}};"></div>
-		    	    	{% endfor %}
-				    </div>
-			    	    	
-				</a>
-			</div>
-			</div>
-	    {% endfor %}
+    <hr />
+    {% for bt in bracelets_accepted %}
+        {% include "common/bracelet_box_partial.html" with bracelet=bt %}
+    {% endfor %}
 {% endif %}
 
 {% if bracelets_not_accepted %}
-<h3>{% trans "Bracelets waiting for admin to accept" %}</h3>
-
-<hr />
-	{% for bt in bracelets_not_accepted %}
-	    <div class="pattern-box">
-		<div class="pattern {% cycle 'pattern-odd' 'pattern-even' %}" id="pattern{{ bt.id }}">
-		        <a href="/bracelet/{{ bt.url }}">
-			        <div class="pattern-thumb">
-				        <img src="{{ MEDIA_URL }}bracelet_thumbs/{{ bt.photo }}" />
-			        </div>
-			        <div class="pattern-info">
-			        	{% if bt.now %}
-				    	    <i class="icon-new">&nbsp;</i>
-				    		<br />
-				    	{% endif %}
-				    	<div title=
-		    	    		{% if bt.category.id == 1 %}
-		    	    			"{% trans 'nature' %}"
-		    	    		{% else %}
-		    	    			{% if bt.category.id == 2 %}
-		    	    				"{% trans 'text' %}"
-		    	    			{% else %}
-		    	    				{% if bt.category.id == 4 %}
-		    	    					"{% trans 'zigzak' %}"
-		    	    				{% else %}
-		    	    					"{% trans 'another' %}"
-		    	    				{% endif %}
-		    	    			{% endif %}
-		    	    		{% endif %}
-		    	    		 class="category icon-category{{ bt.category.id }}">&nbsp;
-		    	    	</div>
-				    	<br />
-		    	    	<i class="icon-strings" title="{% trans 'Number of strings' %}">&nbsp;</i> {{ bt.nofstrings }}
-				    	<br />
-		    	    	<i class="icon-heart-full" title="{% trans 'Rate' %}">&nbsp;</i> {{ bt.short_rate }}
-				    	<br />
-		    	    	<i class="icon-difficulty{{ bt.difficulty}}" title="{% trans 'Difficulty' %}">&nbsp;</i>
-			        </div>
-				</a>
-	        </div>
-	        <div class="pattern-details" id="pattern_info{{ bt.id }}" style="display:none">
-		        <a href="/bracelet/{{ bt.url }}">
-				    <div class="darken">{{ bt.name }}</div>
-				    <div class="darken" style="margin-top:48px">
-				    	{% trans 'by' %}: {{ bt.user.username }} {% trans 'on' %}: {{ bt.date }}
-				    </div>
-				    <div class="darken">
-			    		{% for c in bt.colors %}
-		    	    		<div class="knot" style="background-color:{{c}};"></div>
-		    	    	{% endfor %}
-				    </div>
-			    	    	
-				</a>
-			</div>
-			</div>
-	    {% endfor %}
+    <h3>{% trans "Bracelets waiting for admin to accept" %}</h3>
+    <hr />
+    {% for bt in bracelets_not_accepted %}
+        {% include "common/bracelet_box_partial.html" with bracelet=bt %}
+    {% endfor %}
 {% endif %}
-	    
+
+{% if bracelets_private %}
+    <h3>{% trans "Private bracelets" %}</h3>
+    <hr />
+    {% for bt in bracelets_private %}
+        {% include "common/bracelet_box_partial.html" with bracelet=bt %}
+    {% endfor %}
+{% endif %}
+
 {% if rates %}
 <h3>{% trans 'Rates' %}</h3>
 <hr />
-	<table class='table'>
-		<tr>
-			<td>{% trans 'Bracelet' %}</td>
-			<td>{% trans 'Your rate' %}</td>
-			<td>{% trans 'Action' %}</td>
-		</tr>
-		{% for rate in rates %}
-		<tr>
-			<td><a href="/bracelet/{{ rate.bracelet.url }}">{{rate.bracelet.name}}</a></td>
-			<td>{{rate.rate}}</td>
-			<td><a href="/bracelet/rate/remove/{{rate.id}}" title="{% trans 'Remove' %}"> <i class="icon-trash"></i></a></td>
-		</tr>
-		{% endfor %}
-	</table>
+    <table class='table'>
+        <tr>
+            <td>{% trans 'Bracelet' %}</td>
+            <td>{% trans 'Your rate' %}</td>
+            <td>{% trans 'Action' %}</td>
+        </tr>
+        {% for rate in rates %}
+        <tr>
+            <td><a href="/bracelet/{{ rate.bracelet.url }}">{{rate.bracelet.name}}</a></td>
+            <td>{{rate.rate}}</td>
+            <td><a href="/bracelet/rate/remove/{{rate.id}}" title="{% trans 'Remove' %}"> <i class="icon-trash"></i></a></td>
+        </tr>
+        {% endfor %}
+    </table>
 {% endif %}
 {% if photos_accepted %}
-	<h3>{% trans 'Accepted photos' %}</h3>
-	<hr />
-	{% for photo in photos_accepted %}
-		<div class="photo">
-        	<a class='lightbox' href="{{ MEDIA_URL }}images/{{ photo.name }}"><img src="{{ MEDIA_URL }}bracelet_thumbs/{{ photo.name }}" /></a>
-    	    <a href="/bracelet/{{ photo.bracelet.url }}">{{photo.bracelet.name}}</a>
-    	    {% if photo.bracelet.photo_id != photo.id %}
-    	    	<a href="/bracelet/photo/remove/{{photo.id}}" title="{% trans 'Remove' %}"><i class="icon-trash"></i>{{photo.bracelet.photo_id}} {{photo.id}}</a>
-    	    {% endif %}
-		</div>
-	{% endfor %}
+    <h3>{% trans 'Accepted photos' %}</h3>
+    <hr />
+    {% for photo in photos_accepted %}
+        <div class="photo">
+            <a class='lightbox' href="{{ MEDIA_URL }}images/{{ photo.name }}"><img src="{{ MEDIA_URL }}bracelet_thumbs/{{ photo.name }}" /></a>
+            <a href="/bracelet/{{ photo.bracelet.url }}">{{photo.bracelet.name}}</a>
+            {% if photo.bracelet.photo_id != photo.id %}
+                <a href="/bracelet/photo/remove/{{photo.id}}" title="{% trans 'Remove' %}"><i class="icon-trash"></i>{{photo.bracelet.photo_id}} {{photo.id}}</a>
+            {% endif %}
+        </div>
+    {% endfor %}
 {% endif %}
 
 {% if photos_not_accepted %}
-	<h3>{% trans 'Photos waiting for admin to accept' %}</h3>
-	<hr />
-	{% for photo in photos_not_accepted %}
-		<div class="photo">
-        	<a class='lightbox' href="{{ MEDIA_URL }}images/{{ photo.name }}"><img src="{{ MEDIA_URL }}bracelet_thumbs/{{ photo.name }}" /></a>
-    	    <a href="/bracelet/{{ photo.bracelet.url }}">{{photo.bracelet.name}}</a>
-    	    {% if photo.bracelet.photo_id != photo.id %}
-    	    	<a href="/bracelet/photo/remove/{{photo.id}}" title="{% trans 'Remove' %}"><i class="icon-trash"></i></a>
-    	    {% endif %}
-		</div>
-	{% endfor %}
+    <h3>{% trans 'Photos waiting for admin to accept' %}</h3>
+    <hr />
+    {% for photo in photos_not_accepted %}
+        <div class="photo">
+            <a class='lightbox' href="{{ MEDIA_URL }}images/{{ photo.name }}"><img src="{{ MEDIA_URL }}bracelet_thumbs/{{ photo.name }}" /></a>
+            <a href="/bracelet/{{ photo.bracelet.url }}">{{photo.bracelet.name}}</a>
+            {% if photo.bracelet.photo_id != photo.id %}
+                <a href="/bracelet/photo/remove/{{photo.id}}" title="{% trans 'Remove' %}"><i class="icon-trash"></i></a>
+            {% endif %}
+        </div>
+    {% endfor %}
 {% endif %}
-	<script type="text/javascript">
-		$('.lightbox').lightBox(
-					{
-						imageLoading: {{STATIC_URL}}+'gfx/lightbox-ico-loading.gif',
-						imageBtnClose: {{STATIC_URL}}+'gfx/lightbox-btn-close.gif',
-						imageBtnPrev: {{STATIC_URL}}+'gfx/lightbox-btn-prev.gif',
-						imageBtnNext: {{STATIC_URL}}+'gfx/lightbox-btn-next.gif',
-					}
-				);
-	</script>
+    <script type="text/javascript">
+        $('.lightbox').lightBox(
+                    {
+                        imageLoading: {{STATIC_URL}}+'gfx/lightbox-ico-loading.gif',
+                        imageBtnClose: {{STATIC_URL}}+'gfx/lightbox-btn-close.gif',
+                        imageBtnPrev: {{STATIC_URL}}+'gfx/lightbox-btn-prev.gif',
+                        imageBtnNext: {{STATIC_URL}}+'gfx/lightbox-btn-next.gif',
+                    }
+                );
+    </script>
 {% endblock %}
