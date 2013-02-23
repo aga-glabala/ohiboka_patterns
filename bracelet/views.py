@@ -275,7 +275,7 @@ def accept(request, bracelet_id, bracelet_status):
     b.accepted = status
     b.save()
     msg_content = ''
-    if status == -1:
+    if status == -1 and b.user.email:
         subject = 'Your bracelet was rejected | Twoja bransoletka została odrzucona'
         msg_content = u'Hey! I\'m sorry, but your bracelet was rejected. It was probably to easy or same pattern was already submitted. You can still see this bracelet from your profile' + \
                         u' (http://patterns.ohiboka.com/profile). Thanks for using my site and hope to see you again.' + \
@@ -293,7 +293,7 @@ def accept(request, bracelet_id, bracelet_status):
                         u'\r\nAga' + \
                         u'\r\nhttp://ohiboka.com'
         EmailMessage(subject, msg_content, 'aga@ohiboka.com', [b.user.email], headers = {'Reply-To': ['aga@ohiboka.com']}).send()
-    elif status == 1:
+    elif status == 1 and b.user.email:
         subject = 'Your bracelet was accepted | Twoja bransoletka została zaakceptowana'
         msg_content = u'Hey! Congratulations, your bracelet was accepted. Thanks for great pattern. You can see this bracelet from your profile and on main page' + \
                         u' (http://patterns.ohiboka.com/profile and http://patterns.ohiboka.com). Thanks for using my site and hope to see you again.' + \
