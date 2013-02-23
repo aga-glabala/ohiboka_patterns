@@ -44,7 +44,7 @@
                   {% endif %}
                       "
                   >
-                      <label for="id_subject" class="control-label" >{{ contactform.subject.label }}</label>
+                      <label for="id_subject" class="control-label" >{% trans  contactform.subject.label %}</label>
                     <div class="controls">
                         <span class="field">{{ contactform.subject }}</span>
                         {% if contactform.subject.errors %}
@@ -57,7 +57,7 @@
                       error
                   {% endif %}
                       ">
-                      <label for="id_sender" class="control-label" >{{ contactform.sender.label }}</label>
+                      <label for="id_sender" class="control-label" >{% trans contactform.sender.label %}</label>
                     <div class="controls">
                         <span class="field">{{ contactform.sender }}</span>
                         {% if contactform.sender.errors %}
@@ -70,7 +70,7 @@
                       error
                   {% endif %}
                       ">
-                      <label for="id_message" class="control-label" >{{ contactform.message.label }}</label>
+                      <label for="id_message" class="control-label" >{% trans contactform.message.label %}</label>
                     <div class="controls">
                         <span class="field">{{ contactform.message }}</span>
                         {% if contactform.message.errors %}
