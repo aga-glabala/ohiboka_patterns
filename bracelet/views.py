@@ -147,7 +147,7 @@ def addpattern(request):
         b.photo_id = photo.id
         b.save()
     messages.success(request, _('Bracelet was successfully saved.'))
-    return bracelet(request, b.url)
+    return HttpResponseRedirect('/bracelet/' + b.url)
 
 def photos(request, bracelet_id):
     photos = Photo.objects.filter(bracelet = Bracelet.objects.get(id = bracelet_id), accepted = True)

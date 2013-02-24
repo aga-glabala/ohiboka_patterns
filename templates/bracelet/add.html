@@ -259,7 +259,7 @@
     <button type="button" class="btn" onclick="getCode();">Get code</button>
 {% endif %}
 {% if user.is_authenticated %}
-    <input class='btn' type="submit" value='{% if bracelet %}{% trans "Save pattern" %}{% else %}{% trans "Add pattern" %}{% endif %}'>
+    <input class='btn btn-primary' type="submit" value='{% trans "Save pattern" %}'>
     </div>
 </form>
 {% endif %}
