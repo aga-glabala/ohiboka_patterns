@@ -1,16 +1,8 @@
-{% extends "template.html" %}
-{% load i18n %}
-
-{% block title %}
-- {% trans "Manage bracelets" %}
-{% endblock %}
-
-{% block css %}
-<link rel="stylesheet" href="{{ STATIC_URL }}css/admin.css" type="text/css">
-{% endblock %}
-
-{% block content %}
-{% if to_accept %}
+{% extends "template.html" %} {% load i18n %} {% block title %} - {%
+trans "Manage bracelets" %} {% endblock %} {% block css %}
+<link rel="stylesheet" href="{{ STATIC_URL }}css/admin.css"
+	type="text/css">
+{% endblock %} {% block content %} {% if to_accept %}
 <h2>{% trans "To verify" %}</h2>
 <hr />
 <table>
@@ -22,24 +14,23 @@
 		<td>{% trans "Edit" %}</td>
 	</tr>
 	{% for bracelet in to_accept %}
-		<tr>
-			<td><a href='/bracelet/{{bracelet.url}}'>{{bracelet.name}}</a></td>
-			<td>{{bracelet.user}}</td>
-			<td>
-				<a href='/bracelet/accept/{{bracelet.id}}/-1'>{% trans 'Do not accept'%}</a><br />
-				<a href='/bracelet/accept/{{bracelet.id}}/1'>{% trans 'Accept bracelet'%}</a>
-			</td>
-			<td><a href='/bracelet/delete/{{bracelet.id}}'>{% trans 'Delete'%}</a></td>
-			<td>{% trans "Edit" %}</td>
-		</tr>
+	<tr>
+		<td><a href='/bracelet/{{bracelet.url}}'>{{bracelet.name}}</a></td>
+		<td>{{bracelet.user}}</td>
+		<td><a href='/bracelet/accept/{{bracelet.id}}/-1'>{% trans
+				'Do not accept'%}</a><br /> <a
+			href='/bracelet/accept/{{bracelet.id}}/1'>{% trans 'Accept
+				bracelet'%}</a></td>
+		<td><a href='/bracelet/delete/{{bracelet.id}}'>{% trans
+				'Delete'%}</a></td>
+		<td>{% trans "Edit" %}</td>
+	</tr>
 	{% endfor %}
 </table>
 {% else %}
-	<h2>{% trans 'Nothing to verify' %}</h2>
+<h2>{% trans 'Nothing to verify' %}</h2>
 <hr />
-{% endif %}
-
-{% if accepted %}
+{% endif %} {% if accepted %}
 <h2>{% trans "Accepted" %}</h2>
 <hr />
 <table>
@@ -51,24 +42,23 @@
 		<td>{% trans "Edit" %}</td>
 	</tr>
 	{% for bracelet in accepted %}
-		<tr class="{% cycle 'odd' 'even' %}">
-			<td><a href='/bracelet/{{bracelet.url}}'>{{bracelet.name}}</a></td>
-			<td>{{bracelet.user}}</td>
-			<td>
-				<a href='/bracelet/accept/{{bracelet.id}}/-1'>{% trans 'Do not accept'%}</a><br />
-				<a href='/bracelet/accept/{{bracelet.id}}/0'>{% trans 'To verify'%}</a>
-			</td>
-			<td><a href='/bracelet/delete/{{bracelet.id}}'>{% trans 'Delete'%}</a></td>
-			<td>{% trans "Edit" %}</td>
-		</tr>
+	<tr class="{% cycle 'odd' 'even' %}">
+		<td><a href='/bracelet/{{bracelet.url}}'>{{bracelet.name}}</a></td>
+		<td>{{bracelet.user}}</td>
+		<td><a href='/bracelet/accept/{{bracelet.id}}/-1'>{% trans
+				'Do not accept'%}</a><br /> <a
+			href='/bracelet/accept/{{bracelet.id}}/0'>{% trans 'To verify'%}</a>
+		</td>
+		<td><a href='/bracelet/delete/{{bracelet.id}}'>{% trans
+				'Delete'%}</a></td>
+		<td>{% trans "Edit" %}</td>
+	</tr>
 	{% endfor %}
 </table>
 {% else %}
-	<h2>{% trans 'No accepted bracelets' %}</h2>
+<h2>{% trans 'No accepted bracelets' %}</h2>
 <hr />
-{% endif %}
-
-{% if rejected %}
+{% endif %} {% if rejected %}
 <h2>{% trans "Rejected" %}</h2>
 <hr />
 <table>
@@ -80,21 +70,19 @@
 		<td>{% trans "Edit" %}</td>
 	</tr>
 	{% for bracelet in rejected %}
-		<tr>
-			<td><a href='/bracelet/{{bracelet.url}}'>{{bracelet.name}}</a></td>
-			<td>{{bracelet.user}}</td>
-			<td>
-				<a href='/bracelet/accept/{{bracelet.id}}/0'>{% trans 'To verify'%}</a><br />
-				<a href='/bracelet/accept/{{bracelet.id}}/1'>{% trans 'Accept bracelet'%}</a>
-			</td>
-			<td><a href='/bracelet/delete/{{bracelet.id}}'>{% trans 'Delete'%}</a></td>
-			<td>{% trans "Edit" %}</td>
-		</tr>
+	<tr>
+		<td><a href='/bracelet/{{bracelet.url}}'>{{bracelet.name}}</a></td>
+		<td>{{bracelet.user}}</td>
+		<td><a href='/bracelet/accept/{{bracelet.id}}/0'>{% trans 'To
+				verify'%}</a><br /> <a href='/bracelet/accept/{{bracelet.id}}/1'>{%
+				trans 'Accept bracelet'%}</a></td>
+		<td><a href='/bracelet/delete/{{bracelet.id}}'>{% trans
+				'Delete'%}</a></td>
+		<td>{% trans "Edit" %}</td>
+	</tr>
 	{% endfor %}
 </table>
 {% else %}
-	<h2>{% trans 'No rejected bracelets' %}</h2>
+<h2>{% trans 'No rejected bracelets' %}</h2>
 <hr />
-{% endif %}
-
-{% endblock %}
+{% endif %} {% endblock %}

@@ -1,7 +1,7 @@
 # Django settings for ohiboka_patterns project.
 import os.path
 from private import *
-#projectaddress = ''
+# projectaddress = ''
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -14,11 +14,14 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql', #'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE': 'django.db.backends.mysql', # 'django.db.backends.sqlite3',
+        # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or
+        # 'oracle'.
         'NAME': 'patterns', # Or path to database file if using sqlite3.
         'USER': 'patterns', # Not used with sqlite3.
         'PASSWORD': 'patterns', # Not used with sqlite3.
-        'HOST': 'localhost', # Set to empty string for localhost. Not used with sqlite3.
+        'HOST': 'localhost', # empty string for localhost. Not used with
+                              # sqlite3.
         'PORT': '', # Set to empty string for default. Not used with sqlite3.
     }
 }
@@ -38,8 +41,8 @@ TIME_ZONE = None
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'en'
 LANGUAGES = (('pl', 'Polish'),
-  ('en', 'English'),
-)
+            ('en', 'English'),
+             )
 SITE_ID = 1
 
 # If you set this to False, Django will make some optimizations so as not
@@ -76,7 +79,7 @@ ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-				os.path.join(projectaddress, 'static/'),
+    os.path.join(projectaddress, 'static/'),
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -87,7 +90,7 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 # Make this unique, and don't share it with anybody.
@@ -97,7 +100,7 @@ SECRET_KEY = '9^!^x)f!h+g%362@^b^1lh1-z0ak3ja%3z)w0&g=b7c8cz1wz+'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
+    #     'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -105,17 +108,18 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-	'django.middleware.locale.LocaleMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
 ROOT_URLCONF = 'ohibokapatterns.urls'
 
 TEMPLATE_DIRS = (
-	projectaddress + "templates"
-	# Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-	# Always use forward slashes, even on Windows.
-	# Don't forget to use absolute paths, not relative paths.
+    projectaddress + "templates"
+    # Put strings here, like "/home/html/django_templates" or
+    # "C:/www/django/templates".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
 )
 
 INSTALLED_APPS = (
@@ -136,7 +140,8 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
 )
 
-AUTHENTICATION_BACKENDS = ('ohibokapatterns.common.utils.FacebookBackend', 'django.contrib.auth.backends.ModelBackend',)
+AUTHENTICATION_BACKENDS = ('ohibokapatterns.common.utils.FacebookBackend',
+                           'django.contrib.auth.backends.ModelBackend',)
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
@@ -161,7 +166,7 @@ LOGGING = {
     }
 }
 
-#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True

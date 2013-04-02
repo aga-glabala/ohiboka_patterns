@@ -1,16 +1,19 @@
 .box p {
-    margin: 5px 0;
+	margin: 5px 0;
 }
-#id_message {
 
-    height: 200px;
+#id_message {
+	height: 200px;
 }
+
 .label {
-    padding: 5px 0 0 0;
+	padding: 5px 0 0 0;
 }
+
 .field * {
-    width: 300px;
+	width: 300px;
 }
+
 .field input {
-    width: 303px;
+	width: 303px;
 }

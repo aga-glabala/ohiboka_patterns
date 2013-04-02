@@ -9,7 +9,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from common.forms import UserCreationFormExtended, ContactForm
 from django.http import HttpResponseRedirect
-#from django.core.mail import send_mail
+# from django.core.mail import send_mail
 from common.bracelet_tools import get_colors, find_bracelets, get_all_bracelets
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib.auth import authenticate, login, logout
@@ -20,27 +20,29 @@ from django.core.mail import EmailMessage
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
+
 def get_context(request):
     context = {'loginform': AuthenticationForm(), "FACEBOOK_APP_ID": settings.FACEBOOK_APP_ID}
     if request.user.is_authenticated():
         try:
-            context['userprofile'] = UserProfile.objects.get(user = request.user)
+            context['userprofile'] = UserProfile.objects.get(user=request.user)
         except ObjectDoesNotExist:
             pass
     return context
 
+
 def register(request):
     form = None
     if request.method == 'POST':
-
-        captcha_response = captcha.submit(request.POST['recaptcha_challenge_field'], request.POST['recaptcha_response_field'],
-                                          settings.RECAPTCHA_PRIVATE_KEY, request.META['REMOTE_ADDR'])
+        captcha_response = captcha.submit(request.POST['recaptcha_challenge_field'],
+                    request.POST['recaptcha_response_field'], settings.RECAPTCHA_PRIVATE_KEY,
+                    request.META['REMOTE_ADDR'])
         if captcha_response.is_valid:
             form = UserCreationFormExtended(request.POST)
             if form.is_valid():
                 form.save()
                 messages.success(request, _('Success! You can log in now.'))
-                return  HttpResponseRedirect('/')
+                return HttpResponseRedirect('/')
             else:
                 messages.error(request, _("An error has occured. Correct entered data."))
         else:
@@ -48,7 +50,9 @@ def register(request):
     form = UserCreationFormExtended(request.POST)
     context = get_context(request)
     context.update({'form': form, 'captcha': captcha.displayhtml(settings.RECAPTCHA_PUBLIC_KEY)})
-    return render_to_response("common/register.html", context, context_instance = RequestContext(request))
+    return render_to_response("common/register.html", context,
+                              context_instance=RequestContext(request))
+
 
 @login_required
 def userprofile(request):
@@ -65,7 +69,7 @@ def userprofile(request):
             else:
                 bracelets_not_accepted.append(br)
 
-        photos = Photo.objects.filter(user = request.user)
+        photos = Photo.objects.filter(user=request.user)
         photos_accepted = []
         photos_not_accepted = []
         for p in photos:
@@ -80,45 +84,17 @@ def userprofile(request):
         context['bracelets_private'] = bracelets_private
         context['photos_accepted'] = photos_accepted
         context['photos_not_accepted'] = photos_not_accepted
-        context['rates'] = Rate.objects.filter(user = request.user)
-        return render_to_response("common/userprofile.html", context, RequestContext(request))
+        context['rates'] = Rate.objects.filter(user=request.user)
+        return render_to_response("common/userprofile.html", context,
+                                  RequestContext(request))
     else:
         messages.error(request, _('You need to be logged in.'))
         return HttpResponseRedirect('/')
 
-'''
-def delete_bracelet(request, bracelet_id):
-    try:
-        bracelet = Bracelet.objects.get(id = bracelet_id)
-    except:
-        return userprofile(request, error_message = _("There is no bracelet with id: {0}").format(bracelet_id))
-    if not request.user.is_authenticated():
-        return userprofile(request, error_message = _("You need to be logged in to edit bracelets."))
-    if bracelet.user != request.user:
-        return userprofile(request, error_message = _("You are not owner of this bracelet."))
-    strings = BraceletString.objects.filter(bracelet = bracelet)
-    for string in strings:
-        string.delete()
-
-    knots = BraceletKnot.objects.filter(bracelet = bracelet)
-    for knot in knots:
-        knot.delete()
-
-    photos = Photo.objects.filter(bracelet = bracelet)
-    for photo in photos:
-        photo.delete()
-
-    rates = Rate.objects.filter(bracelet = bracelet)
-    for rate in rates:
-        rate.delete()
-
-    bracelet.delete()
-    return userprofile(request, ok_message = _("Bracelet deleted successfully."))
-'''
 
 def user(request, user_name):
     try:
-        user = User.objects.get(username = user_name)
+        user = User.objects.get(username=user_name)
     except ObjectDoesNotExist:
         messages.error(request, _('There is no user with login: {0}').format(user_name))
         return HttpResponseRedirect('/')
@@ -126,45 +102,62 @@ def user(request, user_name):
     context = get_context(request)
     context['user_content'] = user
     context['bracelets'] = get_all_bracelets(0, user)
-    context['photos'] = Photo.objects.filter(user = user, accepted = True)
-    return render_to_response('common/user.html', context, RequestContext(request))
+    context['photos'] = Photo.objects.filter(user=user, accepted=True)
+    return render_to_response('common/user.html', context,
+                              RequestContext(request))
 
-def about(request, context = {}):
+
+def about(request, context={}):
     if request.method == 'POST':
         form = ContactForm(request.POST)
-        captcha_response = captcha.submit(request.POST['recaptcha_challenge_field'], request.POST['recaptcha_response_field'],
-                                          settings.RECAPTCHA_PRIVATE_KEY, request.META['REMOTE_ADDR'])
+        captcha_response = captcha.submit(request.POST['recaptcha_challenge_field'],
+                    request.POST['recaptcha_response_field'], settings.RECAPTCHA_PRIVATE_KEY,
+                    request.META['REMOTE_ADDR'])
         if captcha_response.is_valid:
             if form.is_valid():
                 subject = form.cleaned_data['subject']
                 msg_content = form.cleaned_data['message']
                 sender = form.cleaned_data['sender']
                 receiver = ['aga@ohiboka.com']
-                EmailMessage(subject, msg_content, sender, receiver, headers = {'Reply-To': sender}).send()
-                #send_mail(subject, msg_content, sender, receiver)
+                EmailMessage(subject, msg_content, sender, receiver,
+                             headers={'Reply-To': sender}).send()
+                # send_mail(subject, msg_content, sender, receiver)
                 return HttpResponseRedirect('/contact/success/')
             else:
                 messages.error(request, _("An error has occured. Correct entered data."))
-                #return about(request, {'subject': form.cleaned_data['subject'], 'msg_content': form.cleaned_data['message'], 'sender': form.cleaned_data['sender']})
+                # return about(request, {'subject':
+                # form.cleaned_data['subject'], 'msg_content':
+                # form.cleaned_data['message'], 'sender':
+                # form.cleaned_data['sender']})
                 context.update(get_context(request))
-                context.update({'contactform':form, 'captcha': captcha.displayhtml(settings.RECAPTCHA_PUBLIC_KEY)})
-                return render_to_response('common/about.html', context, RequestContext(request))
+                context.update({'contactform': form, 'captcha':
+                        captcha.displayhtml(settings.RECAPTCHA_PUBLIC_KEY)})
+                return render_to_response('common/about.html', context,
+                                          RequestContext(request))
         else:
             messages.error(request, _('Wrong captcha.'))
-            #return about(request, {'subject': form.cleaned_data['subject'], 'msg_content': form.cleaned_data['message'], 'sender': form.cleaned_data['sender']})
+            # return about(request, {'subject': form.cleaned_data['subject'],
+            # 'msg_content': form.cleaned_data['message'], 'sender':
+            # form.cleaned_data['sender']})
             context.update(get_context(request))
-            context.update({'contactform':form, 'captcha': captcha.displayhtml(settings.RECAPTCHA_PUBLIC_KEY)})
-            return render_to_response('common/about.html', context, RequestContext(request))
+            context.update({'contactform': form, 'captcha':
+                        captcha.displayhtml(settings.RECAPTCHA_PUBLIC_KEY)})
+            return render_to_response('common/about.html', context,
+                                      RequestContext(request))
     else:
         form = ContactForm()
     context.update(get_context(request))
-    context.update({'contactform':form, 'captcha': captcha.displayhtml(settings.RECAPTCHA_PUBLIC_KEY)})
-    return render_to_response('common/about.html', context, RequestContext(request))
+    context.update({'contactform': form, 'captcha': captcha.displayhtml(settings.RECAPTCHA_PUBLIC_KEY)})
+    return render_to_response('common/about.html', context,
+                              RequestContext(request))
+
 
 def privacypolicy(request):
-    return render_to_response('common/privacypolicy.html', get_context(request), RequestContext(request))
+    return render_to_response('common/privacypolicy.html',
+                              get_context(request), RequestContext(request))
 
-def index(request, context_ = {}):
+
+def index(request, context_={}):
     bracelets = get_all_bracelets(0)
     paginator = Paginator(bracelets, 9)
     page = request.GET.get('page')
@@ -185,17 +178,20 @@ def index(request, context_ = {}):
         'categories': BraceletCategory.objects.all(),
     })
 
-    return render_to_response('common/index.html', context, RequestContext(request))
+    return render_to_response('common/index.html', context,
+                              RequestContext(request))
+
 
 def logout_user(request):
     logout(request)
     return HttpResponseRedirect('/')
 
+
 def login_user(request):
     if 'username' in request.POST:
         username = request.POST['username']
         password = request.POST['password']
-        user = authenticate(username = username, password = password)
+        user = authenticate(username=username, password=password)
         if user is not None and user.is_active:
             login(request, user)
             messages.success(request, _('You are logged in now'))
@@ -205,23 +201,27 @@ def login_user(request):
     else:
         return HttpResponseRedirect('/')
 
+
 def facebook_login(request):
     facebook = Pyfb(settings.FACEBOOK_APP_ID)
     facebook.set_permissions("")
-    return HttpResponseRedirect(facebook.get_auth_code_url(redirect_uri = settings.FACEBOOK_REDIRECT_URL))
+    return HttpResponseRedirect(facebook.get_auth_code_url(redirect_uri=settings.FACEBOOK_REDIRECT_URL))
 
 
-#This view must be refered in your FACEBOOK_REDIRECT_URL. For example: http://www.mywebsite.com/facebook_login_success/
+# This view must be refered in your FACEBOOK_REDIRECT_URL. For example:
+# http://www.mywebsite.com/facebook_login_success/
 def facebook_login_success(request):
     code = request.GET.get('code')
     facebook = Pyfb(settings.FACEBOOK_APP_ID)
     facebook.set_permissions("")
-    facebook.get_access_token(settings.FACEBOOK_SECRET_KEY, code, redirect_uri = settings.FACEBOOK_REDIRECT_URL)
+    facebook.get_access_token(settings.FACEBOOK_SECRET_KEY, code,
+                              redirect_uri=settings.FACEBOOK_REDIRECT_URL)
     me = facebook.get_myself()
     authenticator = FacebookBackend()
     user = authenticator.authenticate(me)
     login(request, user)
     return HttpResponseRedirect('/')
+
 
 def setlang(request, lang):
     request.session['django_language'] = lang
@@ -232,29 +232,31 @@ def setlang(request, lang):
     else:
         return HttpResponseRedirect('/')
 
+
 def search(request):
     # TODO bracelets filter
     url = request.get_full_path()
     if url.find("page") > -1:
-            url = url[url.find("&") :]
+            url = url[url.find("&"):]
     else:
         url = "&" + url[url.find("?") + 1:]
 
     context = get_context(request)
-    context.update({'category' : request.GET['category'],
-        'difficulty': request.GET['difficulty'],
-        'rate': request.GET['rate'],
-        'color': request.GET['color'],
-        'orderby': request.GET['orderby'],
-        'categories': BraceletCategory.objects.all(),
-        'photo': 'photo' in request.GET,
-        'colors': get_colors(),
-        'search': True,
-        'url':url
-    })
+    context.update({'category': request.GET['category'],
+                    'difficulty': request.GET['difficulty'],
+                    'rate': request.GET['rate'],
+                    'color': request.GET['color'],
+                    'orderby': request.GET['orderby'],
+                    'categories': BraceletCategory.objects.all(),
+                    'photo': 'photo' in request.GET,
+                    'colors': get_colors(),
+                    'search': True,
+                    'url': url
+                    })
 
-    bracelets = find_bracelets(category = request.GET['category'], difficulty = request.GET['difficulty'],
-                                        color = request.GET['color'], orderby = request.GET['orderby'], photo = 'photo' in request.GET, rate = request.GET['rate'])
+    bracelets = find_bracelets(
+        category=request.GET['category'], difficulty=request.GET['difficulty'],
+        color=request.GET['color'], orderby=request.GET['orderby'], photo='photo' in request.GET, rate=request.GET['rate'])
 
     paginator = Paginator(bracelets, 9)
     page = request.GET.get('page')
@@ -269,6 +271,6 @@ def search(request):
     context['patterns'] = bracelets
     return render_to_response('common/index.html', context, RequestContext(request))
 
+
 def contact_success(request):
     return render_to_response('contact_ok.html', get_context(request), RequestContext(request))
-

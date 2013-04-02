@@ -1,5 +1,4 @@
-{% load i18n %}
-{% load comments %}
+{% load i18n %} {% load comments %}
 
 <script type="text/javascript">
 //<![CDATA[
@@ -51,43 +50,40 @@ $(document).ready(function() {
 <!-- A context variable called form is created with the necessary hidden
 fields, timestamps and security hashes -->
 {% if user.is_authenticated %}
-<input id="comment-input" type='text' placeholder="{% trans 'Click to add comment' %}" />
+<input id="comment-input" type='text'
+	placeholder="{% trans 'Click to add comment' %}" />
 
-<form id="commentbox" action="/comments/post/" method="post" class='form-horizontal'>
-	{% csrf_token %}
-	{% for field in form %}
-	        {% if field.is_hidden %}
-	            {{ field }}
-	        {% endif %}
-	{% endfor %}
-	<input type='hidden' name='name' id='comment-form-username' value='{{ userprofile.fb_name }}' />
-	<input type='hidden' name='email' id='comment-form-email' value='email@com.com' />
+<form id="commentbox" action="/comments/post/" method="post"
+	class='form-horizontal'>
+	{% csrf_token %} {% for field in form %} {% if field.is_hidden %} {{
+	field }} {% endif %} {% endfor %} <input type='hidden' name='name'
+		id='comment-form-username' value='{{ userprofile.fb_name }}' /> <input
+		type='hidden' name='email' id='comment-form-email'
+		value='email@com.com' />
 	<fieldset>
 		{{ form.non_field_errors }}
 		<div class="control-group">
-			<label for="comment-form-text" class="control-label" >{{ form.comment.label }}</label>
-			<div class="controls">
-				{{ form.comment }}
-			</div>
+			<label for="comment-form-text" class="control-label">{{
+				form.comment.label }}</label>
+			<div class="controls">{{ form.comment }}</div>
 			<p>{{ form.comment.errors }}</p>
-    	</div>
+		</div>
 		<div class="control-group">
-			<label for="comment-form-honeypot" class="control-label" >{% trans 'Do not fill this' %}</label>
-			<div class="controls">
-				{{ form.honeypot }}
-			</div>
+			<label for="comment-form-honeypot" class="control-label">{%
+				trans 'Do not fill this' %}</label>
+			<div class="controls">{{ form.honeypot }}</div>
 			<p>{{ form.honeypot.errors }}</p>
-    	</div>
-    	<div class="control-group">
+		</div>
+		<div class="control-group">
 			<div class="controls">
-				<button id="submit_comment" class='btn btn-primary' type="submit" name="submit" value=""><i class='icon-envelope icon-white'></i> {% trans 'Post' %}</button>
+				<button id="submit_comment" class='btn btn-primary' type="submit"
+					name="submit" value="">
+					<i class='icon-envelope icon-white'></i> {% trans 'Post' %}
+				</button>
 			</div>
 		</div>
-	
+
 	</fieldset>
 </form>
-{% else %}
-	You need to be logged in to post comment.
-{% endif %}
-
-{% render_comment_list for bracelet.bracelet bracelet_id %}
+{% else %} You need to be logged in to post comment. {% endif %} {%
+render_comment_list for bracelet.bracelet bracelet_id %}

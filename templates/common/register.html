@@ -1,57 +1,49 @@
-{% extends "template.html" %}
-{% load i18n %}
-
-{% block title %} - Create an account{% endblock %}
-
-{% block css %}
-<link rel="stylesheet" href="{{ STATIC_URL }}css/register.css" type="text/css">
-<script type="text/javascript" >
+{% extends "template.html" %} {% load i18n %} {% block title %} - Create
+an account{% endblock %} {% block css %}
+<link rel="stylesheet" href="{{ STATIC_URL }}css/register.css"
+	type="text/css">
+<script type="text/javascript">
     $(document).ready(function(){
         $('.active').removeClass('active');
         $('#top-register').addClass('active');
     });
 </script>
-{% endblock %}
+{% endblock %} {% block content %}
+<h1>{% trans 'Create an account' %}</h1>
+<hr />
 
-{% block content %}
-    <h1>{% trans 'Create an account' %}</h1>
-    <hr />
-
-    <form action="" method="post" id="registerForm" class='form-horizontal span4'>
-        {% csrf_token %}
-        <fieldset>
-            {{ form.non_field_errors }}
-            {% for field in form %}
-                <div class="control-group">
-                    <label class="control-label" >{{ field.label }}</label>
-                    <div class="controls">
-                        {{ field }}
-                    </div>
-                    <p class="info">{{ field.help_text }}</p>
-                </div>
-            {% endfor %}
-            <div class="control-group">
-                  {{ captcha|safe }}
-             </div>
-             <div class="control-group">
-                 <p style="margin: 10px 0;">
-                     <small>{% trans 'By clicking button below, you accept' %} <a href="/privacypolicy/">{% trans 'our privacy policy' %}</a></small>
-                 </p>
-                <div class="controls">
-                    <button class='btn btn-primary' >{% trans 'Create new account' %}</button>
-                </div>
-                <p class="info">{{ field.help_text }}</p>
-            </div>
-        </fieldset>
-    </form>
-    <div class="facebook_login span4">
-        <p style="margin: 10px 0;">
-            {% trans 'Save your time - login with facebook' %}
-        </p>
-        <button onclick="location.href='/facebook_login'">&nbsp;      </button>
-    </div>
-    <div class="clearfix"></div>
-    <script language="Javascript" type="text/javascript">
+<form action="" method="post" id="registerForm"
+	class='form-horizontal span4'>
+	{% csrf_token %}
+	<fieldset>
+		{{ form.non_field_errors }} {% for field in form %}
+		<div class="control-group">
+			<label class="control-label">{{ field.label }}</label>
+			<div class="controls">{{ field }}</div>
+			<p class="info">{{ field.help_text }}</p>
+		</div>
+		{% endfor %}
+		<div class="control-group">{{ captcha|safe }}</div>
+		<div class="control-group">
+			<p style="margin: 10px 0;">
+				<small>{% trans 'By clicking button below, you accept' %} <a
+					href="/privacypolicy/">{% trans 'our privacy policy' %}</a></small>
+			</p>
+			<div class="controls">
+				<button class='btn btn-primary'>{% trans 'Create new
+					account' %}</button>
+			</div>
+			<p class="info">{{ field.help_text }}</p>
+		</div>
+	</fieldset>
+</form>
+<div class="facebook_login span4">
+	<p style="margin: 10px 0;">{% trans 'Save your time - login with
+		facebook' %}</p>
+	<button onclick="location.href='/facebook_login'">&nbsp;</button>
+</div>
+<div class="clearfix"></div>
+<script language="Javascript" type="text/javascript">
           $('.field > input').focus(function() {
               $(this).parent().next(".info").fadeIn("slow");
           });

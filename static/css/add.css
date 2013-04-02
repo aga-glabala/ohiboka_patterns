@@ -3,72 +3,90 @@
 	width: 45%;
 	vertical-align: top;
 }
+
 .second {
 	margin-left: 50px;
 }
+
 .color-chooser-button {
 	width: 20px;
 	height: 20px;
 	background: none;
 }
+
 .modal-backdrop {
 	background: none;
 }
+
 .modal {
 	width: 600px;
 }
-#pattern-string, #pattern-colors {
+
+#pattern-string,#pattern-colors {
 	display: none;
 }
+
 #colorsInput select {
 	width: 50px;
 	margin: 1px;
 }
+
 .pattern-tool {
 	background-color: whiteSmoke;
 	padding: 2px;
 	margin-bottom: 10px;
 }
+
 .pattern-tool-inside {
 	border: 1px dashed #E5E5E5;
 	padding: 4px;
 }
+
 #floating-top {
 	position: relative;
 	z-index: 100;
 	margin-top: 10px;
 }
-.pattern-tool-inside div, #colorsInput {
+
+.pattern-tool-inside div,#colorsInput {
 	display: inline-block;
 	vertical-align: top;
 }
+
 #floating-top div#pattern-thumb {
 	display: block;
 }
+
 #pattern-designer-container {
 	position: relative;
-	margin:30px 0;
+	margin: 30px 0;
 }
+
 .btn-group {
 	display: inline-block;
 }
+
 #pattern-designer .current {
 	border: 1px solid black;
 	-webkit-box-shadow: 0 0 5px 2px #000;
 	box-shadow: 0 0 5px 2px #000;
 }
+
 #carousel-addpattern .item p {
 	padding: 18px 80px 0;
 	height: 20px;
 }
+
 #carousel-addpattern .carousel-control {
 	top: 65%;
 	left: 0;
 }
-#carousel-addpattern .carousel-control.right{
+
+#carousel-addpattern .carousel-control.right {
 	left: auto;
 	right: 0;
 }
+
 .character-chooser-button {
 	width: 14px;
 	height: 16px;

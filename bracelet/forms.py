@@ -5,6 +5,6 @@ Created on Mar 16, 2012
 '''
 from django import forms
 
+
 class UploadFileForm(forms.Form):
-    file  = forms.FileField()
-    
+    file = forms.FileField()

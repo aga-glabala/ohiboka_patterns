@@ -6,10 +6,11 @@ from django.template import Library
 
 register = Library()
 
+
 def jsonify(obj):
     if isinstance(obj, QuerySet):
         return mark_safe(serialize('json', obj))
     return mark_safe(simplejson.dumps(obj))
 
 register.filter('jsonify', jsonify)
-jsonify.is_safe = True   
+jsonify.is_safe = True

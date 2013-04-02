@@ -1,23 +1,29 @@
 /* -------------------------------- COMMON -------------------------------- */
-h1, h2, h3, h4, h5 {
+h1,h2,h3,h4,h5 {
 	font-family: "Signika" sans;
 	font-weight: bold;
 }
+
 h1 {
 	font-size: 170%;
 }
+
 h2 {
 	font-size: 140%;
 }
+
 h3 {
 	font-size: 130%;
 }
+
 h4 {
 	font-size: 120%;
 }
+
 h5 {
 	font-size: 110%;
 }
+
 hr {
 	margin: 5px 0 18px 0;
 	border: 0;
@@ -25,46 +31,53 @@ hr {
 	border-bottom: 1px solid #004e76;
 	width: 100%;
 }
+
 a {
 	color: #004e76;
 }
 /* -------------------------------- BODY -------------------------------- */
 body {
 	background-image: url(/static/gfx/bg.png);
-	margin:0;
+	margin: 0;
 	font-family: "Signika", sans;
 	font-size: 15px;
 	color: #111;
 }
-#fb, #en, #pl {
-	width:  29px;
+
+#fb,#en,#pl {
+	width: 29px;
 	height: 30px;
 	position: fixed;
 	right: 0;
 	-webkit-box-shadow: 0 0 5px 0 #222;
-	box-shadow:		 0 0 5px 0 #222;
+	box-shadow: 0 0 5px 0 #222;
 	z-index: 10;
 }
-	#fb a, #en a, #pl a {
-		padding: 0 20px 10px;
-		text-decoration: none;
-	}
+
+#fb a,#en a,#pl a {
+	padding: 0 20px 10px;
+	text-decoration: none;
+}
+
 #fb {
 	top: 200px;
 	background-image: url(/static/gfx/fb.png);
 }
+
 #en {
 	top: 235px;
 	background-image: url(/static/gfx/english.png);
 }
+
 #pl {
 	top: 235px;
 	background-image: url(/static/gfx/polish.png);
 }
+
 .fb-like-box {
 	position: fixed;
 	right: 0;
-	width:  290px;
+	width: 290px;
 	z-index: 10;
 }
 /* -------------------------------- TOP -------------------------------- */
@@ -72,68 +85,82 @@ body {
 	margin: 0 auto;
 	width: 1000px;
 }
-	#top h1 {
-		display: inline-block;
-		width:278px;
-		height:111px;
-		margin: 10px 0 20px;
-	}
-	#top h1 a {
-		text-decoration: none;
-		padding: 50px 60px 55px 0;
-	}
-ul#menu {	
+
+#top h1 {
+	display: inline-block;
+	width: 278px;
+	height: 111px;
+	margin: 10px 0 20px;
+}
+
+#top h1 a {
+	text-decoration: none;
+	padding: 50px 60px 55px 0;
+}
+
+ul#menu {
 	list-style-type: none;
 	float: right;
 	margin-top: 60px;
 	font: 14px "Signika";
 	color: white;
 }
-	ul#menu li {
-		display: inline-block;
-		margin: 0 10px;
-		vertical-align: middle;
-	}
-	ul#menu li a {
-		color: white;
-		text-decoration: none;
-		display: block;
-		float: left;
-		height: 28px;
-		padding-right: 10px; /* sliding doors padding */
-	}
-	ul#menu li a span  {
-	    display: block;
-	    line-height: 18px;
-	    padding: 5px 5px 5px 18px;
-	}
-	ul#menu li.active a {
-		background: transparent url('/static/gfx/button-p.png') no-repeat scroll top right;
-	}
-	ul#menu li.active a span  {
-	    background: transparent url('/static/gfx/button-span.png') no-repeat;
-	}
+
+ul#menu li {
+	display: inline-block;
+	margin: 0 10px;
+	vertical-align: middle;
+}
+
+ul#menu li a {
+	color: white;
+	text-decoration: none;
+	display: block;
+	float: left;
+	height: 28px;
+	padding-right: 10px; /* sliding doors padding */
+}
+
+ul#menu li a span {
+	display: block;
+	line-height: 18px;
+	padding: 5px 5px 5px 18px;
+}
+
+ul#menu li.active a {
+	background: transparent url('/static/gfx/button-p.png') no-repeat scroll
+		top right;
+}
+
+ul#menu li.active a span {
+	background: transparent url('/static/gfx/button-span.png') no-repeat;
+}
 /* -------------------------------- LOGIN -------------------------------- */
 #login-box {
 	background: url('/static/gfx/or.png') center center no-repeat #f8f8f7;
 }
+
 #login-box * {
 	vertical-align: middle;
 }
+
 #login-form {
-	display:inline-block;
+	display: inline-block;
 	width: 45%;
 }
+
 .facebook_login:after {
 	content: ".";
-    visibility: hidden;
+	visibility: hidden;
 }
+
 .facebook_login {
-	display:inline-block;
+	display: inline-block;
 	width: 54%;
 	text-align: right;
 	margin: 0;
 }
+
 .facebook_login button {
 	width: 154px;
 	height: 22px;
@@ -147,12 +174,12 @@ ul#menu {
 	width: 100%;
 	background-image: url(/static/gfx/fabric-white.png);
 	background-repeat: repeat;
-	-moz-box-shadow:	inset 0 0 10px #000000;
+	-moz-box-shadow: inset 0 0 10px #000000;
 	-webkit-box-shadow: inset 0 0 10px #000000;
-	box-shadow:		 inset 0 0 10px #000000;
+	box-shadow: inset 0 0 10px #000000;
 }
 
-#container:before, #container:after {
+#container:before,#container:after {
 	content: ".";
 	visibility: hidden;
 	display: block;
@@ -160,26 +187,34 @@ ul#menu {
 	height: 0;
 	font-size: 0;
 }
+
 #content {
 	margin: -40px auto;
 	width: 1000px;
 }
+
 .box {
 	background-color: #f8f8f7;
 	padding: 15px;
 	-webkit-box-shadow: 0 0 15px 0 #222;
-	box-shadow:		 0 0 15px 0 #222;
+	box-shadow: 0 0 15px 0 #222;
 }
-	.box p {
-		margin: 0;
-	}
+
+.box p {
+	margin: 0;
+}
+
 .error_box {
 	color: #bc0000;
-}	
+}
+
 .success_box {
 	color: #148c00;
 }
-.spacer {margin:20px;}
+
+.spacer {
+	margin: 20px;
+}
 /* -------------------------------- BOTTOM -------------------------------- */
 #bottom {
 	color: white;
@@ -193,9 +228,11 @@ ul#menu {
 	width: 20%;
 	vertical-align: top;
 }
+
 #bottom div:first-child {
 	width: 35%;
 }
+
 #bottom a {
 	color: #fff;
 }
@@ -205,18 +242,33 @@ ul#menu {
 	width: 100%;
 	height: 4px;
 	position: relative;
-	border-top:2px;
-	-moz-border-image:url(/static/gfx/border.png) 100% 1 repeat; /* Firefox */
-	-webkit-border-image:url(/static/gfx/border.png) 100% 1 repeat; /* Safari */
-	-o-border-image:url(/static/gfx/border.png) 100% 1 repeat; /* Opera */
-	border-image:url(/static/gfx/border.png) 100% 2 repeat;
+	border-top: 2px;
+	-moz-border-image: url(/static/gfx/border.png) 100% 1 repeat;
+	/* Firefox */
+	-webkit-border-image: url(/static/gfx/border.png) 100% 1 repeat;
+	/* Safari */
+	-o-border-image: url(/static/gfx/border.png) 100% 1 repeat; /* Opera */
+	border-image: url(/static/gfx/border.png) 100% 2 repeat;
 	z-index: -1;
-	
-	border-bottom:0;
-	border-right:0;
-	border-left:0;
+	border-bottom: 0;
+	border-right: 0;
+	border-left: 0;
 }
-.stitches-top1 { margin-top: 4px;}
-.stitches-top2 { margin-top: -8px;}
-.stitches-bottom1 { margin-top: -36px;position:relative;}
-.stitches-bottom2 { position:absolute; bottom:4px;}
+
+.stitches-top1 {
+	margin-top: 4px;
+}
+
+.stitches-top2 {
+	margin-top: -8px;
+}
+
+.stitches-bottom1 {
+	margin-top: -36px;
+	position: relative;
+}
+
+.stitches-bottom2 {
+	position: absolute;
+	bottom: 4px;
+}

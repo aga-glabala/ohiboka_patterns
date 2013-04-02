@@ -1,71 +1,96 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 class BraceletCategory(models.Model):
-	name = models.CharField(max_length = 50)
-	def __unicode__(self):
-		return self.name
+    name = models.CharField(max_length=50)
+
+    def __unicode__(self):
+        return self.name
+
 
 class Bracelet(models.Model):
-	user = models.ForeignKey(User, related_name = 'bracelets')
-	photo = models.ForeignKey('Photo', related_name = '+', default = '')
-	date = models.DateTimeField('Creation date')
-	name = models.CharField(max_length = 50)
-	accepted = models.IntegerField(default = 0)
-	difficulty = models.IntegerField(choices = ((1, ' Easy'), (2, 'Medium'), (3, 'Hard')))
-	category = models.ForeignKey(BraceletCategory, related_name = 'bracelets')
-	rate = models.DecimalField(max_digits = 3, decimal_places = 2)
-	public = models.BooleanField(default = False)
-	url = models.CharField(max_length = 52, unique = True, null = False)
-	deleted = models.BooleanField(default = False)
-	type = models.IntegerField(choices = ((1, 'Diagonal'), (2, 'Straight')))
+    user = models.ForeignKey(User, related_name='bracelets')
+    photo = models.ForeignKey('Photo', related_name='+', default='')
+    date = models.DateTimeField('Creation date')
+    name = models.CharField(max_length=50)
+    accepted = models.IntegerField(default=0)
+    difficulty = models.IntegerField(choices=((1, ' Easy'), (2, 'Medium'),
+                                             (3, 'Hard')))
+    category = models.ForeignKey(BraceletCategory, related_name='bracelets')
+    rate = models.DecimalField(max_digits=3, decimal_places=2)
+    public = models.BooleanField(default=False)
+    url = models.CharField(max_length=52, unique=True, null=False)
+    deleted = models.BooleanField(default=False)
+    type = models.IntegerField(choices=((1, 'Diagonal'), (2, 'Straight')))
 
-	def __unicode__(self):
-		return "[id=" + str(self.id) + ", user=" + str(self.user) + ", name=" + self.name + ", accepted=" + str(self.accepted) + ", difficulty=" + str(self.difficulty) + \
-				 ", category=" + str(self.category) + ", rate=" + str(self.rate) + ", public=" + str(self.public) + ", type = "+ str(self.type) +"]"
+    def __unicode__(self):
+        return "[id=" + str(self.id) + ", user=" + str(self.user) + ", name="\
+            + self.name + ", accepted=" + str(self.accepted)\
+            + ", difficulty=" + str(self.difficulty) + ", category="\
+            + str(self.category) + ", rate=" + str(self.rate)\
+            + ", public=" + str(self.public) + ", type = " \
+            + str(self.type) + "]"
 
-	def get_average_rate(self):
-		rate = 0
-		rates = self.rates.all()
-		if not rates:
-			return 0
-		for r in rates:
-			rate += r.rate
-		return rate * 1.0 / len(rates)
+    def get_average_rate(self):
+        rate = 0
+        rates = self.rates.all()
+        if not rates:
+            return 0
+        for r in rates:
+            rate += r.rate
+        return rate * 1.0 / len(rates)
+
 
 class BraceletColor(models.Model):
-	hexcolor = models.IntegerField()
-	def __unicode__(self):
-		return "#" + (6 - len(hex(int(self.hexcolor))[2:])) * '0' + hex(int(self.hexcolor))[2:]
+    hexcolor = models.IntegerField()
+
+    def __unicode__(self):
+        return "#" + (6 - len(hex(int(self.hexcolor))[2:])) * '0'\
+                   + hex(int(self.hexcolor))[2:]
+
 
 class BraceletString(models.Model):
-	index = models.IntegerField()
-	color = models.ForeignKey(BraceletColor, related_name = 'bracelets')
-	bracelet = models.ForeignKey(Bracelet, related_name = 'strings')
-	def __unicode__(self):
-		return "[id=" + str(self.id) + ", index=" + str(self.index) + ", color=" + str(self.color) + "]"
+    index = models.IntegerField()
+    color = models.ForeignKey(BraceletColor, related_name='bracelets')
+    bracelet = models.ForeignKey(Bracelet, related_name='strings')
+
+    def __unicode__(self):
+        return "[id=" + str(self.id) + ", index=" + str(self.index)\
+               + ", color=" + str(self.color) + "]"
+
 
 class BraceletKnotType(models.Model):
-	text = models.CharField(max_length = 100)
-	def __unicode__(self):
-		return self.text
+    text = models.CharField(max_length=100)
+
+    def __unicode__(self):
+        return self.text
+
 
 class BraceletKnot(models.Model):
-	index = models.IntegerField()
-	bracelet = models.ForeignKey(Bracelet, related_name = 'knots')
-	knottype = models.ForeignKey(BraceletKnotType, related_name = '+')
-	def __unicode__(self):
-		return "[id=" + str(self.id) + ", index=" + str(self.index) + ", knottype=" + str(self.knottype.id) + ", bracelet=" + str(self.bracelet.id) + "]"
+    index = models.IntegerField()
+    bracelet = models.ForeignKey(Bracelet, related_name='knots')
+    knottype = models.ForeignKey(BraceletKnotType, related_name='+')
+
+    def __unicode__(self):
+        return "[id=" + str(self.id) + ", index=" + str(self.index)\
+            + ", knottype=" + str(self.knottype.id) + ", bracelet="\
+            + str(self.bracelet.id) + "]"
+
 
 class Photo(models.Model):
-	name = models.CharField(max_length = 50)
-	accepted = models.BooleanField(default = False)
-	bracelet = models.ForeignKey(Bracelet, related_name = 'photos')
-	user = models.ForeignKey(User, related_name = 'photos')
-	def __unicode__(self):
-		return "[id=" + str(self.id) + ", accepted=" + str(self.accepted) + ", bracelet=" + str(self.bracelet.id) + ", user=" + self.user.username + "]"
+    name = models.CharField(max_length=50)
+    accepted = models.BooleanField(default=False)
+    bracelet = models.ForeignKey(Bracelet, related_name='photos')
+    user = models.ForeignKey(User, related_name='photos')
+
+    def __unicode__(self):
+        return "[id=" + str(self.id) + ", accepted=" + str(self.accepted)\
+            + ", bracelet=" + str(self.bracelet.id) + ", user="\
+            + self.user.username + "]"
+
 
 class Rate(models.Model):
-	bracelet = models.ForeignKey(Bracelet, related_name = 'rates')
-	rate = models.IntegerField()
-	user = models.ForeignKey(User, related_name = 'rates')
+    bracelet = models.ForeignKey(Bracelet, related_name='rates')
+    rate = models.IntegerField()
+    user = models.ForeignKey(User, related_name='rates')
