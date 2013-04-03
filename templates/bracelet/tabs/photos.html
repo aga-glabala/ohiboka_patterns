@@ -3,35 +3,44 @@
 <script type="text/javascript">
 //<![CDATA[
 $(document).ready(function() {
-	$('#photo-upload-form').submit(function() { 
-		$('.loader').show();
-		return True;
-	});
+    $('#photo-upload-form').submit(function() {
+        $('.loader').show();
+        return True;
+    });
 });
 //]]>
 </script>
 
 <div id="photoAdd">
-	{% if user.is_authenticated %}
-	<form id='photo-upload-form' enctype="multipart/form-data"
-		action="/bracelet/photoUpload/{{ bracelet_id }}/" method="post">
-		{% csrf_token %} <input type="hidden" name="bracelet_id"
-			value="{{ bracelet_id }}"> {{ form.file }} <br /> <input
-			class='btn btn-primary' value="{% trans 'Send photo' %}"
-			type="submit" /> <span class='loader'><img
-			src='{{ STATIC_URL }}gfx/lightbox-ico-loading.gif' /></span>
-	</form>
-	{% else %} {% trans "You need to be logged in to add new photo" %} {%
-	endif %}
+    {% if user.is_authenticated %}
+        <form id='photo-upload-form' enctype="multipart/form-data"
+            action="/bracelet/photoUpload/{{ bracelet_id }}/" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="bracelet_id" value="{{ bracelet_id }}">
+                {{ form.file }} <br />
+            <input class='btn btn-primary' value="{% trans 'Send photo' %}" type="submit" />
+                <span class='loader'>
+                    <img src='{{ STATIC_URL }}gfx/lightbox-ico-loading.gif' />
+                </span>
+        </form>
+    {% else %}
+        {% trans "You need to be logged in to add new photo" %}
+    {% endif %}
 </div>
-{% if photos %} {% for p in photos %}
-<div class="photo">
-	<div>
-		<a href="{{ MEDIA_URL }}images/{{ p.name }}"><img
-			src="{{ MEDIA_URL }}bracelet_thumbs/{{ p.name }}" /></a>
-	</div>
-	<p>{% trans "author" %}: {{ p.user }}</p>
-</div>
-{% endfor %} {% else %} {% if user.is_authenticated %} {% trans "No
-photos, add yours to be first!" %} {% else %} {% trans "There is no
-photo" %} {% endif %} {% endif %}
+{% if photos %}
+    {% for p in photos %}
+        <div class="photo">
+            <div>
+                <a href="{{ MEDIA_URL }}images/{{ p.name }}"><img
+                    src="{{ MEDIA_URL }}bracelet_thumbs/{{ p.name }}" /></a>
+            </div>
+            <p>{% trans "author" %}: {{ p.user }}</p>
+        </div>
+    {% endfor %}
+{% else %}
+    {% if user.is_authenticated %}
+        {% trans "No photos, add yours to be first!" %}
+    {% else %}
+        {% trans "There is no photo" %}
+    {% endif %}
+{% endif %}

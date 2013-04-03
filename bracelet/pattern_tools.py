@@ -19,8 +19,8 @@ class BraceletPattern(object):
         Constructor
         '''
         self.bracelet = bracelet
-        self.strings = BraceletString.objects.filter(bracelet=self.bracelet).order_by('index')
-        self.knots = BraceletKnot.objects.filter(bracelet=self.bracelet)
+        self.strings = self.bracelet.strings.all()
+        self.knots = self.bracelet.knots.all()
         self.strings_order = [range(len(self.strings))]
         self.odd = len(self.strings) % 2
         self.knots_types = []

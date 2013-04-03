@@ -4,20 +4,16 @@
 <head>
 <title>Ohiboka Patterns{% block title %}{% endblock %}</title>
 <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-<link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.css"
-	type="text/css">
-<link rel="stylesheet" href="{{ STATIC_URL }}css/base.css"
-	type="text/css">
+<link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.css" type="text/css">
+<link rel="stylesheet" href="{{ STATIC_URL }}css/base.css" type="text/css">
 <script src="{{ STATIC_URL }}js/jquery.js" type="text/javascript"></script>
-<script src="{{ STATIC_URL }}js/jquery-ui-1.8.18.custom.min.js"
-	type="text/javascript"></script>
+<script src="{{ STATIC_URL }}js/jquery-ui-1.8.18.custom.min.js" type="text/javascript"></script>
 <script src="{{ STATIC_URL }}js/bootstrap.js" type="text/javascript"></script>
 <script src="{{ STATIC_URL }}js/mousetrap.min.js" type="text/javascript"></script>
-<link
-	href='http://fonts.googleapis.com/css?family=Signika:700,400&subset=latin,latin-ext'
-	rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Signika:700,400&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 
-{% block css %} {% endblock %}
+{% block css %}
+{% endblock %}
 <script type="text/javascript">
 
   var _gaq = _gaq || [];
@@ -29,167 +25,173 @@
     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
-	$(document).ready(function() {
-		
-		$('#login').click(function() {
-			if($('#login-box').is(':visible')) {
-				$('#login-box').slideUp();
-				$('#login-box').next().slideUp();
-			} else {
-				$('#login-box').slideDown();
-				$('#login-box').next().slideDown();
-			}
-			// prevent the default action, e.g., following a link
-			return false;
-		});
+    $(document).ready(function() {
 
-		var i = document.createElement('input');
-		if ( 'placeholder' in i) {
-			$('#login-form input:text').attr('placeholder', '{{ loginform.username.label }}');
-			$('#login-form input:password').attr('placeholder', '{{ loginform.password.label }}');
-		} else {
-			$('#login-form input:text').val('{{ loginform.username.label }}');
-			$('#login-form input:password').val('{{ loginform.password.label }}');
-		}
+        $('#login').click(function() {
+            if($('#login-box').is(':visible')) {
+                $('#login-box').slideUp();
+                $('#login-box').next().slideUp();
+            } else {
+                $('#login-box').slideDown();
+                $('#login-box').next().slideDown();
+            }
+            // prevent the default action, e.g., following a link
+            return false;
+        });
 
-		$('#fb').hover(function() {
-			$('.fb-like-box').fadeIn();
-		});
-		$('.fb-like-box').hover(function() {}, function() {
-			$('.fb-like-box').fadeOut();
-		});
-		
-		if($('.login-errors').length>0) {
-			$('#login').click();
-		}
-	});
+        var i = document.createElement('input');
+        if ('placeholder' in i) {
+            $('#login-form input:text').attr('placeholder', '{{ loginform.username.label }}');
+            $('#login-form input:password').attr('placeholder', '{{ loginform.password.label }}');
+        } else {
+            $('#login-form input:text').val('{{ loginform.username.label }}');
+            $('#login-form input:password').val('{{ loginform.password.label }}');
+        }
+
+        $('#fb').hover(function() {
+            $('.fb-like-box').fadeIn();
+        });
+        $('.fb-like-box').hover(function() {}, function() {
+            $('.fb-like-box').fadeOut();
+        });
+
+        if($('.login-errors').length>0) {
+            $('#login').click();
+        }
+    });
 </script>
 </head>
 
 <body>
-	<div id="fb"></div>
-	{% if LANGUAGE_CODE == 'en' %}
-	<div id="pl">
-		<a href="/lang/pl">&nbsp;</a>
-	</div>
-	{% else %}
-	<div id="en">
-		<a href="/lang/en">&nbsp;</a>
-	</div>
-	{% endif %}
-	<div class="fb-like-box"
-		data-href="http://www.facebook.com/ohibokabracelets" data-width="292"
-		data-show-faces="true" data-stream="false" data-header="true"
-		style="position: fixed; top: 200px; background-color: white; display: none"></div>
-	<div class="stitches stitches-top1"></div>
+    <div id="fb"></div>
+    {% if LANGUAGE_CODE == 'en' %}
+        <div id="pl">
+            <a href="/lang/pl">&nbsp;</a>
+        </div>
+    {% else %}
+        <div id="en">
+            <a href="/lang/en">&nbsp;</a>
+        </div>
+    {% endif %}
+    <div class="fb-like-box"
+        data-href="http://www.facebook.com/ohibokabracelets" data-width="292"
+        data-show-faces="true" data-stream="false" data-header="true"
+        style="position: fixed; top: 200px; background-color: white; display: none"></div>
+    <div class="stitches stitches-top1"></div>
 
-	<div id="top">
-		<h1>
-			<a href="/"><img src='{{ STATIC_URL}}gfx/ohiboka.png' /></a>
-		</h1>
-		<ul id="menu">
-			<li><a href="http://blog.ohiboka.com"><span>BLOG</span></a></li>
-			<li id='top-patterns' class="active"><a href="/"><span>PATTERNS</span></a></li>
-			<li id='top-about'><a href="/about/"><span>{% trans
-						"ABOUT" %}</span></a></li> {% if user.is_authenticated %}
-			<li id='top-profile'><a href="/profile/"><span>{%
-						trans "PROFILE" %}</span></a></li>
-			<li><a href="/logout"><span>{% trans "LOG OUT" %}</span></a></li> {%
-			else %}
-			<li><a href="" id="login"><span>{% trans "LOG IN" %}</span></a></li>
-			<li id='top-register'><a href="/register/"><span>{%
-						trans "SIGN IN" %}</span></a></li> {% endif %}
-			<li id='top-search'><a href="/#search" id='search-top'><span>{%
-						trans "SEARCH" %}</span></a></li>
-		</ul>
-	</div>
-	<input id="username" type="hidden" value="{{ user.username  }}" />
-	<div id="container">
-		<div class="stitches stitches-top2"></div>
+    <div id="top">
+        <h1>
+            <a href="/"><img src='{{ STATIC_URL}}gfx/ohiboka.png' /></a>
+        </h1>
+        <ul id="menu">
+            <li><a href="http://blog.ohiboka.com"><span>BLOG</span></a></li>
+            <li id='top-patterns' class="active"><a href="/"><span>PATTERNS</span></a></li>
+            <li id='top-about'><a href="/about/"><span>{% trans "ABOUT" %}</span></a></li>
+            {% if user.is_authenticated %}
+                <li id='top-profile'><a href="/profile/"><span>{% trans "PROFILE" %}</span></a></li>
+                <li><a href="/logout"><span>{% trans "LOG OUT" %}</span></a></li>
+            {% else %}
+                <li><a href="" id="login"><span>{% trans "LOG IN" %}</span></a></li>
+                <li id='top-register'><a href="/register/"><span>{% trans "SIGN IN" %}</span></a></li>
+            {% endif %}
+            <li id='top-search'><a href="/#search" id='search-top'><span>{% trans "SEARCH" %}</span></a></li>
+        </ul>
+    </div>
+    <input id="username" type="hidden" value="{{ user.username  }}" />
+    <div id="container">
+        <div class="stitches stitches-top2"></div>
 
-		<div id="content">
-			<div class="box success_box">
-				{% trans "Hey! It's super-beta version of my new site. You probably
-				find some errors. Feel free to" %} <a href="/about/">{% trans
-					"contact me" %}</a> {% trans "when you find some errors or you have
-				some suggestions how to make this site better." %}
-			</div>
-			<div class="spacer"></div>
-			{% if messages %} {% for message in messages %}
-			<div {% if message.tags %} class="box {{ message.tags }}_box"{% endif %}>{{
-				message }}</div>
-			<div class="spacer"></div>
-			{% endfor %} {% endif %}
+        <div id="content">
+            <div class="box success_box">
+                {% trans "Hey! It's super-beta version of my new site. You probably find some errors. Feel free to" %}
+                <a href="/about/">{% trans "contact me" %}</a> {% trans "when you find some errors or you have some suggestions how to make this site better." %}
+            </div>
+            <div class="spacer"></div>
+            {% if messages %}
+                {% for message in messages %}
+                    <div
+                        {% if message.tags %}
+                            class="box {{ message.tags }}_box"
+                        {% endif %}>
+                        {{ message }}
+                    </div>
+                    <div class="spacer"></div>
+                {% endfor %}
+            {% endif %}
 
-			<div id="login-box" class="box" style="display: none">
-				<div id="login-form">
-					<form method="post" action="{% url "common.views.login_user" %}">
-						{% if loginform.errors %}
-						<p class="login-errors">{% trans "Your username and password
-							didn't match. Please try again." %}</p>
-						{% endif %} {% csrf_token %}
-						<table>
-							<tr>
-								<td>{{ loginform.username }}</td>
-							</tr>
-							<tr>
-								<td>{{ loginform.password }}</td>
-							</tr>
-							<tr>
-								<td><label><input type="checkbox"
-										name="remember_me" value="remember_me" /> {% trans 'Remember
-										me' %}</label></td>
-							</tr>
-							<tr>
-								<td><input class="pull-right btn btn-primary" type="submit"
-									value="{% trans 'Login' %}" /></td>
-							</tr>
-						</table>
-					</form>
-				</div>
-				<div class="facebook_login">
-					<button onclick="location.href='/facebook_login'">&nbsp;</button>
-				</div>
-			</div>
-			<div class="spacer" style="display: none"></div>
-			<div class="box">{% block content %} {% endblock %}</div>
-		</div>
-	</div>
-	<div class="stitches stitches-bottom1"></div>
-	<div id="bottom">
-		<div>
-			Copyright © 2012 - Ohiboka<br /> <a href="/privacypolicy/">{%
-				trans 'Privacy policy' %}</a>
-		</div>
-		<div>
-			<a href="/">{% trans 'Patterns' %}</a><br /> <a
-				href="http://blog.ohiboka.com">{% trans 'Blog' %}</a>
-		</div>
-		<div>
-			{% if user.is_authenticated %} <a href="/profile/">{% trans
-				'Profile' %} - {{ user.username }}</a><br /> <a href="/add/">{%
-				trans 'Add new bracelet' %}</a> {% else %} <a href="" id="login">{%
-				trans 'Log in' %}</a><br /> <a href="/register/">{% trans
-				'Register' %}</a> {% endif %}
-		</div>
-		<div>
-			<a href="http://www.facebook.com/ohibokabracelets">{% trans 'Find
-				me on facebook' %}</a><br /> <a href="/about">{% trans 'About' %}</a><br />
-		</div>
-	</div>
-	<div class="stitches stitches-bottom2"></div>
-	<script>
+            <div id="login-box" class="box" style="display: none">
+                <div id="login-form">
+                    <form method="post" action="{% url "common.views.login_user" %}">
+                        {% if loginform.errors %}
+                            <p class="login-errors">
+                                {% trans "Your username and password didn't match. Please try again." %}
+                            </p>
+                        {% endif %}
+                        {% csrf_token %}
+                        <table>
+                            <tr>
+                                <td>{{ loginform.username }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ loginform.password }}</td>
+                            </tr>
+                            <tr>
+                                <td><label><input type="checkbox" name="remember_me" value="remember_me" /> {% trans 'Remember me' %}</label></td>
+                            </tr>
+                            <tr>
+                                <td><input class="pull-right btn btn-primary" type="submit" value="{% trans 'Login' %}" /></td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+                <div class="facebook_login">
+                    <button onclick="location.href='/facebook_login'">&nbsp;</button>
+                </div>
+            </div>
+            <div class="spacer" style="display: none"></div>
+            <div class="box">
 
-		
-	</script>
-	<div id="fb-root"></div>
-	<script>(function(d, s, id) {
-		  var js, fjs = d.getElementsByTagName(s)[0];
-		  if (d.getElementById(id)) return;
-		  js = d.createElement(s); js.id = id;
-		  js.src = "//connect.facebook.net/pl_PL/all.js#xfbml=1&appId=262681810480763";
-		  fjs.parentNode.insertBefore(js, fjs);
-		}(document, 'script', 'facebook-jssdk'));
-	</script>
+                {% block content %} {% endblock %}
+
+            </div>
+        </div>
+    </div>
+    <div class="stitches stitches-bottom1"></div>
+    <div id="bottom">
+        <div>
+            Copyright © 2012 - Ohiboka<br /> <a href="/privacypolicy/">{% trans 'Privacy policy' %}</a>
+        </div>
+        <div>
+            <a href="/">{% trans 'Patterns' %}</a><br /> <a
+                href="http://blog.ohiboka.com">{% trans 'Blog' %}</a>
+        </div>
+        <div>
+            {% if user.is_authenticated %}
+                <a href="/profile/">{% trans 'Profile' %} - {{ user.username }}</a><br />
+                <a href="/add/">{% trans 'Add new bracelet' %}</a>
+            {% else %}
+                <a href="" id="login">{% trans 'Log in' %}</a><br />
+                <a href="/register/">{% trans 'Register' %}</a>
+            {% endif %}
+        </div>
+        <div>
+            <a href="http://www.facebook.com/ohibokabracelets">{% trans 'Find me on facebook' %}</a><br />
+            <a href="/about">{% trans 'About' %}</a><br />
+        </div>
+    </div>
+    <div class="stitches stitches-bottom2"></div>
+    <script>
+
+
+    </script>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) return;
+          js = d.createElement(s); js.id = id;
+          js.src = "//connect.facebook.net/pl_PL/all.js#xfbml=1&appId=262681810480763";
+          fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
 </body>
 </html>

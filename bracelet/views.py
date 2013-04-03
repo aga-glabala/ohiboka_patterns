@@ -64,8 +64,7 @@ def bracelet(request, bracelet_url, context={}):
                     'nofrows': bp.nofrows,
                     'texts': texts,
                     'ifwhite': bp.get_ifwhite(),
-                    'nofphotos': len(Photo.objects.filter(bracelet=bracelet,
-                                                          accepted=True)),
+                    'nofphotos': len(bracelet.photos.filter(accepted=True)),
                     'request': request,
                     })
     if 'message' in context:
@@ -81,7 +80,7 @@ def bracelet(request, bracelet_url, context={}):
             if you have link to this page."""))
     rates = []
     if request.user.is_authenticated():
-        rates = Rate.objects.filter(user=request.user, bracelet=bracelet)
+        rates = bracelet.rates.filter(user=request.user)
     if len(rates) > 0:
         context['rate'] = rates[0].rate
     elif 'rate' in context:
@@ -110,7 +109,7 @@ def addpattern(request):
     else:
         public = False
     if request.POST['bracelet_id']:
-        b = Bracelet.objects.filter(id=request.POST['bracelet_id'])[0]
+        b = Bracelet.objects.get(id=request.POST['bracelet_id'])
         b.public = public
         b.difficulty = request.POST['difficulty']
         b.category = BraceletCategory.objects.filter(name=request.POST['category'])[0]
@@ -136,12 +135,12 @@ def addpattern(request):
     index = 0
     BraceletString.objects.filter(bracelet=b).delete()
     for color in colors:
-        bs = BraceletString(index=index, color=BraceletColor.objects.filter(hexcolor=color)[0], bracelet=b)
+        bs = BraceletString(index=index, color=BraceletColor.objects.get(hexcolor=color), bracelet=b)
         index += 1
         bs.save()
     BraceletKnot.objects.filter(bracelet=b).delete()
     for i in range(len(knots)):
-        bk = BraceletKnot(bracelet=b, knottype=BraceletKnotType.objects.filter(id=knots[i])[0], index=i)
+        bk = BraceletKnot(bracelet=b, knottype=BraceletKnotType.objects.get(id=knots[i]), index=i)
         bk.save()
 
     photo_name = str(int(time.time() * 1000)) + "-" + str(b.id) + '.png'
@@ -151,7 +150,7 @@ def addpattern(request):
     scale(photo_name, settings.MEDIA_ROOT + 'images/',
           settings.MEDIA_ROOT + 'bracelet_thumbs/')
     if b.photo_id:
-        photo = Photo.objects.filter(id=b.photo_id)[0]
+        photo = Photo.objects.get(id=b.photo_id)
         delete_image_file(photo.name)
         photo.name = photo_name
         photo.save()
@@ -180,7 +179,7 @@ def photo_upload(request, bracelet_id):
         messages.error(request, _('There is no bracelet with this id {0}').format(bracelet_id))
         return HttpResponseRedirect('/')
 
-    photos = Photo.objects.filter(bracelet=bracelet_obj, accepted=True)
+    photos = bracelet_obj.photos.filter(accepted=True)
     form = UploadFileForm(request.POST, request.FILES)
     if form.is_valid():
         handle_uploaded_file(request.FILES['file'],
@@ -204,14 +203,14 @@ def rate(request, bracelet_id, bracelet_rate):
     if request.user.is_authenticated():
         bracelet = Bracelet.objects.get(id=bracelet_id)
         if bracelet != None:
-            rates = Rate.objects.filter(user=request.user, bracelet=bracelet)
+            rates = bracelet.rates.filter(user=request.user)
             if len(rates) == 0:
                 r = Rate(user=request.user, bracelet=bracelet, rate=rate)
                 r.save()
             else:
                 rates[0].rate = rate
                 rates[0].save()
-            rates = Rate.objects.filter(bracelet=bracelet)
+            rates = bracelet.rates
             sum_rates = 0
             for rate in rates:
                 sum_rates += rate.rate
@@ -240,8 +239,7 @@ def edit_bracelet(request, bracelet_id, context={}):
                     'knotsType': bp.get_knots_types(),
                     'nofrows': bp.nofrows,
                     'ifwhite': bp.get_ifwhite(),
-                    'nofphotos': len(Photo.objects.filter(bracelet=bracelet,
-                                                          accepted=True)),
+                    'nofphotos': len(bracelet.photos.filter(accepted=True)),
                     'request': request,
                     'colors': get_colors(),
                     'categories': BraceletCategory.objects.all(),
@@ -378,7 +376,7 @@ def delete_rate(request, rate_id):
         messages.error(request, _("You are not owner of this rate."))
         return HttpResponseRedirect('/profile')
 
-    bracelet = Bracelet.objects.get(id=rate.bracelet.id)
+    bracelet = rate.bracelet
     rate.delete()
     bracelet.rate = bracelet.get_average_rate()
     bracelet.save()

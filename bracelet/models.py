@@ -1,5 +1,8 @@
+import datetime
+
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.query import QuerySet
 
 
 class BraceletCategory(models.Model):
@@ -9,14 +12,54 @@ class BraceletCategory(models.Model):
         return self.name
 
 
+class BraceletQuerySet(QuerySet):
+
+    def accepted(self, user=None):
+        """Filter out bracelets that are published"""
+        if user:
+            return self.filter(accepted=1, public=1, deleted=False, user=user)
+        else:
+            return self.filter(accepted=1, public=1, deleted=False)
+
+    def waiting(self, user=None):
+        """Filter out bracelets that are waiting for acceptance"""
+        if user:
+            return self.filter(accepted=0, public=1, deleted=False, user=user)
+        else:
+            return self.filter(accepted=0, public=1, deleted=False)
+
+    def rejected(self, user=None):
+        """Filter out bracelets that are rejected"""
+        if user:
+            return self.filter(accepted= -1, public=1, deleted=False, user=user)
+        else:
+            return self.filter(accepted= -1, public=1, deleted=False)
+
+    def private(self, user=None):
+        """Filter out bracelets that are private"""
+        if user:
+            return self.filter(public=0, user=user)
+        else:
+            return self.filter(public=0)
+
+
+class BraceletManager(models.Manager):
+    def get_query_set(self):
+        return BraceletQuerySet(self.model)
+    def __getattr__(self, attr, *args):
+        # see https://code.djangoproject.com/ticket/15062 for details
+        if attr.startswith("_"):
+            raise AttributeError
+        return getattr(self.get_query_set(), attr, *args)
+
 class Bracelet(models.Model):
+    objects = BraceletQuerySet()
     user = models.ForeignKey(User, related_name='bracelets')
-    photo = models.ForeignKey('Photo', related_name='+', default='')
+    photo = models.ForeignKey('Photo', related_name='photos', default='')
     date = models.DateTimeField('Creation date')
     name = models.CharField(max_length=50)
     accepted = models.IntegerField(default=0)
-    difficulty = models.IntegerField(choices=((1, ' Easy'), (2, 'Medium'),
-                                             (3, 'Hard')))
+    difficulty = models.IntegerField(choices=((1, ' Easy'), (2, 'Medium'), (3, 'Hard')))
     category = models.ForeignKey(BraceletCategory, related_name='bracelets')
     rate = models.DecimalField(max_digits=3, decimal_places=2)
     public = models.BooleanField(default=False)
@@ -42,6 +85,8 @@ class Bracelet(models.Model):
         return rate * 1.0 / len(rates)
 
 
+
+
 class BraceletColor(models.Model):
     hexcolor = models.IntegerField()
 
@@ -58,7 +103,8 @@ class BraceletString(models.Model):
     def __unicode__(self):
         return "[id=" + str(self.id) + ", index=" + str(self.index)\
                + ", color=" + str(self.color) + "]"
-
+    class Meta:
+        ordering = ['index']
 
 class BraceletKnotType(models.Model):
     text = models.CharField(max_length=100)

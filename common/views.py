@@ -2,7 +2,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from common.models import UserProfile
-from bracelet.models import Photo, Rate, BraceletCategory
+from bracelet.models import Photo, Rate, BraceletCategory, Bracelet
 from django.utils.translation import ugettext as _
 from common import captcha
 from django.conf import settings
@@ -69,7 +69,7 @@ def userprofile(request):
             else:
                 bracelets_not_accepted.append(br)
 
-        photos = Photo.objects.filter(user=request.user)
+        photos = request.user.photos
         photos_accepted = []
         photos_not_accepted = []
         for p in photos:
@@ -79,9 +79,10 @@ def userprofile(request):
                 photos_not_accepted.append(p)
 
         context = get_context(request)
-        context['bracelets_accepted'] = bracelets_accepted
-        context['bracelets_not_accepted'] = bracelets_not_accepted
-        context['bracelets_private'] = bracelets_private
+        context['bracelets_accepted'] = Bracelet.objects.accepted(request.user)
+        context['bracelets_not_accepted'] = Bracelet.objects.waiting(request.user)
+        context['bracelets_rejected'] = Bracelet.objects.rejected(request.user)
+        context['bracelets_private'] = Bracelet.objects.private(request.user)
         context['photos_accepted'] = photos_accepted
         context['photos_not_accepted'] = photos_not_accepted
         context['rates'] = Rate.objects.filter(user=request.user)
@@ -102,7 +103,7 @@ def user(request, user_name):
     context = get_context(request)
     context['user_content'] = user
     context['bracelets'] = get_all_bracelets(0, user)
-    context['photos'] = Photo.objects.filter(user=user, accepted=True)
+    context['photos'] = user.photos.filter(accepted=True)
     return render_to_response('common/user.html', context,
                               RequestContext(request))
 

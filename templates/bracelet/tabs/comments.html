@@ -1,47 +1,48 @@
-{% load i18n %} {% load comments %}
+{% load i18n %}
+{% load comments %}
 
 <script type="text/javascript">
 //<![CDATA[
 $(document).ready(function() {
-	$('#commentbox').submit(function(e) {
-	  e.preventDefault();
-	  return false;
-	});
-	
-	$('#submit_comment').click(function(e) {
-		e.preventDefault();
-		$('.posterror').remove();
-		if($('#id_honeypot').val().length==0 && $('#id_comment').val().length>0) {
-			$.post("/comments/post/", $('#commentbox').serialize(), function(data) {
-				if(data == 1) {
-					var el = $('<div class="comment"><h4><span class="comment-user"></span> <span class="comment-time">{% trans "now" %}</span></h4></div>');
-					$('.comment_start').after(el);
-					$('.comment-user', el).html($('#comment-form-username').val());
-					el.append($('#id_comment').val());
-					el.append($('<hr />'));
-					$("#commentbox").hide();
-					$('#id_comment').val('');
-					$('#comment-input').show();
-					var tabname = $('.ui-tabs-nav li a')[2];
-					tabname = $(tabname);
-					var vals = tabname.html().split("(");
-					tabname.html(vals[0]+"("+(parseInt(vals[1].split(")")[0])+1)+")");
-					$('.thereisnocomments').hide(); 
-				} else {
-					$('.comment_start').after($('<div class="posterror">{% trans "Unexpected error occured. Try reload page or try again later." %}</div>'));
-				}
-			});
-		} else {
-			$('.comment_start').after($('<div class="posterror">{% trans "Validation error, try again please" %}</div>'));
-		}
-		return false;
-	});
-	$('#comment-form-username').val($('#username').val());
-	
-	$('#comment-input').focus(function () {
-		$('#comment-input').hide();
-		$('#commentbox').fadeIn();
-	});
+    $('#commentbox').submit(function(e) {
+      e.preventDefault();
+      return false;
+    });
+
+    $('#submit_comment').click(function(e) {
+        e.preventDefault();
+        $('.posterror').remove();
+        if($('#id_honeypot').val().length==0 && $('#id_comment').val().length>0) {
+            $.post("/comments/post/", $('#commentbox').serialize(), function(data) {
+                if(data == 1) {
+                    var el = $('<div class="comment"><h4><span class="comment-user"></span> <span class="comment-time">{% trans "now" %}</span></h4></div>');
+                    $('.comment_start').after(el);
+                    $('.comment-user', el).html($('#comment-form-username').val());
+                    el.append($('#id_comment').val());
+                    el.append($('<hr />'));
+                    $("#commentbox").hide();
+                    $('#id_comment').val('');
+                    $('#comment-input').show();
+                    var tabname = $('.ui-tabs-nav li a')[2];
+                    tabname = $(tabname);
+                    var vals = tabname.html().split("(");
+                    tabname.html(vals[0]+"("+(parseInt(vals[1].split(")")[0])+1)+")");
+                    $('.thereisnocomments').hide();
+                } else {
+                    $('.comment_start').after($('<div class="posterror">{% trans "Unexpected error occured. Try reload page or try again later." %}</div>'));
+                }
+            });
+        } else {
+            $('.comment_start').after($('<div class="posterror">{% trans "Validation error, try again please" %}</div>'));
+        }
+        return false;
+    });
+    $('#comment-form-username').val($('#username').val());
+
+    $('#comment-input').focus(function () {
+        $('#comment-input').hide();
+        $('#commentbox').fadeIn();
+    });
 });
 //]]>
 </script>
@@ -50,40 +51,40 @@ $(document).ready(function() {
 <!-- A context variable called form is created with the necessary hidden
 fields, timestamps and security hashes -->
 {% if user.is_authenticated %}
-<input id="comment-input" type='text'
-	placeholder="{% trans 'Click to add comment' %}" />
+    <input id="comment-input" type='text' placeholder="{% trans 'Click to add comment' %}" />
 
-<form id="commentbox" action="/comments/post/" method="post"
-	class='form-horizontal'>
-	{% csrf_token %} {% for field in form %} {% if field.is_hidden %} {{
-	field }} {% endif %} {% endfor %} <input type='hidden' name='name'
-		id='comment-form-username' value='{{ userprofile.fb_name }}' /> <input
-		type='hidden' name='email' id='comment-form-email'
-		value='email@com.com' />
-	<fieldset>
-		{{ form.non_field_errors }}
-		<div class="control-group">
-			<label for="comment-form-text" class="control-label">{{
-				form.comment.label }}</label>
-			<div class="controls">{{ form.comment }}</div>
-			<p>{{ form.comment.errors }}</p>
-		</div>
-		<div class="control-group">
-			<label for="comment-form-honeypot" class="control-label">{%
-				trans 'Do not fill this' %}</label>
-			<div class="controls">{{ form.honeypot }}</div>
-			<p>{{ form.honeypot.errors }}</p>
-		</div>
-		<div class="control-group">
-			<div class="controls">
-				<button id="submit_comment" class='btn btn-primary' type="submit"
-					name="submit" value="">
-					<i class='icon-envelope icon-white'></i> {% trans 'Post' %}
-				</button>
-			</div>
-		</div>
-
-	</fieldset>
-</form>
-{% else %} You need to be logged in to post comment. {% endif %} {%
-render_comment_list for bracelet.bracelet bracelet_id %}
+    <form id="commentbox" action="/comments/post/" method="post"
+        class='form-horizontal'>
+        {% csrf_token %}
+        {% for field in form %}
+            {% if field.is_hidden %}
+                {{ field }}
+            {% endif %}
+        {% endfor %}
+        <input type='hidden' name='name' id='comment-form-username' value='{{ userprofile.fb_name }}' />
+        <input type='hidden' name='email' id='comment-form-email' value='email@com.com' />
+        <fieldset>
+            {{ form.non_field_errors }}
+            <div class="control-group">
+                <label for="comment-form-text" class="control-label">{{ form.comment.label }}</label>
+                <div class="controls">{{ form.comment }}</div>
+                <p>{{ form.comment.errors }}</p>
+            </div>
+            <div class="control-group">
+                <label for="comment-form-honeypot" class="control-label">{% trans 'Do not fill this' %}</label>
+                <div class="controls">{{ form.honeypot }}</div>
+                <p>{{ form.honeypot.errors }}</p>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <button id="submit_comment" class='btn btn-primary' type="submit" name="submit" value="">
+                        <i class='icon-envelope icon-white'></i> {% trans 'Post' %}
+                    </button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+{% else %}
+    You need to be logged in to post comment.
+{% endif %}
+{% render_comment_list for bracelet.bracelet bracelet_id %}

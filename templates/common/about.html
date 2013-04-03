@@ -1,102 +1,106 @@
-{% extends "template.html" %} {% load i18n %} {% block css %}
-<link rel="stylesheet" href="{{ STATIC_URL }}css/static.css"
-	type="text/css">
-<script type="text/javascript">
-    $(document).ready(function(){
-        $('.active').removeClass('active');
-        $('#top-about').addClass('active');
-    });
-</script>
-{% endblock %} {% block content %} {% if contactform.errors %} {% trans
-'There are some errors in form.' %}
-</div>
-<div class="spacer"></div>
-<div class="box">
-	{% endif %} {% if LANGUAGE_CODE == 'pl' %}
-	<h2>O stronie</h2>
-	<hr />
-	<p>Strona powstała, aby dzielić się stworzonymi przeze mnie pracami
-		i wzorami. W tej wersji aplikacji i Ty możesz dzielić się Twoimi
-		pracami.</p>
-	<p>Serwis umożliwia dodawanie nowych wzorów przez wygodny
-		generator, a potem pomoże w zrobieniu bransoletki mówiąc krok po
-		kroku, którą nitką na której trzeba zrobić supełek.</p>
+{% extends "template.html" %}
+{% load i18n %}
+{% block css %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/static.css"
+        type="text/css">
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.active').removeClass('active');
+            $('#top-about').addClass('active');
+        });
+    </script>
+{% endblock %}
+{% block content %}
+    {% if contactform.errors %}
+        {% trans 'There are some errors in form.' %}
 
-	<p>
-		Jeśli chcesz się dowiedzieć więcej o Ohiboce i o mnie - przejdź do <a
-			href="http://blog.ohiboka.com/o-nas-2/">tej strony na blogu</a>.
-	</p>
-	Jeśli znalazłbyś jakiś błąd lub miałbyś sugestie dotyczące strony,
-	możesz do mnie napisać. {% else %}
-	<h2>About page</h2>
-	<hr />
-	<p>Page was created to share my work and patterns. In this version
-		of application you can share your works, too.</p>
-	<p>Service allows you to add new patterns through comfortable
-		generator, and then help in making bracelets by showing step by step
-		instructions which two strings we need to do knot.</p>
-	<p>
-		If you want to know more about Ohiboka and me - go to <a
-			href="http://blog.ohiboka.com/o-nas-2/">this page on blog</a> (only
-		in polish)
-	</p>
-	If you find any errors or have any ideas, you can sent me an email. {%
-	endif %}
-	<h2>{% trans "Contact form" %}</h2>
-	<hr />
-	<form action="/about/" method="post" id="contact-form"
-		class='form-horizontal'>
-		{% csrf_token %}
-		<fieldset>
-			<div
-				class="control-group
+        </div>
+        <div class="spacer"></div>
+        <div class="box">
+    {% endif %}
+    {% if LANGUAGE_CODE == 'pl' %}
+        <h2>O stronie</h2>
+        <hr />
+        <p>Strona powstała, aby dzielić się stworzonymi przeze mnie pracami
+            i wzorami. W tej wersji aplikacji i Ty możesz dzielić się Twoimi
+            pracami.</p>
+        <p>Serwis umożliwia dodawanie nowych wzorów przez wygodny
+            generator, a potem pomoże w zrobieniu bransoletki mówiąc krok po
+            kroku, którą nitką na której trzeba zrobić supełek.</p>
+
+        <p>
+            Jeśli chcesz się dowiedzieć więcej o Ohiboce i o mnie - przejdź do <a
+                href="http://blog.ohiboka.com/o-nas-2/">tej strony na blogu</a>.
+        </p>
+        Jeśli znalazłbyś jakiś błąd lub miałbyś sugestie dotyczące strony,
+        możesz do mnie napisać. {% else %}
+        <h2>About page</h2>
+        <hr />
+        <p>Page was created to share my work and patterns. In this version
+            of application you can share your works, too.</p>
+        <p>Service allows you to add new patterns through comfortable
+            generator, and then help in making bracelets by showing step by step
+            instructions which two strings we need to do knot.</p>
+        <p>
+            If you want to know more about Ohiboka and me - go to <a
+                href="http://blog.ohiboka.com/o-nas-2/">this page on blog</a> (only
+            in polish)
+        </p>
+        If you find any errors or have any ideas, you can sent me an email.
+    {% endif %}
+    <h2>{% trans "Contact form" %}</h2>
+    <hr />
+    <form action="/about/" method="post" id="contact-form" class='form-horizontal'>
+        {% csrf_token %}
+        <fieldset>
+            <div
+                class="control-group
                   {% if contactform.subject.errors %}
                       error
                   {% endif %}
                       ">
-				<label for="id_subject" class="control-label">{% trans
-					contactform.subject.label %}</label>
-				<div class="controls">
-					<span class="field">{{ contactform.subject }}</span> {% if
-					contactform.subject.errors %} <span class="help-inline">{%
-						trans 'This field is required' %}</span> {% endif %}
-				</div>
-			</div>
-			<div
-				class="control-group
+                <label for="id_subject" class="control-label">{% trans contactform.subject.label %}</label>
+                <div class="controls">
+                    <span class="field">{{ contactform.subject }}</span>
+                    {% if contactform.subject.errors %}
+                        <span class="help-inline">{% trans 'This field is required' %}</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="control-group
                   {% if contactform.sender.errors %}
                       error
                   {% endif %}
-                      ">
-				<label for="id_sender" class="control-label">{% trans
-					contactform.sender.label %}</label>
-				<div class="controls">
-					<span class="field">{{ contactform.sender }}</span> {% if
-					contactform.sender.errors %} <span class="help-inline">{%
-						trans 'This field is required' %}</span> {% endif %}
-				</div>
-			</div>
-			<div
-				class="control-group
+                  ">
+                <label for="id_sender" class="control-label">{% trans contactform.sender.label %}</label>
+                <div class="controls">
+                    <span class="field">{{ contactform.sender }}</span>
+                    {% if contactform.sender.errors %}
+                        <span class="help-inline">{% trans 'This field is required' %}</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div
+                class="control-group
                   {% if contactform.message.errors %}
                       error
                   {% endif %}
                       ">
-				<label for="id_message" class="control-label">{% trans
-					contactform.message.label %}</label>
-				<div class="controls">
-					<span class="field">{{ contactform.message }}</span> {% if
-					contactform.message.errors %} <span class="help-inline">{%
-						trans 'This field is required' %}</span> {% endif %}
-				</div>
-			</div>
-			<div class="control-group">{{ captcha|safe }}</div>
-			<div class="control-group">
-				<div class="controls">
-					<input class='btn btn-primary' type="submit"
-						value="{% trans 'Send message' %}" />
-				</div>
-			</div>
-		</fieldset>
-	</form>
-	{% endblock %}
+                <label for="id_message" class="control-label">{% trans contactform.message.label %}</label>
+                <div class="controls">
+                    <span class="field">{{ contactform.message }}</span>
+                    {% if contactform.message.errors %}
+                        <span class="help-inline">
+                        {% trans 'This field is required' %}</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="control-group">{{ captcha|safe }}</div>
+            <div class="control-group">
+                <div class="controls">
+                    <input class='btn btn-primary' type="submit" value="{% trans 'Send message' %}" />
+                </div>
+            </div>
+        </fieldset>
+    </form>
+{% endblock %}

@@ -1,7 +1,8 @@
-{% extends "template.html" %} {% load i18n %} {% block title %}{%
-endblock %} {% block css %}
-<link rel="stylesheet" href="{{ STATIC_URL }}css/home.css"
-	type="text/css">
+{% extends "template.html" %}
+{% load i18n %}
+{% block title %}{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{{ STATIC_URL }}css/home.css" type="text/css">
 <script language="Javascript" type="text/javascript">
 function setColor(color, selectbox) {
     selectbox.style.background = ''+color+'';
@@ -64,194 +65,177 @@ $(document).ready(function(){
 });
 
 </script>
-{% endblock %} {% block content %}
+{% endblock %}
+{% block content %}
 <form action="search" class="form-horizontal" method="get"
-	id="search-form">
-	<fieldset class='two-column'>
-		<div class="control-group">
-			<label for="search-form-photo" class="control-label">{%
-				trans "Only with photo" %}</label>
-			<div class="controls">
-				<input id="search-form-photo" type="checkbox" name="photo"
-					value="photo" {% if photo %}checked="checked" {% endif %} />
-			</div>
-		</div>
-		<div class="control-group">
-			<label for="search-form-difficulty" class="control-label">{%
-				trans "Difficulty" %}</label>
-			<div class="controls">
-				<select name="difficulty" id="search-form-difficulty">
-					<option value="0">{% trans "All" %}</option>
-					<option value="1" {% if difficulty== "1" %}selected="selected"{% endif %}>{%
-						trans "Easy" %}</option>
-					<option value="2" {% if difficulty== "2" %}selected="selected"{% endif %}>{%
-						trans "Medium" %}</option>
-					<option value="3" {% if difficulty== "3" %}selected="selected"{% endif %}>{%
-						trans "Hard" %}</option>
-				</select>
-			</div>
-		</div>
-		<div class="control-group">
-			<label for="search-form-category" class="control-label">{%
-				trans "Category" %}</label>
-			<div class="controls">
-				<select name="category" id="search-form-category">
-					<option value="0">{% trans "All" %}</option> {% if categories %} {%
-					for c in categories %}
-					<option {% if category== c.name %}selected="selected"{% endif %}>{{
-						c.name }}</option> {% endfor %} {% endif %}
-				</select>
-			</div>
-		</div>
-	</fieldset>
-	<fieldset class='two-column'>
-		<div class="control-group">
-			<label for="search-form-color" class="control-label">{%
-				trans "Color" %}</label>
-			<div class="controls">
-				<select name="color"
-					onchange='setColor(this.options[this.selectedIndex].value, this)'
-					id="search-form-color" {% if
-					color %}
-                                 style="background-color: {{"{% endif %}
-                        >
-					<option value="0">{% trans "All" %}</option> {% if colors %} {% for
-					c in colors %}
-					<option value="{{ c }}" style="background-color: {{" {% if c==
-						color %}selected="selected"{% endif %} ></option> {% endfor %} {%
-					endif %}
-				</select>
-			</div>
-		</div>
-		<div class="control-group">
-			<label for="search-form-rate" class="control-label">{% trans
-				"Rated" %}</label>
-			<div class="controls">
-				<select name="rate" id="search-form-rate">
-					<option value="0">{% trans "All" %}</option>
-					<option value="1" {% if rate== "1" %}selected="selected"{% endif %}>{%
-						trans "More than" %} *</option>
-					<option value="2" {% if rate== "2" %}selected="selected"{% endif %}>{%
-						trans "More than" %} **</option>
-					<option value="3" {% if rate== "3" %}selected="selected"{% endif %}>{%
-						trans "More than" %} ***</option>
-					<option value="4" {% if rate== "4" %}selected="selected"{% endif %}>{%
-						trans "More than" %} ****</option>
-					<option value="5" {% if rate== "5" %}selected="selected"{% endif %}>*****</option>
-				</select>
-			</div>
-		</div>
-		<div class="control-group">
-			<label for="search-form-orderby" class="control-label">{%
-				trans "Sort by" %}</label>
-			<div class="controls">
-				<select name="orderby" id="search-form-orderby">
-					<option value="0" {% if orderby== "0" %}selected="selected"{% endif %}>{%
-						trans "Newest first" %}</option>
-					<option value="1" {% if orderby== "1" %}selected="selected"{% endif %}>{%
-						trans "Oldest first" %}</option>
-					<option value="2" {% if orderby== "2" %}selected="selected"{% endif %}>{%
-						trans "Highest rates first" %}</option>
-					<option value="3" {% if orderby== "3" %}selected="selected"{% endif %}>{%
-						trans "Lowest rates first" %}</option>
-				</select>
-			</div>
-		</div>
-		<div class="control-group">
-			<div class="controls">
-				<button class='btn btn-primary' type="submit">
-					<i class='icon-search icon-white'></i> {% trans "Search" %}
-				</button>
-			</div>
-		</div>
-	</fieldset>
+    id="search-form">
+    <fieldset class='two-column'>
+        <div class="control-group">
+            <label for="search-form-photo" class="control-label">{% trans "Only with photo" %}</label>
+            <div class="controls">
+                <input id="search-form-photo" type="checkbox" name="photo"
+                    value="photo" {% if photo %}checked="checked" {% endif %} />
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="search-form-difficulty" class="control-label">{% trans "Difficulty" %}</label>
+            <div class="controls">
+                <select name="difficulty" id="search-form-difficulty">
+                    <option value="0">{% trans "All" %}</option>
+                    <option value="1" {% if difficulty == "1" %}selected="selected"{% endif %}>{% trans "Easy" %}</option>
+                    <option value="2" {% if difficulty == "2" %}selected="selected"{% endif %}>{% trans "Medium" %}</option>
+                    <option value="3" {% if difficulty == "3" %}selected="selected"{% endif %}>{% trans "Hard" %}</option>
+                </select>
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="search-form-category" class="control-label">{% trans "Category" %}</label>
+            <div class="controls">
+                <select name="category" id="search-form-category">
+                    <option value="0">{% trans "All" %}</option>
+                    {% if categories %}
+                        {% for c in categories %}
+                            <option {% if category == c.name %}selected="selected"{% endif %}>
+                                {{ c.name }}</option>
+                        {% endfor %}
+                    {% endif %}
+                </select>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset class='two-column'>
+        <div class="control-group">
+            <label for="search-form-color" class="control-label">{% trans "Color" %}</label>
+            <div class="controls">
+                <select name="color" onchange='setColor(this.options[this.selectedIndex].value, this)' id="search-form-color"
+                    {% if color %}
+                         style="background-color: {{ color }}"
+                    {% endif %}
+                 >
+                    <option value="0">{% trans "All" %}</option>
+                    {% if colors %}
+                        {% for c in colors %}
+                            <option value="{{ c }}" style="background-color: {{ c }}"
+                                {% if c == color %}
+                                    selected="selected"
+                                {% endif %}
+                            ></option>
+                        {% endfor %}
+                    {% endif %}
+                </select>
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="search-form-rate" class="control-label">{% trans "Rated" %}</label>
+            <div class="controls">
+                <select name="rate" id="search-form-rate">
+                    <option value="0">{% trans "All" %}</option>
+                    <option value="1" {% if rate == "1" %}selected="selected"{% endif %}>{% trans "More than" %} *</option>
+                    <option value="2" {% if rate == "2" %}selected="selected"{% endif %}>{% trans "More than" %} **</option>
+                    <option value="3" {% if rate == "3" %}selected="selected"{% endif %}>{% trans "More than" %} ***</option>
+                    <option value="4" {% if rate == "4" %}selected="selected"{% endif %}>{% trans "More than" %} ****</option>
+                    <option value="5" {% if rate == "5" %}selected="selected"{% endif %}>*****</option>
+                </select>
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="search-form-orderby" class="control-label">{% trans "Sort by" %}</label>
+            <div class="controls">
+                <select name="orderby" id="search-form-orderby">
+                    <option value="0" {% if orderby == "0" %}selected="selected"{% endif %}>{% trans "Newest first" %}</option>
+                    <option value="1" {% if orderby == "1" %}selected="selected"{% endif %}>{% trans "Oldest first" %}</option>
+                    <option value="2" {% if orderby == "2" %}selected="selected"{% endif %}>{% trans "Highest rates first" %}</option>
+                    <option value="3" {% if orderby == "3" %}selected="selected"{% endif %}>{% trans "Lowest rates first" %}</option>
+                </select>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <button class='btn btn-primary' type="submit">
+                    <i class='icon-search icon-white'></i> {% trans "Search" %}
+                </button>
+            </div>
+        </div>
+    </fieldset>
 </form>
 </div>
 <div class="spacer"></div>
 <div class="box">
-
-
-	<h1>
-		{% if search %} {% trans "Results" %} {% else %} {% trans "Newest
-		bracelets" %} {% endif %}
-		<div class="pull-right">
-			<a href="/add/" class='btn btn-info'><i
-				class="icon-plus icon-white"></i> {% trans "Add new pattern" %}</a> <a
-				href="/add/straight" class='btn btn-info'><i
-				class="icon-plus icon-white"></i> {% trans "Add new text pattern" %}</a>
-		</div>
-	</h1>
-	<hr />
-	{% if patterns %} {% for bt in patterns %}
-	<div class="pattern-box">
-		<div class="pattern" id="pattern{{ bt.id }}">
-			<a href="/bracelet/{{ bt.url }}">
-				<div class="pattern-thumb">
-					<img src="{{ MEDIA_URL }}bracelet_thumbs/{{ bt.photo.name }}" />
-					</td>
-					</tr>
-				</div>
-				<div class="pattern-info">
-					{% if bt.now %} <i class="icon-new">&nbsp;</i> <br /> {% endif %}
-					<div title={% if bt.category.id==
-						1 %}
-                                "{% trans 'nature' %}"
-                            {% else %}
-                                {% if
-						bt.category.id==
-						2 %}
-                                    "{% trans 'text' %}"
+    <h1>
+        {% if search %}
+            {% trans "Results" %}
+        {% else %}
+            {% trans "Newest bracelets" %}
+        {% endif %}
+        <div class="pull-right">
+            <a href="/add/" class='btn btn-info'><i class="icon-plus icon-white"></i>
+                    {% trans "Add new pattern" %}</a>
+            <a href="/add/straight" class='btn btn-info'><i class="icon-plus icon-white"></i>
+                    {% trans "Add new text pattern" %}</a>
+        </div>
+    </h1>
+    <hr />
+    {% if patterns %}
+        {% for bt in patterns %}
+            <div class="pattern-box">
+                <div class="pattern" id="pattern{{ bt.id }}">
+                    <a href="/bracelet/{{ bt.url }}">
+                        <div class="pattern-thumb">
+                            <img src="{{ MEDIA_URL }}bracelet_thumbs/{{ bt.photo.name }}" />
+                        </div>
+                        <div class="pattern-info">
+                            {% if bt.now %}
+                                <i class="icon-new">&nbsp;</i> <br />
+                            {% endif %}
+                            <div title=
+                                {% if bt.category.id == 1 %}
+                                    "{% trans 'nature' %}"
                                 {% else %}
-                                    {% if
-						bt.category.id==
-						4 %}
-                                        "{% trans 'zigzak' %}"
+                                    {% if bt.category.id == 2 %}
+                                        "{% trans 'text' %}"
                                     {% else %}
-                                        "{% trans 'another' %}"
+                                        {% if bt.category.id == 4 %}
+                                            "{% trans 'zigzak' %}"
+                                        {% else %}
+                                            "{% trans 'another' %}"
+                                        {% endif %}
                                     {% endif %}
                                 {% endif %}
-                            {% endif %}
-                             class="category icon-category{{ bt.category.id }}">&nbsp;
-					</div>
-					<br /> <i class="icon-strings"
-						title="{% trans 'Number of strings' %}"></i> {{ bt.nofstrings }} <br />
-					<i class="icon-heart-full"
-						title="{% trans 'Rate' %}: {{ bt.average_rate }}"></i> {{
-					bt.short_rate }} <br /> <i
-						class="icon-difficulty{{ bt.difficulty}}"
-						title="{% trans 'Difficulty' %}"></i>
-				</div>
-			</a>
-		</div>
-		<div class="pattern-details" id="pattern_info{{ bt.id }}"
-			style="display: none">
-			<a href="/bracelet/{{ bt.url }}">
-				<div class="darken">{{ bt.name }}</div>
-				<div class="darken" style="margin-top: 37px">{{
-					bt.user.username }}, {{ bt.date }}</div>
-				<div class="darken" style='height: 19px;'>
-					{% for c in bt.colors %}
-					<div class="knot" style="background-color: {{c"></div>
-					{% endfor %}
-				</div>
+                                class="category icon-category{{ bt.category.id }}">&nbsp;
+                            </div>
+                            <br />
+                            <i class="icon-strings" title="{% trans 'Number of strings' %}"></i> {{ bt.nofstrings }} <br />
+                            <i class="icon-heart-full" title="{% trans 'Rate' %}: {{ bt.average_rate }}"></i> {{ bt.short_rate }} <br />
+                            <i class="icon-difficulty{{ bt.difficulty}}" title="{% trans 'Difficulty' %}"></i>
+                        </div>
+                    </a>
+                </div>
+                <div class="pattern-details" id="pattern_info{{ bt.id }}"
+                    style="display: none">
+                    <a href="/bracelet/{{ bt.url }}">
+                        <div class="darken">{{ bt.name }}</div>
+                        <div class="darken" style="margin-top: 37px">{{ bt.user.username }}, {{ bt.date }}</div>
+                        <div class="darken" style='height: 19px;'>
+                            {% for c in bt.colors %}
+                                <div class="knot" style="background-color: {{c"></div>
+                            {% endfor %}
+                        </div>
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+        <hr />
 
-			</a>
-		</div>
-	</div>
-	{% endfor %}
-	<hr />
-
-	<ul class="pager">
-		{% if patterns.has_previous %}
-		<li class="previous"><a
-			href="?page={{ patterns.previous_page_number }}{{ url }}">&larr;
-				{% trans "previous" %}</a></li> {% endif %}
-		<span class="current"> {% trans "Page" %} {{ patterns.number }}
-			{% trans "of" %} {{ patterns.paginator.num_pages }} </span> {% if
-		patterns.has_next %}
-		<li class="next"><a
-			href="?page={{ patterns.next_page_number }}{{ url }}">{% trans
-				"next" %} &rarr;</a></li> {% endif %}
-	</ul>
-	{% else %} {% trans "There is no patterns to show." %} {% endif %} {%
-	endblock %}
+        <ul class="pager">
+            {% if patterns.has_previous %}
+                <li class="previous"><a href="?page={{ patterns.previous_page_number }}{{ url }}">&larr; {% trans "previous" %}</a></li>
+            {% endif %}
+            <span class="current"> {% trans "Page" %} {{ patterns.number }} {% trans "of" %} {{ patterns.paginator.num_pages }} </span>
+            {% if patterns.has_next %}
+                <li class="next"><a href="?page={{ patterns.next_page_number }}{{ url }}">{% trans "next" %} &rarr;</a></li>
+            {% endif %}
+        </ul>
+    {% else %}
+        {% trans "There is no patterns to show." %}
+    {% endif %}
+{% endblock %}
