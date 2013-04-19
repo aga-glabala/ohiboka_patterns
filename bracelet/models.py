@@ -42,6 +42,37 @@ class BraceletQuerySet(QuerySet):
         else:
             return self.filter(public=0)
 
+    def find_bracelets(self, orderby="0", category="0", difficulty="0", color="0", photo=False, rate="0"):
+        q_orderby = '-date'
+        if orderby == '1':
+            q_orderby = 'date'
+        elif orderby == '2':
+            q_orderby = '-rate'
+        elif orderby == '3':
+            q_orderby = 'rate'
+        patterns = self.accepted().order_by(q_orderby)
+        if category != "0":
+            patterns = patterns.filter(category=BraceletCategory.objects.filter(name=category))
+        if difficulty != "0":
+            patterns = patterns.filter(difficulty=difficulty)
+
+        rate = int(rate)
+        if rate > 0:
+            patterns = patterns.filter(rate__gte=rate)
+
+        if photo:
+            for pattern in patterns:
+                # since we always have picture of pattern we need at least two photos in database
+                if len(pattern.photos.all()) < 2:
+                    del pattern
+
+        if color != "0":
+            color = BraceletColor.objects.get(hexcolor=int('0x' + color[1:], 16))
+            #strings = [bs.bracelet.id for bs in BraceletString.objects.filter(color=color)]
+            patterns = patterns.filter(colors__contains=color)
+
+        return patterns
+
 
 class BraceletManager(models.Manager):
     def get_query_set(self):
@@ -53,7 +84,7 @@ class BraceletManager(models.Manager):
         return getattr(self.get_query_set(), attr, *args)
 
 class Bracelet(models.Model):
-    objects = BraceletQuerySet()
+    objects = BraceletManager()
     user = models.ForeignKey(User, related_name='bracelets')
     photo = models.ForeignKey('Photo', related_name='photos', default='')
     date = models.DateTimeField('Creation date')
@@ -84,10 +115,46 @@ class Bracelet(models.Model):
             rate += r.rate
         return rate * 1.0 / len(rates)
 
+    @property
+    def new(self):
+        d = datetime.datetime.now() - self.date
+        return d.days < 7
 
+    @property
+    def nofstrings(self):
+        return len(self.colors)
+
+    @property
+    def nofvotes(self):
+        return len(self.rates)
+
+    @property
+    def unique_colors(self):
+        colors = []
+        for color in self.colors:
+            colors.append(str(color))
+
+class BraceletColorQuerySet(QuerySet):
+    def all_hexes(self):
+        colors = []
+        for color in self.all():
+            if not str(color) in colors:
+                colors.append(str(color))
+        return colors
+
+
+class BraceletColorManager(models.Manager):
+    def get_query_set(self):
+        return BraceletColorQuerySet(self.model)
+    def __getattr__(self, attr, *args):
+        # see https://code.djangoproject.com/ticket/15062 for details
+        if attr.startswith("_"):
+            raise AttributeError
+        return getattr(self.get_query_set(), attr, *args)
 
 
 class BraceletColor(models.Model):
+    objects = BraceletColorManager()
     hexcolor = models.IntegerField()
 
     def __unicode__(self):

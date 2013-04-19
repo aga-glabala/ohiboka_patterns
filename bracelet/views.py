@@ -7,7 +7,6 @@ from bracelet.models import BraceletColor, Bracelet, BraceletCategory, \
     BraceletString, BraceletKnot, BraceletKnotType, Photo, Rate
 import datetime
 from bracelet.pattern_tools import BraceletPattern, get_custom_characters
-from common.bracelet_tools import get_colors
 from bracelet.forms import UploadFileForm
 from bracelet.helper import handle_uploaded_file, scale, delete_image_file
 from django.utils.translation import ugettext as _
@@ -26,7 +25,7 @@ import re
 
 def add(request, bracelet_type, context_={}):
     context = {
-        'colors': get_colors(),
+        'colors': BraceletColor.objects.all_hexes(),
         'characters': get_custom_characters(),
         'categories': BraceletCategory.objects.all(),
         'bracelet': None,
@@ -241,7 +240,7 @@ def edit_bracelet(request, bracelet_id, context={}):
                     'ifwhite': bp.get_ifwhite(),
                     'nofphotos': len(bracelet.photos.filter(accepted=True)),
                     'request': request,
-                    'colors': get_colors(),
+                    'colors': BraceletColor.objects.all_hexes(),
                     'categories': BraceletCategory.objects.all(),
                     })
     return render_to_response('bracelet/add.html', context,

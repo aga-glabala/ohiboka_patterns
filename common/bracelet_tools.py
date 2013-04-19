@@ -61,7 +61,6 @@ def find_bracelets(orderby="0", category="0", difficulty="0", color="0",
 
     if photo:
         for pattern in patterns:
-            print pattern, pattern.photos.filter(accepted=1).all()
             if len(pattern.photos.all()) < 1:
                 del pattern
 
@@ -88,10 +87,3 @@ def create_bracelet_array(patterns):
         bracelets.append(BraceletContainer(bracelet=br, now=now, colors=colors,
                         nofstrings=len(colors), nofvotes=nofvotes))
     return bracelets
-
-
-def get_colors():
-    colors = []
-    for color in BraceletColor.objects.all():
-        colors.append(str(color))
-    return colors

@@ -14,10 +14,10 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql', # 'django.db.backends.sqlite3',
+        'ENGINE': 'django.db.backends.sqlite3',
         # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or
         # 'oracle'.
-        'NAME': 'patterns', # Or path to database file if using sqlite3.
+        'NAME': 'patterns.db', # Or path to database file if using sqlite3.
         'USER': 'patterns', # Not used with sqlite3.
         'PASSWORD': 'patterns', # Not used with sqlite3.
         'HOST': 'localhost', # empty string for localhost. Not used with
@@ -112,7 +112,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-ROOT_URLCONF = 'ohibokapatterns.urls'
+ROOT_URLCONF = 'ohiboka_patterns.urls'
 
 TEMPLATE_DIRS = (
     projectaddress + "templates"

@@ -2,7 +2,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from common.models import UserProfile
-from bracelet.models import Photo, Rate, BraceletCategory, Bracelet
+from bracelet.models import Photo, Rate, BraceletCategory, Bracelet, BraceletColor
 from django.utils.translation import ugettext as _
 from common import captcha
 from django.conf import settings
@@ -10,7 +10,6 @@ from django.contrib.auth.models import User
 from common.forms import UserCreationFormExtended, ContactForm
 from django.http import HttpResponseRedirect
 # from django.core.mail import send_mail
-from common.bracelet_tools import get_colors, find_bracelets, get_all_bracelets
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib.auth import authenticate, login, logout
 from pyfb.pyfb import Pyfb
@@ -57,18 +56,6 @@ def register(request):
 @login_required
 def userprofile(request):
     if request.user.is_authenticated():
-        bracelets = get_all_bracelets(0, request.user, False)
-        bracelets_accepted = []
-        bracelets_not_accepted = []
-        bracelets_private = []
-        for br in bracelets:
-            if not br.public:
-                bracelets_private.append(br)
-            if br.accepted:
-                bracelets_accepted.append(br)
-            else:
-                bracelets_not_accepted.append(br)
-
         photos = request.user.photos
         photos_accepted = []
         photos_not_accepted = []
@@ -159,7 +146,7 @@ def privacypolicy(request):
 
 
 def index(request, context_={}):
-    bracelets = get_all_bracelets(0)
+    bracelets = Bracelet.objects.accepted()
     paginator = Paginator(bracelets, 9)
     page = request.GET.get('page')
     if not page:
@@ -175,7 +162,7 @@ def index(request, context_={}):
     context.update(context_)
     context.update({
         'patterns': bracelets,
-        'colors': get_colors(),
+        'colors': BraceletColor.objects.all_hexes(),
         'categories': BraceletCategory.objects.all(),
     })
 
@@ -250,12 +237,12 @@ def search(request):
                     'orderby': request.GET['orderby'],
                     'categories': BraceletCategory.objects.all(),
                     'photo': 'photo' in request.GET,
-                    'colors': get_colors(),
+                    'colors': BraceletColor.objects.all_hexes(),
                     'search': True,
                     'url': url
                     })
 
-    bracelets = find_bracelets(
+    bracelets = Bracelet.objects.find_bracelets(
         category=request.GET['category'], difficulty=request.GET['difficulty'],
         color=request.GET['color'], orderby=request.GET['orderby'], photo='photo' in request.GET, rate=request.GET['rate'])
 

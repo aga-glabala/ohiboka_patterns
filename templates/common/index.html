@@ -177,52 +177,7 @@ $(document).ready(function(){
     <hr />
     {% if patterns %}
         {% for bt in patterns %}
-            <div class="pattern-box">
-                <div class="pattern" id="pattern{{ bt.id }}">
-                    <a href="/bracelet/{{ bt.url }}">
-                        <div class="pattern-thumb">
-                            <img src="{{ MEDIA_URL }}bracelet_thumbs/{{ bt.photo.name }}" />
-                        </div>
-                        <div class="pattern-info">
-                            {% if bt.now %}
-                                <i class="icon-new">&nbsp;</i> <br />
-                            {% endif %}
-                            <div title=
-                                {% if bt.category.id == 1 %}
-                                    "{% trans 'nature' %}"
-                                {% else %}
-                                    {% if bt.category.id == 2 %}
-                                        "{% trans 'text' %}"
-                                    {% else %}
-                                        {% if bt.category.id == 4 %}
-                                            "{% trans 'zigzak' %}"
-                                        {% else %}
-                                            "{% trans 'another' %}"
-                                        {% endif %}
-                                    {% endif %}
-                                {% endif %}
-                                class="category icon-category{{ bt.category.id }}">&nbsp;
-                            </div>
-                            <br />
-                            <i class="icon-strings" title="{% trans 'Number of strings' %}"></i> {{ bt.nofstrings }} <br />
-                            <i class="icon-heart-full" title="{% trans 'Rate' %}: {{ bt.average_rate }}"></i> {{ bt.short_rate }} <br />
-                            <i class="icon-difficulty{{ bt.difficulty}}" title="{% trans 'Difficulty' %}"></i>
-                        </div>
-                    </a>
-                </div>
-                <div class="pattern-details" id="pattern_info{{ bt.id }}"
-                    style="display: none">
-                    <a href="/bracelet/{{ bt.url }}">
-                        <div class="darken">{{ bt.name }}</div>
-                        <div class="darken" style="margin-top: 37px">{{ bt.user.username }}, {{ bt.date }}</div>
-                        <div class="darken" style='height: 19px;'>
-                            {% for c in bt.colors %}
-                                <div class="knot" style="background-color: {{c"></div>
-                            {% endfor %}
-                        </div>
-                    </a>
-                </div>
-            </div>
+            {% include "common/bracelet_box_partial.html" with bracelet=bt %}
         {% endfor %}
         <hr />
 
