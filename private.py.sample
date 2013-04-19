@@ -1,0 +1,23 @@
+siteaddress = 'http://localhost:8000/'
+projectaddress = '/files/aptana-workspace/ohibokapatterns/'
+
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+
+#recaptcha account: https://www.google.com/recaptcha/admin/site?siteid=
+RECAPTCHA_PUBLIC_KEY = ''
+RECAPTCHA_PRIVATE_KEY = ''
+
+FACEBOOK_APP_ID = ''
+FACEBOOK_SECRET_KEY = ''
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'
+        'NAME': '',          # Or path to database file if using sqlite3.
+        'USER': '',          # Not used with sqlite3.
+        'PASSWORD': '',                # Not used with sqlite3.
+        'HOST': '',            # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': ''
+    }
+}
