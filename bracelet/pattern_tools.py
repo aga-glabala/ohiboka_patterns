@@ -4,10 +4,8 @@ Created on Feb 28, 2012
 
 @author: agnis
 '''
-from bracelet.models import BraceletString, BraceletKnot
-import Image
-import ImageDraw
-
+from bracelet.models import Bracelet, BraceletString, BraceletKnot
+from PIL import Image, ImageDraw
 
 class BraceletPattern(object):
     '''

@@ -6,7 +6,7 @@ Created on Mar 29, 2012
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from django.http import HttpResponse
-from django.contrib.comments.views.comments import post_comment
+from django_comments.views.comments import post_comment
 from django.contrib.auth.decorators import login_required
 
 

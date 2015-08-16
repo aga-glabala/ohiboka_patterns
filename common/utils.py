@@ -14,10 +14,9 @@ class FacebookBackend(ModelBackend):
 
     def authenticate(self, fb_user=None):
         try:
-            profile = UserProfile.objects.get(fb_username=fb_user.username)
-            profile.user.backend = \
-                        'ohibokapatterns.common.utils.FacebookBackend'
-            return profile.user
+            user_profile = UserProfile.objects.get(fb_username = fb_user.username)
+            user_profile.user.backend = 'common.utils.FacebookBackend'
+            return user_profile.user
         except UserProfile.DoesNotExist:
             # Create a new user. Note that we can set password
             # to anything, because it won't be checked; the password
@@ -38,7 +37,7 @@ class FacebookBackend(ModelBackend):
             user.save()
             userprofile = UserProfile(fb_username=fb_user.username, fb_name=fb_user.name, user=user)
             userprofile.save()
-            user.backend = 'ohibokapatterns.common.utils.FacebookBackend'
+            user.backend = 'common.utils.FacebookBackend'
             return user
 
     def get_user(self, user_id):

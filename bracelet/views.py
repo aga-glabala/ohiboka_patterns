@@ -12,7 +12,7 @@ from bracelet.forms import UploadFileForm
 from bracelet.helper import handle_uploaded_file, scale, delete_image_file
 from django.utils.translation import ugettext as _
 from django.utils.translation import gettext
-from django.utils import simplejson
+import simplejson
 from django.conf import settings
 import time
 from django.core.exceptions import ObjectDoesNotExist
@@ -22,6 +22,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.mail import EmailMessage
 from django.contrib import messages
 import re
+import urllib
 
 
 def add(request, bracelet_type, context_={}):
@@ -398,7 +399,7 @@ def generate_text_pattern(request, pattern_text, text_height):
     notfound = []
     characters = simplejson.load(open(settings.PROJECT_ROOT + "/bracelet/" + text_height + ".json"))
 
-    pattern_text = pattern_text.split('\f')
+    pattern_text = urllib.unquote(pattern_text).split('\f')
     for char in pattern_text:
         if char not in characters:
             notfound += char
@@ -410,7 +411,6 @@ def generate_text_pattern(request, pattern_text, text_height):
         error = _("Not found: ") + " ".join(notfound)
     result = {"pattern": to_json, "error": error}
     return HttpResponse(simplejson.dumps(result), mimetype='application/json')
-
 
 def _fake_for_translate():
     _("Make one knot {0} in forward on {1}")

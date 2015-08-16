@@ -115,10 +115,10 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'ohibokapatterns.urls'
 
 TEMPLATE_DIRS = (
-    projectaddress + "templates"
-    # Put strings here, like "/home/html/django_templates" or
-    # "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
+    #projectaddress + "templates"
+    PROJECT_ROOT + "/templates"
+    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+    # Always use forward slashes, even on Window
     # Don't forget to use absolute paths, not relative paths.
 )
 

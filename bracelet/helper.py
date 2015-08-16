@@ -3,7 +3,7 @@ Created on Mar 20, 2012
 
 @author: agnis
 '''
-import Image as pil
+import PIL.Image as pil
 import time
 import os
 from bracelet.models import Bracelet, Photo

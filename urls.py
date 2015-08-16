@@ -1,4 +1,4 @@
-from django.conf.urls.defaults import patterns, include, url
+from django.conf.urls import patterns, include, url
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -39,10 +39,10 @@ urlpatterns = patterns('',
     url(r'^bracelet/(?P<bracelet_url>.+)?$', 'bracelet.views.bracelet'),
 
     # MODULE COMMENT
-    url(r'^comments/(?P<bracelet_id>\d+)/$', 'comments.views.pattern_comments'),
-    url(r'^comments/post/$', 'comments.views.pattern_comments_post'),
-    url(r'^comments/posted/$', 'comments.views.pattern_comments_posted'),
-    url(r'^comments/', include('django.contrib.comments.urls')),
+    url(r'^comments/(?P<bracelet_id>\d+)/$', 'ocomments.views.pattern_comments'),
+    url(r'^comments/post/$', 'ocomments.views.pattern_comments_post'),
+    url(r'^comments/posted/$', 'ocomments.views.pattern_comments_posted'),
+    url(r'^comments/', include('django_comments.urls')),
 
     # MODULE ADMIN
     url(r'admin/manage_bracelets/?', 'admin.views.manage_bracelets'),
