@@ -61,6 +61,7 @@ def userprofile(request):
         bracelets_accepted = []
         bracelets_not_accepted = []
         bracelets_private = []
+        bracelets_rejected = [] # FIXME
         for br in bracelets:
             if not br.public:
                 bracelets_private.append(br)
@@ -72,17 +73,21 @@ def userprofile(request):
         photos = request.user.photos
         photos_accepted = []
         photos_not_accepted = []
-        for p in photos:
+        for p in photos.all():
             if p.accepted:
                 photos_accepted.append(p)
             else:
                 photos_not_accepted.append(p)
 
         context = get_context(request)
-        context['bracelets_accepted'] = Bracelet.objects.accepted(request.user)
-        context['bracelets_not_accepted'] = Bracelet.objects.waiting(request.user)
-        context['bracelets_rejected'] = Bracelet.objects.rejected(request.user)
-        context['bracelets_private'] = Bracelet.objects.private(request.user)
+#        context['bracelets_accepted'] = Bracelet.objects.accepted(request.user)
+#        context['bracelets_not_accepted'] = Bracelet.objects.waiting(request.user)
+#        context['bracelets_rejected'] = Bracelet.objects.rejected(request.user)
+#        context['bracelets_private'] = Bracelet.objects.private(request.user)
+        context['bracelets_accepted'] = bracelets_accepted
+        context['bracelets_not_accepted'] = bracelets_not_accepted
+        context['bracelets_private'] = bracelets_private
+        context['bracelets_rejected'] = bracelets_rejected
         context['photos_accepted'] = photos_accepted
         context['photos_not_accepted'] = photos_not_accepted
         context['rates'] = Rate.objects.filter(user=request.user)
