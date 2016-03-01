@@ -388,12 +388,12 @@ def delete_rate(request, rate_id):
 def generate_text_pattern(request, pattern_text, text_height):
     if text_height != "7" and text_height != "10":
         return HttpResponse("Bad text_height parameter value (7 or 10 allowed)",
-                            status=400, mimetype='application/json')
+                            status=400, content_type='application/json')
 
     if text_height == "7":
-        empty = [[5] * 9]
+        empty = [[5] * 7]
     else:
-        [[5] * 7]
+        empty = [[5] * 10]
     to_json = []
     to_json += empty
     notfound = []
@@ -410,7 +410,7 @@ def generate_text_pattern(request, pattern_text, text_height):
     if len(notfound) > 0:
         error = _("Not found: ") + " ".join(notfound)
     result = {"pattern": to_json, "error": error}
-    return HttpResponse(simplejson.dumps(result), mimetype='application/json')
+    return HttpResponse(simplejson.dumps(result), content_type='application/json')
 
 def _fake_for_translate():
     _("Make one knot {0} in forward on {1}")
