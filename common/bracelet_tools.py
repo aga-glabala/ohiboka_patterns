@@ -49,7 +49,7 @@ def find_bracelets(orderby="0", category="0", difficulty="0", color="0",
         q_orderby = '-rate'
     elif orderby == '3':
         q_orderby = 'rate'
-    patterns = Bracelet.objects.accepted().order_by(q_orderby)
+    patterns = Bracelet.objects.filter(accepted=True).order_by(q_orderby)
     if category != "0":
         patterns = patterns.filter(category=BraceletCategory.objects.filter(name=category))
     if difficulty != "0":
