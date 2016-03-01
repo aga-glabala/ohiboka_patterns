@@ -1,6 +1,8 @@
-{% extends "template.html" %} {% load i18n %} {% block title %} - {%
-trans 'User page' %} - {{ user_content.username }}{% endblock %} {%
-block css %}
+{% extends "template.html" %}
+{% load i18n %}
+{% block title %} - {% trans 'User page' %} - {{ user_content.username }}{% endblock %}
+
+{%block css %}
 <link rel="stylesheet"
 	href="{{ STATIC_URL }}css/jquery.lightbox-0.5.css" type="text/css">
 <link rel="stylesheet" href="{{ STATIC_URL }}css/bracelet.css"
@@ -28,7 +30,9 @@ block css %}
 		});
 	});
 </script>
-{% endblock %} {% block content %}
+{% endblock %}
+
+{% block content %}
 <big><h2>
 		{% trans 'Content added by' %} <b>{{ user_content.username }}</b>
 	</h2></big>
@@ -47,18 +51,13 @@ block css %}
 			</div>
 			<div class="pattern-info">
 				{% if bt.now %} <i class="icon-new">&nbsp;</i> <br /> {% endif %}
-				<div title={% if bt.category.id==
-					1 %}
+				<div title={% if bt.category.id == 1 %}
 		    	    			"{% trans 'nature' %}"
 		    	    		{% else %}
-		    	    			{% if
-					bt.category.id==
-					2 %}
+		    	    			{% if bt.category.id == 2 %}
 		    	    				"{% trans 'text' %}"
 		    	    			{% else %}
-		    	    				{% if
-					bt.category.id==
-					4 %}
+		    	    				{% if bt.category.id == 4 %}
 		    	    					"{% trans 'zigzak' %}"
 		    	    				{% else %}
 		    	    					"{% trans 'another' %}"
@@ -68,8 +67,7 @@ block css %}
 		    	    		 class="category category{{ bt.category.id }}">&nbsp;
 				</div>
 				<br /> <i class="icon-strings"
-					title="{% trans 'Number of strings' %}">&nbsp;</i> {{ bt.nofstrings
-				}} <br /> <i class="icon-star2" title="{% trans 'Rate' %}">&nbsp;</i>
+					title="{% trans 'Number of strings' %}">&nbsp;</i> {{ bt.nofstrings }} <br /> <i class="icon-star2" title="{% trans 'Rate' %}">&nbsp;</i>
 				{{ bt.short_rate }} <br /> <i
 					class="icon-difficulty{{ bt.difficulty}}"
 					title="{% trans 'Difficulty' %}">&nbsp;</i>
@@ -91,7 +89,9 @@ block css %}
 		</a>
 	</div>
 </div>
-{% endfor %} {% endif %} {% if photos %}
+{% endfor %} {% endif %} 
+
+{% if photos %}
 <div id="user_photos">
 	<h3>{% trans 'Photos' %}</h3>
 	<hr />
