@@ -1,6 +1,6 @@
-{% extends "template.html" %} {% load i18n %} {% block title %} - Create
-an account{% endblock %} {% block css %}
-<link rel="stylesheet" href="{{ STATIC_URL }}css/register.css"
+{% extends "template.html" %} {% load i18n %} {% load static %}
+{% block title %} - Create an account{% endblock %} {% block css %}
+<link rel="stylesheet" href="{% static 'css/register.css' %}"
 	type="text/css">
 <script type="text/javascript">
     $(document).ready(function(){

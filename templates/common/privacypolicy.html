@@ -1,6 +1,6 @@
-{% extends "template.html" %} {% load i18n %} {% block title %} - {%
-trans "Privacy policy" %} {% endblock %} {% block css %}
-<link rel="stylesheet" href="{{ STATIC_URL }}css/static.css"
+{% extends "template.html" %} {% load i18n %} {% load static %} 
+{% block title %} - {% trans "Privacy policy" %} {% endblock %} {% block css %}
+<link rel="stylesheet" href="{% static 'css/static.css' %}"
 	type="text/css">
 {% endblock %} {% block content %} {% if LANGUAGE_CODE == 'pl' %}
 <h2>Polityka prywatności</h2>

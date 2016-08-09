@@ -1,12 +1,13 @@
 {% extends "template.html" %}
 {% load i18n %}
+{% load static %}
 {% block title %} - Profile {% endblock %}
 {% block css %}
-<link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.lightbox-0.5.css" type="text/css">
-<link rel="stylesheet" href="{{ STATIC_URL }}css/bracelet.css" type="text/css">
-<link rel="stylesheet" href="{{ STATIC_URL }}css/home.css" type="text/css">
-<link rel="stylesheet" href="{{ STATIC_URL }}css/userprofile.css" type="text/css">
-<script src="{{ STATIC_URL }}js/jquery.lightbox-0.5.pack.js" type="text/javascript"></script>
+<link rel="stylesheet" href="{% static 'css/jquery.lightbox-0.5.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'css/bracelet.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'css/home.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'css/userprofile.css' %}" type="text/css">
+<script src="{% static 'js/jquery.lightbox-0.5.pack.js' %}" type="text/javascript"></script>
 <script type="text/javascript">
     $(document).ready(function() {
         $('.pattern').hover(function() {
@@ -82,8 +83,8 @@
     <hr />
     {% for photo in photos_accepted %}
         <div class="photo">
-            <a class='lightbox' href="{{ MEDIA_URL }}images/{{ photo.name }}">
-                <img src="{{ MEDIA_URL }}bracelet_thumbs/{{ photo.name }}" /></a>
+            <a class='lightbox' href="{% static 'media/images/' %}{{ photo.name }}">
+                <img src="{% static 'media/bracelet_thumbs/' %}{{ photo.name }}" /></a>
                 <a href="/bracelet/{{ photo.bracelet.url }}">{{photo.bracelet.name}}</a>
                 {% if photo.bracelet.photo_id != photo.id %}
                     <a href="/bracelet/photo/remove/{{photo.id}}" title="{% trans 'Remove' %}">
@@ -99,8 +100,8 @@
     <hr />
     {% for photo in photos_not_accepted %}
         <div class="photo">
-            <a class='lightbox' href="{{ MEDIA_URL }}images/{{ photo.name }}">
-                <img src="{{ MEDIA_URL }}bracelet_thumbs/{{ photo.name }}" /></a>
+            <a class='lightbox' href="{% static 'media/images/' %}{{ photo.name }}">
+                <img src="{% static 'media/bracelet_thumbs/' %}{{ photo.name }}" /></a>
             <a href="/bracelet/{{ photo.bracelet.url }}">{{photo.bracelet.name}}</a>
             {% if photo.bracelet.photo_id != photo.id %}
                 <a href="/bracelet/photo/remove/{{photo.id}}" title="{% trans 'Remove' %}"><i class="icon-trash"></i></a>

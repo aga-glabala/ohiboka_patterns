@@ -1,6 +1,7 @@
-{% extends "template.html" %} {% load i18n %} {% block title %} - {%
+{% extends "template.html" %} {% load i18n %} {% load static %}
+{% block title %} - {%
 trans "Manage bracelets" %} {% endblock %} {% block css %}
-<link rel="stylesheet" href="{{ STATIC_URL }}css/admin.css"
+<link rel="stylesheet" href="{% static 'css/admin.css' %}"
 	type="text/css">
 {% endblock %} {% block content %} {% if to_accept %}
 <h2>{% trans "To verify" %}</h2>

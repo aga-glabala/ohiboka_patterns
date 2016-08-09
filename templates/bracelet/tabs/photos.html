@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load static %}
 
 <script type="text/javascript">
 //<![CDATA[
@@ -20,7 +21,7 @@ $(document).ready(function() {
                 {{ form.file }} <br />
             <input class='btn btn-primary' value="{% trans 'Send photo' %}" type="submit" />
                 <span class='loader'>
-                    <img src='{{ STATIC_URL }}gfx/lightbox-ico-loading.gif' />
+                    <img src='{% static 'gfx/lightbox-ico-loading.gif' %}' />
                 </span>
         </form>
     {% else %}
@@ -31,8 +32,8 @@ $(document).ready(function() {
     {% for p in photos %}
         <div class="photo">
             <div>
-                <a href="{{ MEDIA_URL }}images/{{ p.name }}"><img
-                    src="{{ MEDIA_URL }}bracelet_thumbs/{{ p.name }}" /></a>
+                <a href="{% static 'media/images/' %}{{ p.name }}"><img
+                    src="{% static 'media/bracelet_thumbs/' %}{{ p.name }}" /></a>
             </div>
             <p>{% trans "author" %}: {{ p.user }}</p>
         </div>

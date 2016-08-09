@@ -1,10 +1,12 @@
 {% load i18n %}
+{% load static %}
 <div class="pattern-box">
 	<div class="pattern {% cycle 'pattern-odd' 'pattern-even' %}"
 		id="pattern{{ bracelet.id }}">
 		<a href="/bracelet/{{ bracelet.url }}">
 			<div class="pattern-thumb">
-				<img src="{{ MEDIA_URL }}bracelet_thumbs/{{ bracelet.photo.name }}" />
+				<img src="{% static 'media/bracelet_thumbs/' %}{{ bracelet.photo.name }}" 
+/>
 			</div>
 			<div class="pattern-info">
 				{% if bracelet.now %} <i class="icon-new">&nbsp;</i> <br /> {%

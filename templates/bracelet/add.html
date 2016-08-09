@@ -1,11 +1,12 @@
 {% extends "template.html" %}
 {% load i18n %}
+{% load static %}
 {% load filters %}
 {% block title %} - Add new pattern{% endblock %}
 {% block css %}
-<link rel="stylesheet" href="{{ STATIC_URL }}css/bracelet.css"
+<link rel="stylesheet" href="{% static 'css/bracelet.css' %}"
     type="text/css">
-<link rel="stylesheet" href="{{ STATIC_URL }}css/add.css"
+<link rel="stylesheet" href="{% static 'css/add.css' %}"
     type="text/css">
 <style type="text/css">
 </style>
@@ -19,10 +20,10 @@
     //var strings = {{ strings }};
     var stringColors = {{ stringColors|safe }};
     var ifwhite = {{ ifwhite|safe }};
-    var STATIC_URL = {{ STATIC_URL }};
+    var STATIC_URL = "{% static '' %}";
 </script>
-<script src="{{ STATIC_URL }}js/add-pattern.js" type="text/javascript"></script>
-<script src="{{ STATIC_URL }}js/bootstrap-dropdown.js"
+<script src="{% static 'js/add-pattern.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/bootstrap-dropdown.js' %}"
     type="text/javascript"></script>
 <script type="text/javascript">
     var noNameError = "{% trans 'You need to set name to bracelet before saving' %}";

@@ -1,6 +1,5 @@
 from django.contrib.auth.forms import AuthenticationForm
-from django.shortcuts import render_to_response
-from django.template import RequestContext
+from django.shortcuts import render
 from common.models import UserProfile
 from bracelet.models import Photo, Rate, BraceletCategory, Bracelet
 from django.utils.translation import ugettext as _
@@ -50,9 +49,7 @@ def register(request):
     form = UserCreationFormExtended(request.POST)
     context = get_context(request)
     context.update({'form': form, 'captcha': captcha.displayhtml(settings.RECAPTCHA_PUBLIC_KEY)})
-    return render_to_response("common/register.html", context,
-                              context_instance=RequestContext(request))
-
+    return render(request, "common/register.html", context)
 
 @login_required
 def userprofile(request):
@@ -91,8 +88,7 @@ def userprofile(request):
         context['photos_accepted'] = photos_accepted
         context['photos_not_accepted'] = photos_not_accepted
         context['rates'] = Rate.objects.filter(user=request.user)
-        return render_to_response("common/userprofile.html", context,
-                                  RequestContext(request))
+        return render(request, "common/userprofile.html", context)
     else:
         messages.error(request, _('You need to be logged in.'))
         return HttpResponseRedirect('/')
@@ -109,8 +105,7 @@ def user(request, user_name):
     context['user_content'] = user
     context['bracelets'] = get_all_bracelets(0, user)
     context['photos'] = user.photos.filter(accepted=True)
-    return render_to_response('common/user.html', context,
-                              RequestContext(request))
+    return render(request, 'common/user.html', context)
 
 
 def about(request, context={}):
@@ -138,8 +133,7 @@ def about(request, context={}):
                 context.update(get_context(request))
                 context.update({'contactform': form, 'captcha':
                         captcha.displayhtml(settings.RECAPTCHA_PUBLIC_KEY)})
-                return render_to_response('common/about.html', context,
-                                          RequestContext(request))
+                return render(request, 'common/about.html', context)
         else:
             messages.error(request, _('Wrong captcha.'))
             # return about(request, {'subject': form.cleaned_data['subject'],
@@ -148,19 +142,17 @@ def about(request, context={}):
             context.update(get_context(request))
             context.update({'contactform': form, 'captcha':
                         captcha.displayhtml(settings.RECAPTCHA_PUBLIC_KEY)})
-            return render_to_response('common/about.html', context,
-                                      RequestContext(request))
+            return render(request, 'common/about.html', context)
     else:
         form = ContactForm()
     context.update(get_context(request))
     context.update({'contactform': form, 'captcha': captcha.displayhtml(settings.RECAPTCHA_PUBLIC_KEY)})
-    return render_to_response('common/about.html', context,
-                              RequestContext(request))
+    return render(request, 'common/about.html', context)
 
 
 def privacypolicy(request):
-    return render_to_response('common/privacypolicy.html',
-                              get_context(request), RequestContext(request))
+    return render(request, 'common/privacypolicy.html',
+                              get_context(request))
 
 
 def index(request, context_={}):
@@ -184,8 +176,7 @@ def index(request, context_={}):
         'categories': BraceletCategory.objects.all(),
     })
 
-    return render_to_response('common/index.html', context,
-                              RequestContext(request))
+    return render(request, 'common/index.html', context)
 
 
 def logout_user(request):
@@ -275,8 +266,8 @@ def search(request):
     except EmptyPage:
         bracelets = paginator.page(paginator.num_pages)
     context['patterns'] = bracelets
-    return render_to_response('common/index.html', context, RequestContext(request))
+    return render(request, 'common/index.html', context)
 
 
 def contact_success(request):
-    return render_to_response('contact_ok.html', get_context(request), RequestContext(request))
+    return render(request, 'contact_ok.html', get_context(request))

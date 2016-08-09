@@ -1,8 +1,9 @@
 {% extends "template.html" %}
 {% load i18n %}
+{% load static %}
 {% block title %}{% endblock %}
 {% block css %}
-<link rel="stylesheet" href="{{ STATIC_URL }}css/home.css" type="text/css">
+<link rel="stylesheet" href="{% static 'css/home.css' %}" type="text/css">
 <script language="Javascript" type="text/javascript">
 function setColor(color, selectbox) {
     selectbox.style.background = ''+color+'';
@@ -181,7 +182,7 @@ $(document).ready(function(){
                 <div class="pattern" id="pattern{{ bt.id }}">
                     <a href="/bracelet/{{ bt.url }}">
                         <div class="pattern-thumb">
-                            <img src="{{ MEDIA_URL }}bracelet_thumbs/{{ bt.photo.name }}" />
+                            <img src="{% static 'media/bracelet_thumbs/' %}{{ bt.photo.name }}" />
                         </div>
                         <div class="pattern-info">
                             {% if bt.now %}
